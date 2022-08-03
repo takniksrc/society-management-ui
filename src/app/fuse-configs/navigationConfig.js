@@ -22,6 +22,14 @@ const navigationConfig = [
 				type: 'item',
 				icon: 'whatshot',
 				url: '/example'
+			},
+			{
+				id: 'profile',
+				title: 'User',
+				translate: 'USER',
+				type: 'item',
+				icon: 'person',
+				url: '/users'
 			}
 		]
 	}
