@@ -113,16 +113,15 @@ export const setContactsUnstarred = createAsyncThunk(
 const contactsAdapter = createEntityAdapter({});
 
 export const { selectAll: selectContacts, selectById: selectContactsById } = contactsAdapter.getSelectors(
-	// console.log('I am contactsApp',contactsApp)
-	// state => state.contactsApp
+	state => state.contactsApp.contacts
 );
 
-const newUsersSlice = createSlice({
-	name: 'dialog',
+const contactsSlice = createSlice({
+	name: 'contactsApp/contacts',
 	initialState: contactsAdapter.getInitialState({
 		searchText: '',
 		routeParams: {},
-		newUsersSlice: {
+		contactDialog: {
 			type: 'new',
 			props: {
 				open: false
@@ -138,7 +137,7 @@ const newUsersSlice = createSlice({
 			prepare: event => ({ payload: event.target.value || '' })
 		},
 		openNewContactDialog: (state, action) => {
-			state.newUsersSlice = {
+			state.contactDialog = {
 				type: 'new',
 				props: {
 					open: true
@@ -147,7 +146,7 @@ const newUsersSlice = createSlice({
 			};
 		},
 		closeNewContactDialog: (state, action) => {
-			state.newUsersSlice = {
+			state.contactDialog = {
 				type: 'new',
 				props: {
 					open: false
@@ -156,7 +155,7 @@ const newUsersSlice = createSlice({
 			};
 		},
 		openEditContactDialog: (state, action) => {
-			state.newUsersSlice = {
+			state.contactDialog = {
 				type: 'edit',
 				props: {
 					open: true
@@ -165,7 +164,7 @@ const newUsersSlice = createSlice({
 			};
 		},
 		closeEditContactDialog: (state, action) => {
-			state.newUsersSlice = {
+			state.contactDialog = {
 				type: 'edit',
 				props: {
 					open: false
@@ -194,6 +193,6 @@ export const {
 	closeNewContactDialog,
 	openEditContactDialog,
 	closeEditContactDialog
-} = newUsersSlice.actions;
+} = contactsSlice.actions;
 
-export default newUsersSlice.reducer;
+export default contactsSlice.reducer;

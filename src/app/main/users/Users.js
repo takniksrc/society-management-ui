@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState ,useRef} from 'react';
 import DemoContent from '@fuse/core/DemoContent';
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,12 +9,17 @@ import Typography from '@material-ui/core/Typography';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useParams } from 'react-router-dom';
+import { useDeepCompareEffect } from '@fuse/hooks';
+import { useDispatch } from 'react-redux';
 import UsersHeader from './UsersHeader';
 import BasicInfoTab from './BasicInfoTab';
 import AllUsersHead from './AllUsersHead';
 import ContactDialog from './ContactDialog';
-// import ContactsSidebarContent from './ContactsSidebarContent';
+import ContactsSidebarContent from './ContactsSidebarContent';
 import reducer from './store';
+import { getContacts } from './store/newUsersSlice';
+import { getUserData } from './store/userSlice';
 
 /**
  * Form Validation Schema
@@ -39,9 +44,19 @@ const Users = () => {
 	});
 	const { reset, watch, control, onChange, formState } = methods;
 	const form = watch();
+	const dispatch = useDispatch();
+
+	const pageLayout = useRef(null);
+	const routeParams = useParams();
+
+	useDeepCompareEffect(() => {
+		dispatch(getContacts(routeParams));
+		dispatch(getUserData());
+	}, [dispatch, routeParams]);
 
 	return (
-		<FormProvider {...methods}>
+		<>
+		{/* <FormProvider {...methods}> */}
 			<FusePageSimple
 				classes={{
 					root: classes.layoutRoot
@@ -72,8 +87,10 @@ const Users = () => {
 			// leftSidebarContent={<ContactsSidebarContent />}
 
 			/>
+		{/* </FormProvider> */}
 			<ContactDialog />
-		</FormProvider>
+			</>
+
 	);
 }
 

@@ -29,16 +29,8 @@ import {
 const defaultValues = {
 	id: '',
 	name: '',
-	lastName: '',
-	avatar: 'assets/images/avatars/profile.jpg',
-	nickname: '',
-	company: '',
-	jobTitle: '',
 	email: '',
-	phone: '',
-	address: '',
-	birthday: '',
-	notes: ''
+	jobTitle: '',
 };
 
 /**
@@ -50,7 +42,7 @@ const schema = yup.object().shape({
 
 function ContactDialog(props) {
 	const dispatch = useDispatch();
-	const contactDialog = useSelector(({ contactsApp }) => contactsApp);
+	const contactDialog = useSelector(({ newUsersSlice }) => newUsersSlice.newUsersSlice);
 	console.log('I am clicked',contactDialog)
 
 	const { control, watch, reset, handleSubmit, formState, getValues } = useForm({
@@ -72,82 +64,83 @@ function ContactDialog(props) {
 		/**
 		 * Dialog type: 'edit'
 		 */
-		// if (contactDialog.type === 'edit' && contactDialog.data) {
-		// 	reset({ ...contactDialog.data });
-		// }
+		console.log('inCallback')
+		if (contactDialog.type === 'edit' && contactDialog.data) {
+			reset({ ...contactDialog.data });
+		}
 
-		// /**
-		//  * Dialog type: 'new'
-		//  */
-		// if (contactDialog.type === 'new') {
-		// 	reset({
-		// 		...defaultValues,
-		// 		...contactDialog.data,
-		// 		id: FuseUtils.generateGUID()
-		// 	});
-		// }
-	}, [reset]);
+		/**
+		 * Dialog type: 'new'
+		 */
+		if (contactDialog.type === 'new') {
+			reset({
+				...defaultValues,
+				...contactDialog.data,
+				id: FuseUtils.generateGUID()
+			});
+		}
+	}, [contactDialog.data, contactDialog.type,reset]);
 
 	/**
 	 * On Dialog Open
 	 */
 	useEffect(() => {
-		// if (contactDialog.props.open) {
+		if (contactDialog.props.open) {
 			initDialog();
-		// }
-	}, [initDialog]);
+		}
+	}, [contactDialog.props.open,initDialog]);
 
 	// /**
 	//  * Close Dialog
 	//  */
-	// function closeComposeDialog() {
-	// 	return contactDialog.type === 'edit' ? dispatch(closeEditContactDialog()) : dispatch(closeNewContactDialog());
-	// }
+	function closeComposeDialog() {
+		return contactDialog.type === 'edit' ? dispatch(closeEditContactDialog()) : dispatch(closeNewContactDialog());
+	}
 
 	// /**
 	//  * Form Submit
 	//  */
 	function onSubmit(data) {
-		// if (contactDialog.type === 'new') {
-		// 	dispatch(addContact(data));
-		// } else {
-		// 	dispatch(updateContact({ ...contactDialog.data, ...data }));
-		// }
-		// closeComposeDialog();
+		if (contactDialog.type === 'new') {
+			dispatch(addContact(data));
+		} else {
+			dispatch(updateContact({ ...contactDialog.data, ...data }));
+		}
+		closeComposeDialog();
 	}
 
 	// /**
 	//  * Remove Event
 	//  */
-	// function handleRemove() {
-	// 	dispatch(removeContact(id));
-	// 	closeComposeDialog();
-	// }
+	function handleRemove() {
+		dispatch(removeContact(id));
+		closeComposeDialog();
+	}
 
 	return (
 		<Dialog
 			classes={{
 				paper: 'm-24'
 			}}
-			{...contactDialog}
-			// onClose={closeComposeDialog}
+			{...contactDialog.props}
+			onClose={closeComposeDialog}
 			fullWidth
 			maxWidth="xs"
 		>
 			<AppBar position="static" elevation={0}>
-				{/* <Toolbar className="flex w-full">
+				<Toolbar className="flex w-full">
 					<Typography variant="subtitle1" color="inherit">
-						{contactDialog.type === 'new' ? 'New Contact' : 'Edit Contact'}
+						{contactDialog?.type === 'new' ? 'New Contact' : 'Edit Contact'}
 					</Typography>
 				</Toolbar>
 				<div className="flex flex-col items-center justify-center pb-24">
 					<Avatar className="w-96 h-96" alt="contact avatar" src={avatar} />
-					{contactDialog.type === 'edit' && (
+					{contactDialog?.type === 'edit' && (
 						<Typography variant="h6" color="inherit" className="pt-8">
 							{name}
 						</Typography>
 					)}
-				</div> */}
+				</div>
 			</AppBar>
 			<form noValidate onSubmit={handleSubmit(onSubmit)} className="flex flex-col md:overflow-hidden">
 				<DialogContent classes={{ root: 'p-24' }}>
@@ -173,66 +166,6 @@ function ContactDialog(props) {
 							)}
 						/>
 					</div>
-
-					<div className="flex">
-						<div className="min-w-48 pt-20" />
-
-						<Controller
-							control={control}
-							name="lastName"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									label="Last name"
-									id="lastName"
-									variant="outlined"
-									fullWidth
-								/>
-							)}
-						/>
-					</div>
-
-					<div className="flex">
-						<div className="min-w-48 pt-20">
-							<Icon color="action">star</Icon>
-						</div>
-						<Controller
-							control={control}
-							name="nickname"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									label="Nickname"
-									id="nickname"
-									variant="outlined"
-									fullWidth
-								/>
-							)}
-						/>
-					</div>
-
-					<div className="flex">
-						<div className="min-w-48 pt-20">
-							<Icon color="action">phone</Icon>
-						</div>
-						<Controller
-							control={control}
-							name="phone"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									label="Phone"
-									id="phone"
-									variant="outlined"
-									fullWidth
-								/>
-							)}
-						/>
-					</div>
-
 					<div className="flex">
 						<div className="min-w-48 pt-20">
 							<Icon color="action">email</Icon>
@@ -246,26 +179,6 @@ function ContactDialog(props) {
 									className="mb-24"
 									label="Email"
 									id="email"
-									variant="outlined"
-									fullWidth
-								/>
-							)}
-						/>
-					</div>
-
-					<div className="flex">
-						<div className="min-w-48 pt-20">
-							<Icon color="action">domain</Icon>
-						</div>
-						<Controller
-							control={control}
-							name="company"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									label="Company"
-									id="company"
 									variant="outlined"
 									fullWidth
 								/>
@@ -293,75 +206,9 @@ function ContactDialog(props) {
 							)}
 						/>
 					</div>
-
-					<div className="flex">
-						<div className="min-w-48 pt-20">
-							<Icon color="action">cake</Icon>
-						</div>
-						<Controller
-							control={control}
-							name="birthday"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									id="birthday"
-									label="Birthday"
-									type="date"
-									InputLabelProps={{
-										shrink: true
-									}}
-									variant="outlined"
-									fullWidth
-								/>
-							)}
-						/>
-					</div>
-
-					<div className="flex">
-						<div className="min-w-48 pt-20">
-							<Icon color="action">home</Icon>
-						</div>
-						<Controller
-							control={control}
-							name="address"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									label="Address"
-									id="address"
-									variant="outlined"
-									fullWidth
-								/>
-							)}
-						/>
-					</div>
-
-					<div className="flex">
-						<div className="min-w-48 pt-20">
-							<Icon color="action">note</Icon>
-						</div>
-						<Controller
-							control={control}
-							name="notes"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									label="Notes"
-									id="notes"
-									variant="outlined"
-									multiline
-									rows={5}
-									fullWidth
-								/>
-							)}
-						/>
-					</div>
 				</DialogContent>
-{/* 
-				{contactDialog.type === 'new' ? (
+
+				{contactDialog?.type === 'new' ? (
 					<DialogActions className="justify-between p-4 pb-16">
 						<div className="px-16">
 							<Button
@@ -386,11 +233,11 @@ function ContactDialog(props) {
 								Save
 							</Button>
 						</div>
-						<IconButton onClick={handleRemove}>
+						{/* <IconButton onClick={handleRemove}>
 							<Icon>delete</Icon>
-						</IconButton>
+						</IconButton> */}
 					</DialogActions>
-				)} */}
+				)}
 			</form>
 		</Dialog>
 	);

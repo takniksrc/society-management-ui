@@ -1,3 +1,4 @@
+import { Redirect } from 'react-router-dom';
 import i18next from 'i18next';
 import Users from './Users';
 import en from './i18n/en';
@@ -18,7 +19,15 @@ const UsersConfig = {
 		{
 			path: '/users',
 			component: Users
+			// component: () => <Redirect to="/userss/all" />
+
 		}
+        // ,{
+		// 	path: '/users',
+		// 	// component: Users
+		// 	component: () => <Redirect to="/userss/all" />
+
+		// }
 	]
 };
 

@@ -7,22 +7,41 @@ import Typography from '@material-ui/core/Typography';
 import { useMemo, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ContactsMultiSelectMenu from './ContactsMultiSelectMenu';
+import DataTable from './DataTable';
 import AllUsers from './AllUsers';
 import { openEditContactDialog, removeContact, toggleStarredContact, selectContacts } from './store/newUsersSlice';
 
 function AllUsersHead(props) {
 	const dispatch = useDispatch();
-// 	const contacts = useSelector(selectContacts);
-// 	const searchText = useSelector(({ contactsApp }) => contactsApp.contacts.searchText);
+	// const contacts = useSelector(selectContacts);
+	const contacts = [
+		{
+			role: 'Accountant',
+			id: '5725a680bbcec3cc32a8488a',
+			email: 'john.doe@acmestreet.com'
+		},
+		{
+			role: 'Accountant',
+			id: '5725a6801146cce777df2a08',
+			email: 'john.doe@acmestreet.com'
+		}
+	];
+	const user = [{
+		avatar: "assets/images/avatars/profile.jpg",
+		frequentContacts:["5725a6809fdd915739187ed5","5725a68031fdbb1db2c1af47","5725a680606588342058356d"],
+		starred : ["5725a680ae1ae9a3c960d487","5725a6801146cce777df2a08","5725a680bbcec3cc32a8488a"]
+	}]
+	const searchText = useSelector(({ newUsersSlice }) => newUsersSlice.searchText);
 	// const user = useSelector(({ contactsApp }) => contactsApp);
-	// console.log('I am user',user)
+	console.log('I am user se', searchText);
 
 	const [filteredData, setFilteredData] = useState(null);
 
-	const columns = useMemo(() => [
+	const columns = useMemo(
+		() => [
 			{
 				Header: ({ selectedFlatRows }) => {
-					const selectedRowIds = selectedFlatRows.map(row => row.original.id);
+					const selectedRowIds = selectedFlatRows.map((row) => row.original.id);
 
 					return (
 						selectedFlatRows.length > 0 && <ContactsMultiSelectMenu selectedContactIds={selectedRowIds} />
@@ -43,19 +62,8 @@ function AllUsersHead(props) {
 				sortable: true
 			},
 			{
-				Header: 'Last Name',
-				accessor: 'lastName',
-				className: 'font-medium',
-				sortable: true
-			},
-			{
-				Header: 'Company',
-				accessor: 'company',
-				sortable: true
-			},
-			{
-				Header: 'Job Title',
-				accessor: 'jobTitle',
+				Header: 'Role',
+				accessor: 'Role',
 				sortable: true
 			},
 			{
@@ -64,28 +72,23 @@ function AllUsersHead(props) {
 				sortable: true
 			},
 			{
-				Header: 'Phone',
-				accessor: 'phone',
-				sortable: true
-			},
-			{
 				id: 'action',
 				width: 128,
 				sortable: false,
 				Cell: ({ row }) => (
 					<div className="flex items-center">
-						<IconButton
+						{/* <IconButton
 							onClick={ev => {
 								ev.stopPropagation();
 								dispatch(toggleStarredContact(row.original.id));
 							}}
 						>
-							{/* {user.starred && user.starred.includes(row.original.id) ? (
+							{user.starred && user.starred.includes(row.original.id) ? (
 								<Icon className="text-yellow-700">star</Icon>
 							) : (
 								<Icon>star_border</Icon>
-							)} */}
-						</IconButton>
+							)}
+						</IconButton> */}
 						<IconButton
 							onClick={ev => {
 								ev.stopPropagation();
@@ -98,21 +101,20 @@ function AllUsersHead(props) {
 				)
 			}
 		],
-		[dispatch]
+		[dispatch, user.starred]
 	);
-//   console.log('I am columns',columns)
-	// useEffect(() => {
-	// 	function getFilteredArray(entities, _searchText) {
-	// 		if (_searchText.length === 0) {
-	// 			return contacts;
-	// 		}
-	// 		return FuseUtils.filterArrayByString(contacts, _searchText);
-	// 	}
+	useEffect(() => {
+		function getFilteredArray(entities, _searchText) {
+			if (_searchText.length === 0) {
+				return contacts;
+			}
+			return FuseUtils.filterArrayByString(contacts, _searchText);
+		}
 
-	// 	if (contacts) {
-	// 		setFilteredData(getFilteredArray(contacts, searchText));
-	// 	}
-	// }, [contacts, searchText]);
+		if (contacts) {
+			setFilteredData(getFilteredArray(contacts, searchText));
+		}
+	},[contacts, searchText]);
 
 	if (!filteredData) {
 		return null;
@@ -130,17 +132,17 @@ function AllUsersHead(props) {
 
 	return (
 		<motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}>
-			<AllUsers
+			<DataTable  />
+			{/* <AllUsers
 				columns={columns}
 				data={filteredData}
-				// onRowClick={(ev, row) => {
-				// 	if (row) {
-				// 		dispatch(openEditContactDialog(row.original));
-				// 	}
-				// }}
-			/>
+				onRowClick={(ev, row) => {
+					if (row) {
+						dispatch(openEditContactDialog(row.original));
+					}
+				}}
+			/> */}
 		</motion.div>
-		
 	);
 }
 

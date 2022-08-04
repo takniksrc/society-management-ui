@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { selectMainTheme } from 'app/store/fuse/settingsSlice';
-import { openNewContactDialog } from './store/newUsersSlice';
+import { openNewContactDialog ,setContactsSearchText} from './store/newUsersSlice';
 
 // import { setProductsSearchText } from './store/productsSlice';
 // import { saveProduct, removeProduct } from '../store/productSlice';
@@ -17,10 +17,12 @@ function UsersHeader(props) {
 	const dispatch = useDispatch();
 	// const methods = useFormContext();
 	// const searchText = useSelector(({ eCommerceApp }) => eCommerceApp.products.searchText);
-	const mainTheme = useSelector(selectMainTheme);
-	const user = useSelector(({ contactsApp }) => contactsApp);
+	const searchText = useSelector(({ newUsersSlice }) => newUsersSlice.searchText);
 
-	console.log('I am user',user)
+	const mainTheme = useSelector(selectMainTheme);
+	const contactDialog = useSelector(({ newUsersSlice }) => newUsersSlice.newUsersSlice)
+
+	console.log('I am userin Users',contactDialog)
 
 	return (
 		<div className="flex flex-1 w-full items-center justify-between">
@@ -55,15 +57,15 @@ function UsersHeader(props) {
 						<Icon color="action">search</Icon>
 
 						<Input
-							placeholder="Search"
-							className="flex flex-1 mx-8"
+							placeholder="Search for anything"
+							className="flex flex-1 px-16"
 							disableUnderline
 							fullWidth
-							// value={searchText}
+							value={searchText}
 							inputProps={{
 								'aria-label': 'Search'
 							}}
-							// onChange={ev => dispatch(setProductsSearchText(ev))}
+							onChange={ev => dispatch(setContactsSearchText(ev))}
 						/>
 					</Paper>
 				</ThemeProvider>

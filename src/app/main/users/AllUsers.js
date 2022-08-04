@@ -11,7 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import { useGlobalFilter, usePagination, useRowSelect, useSortBy, useTable } from 'react-table';
 import clsx from 'clsx';
-// import ContactsTablePaginationActions from './ContactsTablePaginationActions';
+import ContactsTablePaginationActions from './ContactsTablePaginationActions';
 
 const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
 	const defaultRef = useRef();
@@ -27,20 +27,8 @@ const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
 		</>
 	);
 });
-const AllUsers = ({ columns,data}) => {
-    console.log('I am table',columns)
-    // const {
-    //     getTableProps,
-    //     getTableBodyProps,
-    //     headerGroups,
-    //     rows,
-    //     prepareRow,
-    //   } = useTable({
-    //     columns,
-    //     data, 
-    //   })
-// const {headerGroups} = useTable({columns})
-
+const AllUsers = ({ columns, data, onRowClick }) => {
+	console.log('I am table', columns)
 	const {
 		getTableProps,
 		headerGroups,
@@ -101,7 +89,6 @@ const AllUsers = ({ columns,data}) => {
 	// Render the UI for your table
 	return (
 		<div className="flex flex-col min-h-full sm:border-1 sm:rounded-16 overflow-hidden">
-
 			<TableContainer className="flex flex-1">
 				<Table  {...getTableProps()}  stickyHeader className="simple borderless">
 					<TableHead>
@@ -127,7 +114,7 @@ const AllUsers = ({ columns,data}) => {
 							</TableRow>
 						))}
 					</TableHead>
-					{/* <TableBody>
+					<TableBody>
 						{page.map((row, i) => {
 							prepareRow(row);
 							return (
@@ -149,7 +136,7 @@ const AllUsers = ({ columns,data}) => {
 								</TableRow>
 							);
 						})}
-					</TableBody> */}
+					</TableBody>
 				</Table>
 			</TableContainer>
 			<TablePagination
@@ -166,9 +153,9 @@ const AllUsers = ({ columns,data}) => {
 					inputProps: { 'aria-label': 'rows per page' },
 					native: false
 				}}
-				onChangePage={handleChangePage}
-				onChangeRowsPerPage={handleChangeRowsPerPage}
-				ActionsComponent={ContactsTablePaginationActions}
+				// onChangePage={handleChangePage}
+				// onChangeRowsPerPage={handleChangeRowsPerPage}
+				// ActionsComponent={ContactsTablePaginationActions}
 			/>
 		</div>
 	);
@@ -177,7 +164,7 @@ const AllUsers = ({ columns,data}) => {
 AllUsers.propTypes = {
 	columns: PropTypes.array.isRequired,
 	data: PropTypes.array.isRequired,
-	// onRowClick: PropTypes.func
+	onRowClick: PropTypes.func
 };
 
 export default AllUsers;
