@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ContactsMultiSelectMenu from './ContactsMultiSelectMenu';
 import DataTable from './DataTable';
 import AllUsers from './AllUsers';
-import { openEditContactDialog, removeContact, toggleStarredContact, selectContacts } from './store/newUsersSlice';
+import { openEditContactDialog, removeUser, toggleStarredContact, selectContacts } from './store/newUsersSlice';
 
 function AllUsersHead(props) {
 	const dispatch = useDispatch();
@@ -92,7 +92,7 @@ function AllUsersHead(props) {
 						<IconButton
 							onClick={ev => {
 								ev.stopPropagation();
-								dispatch(removeContact(row.original.id));
+								dispatch(removeUser(row.original.id));
 							}}
 						>
 							<Icon>delete</Icon>

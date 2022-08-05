@@ -19,8 +19,8 @@ import _ from '@lodash';
 import * as yup from 'yup';
 
 import {
-	removeContact,
-	updateContact,
+	removeUser,
+	updateUsers,
 	addContact,
 	closeNewContactDialog,
 	closeEditContactDialog
@@ -104,7 +104,7 @@ function ContactDialog(props) {
 		if (contactDialog.type === 'new') {
 			dispatch(addContact(data));
 		} else {
-			dispatch(updateContact({ ...contactDialog.data, ...data }));
+			dispatch(updateUsers({ ...contactDialog.data, ...data }));
 		}
 		closeComposeDialog();
 	}
@@ -113,7 +113,7 @@ function ContactDialog(props) {
 	//  * Remove Event
 	//  */
 	function handleRemove() {
-		dispatch(removeContact(id));
+		dispatch(removeUser(id));
 		closeComposeDialog();
 	}
 

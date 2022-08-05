@@ -7,7 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setContactsUnstarred, setContactsStarred, removeContacts } from './store/newUsersSlice';
+import { setContactsUnstarred, setContactsStarred, removeUsers } from './store/newUsersSlice';
 
 function ContactsMultiSelectMenu(props) {
 	const dispatch = useDispatch();
@@ -42,7 +42,7 @@ function ContactsMultiSelectMenu(props) {
 				<MenuList>
 					<MenuItem
 						onClick={() => {
-							dispatch(removeContacts(selectedContactIds));
+							dispatch(removeUsers(selectedContactIds));
 							closeSelectedContactsMenu();
 						}}
 					>

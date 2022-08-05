@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/too
 import axios from 'axios';
 import { getUserData } from './userSlice';
 
-export const getContacts = createAsyncThunk('contactsApp/contacts/getContacts', async (routeParams, { getState }) => {
+export const getUsers = createAsyncThunk('users/manageUsers/getUsers', async (routeParams, { getState }) => {
 	routeParams = routeParams || getState().contactsApp.contacts.routeParams;
 	const response = await axios.get('/api/contacts-app/contacts', {
 		params: routeParams
@@ -13,31 +13,31 @@ export const getContacts = createAsyncThunk('contactsApp/contacts/getContacts', 
 });
 
 export const addContact = createAsyncThunk(
-	'contactsApp/contacts/addContact',
+	'users/manageUsers/addContact',
 	async (contact, { dispatch, getState }) => {
 		const response = await axios.post('/api/contacts-app/add-contact', { contact });
 		const data = await response.data;
 
-		dispatch(getContacts());
+		dispatch(getUsers());
 
 		return data;
 	}
 );
 
-export const updateContact = createAsyncThunk(
-	'contactsApp/contacts/updateContact',
+export const updateUsers = createAsyncThunk(
+	'users/manageUsers/updateUsers',
 	async (contact, { dispatch, getState }) => {
 		const response = await axios.post('/api/contacts-app/update-contact', { contact });
 		const data = await response.data;
 
-		dispatch(getContacts());
+		dispatch(getUsers());
 
 		return data;
 	}
 );
 
-export const removeContact = createAsyncThunk(
-	'contactsApp/contacts/removeContact',
+export const removeUser = createAsyncThunk(
+	'users/manageUsers/removeUser',
 	async (contactId, { dispatch, getState }) => {
 		await axios.post('/api/contacts-app/remove-contact', { contactId });
 
@@ -45,8 +45,8 @@ export const removeContact = createAsyncThunk(
 	}
 );
 
-export const removeContacts = createAsyncThunk(
-	'contactsApp/contacts/removeContacts',
+export const removeUsers = createAsyncThunk(
+	'users/manageUsers/removeUsers',
 	async (contactIds, { dispatch, getState }) => {
 		await axios.post('/api/contacts-app/remove-contacts', { contactIds });
 
@@ -55,56 +55,56 @@ export const removeContacts = createAsyncThunk(
 );
 
 export const toggleStarredContact = createAsyncThunk(
-	'contactsApp/contacts/toggleStarredContact',
+	'users/manageUsers/toggleStarredContact',
 	async (contactId, { dispatch, getState }) => {
 		const response = await axios.post('/api/contacts-app/toggle-starred-contact', { contactId });
 		const data = await response.data;
 
 		dispatch(getUserData());
 
-		dispatch(getContacts());
+		dispatch(getUsers());
 
 		return data;
 	}
 );
 
 export const toggleStarredContacts = createAsyncThunk(
-	'contactsApp/contacts/toggleStarredContacts',
+	'users/manageUsers/toggleStarredContacts',
 	async (contactIds, { dispatch, getState }) => {
 		const response = await axios.post('/api/contacts-app/toggle-starred-contacts', { contactIds });
 		const data = await response.data;
 
 		dispatch(getUserData());
 
-		dispatch(getContacts());
+		dispatch(getUsers());
 
 		return data;
 	}
 );
 
 export const setContactsStarred = createAsyncThunk(
-	'contactsApp/contacts/setContactsStarred',
+	'users/manageUsers/setContactsStarred',
 	async (contactIds, { dispatch, getState }) => {
 		const response = await axios.post('/api/contacts-app/set-contacts-starred', { contactIds });
 		const data = await response.data;
 
 		dispatch(getUserData());
 
-		dispatch(getContacts());
+		dispatch(getUsers());
 
 		return data;
 	}
 );
 
 export const setContactsUnstarred = createAsyncThunk(
-	'contactsApp/contacts/setContactsUnstarred',
+	'users/manageUsers/setContactsUnstarred',
 	async (contactIds, { dispatch, getState }) => {
 		const response = await axios.post('/api/contacts-app/set-contacts-unstarred', { contactIds });
 		const data = await response.data;
 
 		dispatch(getUserData());
 
-		dispatch(getContacts());
+		dispatch(getUsers());
 
 		return data;
 	}
@@ -112,13 +112,14 @@ export const setContactsUnstarred = createAsyncThunk(
 
 const contactsAdapter = createEntityAdapter({});
 
-export const { selectAll: selectContacts, selectById: selectContactsById } = contactsAdapter.getSelectors(
+export const { selectAll: selectUsers, selectById: selectUsersById } = contactsAdapter.getSelectors(
 	// console.log('I am contactsApp',contactsApp)
-	// state => state.contactsApp
+	// state => ('what we write here')
+	state => state.newUsersSlice
 );
 
 const newUsersSlice = createSlice({
-	name: 'dialog',
+	name: 'users/manageUsers',
 	initialState: contactsAdapter.getInitialState({
 		searchText: '',
 		routeParams: {},
@@ -175,11 +176,11 @@ const newUsersSlice = createSlice({
 		}
 	},
 	extraReducers: {
-		[updateContact.fulfilled]: contactsAdapter.upsertOne,
+		[updateUsers.fulfilled]: contactsAdapter.upsertOne,
 		[addContact.fulfilled]: contactsAdapter.addOne,
-		[removeContacts.fulfilled]: (state, action) => contactsAdapter.removeMany(state, action.payload),
-		[removeContact.fulfilled]: (state, action) => contactsAdapter.removeOne(state, action.payload),
-		[getContacts.fulfilled]: (state, action) => {
+		[removeUsers.fulfilled]: (state, action) => contactsAdapter.removeMany(state, action.payload),
+		[removeUser.fulfilled]: (state, action) => contactsAdapter.removeOne(state, action.payload),
+		[getUsers.fulfilled]: (state, action) => {
 			const { data, routeParams } = action.payload;
 			contactsAdapter.setAll(state, data);
 			state.routeParams = routeParams;

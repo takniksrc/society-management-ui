@@ -18,8 +18,9 @@ import AllUsersHead from './AllUsersHead';
 import ContactDialog from './ContactDialog';
 import ContactsSidebarContent from './ContactsSidebarContent';
 import reducer from './store';
-import { getContacts } from './store/newUsersSlice';
+import { getUsers } from './store/newUsersSlice';
 import { getUserData } from './store/userSlice';
+import DataTable from './DataTable';
 
 /**
  * Form Validation Schema
@@ -50,7 +51,7 @@ const Users = () => {
 	const routeParams = useParams();
 
 	useDeepCompareEffect(() => {
-		dispatch(getContacts(routeParams));
+		dispatch(getUsers(routeParams));
 		dispatch(getUserData());
 	}, [dispatch, routeParams]);
 
@@ -76,14 +77,16 @@ const Users = () => {
 				// 	</Tabs>
 				// }
 				// content={<AllUsersHead />}
+				content={<DataTable />}
 
-			content={
-				<div className="p-16 sm:p-24 max-w-2xl">
-					<div>
-						<AllUsersHead />
-					</div>
-				</div>
-			}
+
+			// content={
+			// 	<div className="p-16 sm:p-24 max-w-2xl">
+			// 		<div>
+			// 			<AllUsersHead />
+			// 		</div>
+			// 	</div>
+			// }
 			// leftSidebarContent={<ContactsSidebarContent />}
 
 			/>
