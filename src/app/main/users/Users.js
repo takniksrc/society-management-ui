@@ -62,8 +62,8 @@ const Users = () => {
 					root: classes.layoutRoot
 				}}
 				header={<UsersHeader />}
-				// content={<AllUsersHead />}
-				content={<DataTable />}
+				content={<AllUsersHead />}
+				// content={<DataTable />}
 				/>
 			<ContactDialog />
 		</>

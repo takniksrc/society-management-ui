@@ -20,7 +20,7 @@ import * as yup from 'yup';
 
 import {
 	removeUser,
-	updateUsers,
+	updateUser,
 	addUser,
 	closeNewContactDialog,
 	closeEditContactDialog
@@ -30,7 +30,7 @@ const defaultValues = {
 	id: '',
 	name: '',
 	email: '',
-	jobTitle: '',
+	role: '',
 };
 
 /**
@@ -104,7 +104,7 @@ function ContactDialog(props) {
 		if (contactDialog.type === 'new') {
 			dispatch(addUser(data));
 		} else {
-			dispatch(updateUsers({ ...contactDialog.data, ...data }));
+			dispatch(updateUser({ ...contactDialog.data, ...data }));
 		}
 		closeComposeDialog();
 	}
@@ -134,7 +134,6 @@ function ContactDialog(props) {
 					</Typography>
 				</Toolbar>
 				<div className="flex flex-col items-center justify-center pb-24">
-					<Avatar className="w-96 h-96" alt="contact avatar" src={avatar} />
 					{contactDialog?.type === 'edit' && (
 						<Typography variant="h6" color="inherit" className="pt-8">
 							{name}
@@ -192,14 +191,14 @@ function ContactDialog(props) {
 						</div>
 						<Controller
 							control={control}
-							name="jobTitle"
+							name="role"
 							render={({ field }) => (
 								<TextField
 									{...field}
 									className="mb-24"
-									label="Job title"
-									id="jobTitle"
-									name="jobTitle"
+									label="Role"
+									id="role"
+									name="role"
 									variant="outlined"
 									fullWidth
 								/>

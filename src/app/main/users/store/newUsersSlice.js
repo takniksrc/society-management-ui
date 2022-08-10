@@ -15,18 +15,19 @@ export const getUsers = createAsyncThunk('users/getUsers', async (routeParams, {
 export const addUser = createAsyncThunk(
 	'users/addUser',
 	async (contact, { dispatch, getState }) => {
-		const response = await axios.post('/api/contacts-app/add-contact', { contact });
+		const response = await axios.post('/api/api/users', { contact });
 		const data = await response.data;
-
+        console.log('I am new updated data',data)
 		dispatch(getUsers());
 
 		return data;
 	}
 );
-export const updateUsers = createAsyncThunk(
-	'users/updateUsers',
-	async (contact, { dispatch, getState }) => {
-		const response = await axios.post('/api/contacts-app/update-contact', { contact });
+export const updateUser = createAsyncThunk(
+	'users/updateUser',
+	async (user, { dispatch, getState }) => {
+		const response = await axios.post('/api/api/users/{user}', { user });
+	// const response = await axios.post(`/api/users/${user}`);
 		const data = await response.data;
 
 		dispatch(getUsers());
@@ -37,10 +38,11 @@ export const updateUsers = createAsyncThunk(
 
 export const removeUser = createAsyncThunk(
 	'users/removeUser',
-	async (contactId, { dispatch, getState }) => {
-		await axios.post('/api/contacts-app/remove-contact', { contactId });
+	async (userId, { dispatch, getState }) => {
+		console.log('i am clicked')
+		await axios.post('/api/api/users/{user}', { userId });
 
-		return contactId;
+		return userId;
 	}
 );
 
@@ -175,7 +177,7 @@ const newUsersSlice = createSlice({
 		}
 	},
 	extraReducers: {
-		[updateUsers.fulfilled]: contactsAdapter.upsertOne,
+		[updateUser.fulfilled]: contactsAdapter.upsertOne,
 		[addUser.fulfilled]: contactsAdapter.addOne,
 		[removeUsers.fulfilled]: (state, action) => contactsAdapter.removeMany(state, action.payload),
 		[removeUser.fulfilled]: (state, action) => contactsAdapter.removeOne(state, action.payload),

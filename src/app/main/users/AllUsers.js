@@ -28,7 +28,6 @@ const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
 	);
 });
 const AllUsers = ({ columns, data, onRowClick }) => {
-	console.log('I am table', columns)
 	const {
 		getTableProps,
 		headerGroups,
@@ -78,9 +77,9 @@ const AllUsers = ({ columns, data, onRowClick }) => {
 			]);
 		}
 	);
-	// const handleChangePage = (event, newPage) => {
-	// 	// gotoPage(newPage);
-	// };
+	const handleChangePage = (event, newPage) => {
+		gotoPage(newPage);
+	};
 
 	// const handleChangeRowsPerPage = event => {
 	// 	// setPageSize(Number(event.target.value));
@@ -153,7 +152,7 @@ const AllUsers = ({ columns, data, onRowClick }) => {
 					inputProps: { 'aria-label': 'rows per page' },
 					native: false
 				}}
-				// onChangePage={handleChangePage}
+				onChangePage={handleChangePage}
 				// onChangeRowsPerPage={handleChangeRowsPerPage}
 				// ActionsComponent={ContactsTablePaginationActions}
 			/>

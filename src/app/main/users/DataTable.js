@@ -24,30 +24,19 @@ function DataTable(props) {
 	const products = useSelector(selectUsers);
 	const users = useSelector(selectUsers);
 
-  console.log('I am newProducts' ,products)
+  console.log('I am newUsers' ,users)
 
   // console.log('new User',dispatch(getUsers()));
-  // const products = [
-  //   {
-  //     role: "Accountant",
-  //     id: "5725a680bbcec3cc32a8488a",
-  //     email: "john.doe@acmestreet.com",
-  //     name: "john"
-  //   },
-  //   {
-  //     role: "Accountant",
-  //     id: "5725a6801146cce777df2a08",
-  //     email: "john.doe@acmestreet.com",
-  //     name: "usman"
-  //   }
-  // ];
-  // const searchText = useSelector(({ eCommerceApp }) => eCommerceApp.products.searchText);
+ 
+  // const searchText = useSelector(({ eCommerceApp }) => eCommerceApp.users.searchText);
   const searchText = "";
 
   const [ loading, setLoading ] = useState(true);
   const [ selected, setSelected ] = useState([]);
-  const [ data, setData ] = useState(products);
+  const [ data, setData ] = useState(users);
   // const [data, setData] = useState('');
+  console.log('I am data' ,data)
+
 
   const [ page, setPage ] = useState(0);
   const [ rowsPerPage, setRowsPerPage ] = useState(10);
@@ -67,17 +56,17 @@ function DataTable(props) {
     () => {
       if (searchText.length !== 0) {
         setData(
-          _.filter(products, (item) =>
+          _.filter(users, (item) =>
             item.name.toLowerCase().includes(searchText.toLowerCase())
           )
         );
         setPage(0);
       } else {
-        setData(products);
+        setData(users);
       }
     },
     [ 
-      // products,
+      users,
        searchText ]
   );
 
@@ -151,7 +140,7 @@ function DataTable(props) {
         className="flex flex-1 items-center justify-center h-full"
       >
         <Typography color="textSecondary" variant="h5">
-          There are no products!
+          There are no users!
         </Typography>
       </motion.div>
     );
@@ -171,24 +160,26 @@ function DataTable(props) {
           />
 
           <TableBody>
-            {_.orderBy(
-              data,
-              [
-                (o) => {
-                  switch (order.id) {
-                    case "categories": {
-                      return o.categories[0];
-                    }
-                    default: {
-                      return o[order.id];
-                    }
-                  }
-                }
-              ],
-              [ order.direction ]
-            )
+          {_.orderBy(
+							data,
+							[
+								o => {
+                  console.log('I am o',o)
+									switch (order.id) {
+										case 'categories': {
+											return o.categories[0];
+										}
+										default: {
+											return o[order.id];
+										}
+									}
+								}
+							],
+							[order.direction]
+						)
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((n) => {
+                console.log('I am n',n)
                 const isSelected = selected.indexOf(n.id) !== -1;
                 return (
                   <TableRow

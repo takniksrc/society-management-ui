@@ -13,27 +13,10 @@ import { openEditContactDialog, removeUser, toggleStarredContact, selectUsers } 
 
 function AllUsersHead(props) {
 	const dispatch = useDispatch();
-	// const contacts = useSelector(selectContacts);
-	const contacts = [
-		{
-			role: 'Accountant',
-			id: '5725a680bbcec3cc32a8488a',
-			email: 'john.doe@acmestreet.com'
-		},
-		{
-			role: 'Accountant',
-			id: '5725a6801146cce777df2a08',
-			email: 'john.doe@acmestreet.com'
-		}
-	];
-	const user = [{
-		avatar: "assets/images/avatars/profile.jpg",
-		frequentContacts:["5725a6809fdd915739187ed5","5725a68031fdbb1db2c1af47","5725a680606588342058356d"],
-		starred : ["5725a680ae1ae9a3c960d487","5725a6801146cce777df2a08","5725a680bbcec3cc32a8488a"]
-	}]
+	const contacts = useSelector(selectUsers);
 	const searchText = useSelector(({ newUsersSlice }) => newUsersSlice.searchText);
-	// const user = useSelector(({ contactsApp }) => contactsApp);
-	console.log('I am user se', searchText);
+	// const user = useSelector(({ newUsersSlice }) => newUsersSlice.user);
+	// console.log('I am user se', user);
 
 	const [filteredData, setFilteredData] = useState(null);
 
@@ -48,22 +31,22 @@ function AllUsersHead(props) {
 					);
 				},
 				accessor: 'avatar',
-				Cell: ({ row }) => {
-					return <Avatar className="mx-8" alt={row.original.name} src={row.original.avatar} />;
-				},
+				// Cell: ({ row }) => {
+				// 	return <Avatar className="mx-8" alt={row.original.name} src={row.original.avatar} />;
+				// },
 				className: 'justify-center',
 				width: 64,
 				sortable: false
 			},
 			{
-				Header: 'First Name',
+				Header: 'Name',
 				accessor: 'name',
 				className: 'font-medium',
 				sortable: true
 			},
 			{
 				Header: 'Role',
-				accessor: 'Role',
+				accessor: 'role',
 				sortable: true
 			},
 			{
@@ -101,7 +84,7 @@ function AllUsersHead(props) {
 				)
 			}
 		],
-		[dispatch, user.starred]
+		[dispatch]
 	);
 	useEffect(() => {
 		function getFilteredArray(entities, _searchText) {
@@ -132,8 +115,8 @@ function AllUsersHead(props) {
 
 	return (
 		<motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}>
-			<DataTable  />
-			{/* <AllUsers
+			{/* <DataTable  /> */}
+			<AllUsers
 				columns={columns}
 				data={filteredData}
 				onRowClick={(ev, row) => {
@@ -141,7 +124,7 @@ function AllUsersHead(props) {
 						dispatch(openEditContactDialog(row.original));
 					}
 				}}
-			/> */}
+			/>
 		</motion.div>
 	);
 }
