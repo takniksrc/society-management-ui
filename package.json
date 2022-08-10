@@ -34,6 +34,7 @@
         "framer-motion": "4.0.0",
         "google-map-react": "2.1.9",
         "history": "4.10.1",
+        "http-proxy-middleware": "^2.0.6",
         "i18next": "20.0.0",
         "jsonwebtoken": "8.5.1",
         "jss": "10.6.0",

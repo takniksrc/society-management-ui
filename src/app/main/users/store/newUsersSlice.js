@@ -2,18 +2,18 @@ import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/too
 import axios from 'axios';
 import { getUserData } from './userSlice';
 
-export const getUsers = createAsyncThunk('users/manageUsers/getUsers', async (routeParams, { getState }) => {
+export const getUsers = createAsyncThunk('users/getUsers', async (routeParams, { getState }) => {
 	routeParams = routeParams || getState().contactsApp.contacts.routeParams;
-	const response = await axios.get('/api/contacts-app/contacts', {
+	const response = await axios.get('/api/api/users', {
 		params: routeParams
 	});
 	const data = await response.data;
-
+     console.log('i am dat in ',data)
 	return { data, routeParams };
 });
 
-export const addContact = createAsyncThunk(
-	'users/manageUsers/addContact',
+export const addUser = createAsyncThunk(
+	'users/addUser',
 	async (contact, { dispatch, getState }) => {
 		const response = await axios.post('/api/contacts-app/add-contact', { contact });
 		const data = await response.data;
@@ -23,9 +23,8 @@ export const addContact = createAsyncThunk(
 		return data;
 	}
 );
-
 export const updateUsers = createAsyncThunk(
-	'users/manageUsers/updateUsers',
+	'users/updateUsers',
 	async (contact, { dispatch, getState }) => {
 		const response = await axios.post('/api/contacts-app/update-contact', { contact });
 		const data = await response.data;
@@ -37,7 +36,7 @@ export const updateUsers = createAsyncThunk(
 );
 
 export const removeUser = createAsyncThunk(
-	'users/manageUsers/removeUser',
+	'users/removeUser',
 	async (contactId, { dispatch, getState }) => {
 		await axios.post('/api/contacts-app/remove-contact', { contactId });
 
@@ -46,7 +45,7 @@ export const removeUser = createAsyncThunk(
 );
 
 export const removeUsers = createAsyncThunk(
-	'users/manageUsers/removeUsers',
+	'users/removeUsers',
 	async (contactIds, { dispatch, getState }) => {
 		await axios.post('/api/contacts-app/remove-contacts', { contactIds });
 
@@ -55,7 +54,7 @@ export const removeUsers = createAsyncThunk(
 );
 
 export const toggleStarredContact = createAsyncThunk(
-	'users/manageUsers/toggleStarredContact',
+	'users/toggleStarredContact',
 	async (contactId, { dispatch, getState }) => {
 		const response = await axios.post('/api/contacts-app/toggle-starred-contact', { contactId });
 		const data = await response.data;
@@ -69,7 +68,7 @@ export const toggleStarredContact = createAsyncThunk(
 );
 
 export const toggleStarredContacts = createAsyncThunk(
-	'users/manageUsers/toggleStarredContacts',
+	'users/toggleStarredContacts',
 	async (contactIds, { dispatch, getState }) => {
 		const response = await axios.post('/api/contacts-app/toggle-starred-contacts', { contactIds });
 		const data = await response.data;
@@ -83,7 +82,7 @@ export const toggleStarredContacts = createAsyncThunk(
 );
 
 export const setContactsStarred = createAsyncThunk(
-	'users/manageUsers/setContactsStarred',
+	'users/setContactsStarred',
 	async (contactIds, { dispatch, getState }) => {
 		const response = await axios.post('/api/contacts-app/set-contacts-starred', { contactIds });
 		const data = await response.data;
@@ -97,7 +96,7 @@ export const setContactsStarred = createAsyncThunk(
 );
 
 export const setContactsUnstarred = createAsyncThunk(
-	'users/manageUsers/setContactsUnstarred',
+	'users/setContactsUnstarred',
 	async (contactIds, { dispatch, getState }) => {
 		const response = await axios.post('/api/contacts-app/set-contacts-unstarred', { contactIds });
 		const data = await response.data;
@@ -119,7 +118,7 @@ export const { selectAll: selectUsers, selectById: selectUsersById } = contactsA
 );
 
 const newUsersSlice = createSlice({
-	name: 'users/manageUsers',
+	name: 'users',
 	initialState: contactsAdapter.getInitialState({
 		searchText: '',
 		routeParams: {},
@@ -177,7 +176,7 @@ const newUsersSlice = createSlice({
 	},
 	extraReducers: {
 		[updateUsers.fulfilled]: contactsAdapter.upsertOne,
-		[addContact.fulfilled]: contactsAdapter.addOne,
+		[addUser.fulfilled]: contactsAdapter.addOne,
 		[removeUsers.fulfilled]: (state, action) => contactsAdapter.removeMany(state, action.payload),
 		[removeUser.fulfilled]: (state, action) => contactsAdapter.removeOne(state, action.payload),
 		[getUsers.fulfilled]: (state, action) => {

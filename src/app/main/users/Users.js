@@ -57,43 +57,16 @@ const Users = () => {
 
 	return (
 		<>
-		{/* <FormProvider {...methods}> */}
 			<FusePageSimple
 				classes={{
 					root: classes.layoutRoot
 				}}
 				header={<UsersHeader />}
-				// contentToolbar={
-				// 	<Tabs
-				// 		// value={tabValue}
-				// 		// onChange={handleTabChange}
-				// 		indicatorColor="primary"
-				// 		textColor="primary"
-				// 		variant="scrollable"
-				// 		scrollButtons="auto"
-				// 		classes={{ root: 'w-full h-64' }}
-				// 	>
-				// 		<Tab className="h-64" label="Basic Info" />
-				// 	</Tabs>
-				// }
 				// content={<AllUsersHead />}
 				content={<DataTable />}
-
-
-			// content={
-			// 	<div className="p-16 sm:p-24 max-w-2xl">
-			// 		<div>
-			// 			<AllUsersHead />
-			// 		</div>
-			// 	</div>
-			// }
-			// leftSidebarContent={<ContactsSidebarContent />}
-
-			/>
-		{/* </FormProvider> */}
+				/>
 			<ContactDialog />
-			</>
-
+		</>
 	);
 }
 

@@ -21,7 +21,7 @@ import * as yup from 'yup';
 import {
 	removeUser,
 	updateUsers,
-	addContact,
+	addUser,
 	closeNewContactDialog,
 	closeEditContactDialog
 } from './store/newUsersSlice';
@@ -102,7 +102,7 @@ function ContactDialog(props) {
 	//  */
 	function onSubmit(data) {
 		if (contactDialog.type === 'new') {
-			dispatch(addContact(data));
+			dispatch(addUser(data));
 		} else {
 			dispatch(updateUsers({ ...contactDialog.data, ...data }));
 		}

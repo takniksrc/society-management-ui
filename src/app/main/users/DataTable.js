@@ -17,25 +17,30 @@ import { withRouter } from "react-router-dom";
 import FuseLoading from "@fuse/core/FuseLoading";
 import { getUsers, removeUser ,selectUsers} from "./store/newUsersSlice";
 import ProductsTableHead from "./ProductsTableHead";
+// import { getUserData } from './store/userSlice';
 
 function DataTable(props) {
  const dispatch = useDispatch();
-  // const newProducts = useSelector(selectUsers);
-  // console.log('I am newProducts')
-  const products = [
-    {
-      role: "Accountant",
-      id: "5725a680bbcec3cc32a8488a",
-      email: "john.doe@acmestreet.com",
-      name: "john"
-    },
-    {
-      role: "Accountant",
-      id: "5725a6801146cce777df2a08",
-      email: "john.doe@acmestreet.com",
-      name: "usman"
-    }
-  ];
+	const products = useSelector(selectUsers);
+	const users = useSelector(selectUsers);
+
+  console.log('I am newProducts' ,products)
+
+  // console.log('new User',dispatch(getUsers()));
+  // const products = [
+  //   {
+  //     role: "Accountant",
+  //     id: "5725a680bbcec3cc32a8488a",
+  //     email: "john.doe@acmestreet.com",
+  //     name: "john"
+  //   },
+  //   {
+  //     role: "Accountant",
+  //     id: "5725a6801146cce777df2a08",
+  //     email: "john.doe@acmestreet.com",
+  //     name: "usman"
+  //   }
+  // ];
   // const searchText = useSelector(({ eCommerceApp }) => eCommerceApp.products.searchText);
   const searchText = "";
 
