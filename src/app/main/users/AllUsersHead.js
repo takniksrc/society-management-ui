@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import { useMemo, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ContactsMultiSelectMenu from './ContactsMultiSelectMenu';
-import DataTable from './DataTable';
 import AllUsers from './AllUsers';
 import { openEditContactDialog, removeUser, toggleStarredContact, selectUsers } from './store/newUsersSlice';
 
@@ -15,10 +14,14 @@ function AllUsersHead(props) {
 	const dispatch = useDispatch();
 	const contacts = useSelector(selectUsers);
 	const searchText = useSelector(({ newUsersSlice }) => newUsersSlice.searchText);
+	console.log('I am contacts',contacts)
+	console.log('I am search text',searchText)
 	// const user = useSelector(({ newUsersSlice }) => newUsersSlice.user);
 	// console.log('I am user se', user);
 
 	const [filteredData, setFilteredData] = useState(null);
+	console.log('I am filtered',filteredData)
+
 
 	const columns = useMemo(
 		() => [
@@ -115,7 +118,6 @@ function AllUsersHead(props) {
 
 	return (
 		<motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}>
-			{/* <DataTable  /> */}
 			<AllUsers
 				columns={columns}
 				data={filteredData}

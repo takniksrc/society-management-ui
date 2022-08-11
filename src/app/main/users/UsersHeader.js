@@ -10,13 +10,10 @@ import { Link } from 'react-router-dom';
 import { selectMainTheme } from 'app/store/fuse/settingsSlice';
 import { openNewContactDialog ,setContactsSearchText} from './store/newUsersSlice';
 
-// import { setProductsSearchText } from './store/productsSlice';
-// import { saveProduct, removeProduct } from '../store/productSlice';
-
 function UsersHeader(props) {
 	const dispatch = useDispatch();
 	// const methods = useFormContext();
-	// const searchText = useSelector(({ eCommerceApp }) => eCommerceApp.products.searchText);
+	// const searchText = useSelector(({ contactsApp }) => contactsApp.contacts.searchText);
 	const searchText = useSelector(({ newUsersSlice }) => newUsersSlice.searchText);
 
 	const mainTheme = useSelector(selectMainTheme);

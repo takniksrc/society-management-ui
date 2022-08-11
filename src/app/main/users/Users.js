@@ -13,14 +13,11 @@ import { useParams } from 'react-router-dom';
 import { useDeepCompareEffect } from '@fuse/hooks';
 import { useDispatch } from 'react-redux';
 import UsersHeader from './UsersHeader';
-import BasicInfoTab from './BasicInfoTab';
 import AllUsersHead from './AllUsersHead';
 import ContactDialog from './ContactDialog';
-import ContactsSidebarContent from './ContactsSidebarContent';
 import reducer from './store';
 import { getUsers } from './store/newUsersSlice';
 import { getUserData } from './store/userSlice';
-import DataTable from './DataTable';
 
 /**
  * Form Validation Schema
@@ -63,8 +60,7 @@ const Users = () => {
 				}}
 				header={<UsersHeader />}
 				content={<AllUsersHead />}
-				// content={<DataTable />}
-				/>
+			/>
 			<ContactDialog />
 		</>
 	);

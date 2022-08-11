@@ -12,6 +12,7 @@ import { removeUsers } from './store/newUsersSlice';
 function ContactsMultiSelectMenu(props) {
 	const dispatch = useDispatch();
 	const { selectedContactIds } = props;
+	console.log('I am selectedContactIds',selectedContactIds)
 
 	const [anchorEl, setAnchorEl] = useState(null);
 
@@ -50,28 +51,6 @@ function ContactsMultiSelectMenu(props) {
 							<Icon>delete</Icon>
 						</ListItemIcon>
 						<ListItemText primary="Remove" />
-					</MenuItem>
-					<MenuItem
-						onClick={() => {
-							dispatch(setContactsStarred(selectedContactIds));
-							closeSelectedContactsMenu();
-						}}
-					>
-						<ListItemIcon className="min-w-40">
-							<Icon>star</Icon>
-						</ListItemIcon>
-						<ListItemText primary="Starred" />
-					</MenuItem>
-					<MenuItem
-						onClick={() => {
-							dispatch(setContactsUnstarred(selectedContactIds));
-							closeSelectedContactsMenu();
-						}}
-					>
-						<ListItemIcon className="min-w-40">
-							<Icon>star_border</Icon>
-						</ListItemIcon>
-						<ListItemText primary="Unstarred" />
 					</MenuItem>
 				</MenuList>
 			</Menu>

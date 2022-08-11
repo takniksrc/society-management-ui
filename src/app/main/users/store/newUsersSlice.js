@@ -49,7 +49,7 @@ export const removeUser = createAsyncThunk(
 export const removeUsers = createAsyncThunk(
 	'users/removeUsers',
 	async (contactIds, { dispatch, getState }) => {
-		await axios.post('/api/contacts-app/remove-contacts', { contactIds });
+		await axios.post('/api/api/users/{user}', { contactIds });
 
 		return contactIds;
 	}

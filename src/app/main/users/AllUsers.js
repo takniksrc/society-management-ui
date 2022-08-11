@@ -39,7 +39,8 @@ const AllUsers = ({ columns, data, onRowClick }) => {
 	} = useTable(
 		{
 			columns,
-			data
+			data,
+			autoResetPage: true
 		},
 		useGlobalFilter,
 		useSortBy,
@@ -81,15 +82,15 @@ const AllUsers = ({ columns, data, onRowClick }) => {
 		gotoPage(newPage);
 	};
 
-	// const handleChangeRowsPerPage = event => {
-	// 	// setPageSize(Number(event.target.value));
-	// };
+	const handleChangeRowsPerPage = event => {
+		setPageSize(Number(event.target.value));
+	};
 
 	// Render the UI for your table
 	return (
 		<div className="flex flex-col min-h-full sm:border-1 sm:rounded-16 overflow-hidden">
 			<TableContainer className="flex flex-1">
-				<Table  {...getTableProps()}  stickyHeader className="simple borderless">
+				<Table {...getTableProps()} stickyHeader className="simple borderless">
 					<TableHead>
 						{headerGroups.map(headerGroup => (
 							<TableRow {...headerGroup.getHeaderGroupProps()}>
@@ -153,8 +154,8 @@ const AllUsers = ({ columns, data, onRowClick }) => {
 					native: false
 				}}
 				onChangePage={handleChangePage}
-				// onChangeRowsPerPage={handleChangeRowsPerPage}
-				// ActionsComponent={ContactsTablePaginationActions}
+				onChangeRowsPerPage={handleChangeRowsPerPage}
+				ActionsComponent={ContactsTablePaginationActions}
 			/>
 		</div>
 	);
