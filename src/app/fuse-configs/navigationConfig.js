@@ -30,7 +30,23 @@ const navigationConfig = [
 				type: 'item',
 				icon: 'person',
 				url: '/users'
-			}
+			},
+			{
+				id: 'analysis-report',
+				title: 'Analysis Report',
+				translate: 'ANALYSISREPORT',
+				type: 'item',
+				icon: 'assessment',
+				url: '/scrumboard'
+			},
+			{
+				id: 'Billing',
+				title: 'Billing',
+				translate: 'BILLING',
+				type: 'item',
+				icon: 'assessment',
+				url: '/billing'
+			},
 		]
 	}
 ];
