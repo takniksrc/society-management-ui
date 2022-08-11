@@ -1,5 +1,7 @@
 import i18next from 'i18next';
 import Example from './Example';
+import SettingsComponent from './Settings';
+import propertyManagement from './Property';
 import en from './i18n/en';
 import tr from './i18n/tr';
 import ar from './i18n/ar';
@@ -18,6 +20,14 @@ const ExampleConfig = {
 		{
 			path: '/example',
 			component: Example
+		},
+		{
+			path: '/Settings',
+			component: SettingsComponent
+		},
+		{
+			path: '/Property',
+			component: propertyManagement
 		}
 	]
 };

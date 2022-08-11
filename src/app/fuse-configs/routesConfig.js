@@ -1,6 +1,8 @@
 import { Redirect } from 'react-router-dom';
 import FuseUtils from '@fuse/utils';
 import ExampleConfig from 'app/main/example/ExampleConfig';
+import SettingsComponent from 'app/main/example/Settings';
+import propertyManagement from 'app/main/example/Property';
 
 const routeConfigs = [ExampleConfig];
 
@@ -12,6 +14,14 @@ const routes = [
 	{
 		path: '/',
 		component: () => <Redirect to="/example" />
+	},
+	{
+		path: '/',
+		component: () => <Redirect to="/Settings" />
+	},
+	{
+		path: '/',
+		component: () => <Redirect to="/Property" />
 	}
 ];
 

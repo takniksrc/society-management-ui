@@ -22,7 +22,16 @@ const navigationConfig = [
 				type: 'item',
 				icon: 'whatshot',
 				url: '/example'
+			},
+			{
+				id: 'settings-component',
+				title: 'Settings',
+				translate: 'SETTINGS',
+				type: 'item',
+				// icon: 'whatshot',
+				url: '/Settings'
 			}
+			
 		]
 	}
 ];

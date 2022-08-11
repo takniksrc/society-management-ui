@@ -1,6 +1,7 @@
 import DemoContent from '@fuse/core/DemoContent';
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import { makeStyles } from '@material-ui/core/styles';
+import SettingsComponent from './Settings';
 
 const useStyles = makeStyles({
 	layoutRoot: {}
