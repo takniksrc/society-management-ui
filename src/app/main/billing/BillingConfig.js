@@ -6,9 +6,13 @@ const ScrumboardAppConfig = {
 		layout: {}
 	},
 	routes: [
+		// {
+		// 	path: '/billing/boards/:boardId/:boardUri?',
+		// 	component: lazy(() => import('./board/Board'))
+		// },
 		{
 			path: '/billing/boards/:boardId/:boardUri?',
-			component: lazy(() => import('./board/Board'))
+			component: lazy(() => import('./board/GenerateBills'))
 		},
 		{
 			path: '/billing/boards',

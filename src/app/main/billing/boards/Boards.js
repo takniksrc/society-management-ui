@@ -70,9 +70,9 @@ function Boards(props) {
 					className="flex flex-wrap w-full justify-center py-32 px-16"
 				>
 					{boards.map(board => (
-						<motion.div variants={item} className="w-224 h-224 p-16" key={board.id}>
+						<motion.div variants={item} className="h-224 p-16" key={board.id}>
 							<Paper
-								to={`/scrumboard/boards/${board.id}/${board.uri}`}
+								to={`/billing/boards/${board.id}/${board.uri}`}
 								className={clsx(
 									classes.board,
 									'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
