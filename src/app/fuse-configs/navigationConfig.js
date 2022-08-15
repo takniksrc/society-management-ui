@@ -37,7 +37,7 @@ const navigationConfig = [
 				translate: 'ANALYSISREPORT',
 				type: 'item',
 				icon: 'assessment',
-				url: '/scrumboard'
+				url: '/analysisreport'
 			},
 			{
 				id: 'Billing',
@@ -46,6 +46,14 @@ const navigationConfig = [
 				type: 'item',
 				icon: 'assessment',
 				url: '/billing'
+			},
+			{
+				id: 'Services',
+				title: 'Services',
+				translate: 'SERVICES',
+				type: 'item',
+				icon: 'assessment',
+				url: '/services'
 			},
 		]
 	}

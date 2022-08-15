@@ -10,16 +10,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import reducer from '../store';
 import { selectBoards, newBoard, getBoards, resetBoards } from '../store/boardsSlice';
-import MonthlyIcon from '../../../../assets/ReportsIcon/monthly-report-icon.png';
-import DisconnectIcon from '../../../../assets/ReportsIcon/wpf_disconnected.png';
-import PermanentDisconnectIcon from '../../../../assets/ReportsIcon/mdi_pipe-disconnected.png';
-import ReConnectionIcon from '../../../../assets/ReportsIcon/icon-park-solid_connection-point.png';
-import RaiseAndFallIcon from '../../../../assets/ReportsIcon/entypo_bar-graph.png';
-import DailyAmountIcon from '../../../../assets/ReportsIcon/pixelarticons_reciept.png';
-import ArrearListIcon from '../../../../assets/ReportsIcon/icon-park_table-report.png';
-import NewMetersIcon from '../../../../assets/ReportsIcon/ic_baseline-gas-meter.png';
-import MeterChangeIcon from '../../../../assets/ReportsIcon/ic_baseline-electric-meter.png';
-import FaultyMeterIcon from '../../../../assets/ReportsIcon/ic_baseline-gas-meter-fault.png';
+import societyChargesIcon from '../../../../assets/ServicesIcon/society-charges-icon.png';
+import consumptionChragesIcon from '../../../../assets/ServicesIcon/consumption-based-icon.png';
+
 
 const useStyles = makeStyles(theme => ({
 	root: {},
@@ -36,16 +29,10 @@ function Boards(props) {
 	const dispatch = useDispatch();
 	// const boards = useSelector(selectBoards);
 	const boards = [
-	{id: '32gfhaf1', name: 'Monthly Electricity Bill', uri: 'acme-frontend-application',icon: MonthlyIcon},
-	{id: '32gfhaf2', name: 'Disconnected Order', uri: 'acme-frontend-application',icon: DisconnectIcon},
-	{id: '32gfhaf3', name: 'Permanent Disconnection Order', uri: 'acme-frontend-application',icon: PermanentDisconnectIcon},
-	{id: '32gfhaf4', name: 'Re-Connection', uri: 'acme-frontend-application',icon: ReConnectionIcon},
-	{id: '32gfhaf5', name: 'Rise and Fall of Units', uri: 'acme-frontend-application',icon: RaiseAndFallIcon},
-	{id: '32gfhaf6', name: 'Daily Amount Recieved', uri: 'acme-frontend-application',icon: DailyAmountIcon},
-	{id: '32gfhaf7', name: 'Arrear List with Proper Age', uri: 'acme-frontend-application',icon: ArrearListIcon},
-	{id: '32gfhaf8', name: 'New Meters added (Month wise)', uri: 'acme-frontend-application',icon: NewMetersIcon},
-	{id: '32gfhaf9', name: 'Meter Change Order (Month wise)', uri: 'acme-frontend-application',icon: MeterChangeIcon},
-	{id: '32gfhaf10', name: 'Faulty Meter Report', uri: 'acme-frontend-application',icon: FaultyMeterIcon}
+	     {id:'1' , name: 'Consumption Based Chrages', uri: 'consumption-based-charges',icon: consumptionChragesIcon},
+]
+    const boards2 = [
+     	{id:'2' , name: 'Society Charges', uri: 'society-charges',icon: societyChargesIcon}
 ]
 	console.log('I am boards',boards)
 
@@ -76,7 +63,7 @@ function Boards(props) {
 			<div className="flex flex-grow flex-shrink-0 flex-col items-center container px-16 md:px-24">
 				<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.1 } }}>
 					<Typography className="mt-44 sm:mt-88 sm:py-24 text-32 sm:text-40 font-bold" color="inherit">
-						Analysis Report
+						Services
 					</Typography>
 				</motion.div>
 
@@ -84,12 +71,12 @@ function Boards(props) {
 					variants={container}
 					initial="hidden"
 					animate="show"
-					className="flex flex-wrap w-full justify-center py-32 px-16"
+					className="grid grid-cols-2 flex-wrap w-full justify-center py-32 px-16"
 				>
 					{boards.map(board => (
-						<motion.div variants={item} className="w-224 h-224 p-16" key={board.id}>
+						<motion.div variants={item} className="h-224 p-16" key={board.id}>
 							<Paper
-								to={`/analysisreport/boards/${board.id}/${board.uri}`}
+								to={`/services/boards/${board.uri}`}
 								className={clsx(
 									classes.board,
 									'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
@@ -98,7 +85,27 @@ function Boards(props) {
 								component={Link}
 							>
 								<Icon className="text-56" color="action">
-								    <img src={board.icon} />
+								    <img src={board.icon} alt='' />
+								</Icon>
+								<Typography className="text-16 font-medium text-center pt-16 px-32" color="inherit">
+									{board.name}
+								</Typography>
+							</Paper>
+						</motion.div>
+					))}
+					{boards2.map(board => (
+						<motion.div variants={item} className="h-224 p-16" key={board.id}>
+							<Paper
+								to={`/services/boards/${board.uri}`}
+								className={clsx(
+									classes.board,
+									'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
+								)}
+								role="button"
+								component={Link}
+							>
+								<Icon className="text-56" color="action">
+								    <img src={board.icon} alt='' />
 								</Icon>
 								<Typography className="text-16 font-medium text-center pt-16 px-32" color="inherit">
 									{board.name}

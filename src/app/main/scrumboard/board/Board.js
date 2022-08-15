@@ -83,14 +83,14 @@ function Board(props) {
 			<AppBar position="static" color="primary" elevation={0}>
 				<Toolbar className="flex items-center justify-between px-4 sm:px-24 h-48 sm:h-64 sm:h-96 container">
 					<Hidden xsDown>
-						<Button to="/scrumboard/boards/" component={Link} variant="contained" color="secondary">
+						<Button to="/analysisreport/boards/" component={Link} variant="contained" color="secondary">
 							<Icon>assessment</Icon>
 							<span className="px-8">Boards</span>
 						</Button>
 					</Hidden>
 
 					<Hidden smUp>
-						<IconButton color="inherit" to="/scrumboard/boards/" component={Link}>
+						<IconButton color="inherit" to="/analysisreport/boards/" component={Link}>
 							<Icon>assessment</Icon>
 						</IconButton>
 					</Hidden>
