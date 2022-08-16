@@ -6,7 +6,9 @@ import AnalysisReportConfig from 'app/main/scrumboard/ScrumboardAppConfig';
 import BillingConfig from 'app/main/billing/BillingConfig';
 import ServicesConfig from 'app/main/services/ServicesConfig';
 
-const routeConfigs = [ UsersConfig];
+
+
+const routeConfigs = [CustomersConfig, UsersConfig, AnalysisReportConfig, BillingConfig, ServicesConfig];
 
 const routes = [
 	// if you want to make whole app auth protected by default change defaultAuth for example:
@@ -14,6 +16,10 @@ const routes = [
 	// The individual route configs which has auth option won't be overridden.
 	...FuseUtils.generateRoutesFromConfigs(routeConfigs),
 
+	{
+		path: '/',
+		component: () => <Redirect to="/customers" />
+	},
 	{
 		path: '/',
 		component: () => <Redirect to="/users" />
