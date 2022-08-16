@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { selectMainTheme } from 'app/store/fuse/settingsSlice';
-import { openNewContactDialog ,setContactsSearchText} from './store/newUsersSlice';
+import { openNewContactDialog, setContactsSearchText } from './store/newUsersSlice';
 
 function UsersHeader(props) {
 	const dispatch = useDispatch();
