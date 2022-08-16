@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, withRouter, useParams } from 'react-router-dom';
 import { useDeepCompareEffect } from '@fuse/hooks';
 import reducer from '../store';
+import SCData from './SCData';
 
 const useStyles = makeStyles(theme => ({
 	'@global': {
@@ -55,7 +56,7 @@ function SocietyCharges(props) {
 					 <Typography className="flex-1 text-20 mx-16">Society Charges</Typography>
 				</div>
 			}
-			// content={}
+			content={<SCData/>}
 			// content={
 			// 	course && (
 			// 		<div className="flex flex-1 relative overflow-hidden">

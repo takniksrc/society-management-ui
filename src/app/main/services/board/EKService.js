@@ -50,7 +50,7 @@ function EKService(props) {
 							<Icon>menu</Icon>
 						</IconButton>
 					</Hidden>
-					<IconButton to="/services/boards" component={Link}>
+					<IconButton to="/services/boards/consumption-based-charges" component={Link}>
 						<Icon>{theme.direction === 'ltr' ? 'arrow_back' : 'arrow_forward'}</Icon>
 					</IconButton>
 					 <Typography className="flex-1 text-20 mx-16">Electricity khayaban e Amin</Typography>

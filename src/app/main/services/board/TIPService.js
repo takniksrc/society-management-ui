@@ -16,7 +16,6 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, withRouter, useParams } from 'react-router-dom';
 import { useDeepCompareEffect } from '@fuse/hooks';
-import CBData from './CBData';
 import reducer from '../store';
 
 const useStyles = makeStyles(theme => ({
@@ -50,13 +49,13 @@ function TIPService(props) {
 							<Icon>menu</Icon>
 						</IconButton>
 					</Hidden>
-					<IconButton to="/services/boards" component={Link}>
+					<IconButton to="/services/boards/consumption-based-charges" component={Link}>
 						<Icon>{theme.direction === 'ltr' ? 'arrow_back' : 'arrow_forward'}</Icon>
 					</IconButton>
 					 <Typography className="flex-1 text-20 mx-16">Electricity TIP</Typography>
 				</div>
 			}
-			// content={<CBData/>}
+			// content={<TIPData/>}
 			
 			innerScroll
 			ref={pageLayout}

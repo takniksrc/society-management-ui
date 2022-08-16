@@ -7,14 +7,14 @@ import Typography from '@material-ui/core/Typography';
 import { useMemo, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ContactsMultiSelectMenu from './ContactsMultiSelectMenu';
-import AllUsers from './AllUsers';
+import AllCustomers from './AllCustomers';
 import { openEditContactDialog, removeUser, toggleStarredContact, selectUsers } from './store/newUsersSlice';
 
-function AllUsersHead(props) {
+function AllCustomersHead(props) {
 	const dispatch = useDispatch();
-	const contacts = useSelector(selectUsers);
+	const customers = useSelector(selectUsers);
 	const searchText = useSelector(({ newUsersSlice }) => newUsersSlice.searchText);
-	console.log('I am contacts',contacts)
+	console.log('I am customers',customers)
 	console.log('I am search text',searchText)
 	// const user = useSelector(({ newUsersSlice }) => newUsersSlice.user);
 	// console.log('I am user se', user);
@@ -42,19 +42,34 @@ function AllUsersHead(props) {
 				sortable: false
 			},
 			{
-				Header: 'Name',
+				Header: 'Customer Name',
 				accessor: 'name',
 				className: 'font-medium',
 				sortable: true
 			},
 			{
-				Header: 'Role',
-				accessor: 'role',
+				Header: 'Property Size',
+				accessor: 'property_size',
 				sortable: true
 			},
 			{
-				Header: 'Email',
-				accessor: 'email',
+				Header: 'property Type',
+				accessor: 'property_type',
+				sortable: true
+			},
+			{
+				Header: 'Meter No',
+				accessor: 'meter_no',
+				sortable: true
+			},
+			{
+				Header: 'Meter Type',
+				accessor: 'meter_type',
+				sortable: true
+			},
+			{
+				Header: 'Billing Status',
+				accessor: 'billing_status',
 				sortable: true
 			},
 			{
@@ -92,15 +107,15 @@ function AllUsersHead(props) {
 	useEffect(() => {
 		function getFilteredArray(entities, _searchText) {
 			if (_searchText.length === 0) {
-				return contacts;
+				return customers;
 			}
-			return FuseUtils.filterArrayByString(contacts, _searchText);
+			return FuseUtils.filterArrayByString(customers, _searchText);
 		}
 
-		if (contacts) {
-			setFilteredData(getFilteredArray(contacts, searchText));
+		if (customers) {
+			setFilteredData(getFilteredArray(customers, searchText));
 		}
-	},[contacts, searchText]);
+	},[customers, searchText]);
 
 	if (!filteredData) {
 		return null;
@@ -110,7 +125,7 @@ function AllUsersHead(props) {
 		return (
 			<div className="flex flex-1 items-center justify-center h-full">
 				<Typography color="textSecondary" variant="h5">
-					There are no users!
+					There are no customers!
 				</Typography>
 			</div>
 		);
@@ -118,7 +133,7 @@ function AllUsersHead(props) {
 
 	return (
 		<motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}>
-			<AllUsers
+			<AllCustomers
 				columns={columns}
 				data={filteredData}
 				onRowClick={(ev, row) => {
@@ -131,4 +146,4 @@ function AllUsersHead(props) {
 	);
 }
 
-export default AllUsersHead;
+export default AllCustomersHead;

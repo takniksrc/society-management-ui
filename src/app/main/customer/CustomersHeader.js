@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import { selectMainTheme } from 'app/store/fuse/settingsSlice';
 import { openNewContactDialog ,setContactsSearchText} from './store/newUsersSlice';
 
-function UsersHeader(props) {
+function CustomersHeader(props) {
 	const dispatch = useDispatch();
 	// const methods = useFormContext();
 	// const searchText = useSelector(({ contactsApp }) => contactsApp.contacts.searchText);
@@ -39,7 +39,7 @@ function UsersHeader(props) {
 					delay={300}
 					className="hidden sm:flex text-16 md:text-24 mx-12 font-semibold"
 				>
-					Users
+					Customers
 				</Typography>
 			</div>
 
@@ -74,11 +74,11 @@ function UsersHeader(props) {
 						className="w-full"
 						onClick={ev => dispatch(openNewContactDialog())}
 					>
-						Add New User
+						Add Customer
 					</Button>
 			</motion.div>
 		</div>
 	);
 }
 
-export default UsersHeader;
+export default CustomersHeader;

@@ -25,6 +25,14 @@ const navigationConfig = [
 			},
 			{
 				id: 'profile',
+				title: 'cUSTOMER',
+				translate: 'CUSTOMER',
+				type: 'item',
+				icon: 'person',
+				url: '/customers'
+			},
+			{
+				id: 'profile',
 				title: 'User',
 				translate: 'USER',
 				type: 'item',
