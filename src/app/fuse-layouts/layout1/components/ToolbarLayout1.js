@@ -55,9 +55,9 @@ function ToolbarLayout1(props) {
 							</>
 						)}
 
-						<Hidden mdDown>
+						{/* <Hidden mdDown>
 							<FuseShortcuts />
-						</Hidden>
+						</Hidden> */}
 					</div>
 
 					<div className="flex items-center px-8 h-full overflow-x-auto">
@@ -67,9 +67,9 @@ function ToolbarLayout1(props) {
 
 						<FullScreenToggle />
 
-						<FuseSearch />
+			
 
-						<QuickPanelToggleButton />
+						{/* <QuickPanelToggleButton /> */}
 
 						<UserMenu />
 					</div>
