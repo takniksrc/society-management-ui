@@ -110,6 +110,7 @@
         "@babel/preset-env": "7.12.13",
         "@craco/craco": "^6.1.1",
         "@tailwindcss/postcss7-compat": "2.1.0",
+        "@testing-library/react": "12.x.x",
         "@typescript-eslint/eslint-plugin": "^4.0.0",
         "@typescript-eslint/parser": "^4.0.0",
         "@yarnpkg/pnpify": "2.4.0",
