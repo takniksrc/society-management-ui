@@ -10,7 +10,7 @@ function SettingsComponent() {
 */
 import { Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import { Button, Box, Typography, Avatar } from '@material-ui/core';
 import DemoContent from '@fuse/core/DemoContent';
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import { makeStyles } from '@material-ui/core/styles';
@@ -30,15 +30,15 @@ function SettingsComponent() {
 				root: classes.layoutRoot
 			}}
 			header={
-				<div className="p-24">
-					<h4>Settings </h4>
+				<div className="px-10 pt-40 font-extrabold">
+					<h3>Settings </h3>
 				</div>
 			}
 			contentToolbar={
-				<div >
-					{/*<Link to="/example/Property"> Property Management </Link> */}
-					{/* <Link to="/Property"> Property Management </Link> */}
-					<Button component={Link} to="/Property"  > Property Management </Button>
+				<div>
+					
+					<Button className="pl-400 font-semibold"  startIcon={<Avatar src="C:\Users\zirva\Downloads\Home-icon.svg.png" />}   component={Link} to="/Property"  > Property Management </Button>
+					
 				</div>
 			}
 			content={
