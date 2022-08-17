@@ -30,14 +30,14 @@ function SettingsComponent() {
 				root: classes.layoutRoot
 			}}
 			header={
-				<div className="px-10 pt-40 font-extrabold">
+				<div className="px-10 pt-40 font-extrabold"> {/*px-10 pt-40 font-extrabold*/}
 					<h3>Settings </h3>
 				</div>
 			}
 			contentToolbar={
 				<div>
 					
-					<Button className="pl-400 font-semibold"  startIcon={<Avatar src="C:\Users\zirva\Downloads\Home-icon.svg.png" />}   component={Link} to="/Property"  > Property Management </Button>
+					<Button className="font-semibold"  startIcon={<Avatar src="C:\Users\zirva\societ-management-ui\node_module\Home" />}   component={Link} to="/Property"  > Property Management </Button>
 					
 				</div>
 			}
