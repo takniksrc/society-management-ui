@@ -11,7 +11,13 @@ import { Link } from 'react-router-dom';
 import reducer from '../store';
 import { selectBoards, newBoard, getBoards, resetBoards } from '../store/boardsSlice';
 import societyChargesIcon from '../../../../assets/ServicesIcon/society-charges-icon.png';
-import consumptionChragesIcon from '../../../../assets/ServicesIcon/consumption-based-icon.png';
+import Aquifer from '../../../../assets/ServicesIcon/aquifer.png';
+import Garbage from '../../../../assets/ServicesIcon/garbage.png';
+import Cleanliness from '../../../../assets/ServicesIcon/cleanliness.png';
+import Cabel from '../../../../assets/ServicesIcon/cabel.png';
+import Security from '../../../../assets/ServicesIcon/security.png';
+import Water from '../../../../assets/ServicesIcon/water.png';
+
 
 
 const useStyles = makeStyles(theme => ({
@@ -29,12 +35,12 @@ function SCData(props) {
 	const dispatch = useDispatch();
 	// const boards = useSelector(selectBoards);
 	const boards = [
-	     {id:'1' , name: 'Electricity Khaban-e-Amin', uri: 'electricity-khayaban-amin',icon: consumptionChragesIcon},
-		 {id:'2' , name: 'Electricity TIP', uri: 'electricity-tip',icon: consumptionChragesIcon},
-		 {id:'3' , name: 'Electricity TIP', uri: 'electricity-tip',icon: consumptionChragesIcon},
-		 {id:'4' , name: 'Electricity TIP', uri: 'electricity-tip',icon: consumptionChragesIcon},
-		 {id:'5' , name: 'Electricity TIP', uri: 'electricity-tip',icon: consumptionChragesIcon},
-		 {id:'6' , name: 'Electricity TIP', uri: 'electricity-tip',icon: consumptionChragesIcon},
+	     {id:'1' , name: 'Aquifer', uri: 'aquifer',icon: Aquifer},
+		 {id:'2' , name: 'Garbage', uri: 'garbage',icon: Garbage},
+		 {id:'3' , name: 'Cleanliness', uri: 'cleanliness',icon: Cleanliness},
+		 {id:'4' , name: 'Cable', uri: 'cable',icon: Cabel},
+		 {id:'5' , name: 'Security', uri: 'security',icon: Security},
+		 {id:'6' , name: 'Water', uri: 'water',icon: Water},
 ]
    
 	console.log('I am boards',boards)
@@ -65,7 +71,7 @@ function SCData(props) {
 		<div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>
 			<div className="flex flex-grow flex-shrink-0 flex-col items-center container px-16 md:px-24">
 			<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.1 } }}>
-					<Typography className="mt-44 sm:mt-88 sm:py-24 text-32 sm:text-40 font-bold" color="inherit">
+					<Typography className="mt-44 sm:mt-88 text-32 sm:text-40 font-bold" color="inherit">
 						Services
 					</Typography>
 				</motion.div>

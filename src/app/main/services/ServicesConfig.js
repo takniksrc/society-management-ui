@@ -12,7 +12,7 @@ const ScrumboardAppConfig = {
 		// },
 		{
 			path: '/services/boards/consumption-based-charges/1/electricity-khayaban-amin',
-			component: lazy(() => import('./board/EKService'))
+			component: lazy(() => import('./board/EKServiceTemplate'))
 		},
 		{
 			path: '/services/boards/consumption-based-charges/2/electricity-tip',
@@ -22,10 +22,36 @@ const ScrumboardAppConfig = {
 			path: '/services/boards/consumption-based-charges',
 			component: lazy(() => import('./board/ConsumptionBased'))
 		},
+
+		// {
+		// 	path: '/services/boards/society-charges/garbage',
+		// 	component: lazy(() => import('./board/SocietyCharges'))
+		// },
+		// {
+		// 	path: '/services/boards/society-charges/cleanliness',
+		// 	component: lazy(() => import('./board/SocietyCharges'))
+		// },
+		// {
+		// 	path: '/services/boards/society-charges/cable',
+		// 	component: lazy(() => import('./board/SocietyCharges'))
+		// },
+		// {
+		// 	path: '/services/boards/society-charges/security',
+		// 	component: lazy(() => import('./board/SocietyCharges'))
+		// },
+		// {
+		// 	path: '/services/boards/society-charges/water',
+		// 	component: lazy(() => import('./board/SocietyCharges'))
+		// },
+		{
+			path: '/services/boards/society-charges/:boardId/:boardUri?',
+			component: lazy(() => import('./board/SCDataTemplate'))
+		},
 		{
 			path: '/services/boards/society-charges',
 			component: lazy(() => import('./board/SocietyCharges'))
 		},
+
 		{
 			path: '/services/boards',
 			component: lazy(() => import('./boards/Boards'))
