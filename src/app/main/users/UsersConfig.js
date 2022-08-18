@@ -1,7 +1,5 @@
 import i18next from 'i18next';
 import Users from './Users';
-import SettingsComponent from './Settings';
-import propertyManagement from './Property';
 import en from './i18n/en';
 import tr from './i18n/tr';
 import ar from './i18n/ar';
@@ -20,11 +18,8 @@ const UsersConfig = {
 		{
 			path: '/users',
 			component: Users
-		},
-		{
-			path: '/Settings',
-			component: SettingsComponent	
 		}
+
 	]
 };
 

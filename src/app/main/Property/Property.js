@@ -24,133 +24,42 @@ const ResidentialPropertySize = ["5 Marla", "7 Marla", "10 Marla", "1 Kanal", "2
 const CommercialPropertySize = ["4 Marla", "8 Marla", "12 Marla"];
 
 function PropertyManagement() {
-const classes = useStyles();
+	const classes = useStyles();
 
-return (
-	<FusePageSimple
-		classes={{
-			root: classes.layoutRoot
-		}}
-		header={
-			<div className="px-10 pt-40 font-extrabold">
-				<h4> Property Management </h4>
-			</div>
-		}
-		
-			content= {
-			
-			
-				<div className="p-24 space-y-20">
-					 
-					<Card className="flex flex-col h-256 shadow w-full pb-24 sm:w-1/2 lg:w-1/3 sm:p-16">
-					<CardHeader
-       					 avatar={
-          					<Avatar sx={{ bgcolor: blue[500] }} aria-label="recipe">
-          						  Customer Type
-         					 </Avatar>
-     							 }/>
-								 
-						
-						<CardContent className="flex flex-col flex-auto items-center justify-center">
-						
-							<div className="flex flex-shrink-0 items-center justify-between px-24 h-64">
-						<Typography className="font-medium truncate" color="inherit">
-														Customer Type
-													</Typography>
-							
-						
-							<Typography className="text-center text-16 font-medium">
-							{customerType.map(item => (
-								{item} 
-								))}
-								</Typography>
-								</div>
-						</CardContent>
-					</Card>
-					
+	return (
+		<FusePageSimple
+			classes={{
+				root: classes.layoutRoot
+			}}
+			header={
+				<div className="px-10 pt-40 font-extrabold">
+					<h4> Property Management </h4>
+				</div>
+			}
+			content={
+				<Card sx={{ minWidth: 275 }}>
+     			 <CardContent>
+       				 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+          				Word of the Day
+       				 </Typography>
+        <Typography variant="h5" component="div">
+          be
+        </Typography>
+        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+          adjective
+        </Typography>
+        <Typography variant="body2">
+          well meaning and kindly.
+          <br />
+          "a benevolent smile"
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small">Learn More</Button>
+      </CardActions>
+    </Card>
+	
 
-
-						<div className="space-y-20">
-							Customer Type
-							<br />
-
-
-							<div className="space-x-20">
-								{customerType.map(item => (
-									<Chip label={item} />
-								))}
-									</div>
-						</div>
-								{/*
-									
-					<Card className="flex flex-col flex-auto items-center justify-center" sx={{ minWidth: 275 }}>
-					<div className="flex flex-shrink-0 items-center justify-between px-24 h-64"> </div>
-					<CardContent>
-						<Typography className="text-center text-16 font-medium">
-							Customer Type
-						</Typography>
-						<Typography className="text-center text-13 mt-8 font-normal" color="textSecondary">
-							{customerType.map(item => (
-								{ item }
-							))}
-						</Typography>
-					</CardContent>
-				</Card>
-
-
-{/*
-<Chip label="Residential" size="large" color = "blue"/>
-<Chip label="Commercial" />
-<Chip label="Construction" />
-
-<Button variant = "contained"> Residential </Button>
-<Button variant="contained"> Commercial </Button>
-<Button variant="contained"> Construction </Button>
-*/}
-						
-
-						<div className="space-y-20">
-							Residential Property Type
-							<br />
-							<div className="space-x-20">
-								{ResidentialPropertyType.map(item => (
-									<Chip label={item} />
-								))}
-
-							</div>
-						</div>
-
-						<div className="space-y-20">
-							Commercial Property Type
-							<br />
-							<div className="space-x-20">
-								{CommercialPropertyType.map(item => (
-									<Chip label={item} />
-								))}
-
-							</div>
-						</div>
-
-						<div className="space-y-20">
-							Residential Property Size
-							<br />
-							<div className="space-x-20">
-								{ResidentialPropertySize.map(item => (
-									<Chip label={item} />
-								))}
-							</div>
-						</div>
-
-						<div className="space-y-20">
-							Commercial Property Size
-							<br />
-							<div className="space-x-20">
-								{CommercialPropertySize.map(item => (
-									<Chip label={item} />
-								))}
-							</div>
-						</div>
-					</div>
 			}
 		/>
 	);
