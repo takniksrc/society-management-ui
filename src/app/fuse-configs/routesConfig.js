@@ -1,10 +1,9 @@
 import { Redirect } from 'react-router-dom';
 import FuseUtils from '@fuse/utils';
-import SettingsComponent from 'app/main/example/Settings';
-import propertyManagement from 'app/main/example/Property';
+import PropertyConfig from 'app/main/Property/PropertyConfig';
 import UsersConfig from 'app/main/users/UsersConfig';
 
-const routeConfigs = [ UsersConfig];
+const routeConfigs = [ UsersConfig, PropertyConfig];
 
 const routes = [
 	// if you want to make whole app auth protected by default change defaultAuth for example:
@@ -13,14 +12,7 @@ const routes = [
 	...FuseUtils.generateRoutesFromConfigs(routeConfigs),
 
 
-	{
-		path: '/',
-		component: () => <Redirect to="/Settings" />
-	},
-	{
-		path: '/',
-		component: () => <Redirect to="/Property" />
-	}
+	
 ];
 
 export default routes;
