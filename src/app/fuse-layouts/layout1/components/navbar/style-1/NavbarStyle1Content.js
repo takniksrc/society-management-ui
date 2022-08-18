@@ -48,7 +48,7 @@ function NavbarStyle1Content(props) {
 				className="flex flex-row items-center flex-shrink h-48 md:h-64 min-h-48 md:min-h-64 px-12 shadow-0"
 			>
 				<div className="flex flex-1 mx-4">
-					<Logo />
+					{/* <Logo /> */}
 				</div>
 
 				<NavbarToggleButton className="w-40 h-40 p-0" />

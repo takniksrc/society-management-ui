@@ -17,12 +17,12 @@ const navigationConfig = [
 		icon: 'apps',
 		children: [
 			{
-				id: 'example-component',
-				title: 'Example',
-				translate: 'EXAMPLE',
+				id: 'profile',
+				title: 'User',
+				translate: 'USER',
 				type: 'item',
-				icon: 'whatshot',
-				url: '/example'
+				icon: 'person',
+				url: '/users'
 			},
 			{
 				id: 'settings-component',
@@ -32,7 +32,6 @@ const navigationConfig = [
 				 icon: 'build',
 				url: '/Settings'
 			}
-			
 		]
 	}
 ];

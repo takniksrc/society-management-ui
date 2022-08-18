@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import Example from './Example';
+import Users from './Users';
 import SettingsComponent from './Settings';
 import propertyManagement from './Property';
 import en from './i18n/en';
@@ -10,7 +10,7 @@ i18next.addResourceBundle('en', 'examplePage', en);
 i18next.addResourceBundle('tr', 'examplePage', tr);
 i18next.addResourceBundle('ar', 'examplePage', ar);
 
-const ExampleConfig = {
+const UsersConfig = {
 	settings: {
 		layout: {
 			config: {}
@@ -18,21 +18,17 @@ const ExampleConfig = {
 	},
 	routes: [
 		{
-			path: '/example',
-			component: Example
+			path: '/users',
+			component: Users
 		},
 		{
 			path: '/Settings',
-			component: SettingsComponent
-		},
-		{
-			path: '/Property',
-			component: propertyManagement
+			component: SettingsComponent	
 		}
 	]
 };
 
-export default ExampleConfig;
+export default UsersConfig;
 
 /**
  * Lazy load Example

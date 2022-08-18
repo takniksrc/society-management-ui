@@ -1,6 +1,6 @@
 const locale = {
 	APPLICATIONS: 'Applications',
-	EXAMPLE: 'Example',
+	USER: 'User',
 	SETTINGS: 'Settings'
 };
 
