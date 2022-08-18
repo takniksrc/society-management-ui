@@ -25,8 +25,9 @@ import { Autocomplete } from '@material-ui/lab';
 import reducer from '../store';
 import DescriptionTab from '../ConsumptionTabs/DescriptionTab';
 import ResidentialTab from '../ConsumptionTabs/ResidentialTab';
-import CommercialTab from '../Tabs/CommercialTab';
-import ConstructionTab from '../Tabs/ConstructionTab';
+import ConstructionTab from '../ConsumptionTabs/ConstructionTab';
+import FPATab from '../ConsumptionTabs/FPATab';
+import CommercialTab from '../ConsumptionTabs/CommercialTab';
 // import ProductHeader from './ProductHeader';
 // import InventoryTab from './tabs/InventoryTab';
 // import PricingTab from './tabs/PricingTab';
@@ -96,6 +97,8 @@ function EKServiceTemplate(props) {
 						<Tab className="h-64" label="Residential" />
 						<Tab className="h-64" label="Commercial" />
 						<Tab className="h-64" label="Construction" />
+						<Tab className="h-64" label="FPA" />
+
 					</Tabs>
                     </>
 				}
@@ -107,14 +110,15 @@ function EKServiceTemplate(props) {
 						<div className={tabValue !== 1 ? 'hidden' : ''}>
 							<ResidentialTab />
 						</div>
-
-
 						<div className={tabValue !== 2 ? 'hidden' : ''}>
 							<CommercialTab />
 						</div>
 
 						<div className={tabValue !== 3 ? 'hidden' : ''}>
 							<ConstructionTab />
+						</div>
+						<div className={tabValue !== 4 ? 'hidden' : ''}>
+							<FPATab/>
 						</div>
 					</div>
 				}
