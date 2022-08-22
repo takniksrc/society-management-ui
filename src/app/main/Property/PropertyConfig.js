@@ -20,7 +20,7 @@ const PropertyConfig = {
 		},
 		{
 			path: '/Settings',
-			component: SettingsComponent	
+			component: SettingsComponent
 		}
 	]
 };
@@ -34,17 +34,17 @@ export default PropertyConfig;
 import React from 'react';
 
 const ExampleConfig = {
-    settings: {
-        layout: {
-            config: {}
-        }
-    },
-    routes  : [
-        {
-            path     : '/example',
-            component: React.lazy(() => import('./Example'))
-        }
-    ]
+	settings: {
+		layout: {
+			config: {}
+		}
+	},
+	routes  : [
+		{
+			path     : '/example',
+			component: React.lazy(() => import('./Example'))
+		}
+	]
 };
 
 export default ExampleConfig;
