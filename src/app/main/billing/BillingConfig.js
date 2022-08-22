@@ -11,6 +11,14 @@ const ScrumboardAppConfig = {
 		// 	component: lazy(() => import('./board/Board'))
 		// },
 		{
+			path: '/billing/boards/1/electrcity-bills/billing',
+			component: lazy(() => import('./board/GBDataTemplate'))
+		},
+		{
+			path: '/billing/boards/:boardId/:boardUri?/billing',
+			component: lazy(() => import('./board/GBDataTemplate'))
+		},
+		{
 			path: '/billing/boards/:boardId/:boardUri?',
 			component: lazy(() => import('./board/GenerateBills'))
 		},

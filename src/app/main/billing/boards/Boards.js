@@ -10,8 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import reducer from '../store';
 import { selectBoards, newBoard, getBoards, resetBoards } from '../store/boardsSlice';
-import ElectricityIcon from '../../../../assets/ReportsIcon/monthly-report-icon.png';
-
+// import 'Closed' from '../../../../assets/ReportsIcon/monthly-report-status.png';
 
 const useStyles = makeStyles(theme => ({
 	root: {},
@@ -28,9 +27,17 @@ function Boards(props) {
 	const dispatch = useDispatch();
 	// const boards = useSelector(selectBoards);
 	const boards = [
-	     {id:'1' , name: 'Generate Bills (Electricity & Society Charges)', uri: 'electricity-bills',icon: ElectricityIcon}
-]
-	console.log('I am boards',boards)
+		{ id: '1', name: 'TIP', uri: 'electricity-bills', status: 'Closed' },
+		{ id: '2', name: 'A', uri: 'electricity-bills', status: 'Closed' },
+		{ id: '3', name: 'B', uri: 'electricity-bills', status: 'Closed' },
+		{ id: '4', name: 'C', uri: 'electricity-bills', status: 'OnGoing' },
+		{ id: '5', name: 'D', uri: 'electricity-bills', status: 'Closed' },
+		{ id: '6', name: 'E', uri: 'electricity-bills', status: 'Closed' },
+		{ id: '7', name: 'F', uri: 'electricity-bills', status: 'Closed' },
+		{ id: '8', name: 'G', uri: 'electricity-bills', status: 'Closed' },
+		{ id: '9', name: 'H', uri: 'electricity-bills', status: 'Closed' }
+	];
+	console.log('I am boards', boards);
 
 	const classes = useStyles(props);
 
@@ -69,8 +76,8 @@ function Boards(props) {
 					animate="show"
 					className="flex flex-wrap w-full justify-center py-32 px-16"
 				>
-					{boards.map(board => (
-						<motion.div variants={item} className="h-224 p-16" key={board.id}>
+					{/* {boards.map(board => (
+						<motion.div variants={item} className="p-16" key={board.id}>
 							<Paper
 								to={`/billing/boards/${board.id}/${board.uri}`}
 								className={clsx(
@@ -80,15 +87,77 @@ function Boards(props) {
 								role="button"
 								component={Link}
 							>
-								<Icon className="text-56" color="action">
-								    <img src={board.icon} />
-								</Icon>
-								<Typography className="text-16 font-medium text-center pt-16 px-32" color="inherit">
+								<Typography className="text-16 font-medium text-center pt-16 px-32 font-bold " color="inherit">
 									{board.name}
 								</Typography>
+								<div className="flex mx-16 space-x-7">
+									<Typography variant="subtitle1" className="py-16 font-semibold ">
+										Status :
+									</Typography>
+									<Typography className="text-16 font-medium text-center pt-16" color="inherit">
+										{board.status}
+									</Typography>
+								</div>
 							</Paper>
 						</motion.div>
-					))}
+					))} */}
+					{boards.map((board, index) => {
+						return board.status === 'Closed' ? (
+							<motion.div variants={item} className="p-16" key={board.id}>
+								<Paper
+									to={`/billing/boards/${board.id}/${board.uri}`}
+									className={clsx(
+										classes.board,
+										'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
+									)}
+									role="button"
+									component={Link}
+								>
+									<Typography
+										className="text-16 font-medium text-center pt-16 px-32 font-bold "
+										color="inherit"
+									>
+										{board.name}
+									</Typography>
+									<div className="flex mx-16 space-x-7">
+										<Typography variant="subtitle1" className="py-16 font-semibold ">
+											Status :
+										</Typography>
+										<Typography className="text-16 font-medium text-center pt-16" color="inherit">
+											{board.status}
+										</Typography>
+									</div>
+								</Paper>
+							</motion.div>
+						) : (
+							<motion.div variants={item} className="p-16" key={board.id}>
+								<Paper
+									to={`/billing/boards/${board.id}/${board.uri}/billing`}
+									className={clsx(
+										classes.board,
+										'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
+									)}
+									role="button"
+									component={Link}
+								>
+									<Typography
+										className="text-16 font-medium text-center pt-16 px-32 font-bold "
+										color="inherit"
+									>
+										{board.name}
+									</Typography>
+									<div className="flex mx-16 space-x-7">
+										<Typography variant="subtitle1" className="py-16 font-semibold ">
+											Status :
+										</Typography>
+										<Typography className="text-16 font-medium text-center pt-16" color="inherit">
+											{board.status}
+										</Typography>
+									</div>
+								</Paper>
+							</motion.div>
+						);
+					})}
 					{/* <motion.div variants={item} className="w-224 h-224 p-16">
 						<Paper
 							className={clsx(
