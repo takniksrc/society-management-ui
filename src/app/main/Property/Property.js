@@ -42,18 +42,16 @@ function PropertyManagement() {
 			}
 			content={
 
-				<div className="p-32" >
-					<Box className="p-16 w-full rounded-16 mb-24 border"
-						sx={{
-							backgroundColor: "#F6F9FB"
-						}}
-					>
+				<div className="p-32" 
+				>
+					<Box className="p-16 w-full rounded-16 mb-24 border shadow bg-zinc-900" 
+							>
 						<Typography className="font-medium" variant="h6">Customer Type</Typography>
 						<div className="flex flex-wrap -m-8 mt-8">
 							{customerType.map((item) => (
 								<Box
-									sx={{ backgroundColor: 'background.paper' }}
-									className="relative w-full sm:w-160 h-160 m-8 p-16 shadow rounded-16">
+									
+									className="relative w-full sm:w-160 h-160 m-8 p-16 shadow rounded-16" >
 									<div className="flex shrink flex-col justify-center text-center">
 										<Typography className="truncate text-14 font-medium">{item}</Typography>
 									</div>
@@ -64,7 +62,7 @@ function PropertyManagement() {
 
 					</Box>
 
-					<Box className="p-16 w-full rounded-16 mb-24 border"
+					<Box className="p-16 w-full rounded-16 mb-24 border shadow"
 						sx={{
 							backgroundColor: "#F6F9FB"
 						}}
@@ -84,7 +82,7 @@ function PropertyManagement() {
 
 					</Box>
 
-					<Box className="p-16 w-full rounded-16 mb-24 border"
+					<Box className="p-16 w-full rounded-16 mb-24 border shadow"
 						sx={{
 							backgroundColor: "#F6F9FB"
 						}}
@@ -104,7 +102,7 @@ function PropertyManagement() {
 
 					</Box>
 
-					<Box className="p-16 w-full rounded-16 mb-24 border"
+					<Box className="p-16 w-full rounded-16 mb-24 border shadow"
 						sx={{
 							backgroundColor: "#F6F9FB"
 						}}
@@ -124,7 +122,7 @@ function PropertyManagement() {
 
 					</Box>
 
-					<Box className="p-16 w-full rounded-16 mb-24 border"
+					<Box className="p-16 w-full rounded-16 mb-24 border shadow"
 						sx={{
 							backgroundColor: "#F6F9FB"
 						}}
