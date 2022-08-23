@@ -12,7 +12,7 @@ import * as yup from 'yup';
 import { useParams } from 'react-router-dom';
 import { useDeepCompareEffect } from '@fuse/hooks';
 import { useDispatch } from 'react-redux';
-import ContactDialog from '../../users/ContactDialog';
+import ContactDialog from './ContactDialog';
 import reducer from '../store';
 import BillingHeader from './BillingHeader';
 import { getUsers } from '../store/newUsersSlice';

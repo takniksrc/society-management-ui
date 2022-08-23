@@ -53,7 +53,7 @@ function BillingHeader(props) {
 			<motion.div
 				initial={{ opacity: 0, x: 20 }}
 				animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
-				className="flex flex-1 items-center justify-center px-12 max-w-xs space-x-20"
+				className="flex flex-2 items-center justify-center px-12 max-w-xs space-x-20"
 			>
 				<Button
 					variant="contained"
@@ -63,14 +63,14 @@ function BillingHeader(props) {
 				>
 					Close Month
 				</Button>
-				<Button
+				{/* <Button
 					variant="contained"
 					color="secondary"
 					className="w-full"
 					onClick={ev => dispatch(openNewContactDialog())}
 				>
 					Generate Bills
-				</Button>
+				</Button> */}
 			</motion.div>
 		</div>
 	);

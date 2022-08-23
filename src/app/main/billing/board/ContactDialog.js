@@ -11,10 +11,14 @@ import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import UploadButtons from 'app/main/Button/UploadButtons';
 import { useCallback, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { DateTimePicker } from '@material-ui/pickers';
+import PrintIcon from '@material-ui/icons/Print';
+import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
+import { motion } from 'framer-motion';
 import _ from '@lodash';
 import * as yup from 'yup';
 
@@ -27,7 +31,9 @@ const defaultValues = {
 	property_type: '',
 	meter_no: '',
 	meter_type: '',
-	billing_status: ''
+	billing_status: '',
+	startDate: new Date(),
+
 };
 
 /**
@@ -113,6 +119,7 @@ function ContactDialog(props) {
 		dispatch(removeUser(id));
 		closeComposeDialog();
 	}
+	const startDate = watch('startDate');
 
 	return (
 		<Dialog
@@ -127,8 +134,30 @@ function ContactDialog(props) {
 			<AppBar position="static" elevation={0}>
 				<Toolbar className="flex w-full">
 					<Typography variant="subtitle1" color="inherit">
-						{contactDialog?.type === 'new' ? 'New Contact' : 'Edit Contact'}
+						{contactDialog?.type === 'new' ? 'New Bill' : 'Edit Bill'}
 					</Typography>
+					<motion.div
+									initial={{ opacity: 0, x: 20 }}
+									animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
+									className="flex flex-2 ml-auto flex-row items-center justify-center ml-14 space-x-10 mt-10 "
+								>
+									<Button
+										variant="contained"
+										color="secondary"
+										className="w-full"
+										// onClick={ev => dispatch(openNewContactDialog())}
+									>
+										<PictureAsPdfIcon/>
+									</Button>
+									<Button
+										variant="contained"
+										color="secondary"
+										className="w-full"
+										// onClick={ev => dispatch(openNewContactDialog())}
+									>
+										<PrintIcon/>
+									</Button>
+								</motion.div>
 				</Toolbar>
 				<div className="flex flex-col items-center justify-center pb-24">
 					{contactDialog?.type === 'edit' && (
@@ -181,21 +210,249 @@ function ContactDialog(props) {
 							)}
 						/>
 					</div>
-
 					<div className="flex">
 						<div className="min-w-48 pt-20">
-							<Icon color="action">work</Icon>
+							<Icon color="action">house</Icon>
 						</div>
 						<Controller
 							control={control}
-							name="role"
+							name="house_address"
 							render={({ field }) => (
 								<TextField
 									{...field}
 									className="mb-24"
-									label="Role"
-									id="role"
-									name="role"
+									label="House Address"
+									id="house_address"
+									variant="outlined"
+									fullWidth
+								/>
+							)}
+						/>
+					</div>
+					<div className="flex">
+						<div className="min-w-48 pt-20">
+							<Icon color="action">email</Icon>
+						</div>
+						<Controller
+							control={control}
+							name="meter_no"
+							render={({ field }) => (
+								<TextField
+									{...field}
+									className="mb-24"
+									label="Meter No"
+									id="meter_no"
+									variant="outlined"
+									fullWidth
+								/>
+							)}
+						/>
+					</div>
+					<div className="flex">
+						<div className="min-w-48 pt-20">
+							<Icon color="action">email</Icon>
+						</div>
+						<Controller
+							control={control}
+							name="total_units"
+							render={({ field }) => (
+								<TextField
+									{...field}
+									className="mb-24"
+									label="Total Units"
+									id="total_units"
+									variant="outlined"
+									fullWidth
+								/>
+							)}
+						/>
+					</div>
+					<div className="flex">
+						<div className="min-w-48 pt-20">
+							<Icon color="action">email</Icon>
+						</div>
+						<Controller
+							name="dueDate"
+							control={control}
+							defaultValue=""
+							render={({ field: { onChange, value } }) => (
+								<DateTimePicker
+									label="Due Date"
+									inputVariant="outlined"
+									value={value}
+									onChange={onChange}
+									id="dueDate"
+									className="mt-8 mb-16 mx-4 flex w-full mb-16 ml-px"
+									minDate={startDate}
+								/>
+							)}
+						/>
+					</div>
+					<div className="flex">
+						<div className="min-w-48 pt-20">
+							<Icon color="action">email</Icon>
+						</div>
+						<Controller
+							control={control}
+							name="arrears"
+							render={({ field }) => (
+								<TextField
+									{...field}
+									className="mb-24"
+									label="Arrear's-May"
+									id="arrears"
+									variant="outlined"
+									fullWidth
+								/>
+							)}
+						/>
+					</div>
+					<div className="flex">
+						<div className="min-w-48 pt-20">
+							<Icon color="action">email</Icon>
+						</div>
+						<Controller
+							control={control}
+							name="fpa"
+							render={({ field }) => (
+								<TextField
+									{...field}
+									className="mb-24"
+									label="Total FPA"
+									id="fpa"
+									variant="outlined"
+									fullWidth
+								/>
+							)}
+						/>
+					</div>
+					<div className="flex">
+						<div className="min-w-48 pt-20">
+							<Icon color="action">email</Icon>
+						</div>
+						<Controller
+							control={control}
+							name="current_bill"
+							render={({ field }) => (
+								<TextField
+									{...field}
+									className="mb-24"
+									label="Current Bill"
+									id="current_bill"
+									variant="outlined"
+									fullWidth
+								/>
+							)}
+						/>
+					</div>
+					<div className="flex">
+						<div className="min-w-48 pt-20">
+							<Icon color="action">email</Icon>
+						</div>
+						<Controller
+							control={control}
+							name="society_charges"
+							render={({ field }) => (
+								<TextField
+									{...field}
+									className="mb-24"
+									label="Society Charges"
+									id="society_charges"
+									variant="outlined"
+									fullWidth
+								/>
+							)}
+						/>
+					</div>
+					<div className="flex">
+						<div className="min-w-48 pt-20">
+							<Icon color="action">email</Icon>
+						</div>
+						<Controller
+							control={control}
+							name="previous_meter_rating"
+							render={({ field }) => (
+								<TextField
+									{...field}
+									className="mb-24"
+									label="Previous Meter Rating"
+									id="previous_meter_rating"
+									variant="outlined"
+									fullWidth
+								/>
+							)}
+						/>
+					</div>
+					<div className="flex">
+						<div className="min-w-48 pt-20">
+							<Icon color="action">email</Icon>
+						</div>
+						<Controller
+							control={control}
+							name="current_meter_readng"
+							render={({ field }) => (
+								<TextField
+									{...field}
+									className="mb-24"
+									label="Current Meter Reading"
+									id="current_meter_readng"
+									variant="outlined"
+									fullWidth
+								/>
+							)}
+						/>
+					</div>
+					<div className="flex">
+						<div className="min-w-48 pt-20">
+							<Icon color="action">email</Icon>
+						</div>
+						<Controller
+							control={control}
+							name="total_payable"
+							render={({ field }) => (
+								<TextField
+									{...field}
+									className="mb-24"
+									label="Total Payable"
+									id="total_payable"
+									variant="outlined"
+									fullWidth
+								/>
+							)}
+						/>
+					</div>
+					<div className="flex">
+						<div className="min-w-48 pt-20">
+							<Icon color="action">email</Icon>
+						</div>
+						<Controller
+							control={control}
+							name="after_duedate"
+							render={({ field }) => (
+								<TextField
+									{...field}
+									className="mb-24"
+									label="Payable After due Date"
+									id="after_duedate"
+									variant="outlined"
+									fullWidth
+								/>
+							)}
+						/>
+					</div>
+					<div className="flex">
+						<div className="min-w-48 pt-20">
+							<Icon color="action">email</Icon>
+						</div>
+						<Controller
+							control={control}
+							name="discount"
+							render={({ field }) => (
+								<TextField
+									{...field}
+									className="mb-24"
+									label="discount"
+									id="discount"
 									variant="outlined"
 									fullWidth
 								/>
@@ -218,7 +475,7 @@ function ContactDialog(props) {
 						</div>
 					</DialogActions>
 				) : (
-					<DialogActions className="justify-between p-4 pb-16">
+					<DialogActions className="justify-between p-4 pb-16 ml-auto">
 						<div className="px-16">
 							<Button
 								variant="contained"

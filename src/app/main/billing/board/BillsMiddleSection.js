@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
 	newBoard: {}
 }));
 
-function BillsBellowSection(props) {
+function BillsMiddleSection(props) {
 	const mainTheme = useSelector(selectMainTheme);
 
 	const dispatch = useDispatch();
@@ -107,10 +107,11 @@ function BillsBellowSection(props) {
 	const [selectedCategory, setSelectedCategory] = useState('house');
 	const payment = [
 		{ id: 0, value: 'card', label: 'Card', color: '#2196f3' },
-		{ id: 1, value: 'cash', label: 'Cash', color: '#2196f3' }
+		{ id: 1, value: 'cash', label: 'Cash', color: '#2196f3' },
 	];
 	const [serie, setSerie] = useState('daily');
 	const [payments, setPayments] = useState('card');
+
 
 	const data = [
 		{ id: 0, value: 'daily', label: 'Daily', color: '#2196f3' },
@@ -122,7 +123,7 @@ function BillsBellowSection(props) {
 	}
 	// const dispatch = useDispatch();
 	const contacts = useSelector(selectUsers);
-	const allBills = contacts[0]?.customer;
+	const allBills = contacts[0]?.customer
 	const searchText = useSelector(({ newUsersSlice }) => newUsersSlice.searchText);
 	console.log('I am customers bills', allBills);
 	console.log('I am search text', searchText);
@@ -157,27 +158,27 @@ function BillsBellowSection(props) {
 			},
 			{
 				Header: 'Property Size',
-				accessor: 'property_type_id',
+				accessor: 'property-size',
 				sortable: true
 			},
 			{
 				Header: 'Property Type',
-				accessor: 'streetAddress',
+				accessor: 'role',
 				sortable: true
 			},
 			{
 				Header: 'Meter No.',
-				accessor: 'customerId',
+				accessor: '',
 				sortable: true
 			},
 			{
 				Header: 'Meter Type',
-				accessor: 'phone_number',
+				accessor: '',
 				sortable: true
 			},
 			{
 				Header: 'billing Status',
-				accessor: 'customer_type_id',
+				accessor: '',
 				sortable: true
 			},
 			{
@@ -229,120 +230,19 @@ function BillsBellowSection(props) {
 		return null;
 	}
 
-	if (filteredData.length === 0) {
-		return (
-			<div className="flex flex-1 items-center justify-center h-full">
-				<div className="flex flex-grow flex-shrink-0 flex-col items-center container px-16 md:px-24">
-					<motion.div
-						variants={container}
-						initial="hidden"
-						animate="show"
-						className="grid grid-cols-1 flex-wrap w-full justify-center py-16 "
-					>
-						<motion.div variants={item} className="h-auto p-16" key={1}>
-							<Paper
-								// to={`/services/boards/consumption-based-charges/${board.id}/${board.uri}`}
-								className={clsx(
-									classes.board,
-									'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
-								)}
-								role="button"
-								component={Link}
-							>
-								<div className=" flex flex-wrap w-full justify-center px-16 flex-row">
-									<div className="flex flex-1 items-center justify-center basis-1/4">
-										<ThemeProvider theme={mainTheme}>
-											<Paper
-												component={motion.div}
-												initial={{ y: -20, opacity: 0 }}
-												animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
-												className="flex items-center w-full max-w-512 px-8 py-4 rounded-16 shadow"
-											>
-												<Icon color="action">search</Icon>
-
-												<Input
-													placeholder="Search for anything"
-													className="flex flex-1 px-16"
-													disableUnderline
-													fullWidth
-													value={searchText}
-													inputProps={{
-														'aria-label': 'Search'
-													}}
-													onChange={ev => dispatch(setContactsSearchText(ev))}
-												/>
-											</Paper>
-										</ThemeProvider>
-									</div>
-									<div className="flex flex-row items-center justify-between m-24 space-x-20 basis-1/4">
-										<FormControl className="" variant="filled">
-											<Select
-												classes={{ select: 'py-8' }}
-												value={serie}
-												onChange={ev => setSerie(ev.target.value)}
-											>
-												{data.map(category => (
-													<MenuItem value={category.value} key={category.id}>
-														{category.label}
-													</MenuItem>
-												))}
-											</Select>
-										</FormControl>
-
-										<FormControl className="" variant="filled">
-											<Select
-												classes={{ select: 'py-8' }}
-												value={payments}
-												onChange={ev => setPayments(ev.target.value)}
-											>
-												{payment.map(pay => (
-													<MenuItem value={pay.value} key={pay.id}>
-														{pay.label}
-													</MenuItem>
-												))}
-											</Select>
-										</FormControl>
-									</div>
-
-									<motion.div
-										initial={{ opacity: 0, x: 20 }}
-										animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
-										className="flex flex-1 items-center justify-center px-12 space-x-20 basis-1/2"
-									>
-										<Button
-											variant="contained"
-											color="secondary"
-											className="w-full"
-											onClick={ev => dispatch(openNewContactDialog())}
-										>
-											Download PDF
-										</Button>
-										<Button
-											variant="contained"
-											color="secondary"
-											className="w-full"
-											onClick={ev => dispatch(openNewContactDialog())}
-										>
-											Upload Payemnts
-										</Button>
-									</motion.div>
-								</div>
-
-								<div className=" flex flex-wrap w-full justify-center py-32 px-16 flex-row">
-									<Typography color="textSecondary" variant="h5">
-										There are no bills!
-									</Typography>
-								</div>
-								{/* </motion.div> */}
-							</Paper>
-						</motion.div>
-					</motion.div>
-				</div>
-			</div>
-		);
-	}
+	// if (filteredData.length === 0) {
+	// 	return (
+	// 		<div className="flex flex-1 items-center justify-center h-full">
+	// 			<Typography color="textSecondary" variant="h5">
+	// 				There are no bills!
+	// 			</Typography>
+	// 		</div>
+	// 	);
+	// }
 
 	return (
+		
+
 		<div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>
 			<div className="flex flex-grow flex-shrink-0 flex-col items-center container px-16 md:px-24">
 				<motion.div
@@ -387,6 +287,7 @@ function BillsBellowSection(props) {
 									</ThemeProvider>
 								</div>
 								<div className="flex flex-row items-center justify-between m-24 space-x-20 basis-1/4">
+									{/* <div> */}
 									<FormControl className="" variant="filled">
 										<Select
 											classes={{ select: 'py-8' }}
@@ -400,7 +301,9 @@ function BillsBellowSection(props) {
 											))}
 										</Select>
 									</FormControl>
-
+									{/* </div> */}
+									{/* <div className="flex flex-row items-center justify-between"> */}
+									{/* <div> */}
 									<FormControl className="" variant="filled">
 										<Select
 											classes={{ select: 'py-8' }}
@@ -414,6 +317,8 @@ function BillsBellowSection(props) {
 											))}
 										</Select>
 									</FormControl>
+									{/* </div> */}
+									{/* </div> */}
 								</div>
 
 								<motion.div
@@ -421,6 +326,14 @@ function BillsBellowSection(props) {
 									animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
 									className="flex flex-1 items-center justify-center px-12 space-x-20 basis-1/2"
 								>
+									{/* <Button
+										variant="contained"
+										color="secondary"
+										className="w-full"
+										// onClick={ev => dispatch(openNewContactDialog())}
+									>
+										Add FPA this month
+									</Button> */}
 									<Button
 										variant="contained"
 										color="secondary"
@@ -439,26 +352,20 @@ function BillsBellowSection(props) {
 									</Button>
 								</motion.div>
 							</div>
-
-							<div className=" flex flex-wrap w-full justify-center py-32 px-16 flex-row">
-								<AllBills
-									columns={columns}
-									// data={[filteredData[0].customer]}
-									data={filteredData.map(newData => newData?.customer)}
-									onRowClick={(ev, row) => {
-										if (row) {
-											dispatch(openEditContactDialog(row.original));
-										}
-									}}
-								/>
-							</div>
+							{/* <motion.div
+								initial={{ y: 20, opacity: 0 }}
+								animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
+							> */}
 							{/* </motion.div> */}
 						</Paper>
 					</motion.div>
 				</motion.div>
 			</div>
+
+
 		</div>
+	
 	);
 }
 
-export default withReducer('scrumboardApp', reducer)(BillsBellowSection);
+export default withReducer('scrumboardApp', reducer)(BillsMiddleSection);

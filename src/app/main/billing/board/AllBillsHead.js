@@ -14,6 +14,7 @@ import ContactsMultiSelectMenu from './ContactsMultiSelectMenu';
 import AllBills from './AllBills';
 import { openEditContactDialog, removeUser, toggleStarredContact, selectUsers } from '../store/newUsersSlice';
 import BillsBellowSection from './BillsBellowSection';
+import BillsMiddleSection from './BillsMiddleSection';
 
 const useStyles = makeStyles(theme => ({
 	root: {},
@@ -67,6 +68,8 @@ function AllBillsHead(props) {
 				</motion.div>
 			</div>
 			</div>
+			{/* <BillsMiddleSection /> */}
+
 			<BillsBellowSection />
 		</motion.div>
 	);

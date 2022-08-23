@@ -24,6 +24,7 @@ import reducer from '../store';
 // import { selectBoards, newBoard, getBoards, resetBoards } from '../store/boardsSlice';
 import societyChargesIcon from '../../../../assets/ServicesIcon/society-charges-icon.png';
 import consumptionChragesIcon from '../../../../assets/ServicesIcon/consumption-based-icon.png';
+import UploadButtons from 'app/main/Button/UploadButtons';
 
 const defaultValues = {
 	id: '',
@@ -87,7 +88,7 @@ function GBData(props) {
 	const startDate = watch('startDate');
 
 	const { errors, isValid, dirtyFields } = formState;
-	const [selectedCategory, setSelectedCategory] = useState('all');
+	const [selectedCategory, setSelectedCategory] = useState('house');
 	const categories = [
 		{ id: 0, value: 'house', label: 'House', color: '#2196f3' },
 		{ id: 1, value: 'plot', label: 'Plot', color: '#2196f3' },
@@ -150,7 +151,7 @@ function GBData(props) {
 								</FormControl>
 
 								<div className="flex -mx-4 " style={{ margin: '1.3rem' }}>
-									<Controller
+									{/* <Controller
 										name="startDate"
 										control={control}
 										defaultValue=""
@@ -164,7 +165,7 @@ function GBData(props) {
 												maxDate={dueDate}
 											/>
 										)}
-									/>
+									/> */}
 
 									<Controller
 										name="dueDate"
@@ -182,33 +183,19 @@ function GBData(props) {
 										)}
 									/>
 								</div>
-								<FormControl
-									className="flex w-full sm:w-320 -mx-4 mt-8 mb-16 ml-px"
-									style={{ margin: '2rem' }}
-									variant="outlined"
-								>
-									<InputLabel htmlFor="category-label-placeholder"> Company </InputLabel>
-									<Select
-										value={selectedCategory}
-										onChange={handleSelectedCategory}
-										input={
-											<OutlinedInput
-												labelWidth={'category'.length * 9}
-												name="category"
-												id="category-label-placeholder"
-											/>
-										}
-									>
-										<MenuItem value="all">
-											<em> All </em>
-										</MenuItem>
-										{categories.map(category => (
-											<MenuItem value={category.value} key={category.id}>
-												{category.label}
-											</MenuItem>
-										))}
-									</Select>
-								</FormControl>
+								<div className="flex items-center justify-center ">
+									<div className="mb-8">
+									<Typography variant="subtitle1" className="font-semibold mr-8 mx-4 mr-20">
+										Add FPA File
+									</Typography>
+									<Typography variant="subtitle1" className="flex items-center justify-center text-xs font-semibold mr-8 mx-4">
+										(optional)
+									</Typography>
+									</div>
+									<div> <UploadButtons /></div>
+									
+									
+								</div>
 							</div>
 							<div className="px-16">
 								<Button
