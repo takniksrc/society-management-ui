@@ -5,6 +5,7 @@ import CustomersConfig from 'app/main/customer/CustomersConfig';
 import AnalysisReportConfig from 'app/main/scrumboard/ScrumboardAppConfig';
 import BillingConfig from 'app/main/billing/BillingConfig';
 import ServicesConfig from 'app/main/services/ServicesConfig';
+import Login from 'app/login/Login';
 
 
 
@@ -15,7 +16,10 @@ const routes = [
 	// ...FuseUtils.generateRoutesFromConfigs(routeConfigs, ['admin','staff','user']),
 	// The individual route configs which has auth option won't be overridden.
 	...FuseUtils.generateRoutesFromConfigs(routeConfigs),
-
+		{
+			path: '/login',
+			component: Login
+		},
 	{
 		path: '/',
 		component: () => <Redirect to="/customers" />

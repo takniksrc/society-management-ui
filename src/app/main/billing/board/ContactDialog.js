@@ -32,8 +32,7 @@ const defaultValues = {
 	meter_no: '',
 	meter_type: '',
 	billing_status: '',
-	startDate: new Date(),
-
+	startDate: new Date()
 };
 
 /**
@@ -137,27 +136,27 @@ function ContactDialog(props) {
 						{contactDialog?.type === 'new' ? 'New Bill' : 'Edit Bill'}
 					</Typography>
 					<motion.div
-									initial={{ opacity: 0, x: 20 }}
-									animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
-									className="flex flex-2 ml-auto flex-row items-center justify-center ml-14 space-x-10 mt-10 "
-								>
-									<Button
-										variant="contained"
-										color="secondary"
-										className="w-full"
-										// onClick={ev => dispatch(openNewContactDialog())}
-									>
-										<PictureAsPdfIcon/>
-									</Button>
-									<Button
-										variant="contained"
-										color="secondary"
-										className="w-full"
-										// onClick={ev => dispatch(openNewContactDialog())}
-									>
-										<PrintIcon/>
-									</Button>
-								</motion.div>
+						initial={{ opacity: 0, x: 20 }}
+						animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
+						className="flex flex-2 ml-auto flex-row items-center justify-center ml-14 space-x-10 mt-10 "
+					>
+						<Button
+							variant="contained"
+							color="secondary"
+							className="w-full"
+							// onClick={ev => dispatch(openNewContactDialog())}
+						>
+							<PictureAsPdfIcon />
+						</Button>
+						<Button
+							variant="contained"
+							color="secondary"
+							className="w-full"
+							// onClick={ev => dispatch(openNewContactDialog())}
+						>
+							<PrintIcon />
+						</Button>
+					</motion.div>
 				</Toolbar>
 				<div className="flex flex-col items-center justify-center pb-24">
 					{contactDialog?.type === 'edit' && (

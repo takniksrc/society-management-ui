@@ -1,6 +1,6 @@
 // Internet Explorer 11 requires polyfills and partially supported by this project.
 // import 'react-app-polyfill/ie11';
-// import 'react-app-polyfill/stable';      
+// import 'react-app-polyfill/stable';
 import ReactDOM from 'react-dom';
 import 'typeface-poppins';
 import './i18n';
@@ -9,8 +9,20 @@ import './styles/app-base.css';
 import './styles/app-components.css';
 import './styles/app-utilities.css';
 import App from 'app/App';
-import * as serviceWorker from './serviceWorker';
+import axios from 'axios';
+import * as serviceWorker from './serviceWorker'; 
 import reportWebVitals from './reportWebVitals';
+
+axios.defaults.baseURL = 'http://localhost:8000/';
+axios.interceptors.request.use(request => {
+	console.log(request);
+	request.headers.channelName = 'Usman';
+	return request;
+});
+axios.interceptors.request.use(response => {
+	console.log(response);
+	return response;
+});
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
