@@ -9,9 +9,9 @@ import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Auth0LoginTab from './tabs/Auth0LoginTab';
-import FirebaseLoginTab from './tabs/FirebaseLoginTab';
-import JWTLoginTab from './tabs/JWTLoginTab';
+import Auth0RegisterTab from './tabs/Auth0RegisterTab';
+import FirebaseRegisterTab from './tabs/FirebaseRegisterTab';
+import JWTRegisterTab from './tabs/JWTRegisterTab';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-function Login() {
+function Register() {
 	const classes = useStyles();
 	const [selectedTab, setSelectedTab] = useState(0);
 
@@ -60,7 +60,7 @@ function Login() {
 				>
 					<CardContent className="flex flex-col items-center justify-center w-full py-96 max-w-320">
 						<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.2 } }}>
-							<div className="flex items-center mb-48">
+							<div className="flex items-center justif-center mb-32">
 								<img className="logo-icon w-48" src="assets/images/logos/fuse.svg" alt="logo" />
 								<div className="border-l-1 mr-4 w-1 h-40" />
 								<div>
@@ -106,19 +106,19 @@ function Login() {
 							/>
 						</Tabs>
 
-						{selectedTab === 0 && <JWTLoginTab />}
-						{selectedTab === 1 && <FirebaseLoginTab />}
-						{selectedTab === 2 && <Auth0LoginTab />}
+						{selectedTab === 0 && <JWTRegisterTab />}
+						{selectedTab === 1 && <FirebaseRegisterTab />}
+						{selectedTab === 2 && <Auth0RegisterTab />}
 					</CardContent>
 
 					<div className="flex flex-col items-center justify-center pb-32">
 						<div>
-							<span className="font-normal mr-8">Don't have an account?</span>
-							<Link className="font-normal" to="/register">
-								Register
+							<span className="font-normal mr-8">Already have an account?</span>
+							<Link className="font-normal" to="/login">
+								Login
 							</Link>
 						</div>
-						<Link className="font-normal mt-8" to="/users">
+						<Link className="font-normal mt-8" to="/">
 							Back to Dashboard
 						</Link>
 					</div>
@@ -149,4 +149,4 @@ function Login() {
 	);
 }
 
-export default Login;
+export default Register;
