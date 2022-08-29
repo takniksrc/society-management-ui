@@ -9,22 +9,21 @@ import DialogContent from '@material-ui/core/DialogContent';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-
+import OutlinedInput from '@material-ui/core/OutlinedInput';
 import _ from '@lodash';
 import * as yup from 'yup';
 
-import {
-	removeUser,
-	updateUser,
-	addUser,
-	closeNewContactDialog,
-	closeEditContactDialog
-} from './store/newUsersSlice';
+import { removeUser, updateUser, addUser, closeNewContactDialog, closeEditContactDialog } from './store/newUsersSlice';
 
 const defaultValues = {
 	id: '',
@@ -46,8 +45,60 @@ const schema = yup.object().shape({
 function ContactDialog(props) {
 	const dispatch = useDispatch();
 	const contactDialog = useSelector(({ newUsersSlice }) => newUsersSlice.newUsersSlice);
-	console.log('I am clicked',contactDialog)
-
+	console.log('I am clicked', contactDialog);
+	const [customerType, setCustomerType] = useState('');
+	const customerstype = [
+		{ id: 0, value: 'residential', label: 'Residential', color: '#2196f3' },
+		{ id: 1, value: 'commercial', label: 'Commercial', color: '#2196f3' },
+		{ id: 2, value: 'construction', label: 'Construction', color: '#2196f3' }
+	];
+	const handleCustomerType = event => {
+		setCustomerType(event.target.value);
+	};
+	const [propertyType, setPropertyType] = useState('');
+	const propertiestype = [
+		{ id: 0, value: 'house', label: 'House', color: '#2196f3' },
+		{ id: 1, value: 'plot', label: 'Plot', color: '#2196f3' },
+		{ id: 2, value: 'flat', label: 'Flat', color: '#2196f3' }
+	];
+	const handlePropertyType = event => {
+		setPropertyType(event.target.value);
+	};
+	const [propertySize, setPropertySize] = useState('');
+	const propertiessize = [
+		{ id: 0, value: '4marla', label: '4 Marla', color: '#2196f3' },
+		{ id: 1, value: '8marla', label: '8 Marla', color: '#2196f3' },
+		{ id: 2, value: '12marla', label: '12 Marla', color: '#2196f3' }
+	];
+	const handleProperty = event => {
+		setPropertySize(event.target.value);
+	};
+	const [meterPhase, setMeterPhase] = useState('');
+	const metersphase = [
+		{ id: 0, value: 'singlephase', label: 'Single Phase', color: '#2196f3' },
+		{ id: 1, value: '2phase', label: '2 Phase', color: '#2196f3' },
+		{ id: 2, value: '3phase', label: '3 Phase', color: '#2196f3' }
+	];
+	const handleMeterPhase = event => {
+		setMeterPhase(event.target.value);
+	};
+	const [meterType, setMeterType] = useState('');
+	const meterstype = [
+		{ id: 0, value: 'normal', label: 'Normal', color: '#2196f3' },
+		{ id: 1, value: 'mco', label: 'MCO', color: '#2196f3' }
+	];
+	const handleMeterType = event => {
+		setMeterType(event.target.value);
+	};
+	const [meterStatus, setMeterStatus] = useState('');
+	const metersstatus = [
+		{ id: 0, value: 'active', label: 'Active', color: '#2196f3' },
+		{ id: 1, value: 'temperorllydisconnect', label: 'Temporarlly Disconect', color: '#2196f3' },
+		{ id: 2, value: 'permanentdisconect', label: 'Permanent Disconect', color: '#2196f3' }
+	];
+	const handleMeterStatus = event => {
+		setMeterStatus(event.target.value);
+	};
 	const { control, watch, reset, handleSubmit, formState, getValues } = useForm({
 		mode: 'onChange',
 		defaultValues,
@@ -67,7 +118,7 @@ function ContactDialog(props) {
 		/**
 		 * Dialog type: 'edit'
 		 */
-		console.log('inCallback')
+		console.log('inCallback');
 		if (contactDialog.type === 'edit' && contactDialog.data) {
 			reset({ ...contactDialog.data });
 		}
@@ -82,7 +133,7 @@ function ContactDialog(props) {
 				id: FuseUtils.generateGUID()
 			});
 		}
-	}, [contactDialog.data, contactDialog.type,reset]);
+	}, [contactDialog.data, contactDialog.type, reset]);
 
 	/**
 	 * On Dialog Open
@@ -91,7 +142,7 @@ function ContactDialog(props) {
 		if (contactDialog.props.open) {
 			initDialog();
 		}
-	}, [contactDialog.props.open,initDialog]);
+	}, [contactDialog.props.open, initDialog]);
 
 	// /**
 	//  * Close Dialog
@@ -148,6 +199,26 @@ function ContactDialog(props) {
 				<DialogContent classes={{ root: 'p-24' }}>
 					<div className="flex">
 						<div className="min-w-48 pt-20">
+							<Icon color="action">confirmation_number</Icon>
+						</div>
+						<Controller
+							control={control}
+							name="reference_number"
+							render={({ field }) => (
+								<TextField
+									{...field}
+									className="mb-24"
+									label="Reference Number"
+									id="reference_number"
+									variant="outlined"
+									type="number"
+									fullWidth
+								/>
+							)}
+						/>
+					</div>
+					<div className="flex">
+						<div className="min-w-48 pt-20">
 							<Icon color="action">account_circle</Icon>
 						</div>
 						<Controller
@@ -168,78 +239,20 @@ function ContactDialog(props) {
 							)}
 						/>
 					</div>
-					<div className="flex">
-						<div className="min-w-48 pt-20">
-							<Icon color="action">email</Icon>
-						</div>
-						<Controller
-							control={control}
-							name="property_size"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									label="Property Size"
-									id="property_size"
-									variant="outlined"
-									fullWidth
-								/>
-							)}
-						/>
-					</div>
-					<div className="flex">
-						<div className="min-w-48 pt-20">
-							<Icon color="action">email</Icon>
-						</div>
-						<Controller
-							control={control}
-							name="property_type"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									label="Property Type"
-									id="property_type"
-									variant="outlined"
-									fullWidth
-								/>
-							)}
-						/>
-					</div>
-					<div className="flex">
-						<div className="min-w-48 pt-20">
-							<Icon color="action">email</Icon>
-						</div>
-						<Controller
-							control={control}
-							name="meter_no"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									label="Meter No"
-									id="meter_no"
-									variant="outlined"
-									fullWidth
-								/>
-							)}
-						/>
-					</div>
 
 					<div className="flex">
 						<div className="min-w-48 pt-20">
-							<Icon color="action">work</Icon>
+							<Icon color="action">contact_mail</Icon>
 						</div>
 						<Controller
 							control={control}
-							name="meter_type"
+							name="cnic"
 							render={({ field }) => (
 								<TextField
 									{...field}
 									className="mb-24"
-									label="Meter Type"
-									id="meter_type"
-									name="meter_type"
+									label="CNIC"
+									id="cnic"
 									variant="outlined"
 									fullWidth
 								/>
@@ -248,24 +261,260 @@ function ContactDialog(props) {
 					</div>
 					<div className="flex">
 						<div className="min-w-48 pt-20">
-							<Icon color="action">work</Icon>
+							<Icon color="action">phone</Icon>
 						</div>
 						<Controller
 							control={control}
-							name="billing_status"
+							name="phone"
 							render={({ field }) => (
 								<TextField
 									{...field}
 									className="mb-24"
-									label="Billing Status"
-									id="billing_status"
-									name="billing_status"
+									label="Phone"
+									id="phone"
 									variant="outlined"
 									fullWidth
 								/>
 							)}
 						/>
 					</div>
+					<div className="flex">
+						<div className="min-w-48 pt-20">
+							<Icon color="action">email</Icon>
+						</div>
+						<Controller
+							control={control}
+							name="email"
+							render={({ field }) => (
+								<TextField
+									{...field}
+									className="mb-24"
+									label="Email"
+									id="email"
+									variant="outlined"
+									fullWidth
+								/>
+							)}
+						/>
+					</div>
+					<div className="flex">
+						<div className="min-w-48 pt-20">
+							<Icon color="action">location_on</Icon>
+						</div>
+						<Controller
+							control={control}
+							name="address"
+							render={({ field }) => (
+								<TextField
+									{...field}
+									className="mb-24"
+									label="Address"
+									id="address"
+									variant="outlined"
+									fullWidth
+								/>
+							)}
+						/>
+						<div className="min-w-48 pt-20 pl-16">
+							<Icon color="action">location_city</Icon>
+						</div>
+						<Controller
+							control={control}
+							name="block"
+							render={({ field }) => (
+								<TextField
+									{...field}
+									className="mb-24"
+									label="Block"
+									id="block"
+									variant="outlined"
+									fullWidth
+								/>
+							)}
+						/>
+					</div>
+					<div className="flex">
+						<div className="min-w-48 pt-20">
+							<Icon color="action">email</Icon>
+						</div>
+						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
+							<InputLabel htmlFor="category-label-placeholder"> Customer Type </InputLabel>
+							<Select
+								value={customerType}
+								onChange={handleCustomerType}
+								input={
+									<OutlinedInput
+										labelWidth={'category'.length * 9}
+										name="customer_type"
+										id="category-label-placeholder"
+									/>
+								}
+							>
+								{/* <MenuItem value="all">
+									<em> All </em>
+								</MenuItem> */}
+								{customerstype.map(category => (
+									<MenuItem value={category.value} key={category.id}>
+										{category.label}
+									</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+					</div>
+					<div className="flex">
+						<div className="min-w-48 pt-20">
+							<Icon color="action">email</Icon>
+						</div>
+						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
+							<InputLabel htmlFor="category-label-placeholder"> Property Type </InputLabel>
+							<Select
+								value={propertyType}
+								onChange={handlePropertyType}
+								input={
+									<OutlinedInput
+										labelWidth={'category'.length * 9}
+										name="property_type"
+										id="category-label-placeholder"
+									/>
+								}
+							>
+								{/* <MenuItem value="all">
+									<em> All </em>
+								</MenuItem> */}
+								{propertiestype.map(category => (
+									<MenuItem value={category.value} key={category.id}>
+										{category.label}
+									</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+						<div className="min-w-48 pt-20 pl-12">
+							<Icon color="action">email</Icon>
+						</div>
+						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
+							<InputLabel htmlFor="category-label-placeholder"> Property Size </InputLabel>
+							<Select
+								value={propertySize}
+								onChange={handleProperty}
+								input={
+									<OutlinedInput
+										labelWidth={'category'.length * 9}
+										name="property_size"
+										id="category-label-placeholder"
+									/>
+								}
+							>
+								{/* <MenuItem value="all">
+									<em> All </em>
+								</MenuItem> */}
+								{propertiessize.map(category => (
+									<MenuItem value={category.value} key={category.id}>
+										{category.label}
+									</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+					</div>
+					<div className="flex">
+					<div className="min-w-48 pt-20">
+							<Icon color="action">location_city</Icon>
+						</div>
+						<Controller
+							control={control}
+							name="meter_number"
+							render={({ field }) => (
+								<TextField
+									{...field}
+									className="mb-24"
+									label="Meter Number"
+									id="meter_number"
+									variant="outlined"
+									fullWidth
+								/>
+							)}
+						/>
+						<div className="min-w-48 pt-20 pl-12">
+							<Icon color="action">email</Icon>
+						</div>
+						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
+							<InputLabel htmlFor="category-label-placeholder"> Meter Phase </InputLabel>
+							<Select
+								value={meterPhase}
+								onChange={handleMeterPhase}
+								input={
+									<OutlinedInput
+										labelWidth={'category'.length * 9}
+										name="meter_phase"
+										id="category-label-placeholder"
+									/>
+								}
+							>
+								{/* <MenuItem value="all">
+									<em> All </em>
+								</MenuItem> */}
+								{metersphase.map(category => (
+									<MenuItem value={category.value} key={category.id}>
+										{category.label}
+									</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+					</div>
+					<div className="flex">
+						<div className="min-w-48 pt-20">
+							<Icon color="action">email</Icon>
+						</div>
+						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
+							<InputLabel htmlFor="category-label-placeholder"> Meter Type </InputLabel>
+							<Select
+								value={meterType}
+								onChange={handleMeterType}
+								input={
+									<OutlinedInput
+										labelWidth={'category'.length * 9}
+										name="meter_type"
+										id="category-label-placeholder"
+									/>
+								}
+							>
+								{/* <MenuItem value="all">
+									<em> All </em>
+								</MenuItem> */}
+								{meterstype.map(category => (
+									<MenuItem value={category.value} key={category.id}>
+										{category.label}
+									</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+						<div className="min-w-48 pt-20 pl-12">
+							<Icon color="action">email</Icon>
+						</div>
+						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
+							<InputLabel htmlFor="category-label-placeholder"> Meter Status </InputLabel>
+							<Select
+								value={meterStatus}
+								onChange={handleMeterStatus}
+								input={
+									<OutlinedInput
+										labelWidth={'category'.length * 9}
+										name="meter_status"
+										id="category-label-placeholder"
+									/>
+								}
+							>
+								{/* <MenuItem value="all">
+									<em> All </em>
+								</MenuItem> */}
+								{metersstatus.map(category => (
+									<MenuItem value={category.value} key={category.id}>
+										{category.label}
+									</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+					</div>
+				
 				</DialogContent>
 
 				{contactDialog?.type === 'new' ? (

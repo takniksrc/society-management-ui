@@ -13,7 +13,7 @@ import TextField from '@material-ui/core/TextField';
 import { Controller, useFormContext, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-
+import UploadButtons from 'app/main/Button/UploadButtons';
 import { DateTimePicker } from '@material-ui/pickers';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -24,7 +24,6 @@ import reducer from '../store';
 // import { selectBoards, newBoard, getBoards, resetBoards } from '../store/boardsSlice';
 import societyChargesIcon from '../../../../assets/ServicesIcon/society-charges-icon.png';
 import consumptionChragesIcon from '../../../../assets/ServicesIcon/consumption-based-icon.png';
-import UploadButtons from 'app/main/Button/UploadButtons';
 
 const defaultValues = {
 	id: '',
@@ -185,16 +184,20 @@ function GBData(props) {
 								</div>
 								<div className="flex items-center justify-center ">
 									<div className="mb-8">
-									<Typography variant="subtitle1" className="font-semibold mr-8 mx-4 mr-20">
-										Add FPA File
-									</Typography>
-									<Typography variant="subtitle1" className="flex items-center justify-center text-xs font-semibold mr-8 mx-4">
-										(optional)
-									</Typography>
+										<Typography variant="subtitle1" className="font-semibold mr-8 mx-4 mr-20">
+											Add FPA File
+										</Typography>
+										<Typography
+											variant="subtitle1"
+											className="flex items-center justify-center text-xs font-semibold mr-8 mx-4"
+										>
+											(optional)
+										</Typography>
 									</div>
-									<div> <UploadButtons /></div>
-									
-									
+									<div>
+										{' '}
+										<UploadButtons />
+									</div>
 								</div>
 							</div>
 							<div className="px-16">
