@@ -33,21 +33,20 @@ import { useDispatch, useSelector } from 'react-redux';
 const useStyles = makeStyles({
 	layoutRoot: {}
 });
-
+/*
 const customerType = ["Residential", "Commercial", "Construction"];
 const ResidentialPropertyType = ["House", "Flat", "Plot"];
 const CommercialPropertyType = ["Plot", "Shop"];
 const ResidentialPropertySize = ["5 Marla", "7 Marla", "10 Marla", "1 Kanal", "2 Kanal"];
 const CommercialPropertySize = ["4 Marla", "8 Marla", "12 Marla"];
+*/
 
-
-/*
 const propertyData = [
 	{ customerType: "Residential", propertyType: ["House", "Flat", "Plot"], propertySize: ["5 Marla", "7 Marla", "10 Marla", "1 Kanal", "2 Kanal"] },
 	{ customerType: "Commercial", propertyType: ["Plot", "Shop"], propertySize: ["4 Marla", "8 Marla", "12 Marla"] },
 	{ customerType: "Construction", propertyType: [], propertySize: [] }
 ];
-*/
+
 
 
 
@@ -66,66 +65,44 @@ function PropertyManagement() {
 				</div>
 			}
 			content={
-				// propertyData && (propertyData.length > 0 ? (
-				<motion.div
-								className="flex flex-wrap py-24"
-								variants={Container}
-								initial="hidden"
-								animate="show"
-							>
-								{customerType.map(item => {
-									
-									return (
-										<motion.div
-											variants={item}
-											className="w-full pb-24 sm:w-1/2 lg:w-1/3 sm:p-16"
-											key={item}
-										>
-											<Card className="flex flex-col h-256 shadow">
-												<div
-													className="flex flex-shrink-0 items-center justify-between px-24 h-64"
-													style={{
-														background: "gray",
-														color: "red"
-													}}
-												>
-													<Typography className="font-medium truncate" color="inherit">
-														{item}
-													</Typography>
-													<div className="flex items-center justify-center opacity-75">
-														<Icon className="text-20 mx-8" color="inherit">
-															access_time
-														</Icon>
-														<div className="text-14 font-medium whitespace-nowrap">
-															{item.propertyType}
-															
-														</div>
-													</div>
-												</div>
-												<CardContent className="flex flex-col flex-auto items-center justify-center">
-													<Typography className="text-center text-16 font-medium">
-														{item.propertySize}
-													</Typography>
-													<Typography
-														className="text-center text-13 mt-8 font-normal"
-														color="textSecondary"
-													>
-														{item.propertySize}
-													</Typography>
-												</CardContent>
-												
-												
-											</Card>
-										</motion.div>
-									);
-								})}
-							</motion.div>
-							
-							
-							
-						
-				}
-			
+
+
+
+				<div className="p-32">
+					{propertyData.map((item, index) => (
+
+						<Box key={index}
+							className="p-16 w-full rounded-16 mb-24 border"
+						>
+							<Typography className="font-medium" variant="h6">{item.customerType}</Typography>
+
+							<div className="flex flex-wrap -m-8 mt-8">
+								{item.propertyType.map((itemone, index) => (
+									<Box key={index}
+										className="relative w-full sm:w-160 h-160 m-8 p-16 shadow rounded-16"
+									>
+
+										<Typography className="truncate text-16 font-medium">{itemone}</Typography>
+										<div className="flex flex-wrap -m-8 mt-8 space-x-4 space-y-4">
+											{item.propertySize.map((itemtwo, index) => (
+												<Chip key={index} label={itemtwo} />
+
+											))}
+										</div>
+
+
+
+
+									</Box>
+								))}
+							</div>
+						</Box>
+					))}
+
+
+
+				</div>
+			}
 		/>
 	);
 }
