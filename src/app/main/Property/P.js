@@ -161,3 +161,66 @@ export default PropertyManagement;
 }
 export default PropertyManagement;
 */}
+
+
+--------------------
+
+
+// propertyData && (propertyData.length > 0 ? (
+    <motion.div
+    className="flex flex-wrap py-24"
+    variants={Container}
+    initial="hidden"
+    animate="show"
+>
+    {propertyData.map(item => {
+
+        return (
+            <motion.div
+
+                className="w-full pb-24 sm:w-1/2 lg:w-1/3 sm:p-16"
+
+            >
+                <Card className="flex flex-col h-256 shadow">
+                    <div
+                        className="flex flex-shrink-0 items-center justify-between px-24 h-64"
+                        style={{
+                            background: "gray",
+                            color: "red"
+                        }}
+                    >
+                        <Typography className="font-medium truncate" color="inherit">
+                            {item.customerType}
+                        </Typography>
+                        {propertyData.propertyType.map((item) => (
+                            <div className="flex items-center justify-center opacity-75">
+
+                                <Icon className="text-20 mx-8" color="inherit">
+                                    access_time
+                                </Icon>
+                                <div className="text-14 font-medium whitespace-nowrap">
+                                    {item.propertyType}
+                                </div>
+
+                            </div>
+                        ))}
+                    </div>
+                    <CardContent className="flex flex-col flex-auto items-center justify-center">
+                        <Typography className="text-center text-16 font-medium">
+                            {item.propertySize}
+                        </Typography>
+                        <Typography
+                            className="text-center text-13 mt-8 font-normal"
+                            color="textSecondary"
+                        >
+                            {item.propertySize}
+                        </Typography>
+                    </CardContent>
+
+
+                </Card>
+            </motion.div>
+        );
+    })}
+</motion.div>
+
