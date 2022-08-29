@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const getBillingData = createAsyncThunk('contactsApp/user/getBillingData', async () => {
 	
-	const response = await axios.get('/api/api/bills');
+	const response = await axios.get('/api/bills');
 	const data = await response.data;
 	// console.log('I am data',data)
 

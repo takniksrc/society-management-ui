@@ -70,18 +70,19 @@ export const createUserSettingsFirebase = authUser => async (dispatch, getState)
 };
 
 export const setUserData = user => async (dispatch, getState) => {
+	console.log('user inside setUserDAta', user);
 	/*
         You can redirect the logged-in user to a specific route depending on his role
          */
-
-	history.location.state = {
-		redirectUrl: user.redirectUrl // for example 'apps/academy'
-	};
+	history.push('/users');
+	// history.location.state = {
+	// 	redirectUrl: '' // for example 'apps/academy'
+	// };
 
 	/*
     Set User Settings
      */
-	dispatch(setDefaultSettings(user.data.settings));
+	// dispatch(setDefaultSettings(user.data.settings));
 
 	dispatch(setUser(user));
 };

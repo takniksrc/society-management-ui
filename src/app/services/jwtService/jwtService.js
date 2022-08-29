@@ -57,24 +57,38 @@ class JwtService extends FuseUtils.EventEmitter {
 			});
 		});
 	};
+	// currently in use
 
 	signInWithEmailAndPassword = (email, password) => {
+		console.log('I am user ', { email, password });
+
 		return new Promise((resolve, reject) => {
-			axios
-				.get('/api/auth', {
-					data: {
-						email,
-						password
-					}
-				})
-				.then(response => {
-					if (response.data.user) {
-						this.setSession(response.data.access_token);
-						resolve(response.data.user);
-					} else {
-						reject(response.data.error);
-					}
-				});
+			const data = JSON.stringify({
+				email,
+				password
+			});
+
+			const config = {
+				method: 'post',
+				url: '/api/login',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json'
+				},
+				data
+			};
+
+			axios(config).then(response => {
+				console.log('response', response);
+				if (response.data.access_token) {
+					console.log('response.data.accessToken', response.data.access_token);
+					this.setSession(response.data.access_token);
+					// resolve(response.data.user);
+					resolve({ redirectUrl: 'users', role: 'admin', data: { displayName: 'Fake User', email } });
+				} else {
+					reject(response.data.error);
+				}
+			});
 		});
 	};
 
@@ -132,7 +146,7 @@ class JwtService extends FuseUtils.EventEmitter {
 			console.warn('access token expired');
 			return false;
 		}
-
+		console.log('access token valid', decoded.exp);
 		return true;
 	};
 

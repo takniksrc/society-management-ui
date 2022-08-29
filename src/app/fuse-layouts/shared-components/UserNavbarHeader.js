@@ -48,7 +48,7 @@ function UserNavbarHeader(props) {
 				{user.data.email}
 			</Typography>
 			<div className="flex items-center justify-center absolute bottom-0 -mb-44">
-				<Avatar
+				{/* <Avatar
 					className={clsx(classes.avatar, 'avatar w-72 h-72 p-8 box-content')}
 					alt="user photo"
 					src={
@@ -56,7 +56,7 @@ function UserNavbarHeader(props) {
 							? user.data.photoURL
 							: 'assets/images/avatars/profile.jpg'
 					}
-				/>
+				/> */}
 			</div>
 		</AppBar>
 	);

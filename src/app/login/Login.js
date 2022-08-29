@@ -10,7 +10,6 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Auth0LoginTab from './tabs/Auth0LoginTab';
-import FirebaseLoginTab from './tabs/FirebaseLoginTab';
 import JWTLoginTab from './tabs/JWTLoginTab';
 
 const useStyles = makeStyles(theme => ({
@@ -61,18 +60,16 @@ function Login() {
 					<CardContent className="flex flex-col items-center justify-center w-full py-96 max-w-320">
 						<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.2 } }}>
 							<div className="flex items-center mb-48">
-								<img className="logo-icon w-48" src="assets/images/logos/fuse.svg" alt="logo" />
-								<div className="border-l-1 mr-4 w-1 h-40" />
+								{/* <img className="logo-icon w-48" src="assets/images/logos/fuse.svg" alt="logo" /> */}
+								{/* <div className="border-l-1 mr-4 w-1 h-40" /> */}
 								<div>
 									<Typography className="text-24 font-semibold logo-text" color="inherit">
-										FUSE
+										SMS
 									</Typography>
 									<Typography
 										className="text-16 tracking-widest -mt-8 font-700"
 										color="textSecondary"
-									>
-										REACT
-									</Typography>
+									></Typography>
 								</div>
 							</div>
 						</motion.div>
@@ -84,31 +81,26 @@ function Login() {
 							className="w-full mb-32"
 						>
 							<Tab
-								icon={
-									<img
-										className="h-40 p-4 bg-black rounded-12"
-										src="assets/images/logos/jwt.svg"
-										alt="firebase"
-									/>
-								}
+								// icon={
+								// 	<img
+								// 		className="h-40 p-4 bg-black rounded-12"
+								// 		src="assets/images/logos/jwt.svg"
+								// 		alt="firebase"
+								// 	/>
+								// }
 								className="min-w-0"
-								label="JWT"
+								label="Login with User"
 							/>
+
 							<Tab
-								icon={<img className="h-40" src="assets/images/logos/firebase.svg" alt="firebase" />}
+								// icon={<img className="h-40" src="assets/images/logos/auth0.svg" alt="auth0" />}
 								className="min-w-0"
-								label="Firebase"
-							/>
-							<Tab
-								icon={<img className="h-40" src="assets/images/logos/auth0.svg" alt="auth0" />}
-								className="min-w-0"
-								label="Auth0"
+								label="Login with Google"
 							/>
 						</Tabs>
 
 						{selectedTab === 0 && <JWTLoginTab />}
-						{selectedTab === 1 && <FirebaseLoginTab />}
-						{selectedTab === 2 && <Auth0LoginTab />}
+						{selectedTab === 1 && <Auth0LoginTab />}
 					</CardContent>
 
 					<div className="flex flex-col items-center justify-center pb-32">
@@ -132,14 +124,14 @@ function Login() {
 						>
 							<Typography variant="h3" color="inherit" className="font-semibold leading-tight">
 								Welcome <br />
-								to the <br /> FUSE React!
+								to the <br /> Society Management System!
 							</Typography>
 						</motion.div>
 
 						<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.3 } }}>
 							<Typography variant="subtitle1" color="inherit" className="mt-32">
-								Powerful and professional admin template for Web Applications, CRM, CMS, Admin Panels
-								and more.
+								Society Management System simplify and automate societies' operations.
+								{/* Manage various administrative activities through a smart dashboard that helps you access any feature in just a click. */}
 							</Typography>
 						</motion.div>
 					</div>

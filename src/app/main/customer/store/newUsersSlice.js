@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
-import axios from 'axios';
+import instance from 'axiosinstance';
 import { getCustomerData } from './customerSlice';
 
 export const getUsers = createAsyncThunk('users/getUsers', async (routeParams, { getState }) => {
 	routeParams = routeParams || getState().contactsApp.contacts.routeParams;
-	const response = await axios.get('/api/api/customers', {
+	const response = await instance.get('/api/customers', {
 		params: routeParams
 	});
 	const data = await response.data;
@@ -15,7 +15,7 @@ export const getUsers = createAsyncThunk('users/getUsers', async (routeParams, {
 export const addUser = createAsyncThunk(
 	'users/addUser',
 	async (contact, { dispatch, getState }) => {
-		const response = await axios.post('/api/api/customers', { contact });
+		const response = await instance.post('/api/customers', { contact });
 		const data = await response.data;
         console.log('I am new updated data',data)
 		dispatch(getUsers());
@@ -26,8 +26,8 @@ export const addUser = createAsyncThunk(
 export const updateUser = createAsyncThunk(
 	'users/updateUser',
 	async (user, { dispatch, getState }) => {
-		const response = await axios.post('/api/api/customers/{user}', { user });
-	// const response = await axios.post(`/api/users/${user}`);
+		const response = await instance.post('/api/customers/{user}', { user });
+	// const response = await instance.post(`/api/users/${user}`);
 		const data = await response.data;
 
 		dispatch(getUsers());
@@ -40,7 +40,7 @@ export const removeUser = createAsyncThunk(
 	'users/removeUser',
 	async (userId, { dispatch, getState }) => {
 		console.log('i am clicked')
-		await axios.post('/api/api/customers/{user}', { userId });
+		await instance.post('/api/customers/{user}', { userId });
 
 		return userId;
 	}
@@ -49,7 +49,7 @@ export const removeUser = createAsyncThunk(
 export const removeUsers = createAsyncThunk(
 	'users/removeUsers',
 	async (contactIds, { dispatch, getState }) => {
-		await axios.post('/api/api/customers/{user}', { contactIds });
+		await instance.post('/api/customers/{user}', { contactIds });
 
 		return contactIds;
 	}
@@ -58,7 +58,7 @@ export const removeUsers = createAsyncThunk(
 export const toggleStarredContact = createAsyncThunk(
 	'users/toggleStarredContact',
 	async (contactId, { dispatch, getState }) => {
-		const response = await axios.post('/api/contacts-app/toggle-starred-contact', { contactId });
+		const response = await instance.post('/api/contacts-app/toggle-starred-contact', { contactId });
 		const data = await response.data;
 
 		dispatch(getCustomerData());
@@ -72,7 +72,7 @@ export const toggleStarredContact = createAsyncThunk(
 export const toggleStarredContacts = createAsyncThunk(
 	'users/toggleStarredContacts',
 	async (contactIds, { dispatch, getState }) => {
-		const response = await axios.post('/api/contacts-app/toggle-starred-contacts', { contactIds });
+		const response = await instance.post('/api/contacts-app/toggle-starred-contacts', { contactIds });
 		const data = await response.data;
 
 		dispatch(getCustomerData());
@@ -86,7 +86,7 @@ export const toggleStarredContacts = createAsyncThunk(
 export const setContactsStarred = createAsyncThunk(
 	'users/setContactsStarred',
 	async (contactIds, { dispatch, getState }) => {
-		const response = await axios.post('/api/contacts-app/set-contacts-starred', { contactIds });
+		const response = await instance.post('/api/contacts-app/set-contacts-starred', { contactIds });
 		const data = await response.data;
 
 		dispatch(getCustomerData());
@@ -100,7 +100,7 @@ export const setContactsStarred = createAsyncThunk(
 export const setContactsUnstarred = createAsyncThunk(
 	'users/setContactsUnstarred',
 	async (contactIds, { dispatch, getState }) => {
-		const response = await axios.post('/api/contacts-app/set-contacts-unstarred', { contactIds });
+		const response = await instance.post('/api/contacts-app/set-contacts-unstarred', { contactIds });
 		const data = await response.data;
 
 		dispatch(getCustomerData());

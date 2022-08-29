@@ -1,64 +1,54 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
-import axios from 'axios';
+// import instance from 'instance';
+import instance from 'axiosinstance';
+
 import { getUserData } from './userSlice';
 
 export const getUsers = createAsyncThunk('users/getUsers', async (routeParams, { getState }) => {
 	routeParams = routeParams || getState().contactsApp.contacts.routeParams;
-	const response = await axios.get('/api/api/users', {
+	const response = await instance.get('/api/users', {
 		params: routeParams
 	});
 	const data = await response.data;
-     console.log('i am dat in ',data)
+	console.log('i am dat in ', data);
 	return { data, routeParams };
 });
 
-export const addUser = createAsyncThunk(
-	'users/addUser',
-	async (contact, { dispatch, getState }) => {
-		const response = await axios.post('/api/api/users', { contact });
-		const data = await response.data;
-        console.log('I am new updated data',data)
-		dispatch(getUsers());
+export const addUser = createAsyncThunk('users/addUser', async (contact, { dispatch, getState }) => {
+	const response = await instance.post('/api/users', { contact });
+	const data = await response.data;
+	console.log('I am new updated data', data);
+	dispatch(getUsers());
 
-		return data;
-	}
-);
-export const updateUser = createAsyncThunk(
-	'users/updateUser',
-	async (user, { dispatch, getState }) => {
-		const response = await axios.post('/api/api/users/{user}', { user });
-	// const response = await axios.post(`/api/users/${user}`);
-		const data = await response.data;
+	return data;
+});
+export const updateUser = createAsyncThunk('users/updateUser', async (user, { dispatch, getState }) => {
+	const response = await instance.post('/api/users/{user}', { user });
+	// const response = await instance.post(`/api/users/${user}`);
+	const data = await response.data;
 
-		dispatch(getUsers());
+	dispatch(getUsers());
 
-		return data;
-	}
-);
+	return data;
+});
 
-export const removeUser = createAsyncThunk(
-	'users/removeUser',
-	async (userId, { dispatch, getState }) => {
-		console.log('i am clicked')
-		await axios.post('/api/api/users/{user}', { userId });
+export const removeUser = createAsyncThunk('users/removeUser', async (userId, { dispatch, getState }) => {
+	console.log('i am clicked');
+	await instance.post('/api/users/{user}', { userId });
 
-		return userId;
-	}
-);
+	return userId;
+});
 
-export const removeUsers = createAsyncThunk(
-	'users/removeUsers',
-	async (contactIds, { dispatch, getState }) => {
-		await axios.post('/api/api/users/{user}', { contactIds });
+export const removeUsers = createAsyncThunk('users/removeUsers', async (contactIds, { dispatch, getState }) => {
+	await instance.post('/api/users/{user}', { contactIds });
 
-		return contactIds;
-	}
-);
+	return contactIds;
+});
 
 export const toggleStarredContact = createAsyncThunk(
 	'users/toggleStarredContact',
 	async (contactId, { dispatch, getState }) => {
-		const response = await axios.post('/api/contacts-app/toggle-starred-contact', { contactId });
+		const response = await instance.post('/api/contacts-app/toggle-starred-contact', { contactId });
 		const data = await response.data;
 
 		dispatch(getUserData());
@@ -72,7 +62,7 @@ export const toggleStarredContact = createAsyncThunk(
 export const toggleStarredContacts = createAsyncThunk(
 	'users/toggleStarredContacts',
 	async (contactIds, { dispatch, getState }) => {
-		const response = await axios.post('/api/contacts-app/toggle-starred-contacts', { contactIds });
+		const response = await instance.post('/api/contacts-app/toggle-starred-contacts', { contactIds });
 		const data = await response.data;
 
 		dispatch(getUserData());
@@ -86,7 +76,7 @@ export const toggleStarredContacts = createAsyncThunk(
 export const setContactsStarred = createAsyncThunk(
 	'users/setContactsStarred',
 	async (contactIds, { dispatch, getState }) => {
-		const response = await axios.post('/api/contacts-app/set-contacts-starred', { contactIds });
+		const response = await instance.post('/api/contacts-app/set-contacts-starred', { contactIds });
 		const data = await response.data;
 
 		dispatch(getUserData());
@@ -100,7 +90,7 @@ export const setContactsStarred = createAsyncThunk(
 export const setContactsUnstarred = createAsyncThunk(
 	'users/setContactsUnstarred',
 	async (contactIds, { dispatch, getState }) => {
-		const response = await axios.post('/api/contacts-app/set-contacts-unstarred', { contactIds });
+		const response = await instance.post('/api/contacts-app/set-contacts-unstarred', { contactIds });
 		const data = await response.data;
 
 		dispatch(getUserData());

@@ -1,6 +1,6 @@
-import {render, screen, cleanup} from '@testing-library/react'
-import UsersHeader from "../UsersHeader";
+import { render, screen, cleanup } from '@testing-library/react';
+import UsersHeader from '../UsersHeader';
 
-test('renders without crashing', ()=>{
-   expect(true).toBe(true)
-} ) 
+test('renders without crashing', () => {
+	expect(true).toBe(true);
+});

@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+// import axios from 'axios';
+import instance from 'axios';
 
 export const getUserData = createAsyncThunk('contactsApp/user/getUserData', async () => {
-	
-	const response = await axios.get('/api/api/users');
+	const response = await instance.get('/api/users');
 	const data = await response.data;
 	// console.log('I am data',data)
 
