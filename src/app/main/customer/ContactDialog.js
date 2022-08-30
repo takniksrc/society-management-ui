@@ -25,23 +25,6 @@ import * as yup from 'yup';
 
 import { removeUser, updateUser, addUser, closeNewContactDialog, closeEditContactDialog } from './store/newUsersSlice';
 
-const defaultValues = {
-	id: '',
-	name: '',
-	propertysize: '',
-	propertytype: '',
-	meterno: '',
-	metertype: '',
-	billingstatus: ''
-};
-
-/**
- * Form Validation Schema
- */
-const schema = yup.object().shape({
-	name: yup.string().required('You must enter a name')
-});
-
 function ContactDialog(props) {
 	const dispatch = useDispatch();
 	const contactDialog = useSelector(({ newUsersSlice }) => newUsersSlice.newUsersSlice);
@@ -99,6 +82,31 @@ function ContactDialog(props) {
 	const handleMeterStatus = event => {
 		setMeterStatus(event.target.value);
 	};
+
+	const defaultValues = {
+		id: '',
+		reference_number: '',
+		cnic: '',
+		phone: '',
+		name: '',
+		address: '',
+		block: '',
+		meter_number: '',
+		property_size: '',
+		property_type: '',
+		meter_type: '',
+		meter_status: meterStatus,
+		customer_type: customerType,
+		meter_phase: meterPhase
+	};
+
+	/**
+	 * Form Validation Schema
+	 */
+	const schema = yup.object().shape({
+		name: yup.string().required('You must enter a name')
+	});
+
 	const { control, watch, reset, handleSubmit, formState, getValues } = useForm({
 		mode: 'onChange',
 		defaultValues,
@@ -155,6 +163,7 @@ function ContactDialog(props) {
 	//  * Form Submit
 	//  */
 	function onSubmit(data) {
+		console.log('data in customer submit', data);
 		if (contactDialog.type === 'new') {
 			dispatch(addUser(data));
 		} else {
@@ -241,7 +250,7 @@ function ContactDialog(props) {
 					</div>
 
 					<div className="flex">
-						<div className="min-w-48 pt-20">
+						<div className="min-w-48 pt-FF20">
 							<Icon color="action">contact_mail</Icon>
 						</div>
 						<Controller
@@ -350,9 +359,6 @@ function ContactDialog(props) {
 									/>
 								}
 							>
-								{/* <MenuItem value="all">
-									<em> All </em>
-								</MenuItem> */}
 								{customerstype.map(category => (
 									<MenuItem value={category.value} key={category.id}>
 										{category.label}
@@ -416,7 +422,7 @@ function ContactDialog(props) {
 						</FormControl>
 					</div>
 					<div className="flex">
-					<div className="min-w-48 pt-20">
+						<div className="min-w-48 pt-20">
 							<Icon color="action">location_city</Icon>
 						</div>
 						<Controller
@@ -514,7 +520,6 @@ function ContactDialog(props) {
 							</Select>
 						</FormControl>
 					</div>
-				
 				</DialogContent>
 
 				{contactDialog?.type === 'new' ? (

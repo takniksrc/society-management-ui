@@ -5,7 +5,7 @@ import instance from 'axios';
 export const getUserData = createAsyncThunk('contactsApp/user/getUserData', async () => {
 	const response = await instance.get('/api/users');
 	const data = await response.data;
-	// console.log('I am data',data)
+	console.log('I am data',data)
 
 	return data;
 });

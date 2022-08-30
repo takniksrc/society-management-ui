@@ -14,20 +14,19 @@ function AllUsersHead(props) {
 	const dispatch = useDispatch();
 	const contacts = useSelector(selectUsers);
 	const searchText = useSelector(({ newUsersSlice }) => newUsersSlice.searchText);
-	console.log('I am contacts',contacts)
-	console.log('I am search text',searchText)
+	console.log('I am contacts', contacts);
+	console.log('I am search text', searchText);
 	// const user = useSelector(({ newUsersSlice }) => newUsersSlice.user);
 	// console.log('I am user se', user);
 
 	const [filteredData, setFilteredData] = useState(null);
-	console.log('I am filtered',filteredData)
-
+	console.log('I am filtered', filteredData);
 
 	const columns = useMemo(
 		() => [
 			{
 				Header: ({ selectedFlatRows }) => {
-					const selectedRowIds = selectedFlatRows.map((row) => row.original.id);
+					const selectedRowIds = selectedFlatRows.map(row => row.original.id);
 
 					return (
 						selectedFlatRows.length > 0 && <ContactsMultiSelectMenu selectedContactIds={selectedRowIds} />
@@ -100,7 +99,7 @@ function AllUsersHead(props) {
 		if (contacts) {
 			setFilteredData(getFilteredArray(contacts, searchText));
 		}
-	},[contacts, searchText]);
+	}, [contacts, searchText]);
 
 	if (!filteredData) {
 		return null;
@@ -118,7 +117,6 @@ function AllUsersHead(props) {
 
 	return (
 		<motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}>
-			
 			<AllUsers
 				columns={columns}
 				data={filteredData}

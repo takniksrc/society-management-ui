@@ -14,20 +14,19 @@ function AllCustomersHead(props) {
 	const dispatch = useDispatch();
 	const customers = useSelector(selectUsers);
 	const searchText = useSelector(({ newUsersSlice }) => newUsersSlice.searchText);
-	console.log('I am customers',customers)
-	console.log('I am search text',searchText)
+	console.log('I am customers', customers);
+	console.log('I am search text', searchText);
 	// const user = useSelector(({ newUsersSlice }) => newUsersSlice.user);
 	// console.log('I am user se', user);
 
 	const [filteredData, setFilteredData] = useState(null);
-	console.log('I am filtered',filteredData)
-
+	console.log('I am filtered', filteredData);
 
 	const columns = useMemo(
 		() => [
 			{
 				Header: ({ selectedFlatRows }) => {
-					const selectedRowIds = selectedFlatRows.map((row) => row.original.id);
+					const selectedRowIds = selectedFlatRows.map(row => row.original.id);
 
 					return (
 						selectedFlatRows.length > 0 && <ContactsMultiSelectMenu selectedContactIds={selectedRowIds} />
@@ -115,7 +114,7 @@ function AllCustomersHead(props) {
 		if (customers) {
 			setFilteredData(getFilteredArray(customers, searchText));
 		}
-	},[customers, searchText]);
+	}, [customers, searchText]);
 
 	if (!filteredData) {
 		return null;

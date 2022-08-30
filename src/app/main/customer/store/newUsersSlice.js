@@ -7,53 +7,41 @@ export const getUsers = createAsyncThunk('users/getUsers', async (routeParams, {
 	const response = await instance.get('/api/customers', {
 		params: routeParams
 	});
-	const data = await response.data;
-     console.log('i am dat in ',data)
+	const data = await response.data.customers;
+	console.log('i am dat in ', data);
 	return { data, routeParams };
 });
 
-export const addUser = createAsyncThunk(
-	'users/addUser',
-	async (contact, { dispatch, getState }) => {
-		const response = await instance.post('/api/customers', { contact });
-		const data = await response.data;
-        console.log('I am new updated data',data)
-		dispatch(getUsers());
+export const addUser = createAsyncThunk('users/addUser', async (contact, { dispatch, getState }) => {
+	const response = await instance.post('/api/customers', { contact });
+	const data = await response.data;
+	console.log('I am new updated data', data);
+	dispatch(getUsers());
 
-		return data;
-	}
-);
-export const updateUser = createAsyncThunk(
-	'users/updateUser',
-	async (user, { dispatch, getState }) => {
-		const response = await instance.post('/api/customers/{user}', { user });
+	return data;
+});
+export const updateUser = createAsyncThunk('users/updateUser', async (user, { dispatch, getState }) => {
+	const response = await instance.post('/api/customers/{user}', { user });
 	// const response = await instance.post(`/api/users/${user}`);
-		const data = await response.data;
+	const data = await response.data;
 
-		dispatch(getUsers());
+	dispatch(getUsers());
 
-		return data;
-	}
-);
+	return data;
+});
 
-export const removeUser = createAsyncThunk(
-	'users/removeUser',
-	async (userId, { dispatch, getState }) => {
-		console.log('i am clicked')
-		await instance.post('/api/customers/{user}', { userId });
+export const removeUser = createAsyncThunk('users/removeUser', async (userId, { dispatch, getState }) => {
+	console.log('i am clicked');
+	await instance.post('/api/customers/{user}', { userId });
 
-		return userId;
-	}
-);
+	return userId;
+});
 
-export const removeUsers = createAsyncThunk(
-	'users/removeUsers',
-	async (contactIds, { dispatch, getState }) => {
-		await instance.post('/api/customers/{user}', { contactIds });
+export const removeUsers = createAsyncThunk('users/removeUsers', async (contactIds, { dispatch, getState }) => {
+	await instance.post('/api/customers/{user}', { contactIds });
 
-		return contactIds;
-	}
-);
+	return contactIds;
+});
 
 export const toggleStarredContact = createAsyncThunk(
 	'users/toggleStarredContact',

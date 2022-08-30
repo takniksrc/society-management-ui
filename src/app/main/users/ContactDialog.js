@@ -11,26 +11,25 @@ import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import _ from '@lodash';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
 import * as yup from 'yup';
 
-import {
-	removeUser,
-	updateUser,
-	addUser,
-	closeNewContactDialog,
-	closeEditContactDialog
-} from './store/newUsersSlice';
+import { removeUser, updateUser, addUser, closeNewContactDialog, closeEditContactDialog } from './store/newUsersSlice';
 
 const defaultValues = {
 	id: '',
 	name: '',
 	email: '',
-	role: '',
+	role: ''
 };
 
 /**
@@ -41,9 +40,19 @@ const schema = yup.object().shape({
 });
 
 function ContactDialog(props) {
+	const [role, setRole] = useState('');
+	const roles = [
+		{ id: 0, value: 'admin', label: 'Admin', color: '#2196f3' },
+		{ id: 1, value: 'worker', label: 'Worker', color: '#2196f3' },
+		{ id: 2, value: 'accountant', label: 'Accountant', color: '#2196f3' }
+	];
+	const handleRole = event => {
+		setRole(event.target.value);
+	};
+
 	const dispatch = useDispatch();
 	const contactDialog = useSelector(({ newUsersSlice }) => newUsersSlice.newUsersSlice);
-	console.log('I am clicked',contactDialog)
+	console.log('I am clicked', contactDialog);
 
 	const { control, watch, reset, handleSubmit, formState, getValues } = useForm({
 		mode: 'onChange',
@@ -64,7 +73,7 @@ function ContactDialog(props) {
 		/**
 		 * Dialog type: 'edit'
 		 */
-		console.log('inCallback')
+		console.log('inCallback');
 		if (contactDialog.type === 'edit' && contactDialog.data) {
 			reset({ ...contactDialog.data });
 		}
@@ -79,7 +88,7 @@ function ContactDialog(props) {
 				id: FuseUtils.generateGUID()
 			});
 		}
-	}, [contactDialog.data, contactDialog.type,reset]);
+	}, [contactDialog.data, contactDialog.type, reset]);
 
 	/**
 	 * On Dialog Open
@@ -88,7 +97,7 @@ function ContactDialog(props) {
 		if (contactDialog.props.open) {
 			initDialog();
 		}
-	}, [contactDialog.props.open,initDialog]);
+	}, [contactDialog.props.open, initDialog]);
 
 	// /**
 	//  * Close Dialog
@@ -187,23 +196,28 @@ function ContactDialog(props) {
 
 					<div className="flex">
 						<div className="min-w-48 pt-20">
-							<Icon color="action">work</Icon>
+							<Icon color="action">email</Icon>
 						</div>
-						<Controller
-							control={control}
-							name="role"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									label="Role"
-									id="role"
-									name="role"
-									variant="outlined"
-									fullWidth
-								/>
-							)}
-						/>
+						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
+							<InputLabel htmlFor="category-label-placeholder"> Role </InputLabel>
+							<Select
+								value={role}
+								onChange={handleRole}
+								input={
+									<OutlinedInput
+										labelWidth={'category'.length * 9}
+										name="role"
+										id="category-label-placeholder"
+									/>
+								}
+							>
+								{roles.map(category => (
+									<MenuItem value={category.value} key={category.id}>
+										{category.label}
+									</MenuItem>
+								))}
+							</Select>
+						</FormControl>
 					</div>
 				</DialogContent>
 

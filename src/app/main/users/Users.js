@@ -1,4 +1,4 @@
-import { useEffect, useState ,useRef} from 'react';
+import { useEffect, useState, useRef } from 'react';
 import DemoContent from '@fuse/core/DemoContent';
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import { makeStyles } from '@material-ui/core/styles';
@@ -48,8 +48,9 @@ const Users = () => {
 	const routeParams = useParams();
 
 	useDeepCompareEffect(() => {
+		console.log('routeParams :', routeParams);
 		dispatch(getUsers(routeParams));
-		dispatch(getUserData());
+		// dispatch(getUserData());
 	}, [dispatch, routeParams]);
 
 	return (
@@ -64,6 +65,6 @@ const Users = () => {
 			<ContactDialog />
 		</>
 	);
-}
+};
 
 export default Users;

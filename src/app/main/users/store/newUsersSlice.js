@@ -9,8 +9,8 @@ export const getUsers = createAsyncThunk('users/getUsers', async (routeParams, {
 	const response = await instance.get('/api/users', {
 		params: routeParams
 	});
-	const data = await response.data;
-	console.log('i am dat in ', data);
+	const data = await response.data.users;
+	console.log('I am data', data);
 	return { data, routeParams };
 });
 
@@ -33,8 +33,7 @@ export const updateUser = createAsyncThunk('users/updateUser', async (user, { di
 });
 
 export const removeUser = createAsyncThunk('users/removeUser', async (userId, { dispatch, getState }) => {
-	console.log('i am clicked');
-	await instance.post('/api/users/{user}', { userId });
+	await instance.delete(`/api/users/${userId}`);
 
 	return userId;
 });
