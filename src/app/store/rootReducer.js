@@ -1,5 +1,6 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import auth from 'app/auth/store';
+// import userSlice from  '../auth/store/userSlice'
 import fuse from './fuse';
 import newUsersSlice from '../main/users/store/newUsersSlice';
 import newCustomersSlice from '../main/customer/store/newCustomersSlice';
@@ -14,6 +15,7 @@ const createReducer = asyncReducers => (state, action) => {
 		newCustomersSlice,
 		...asyncReducers
 	});
+
 
 	/*
 	Reset the redux store when user logged out

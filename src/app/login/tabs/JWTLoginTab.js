@@ -31,6 +31,7 @@ const defaultValues = {
 function JWTLoginTab(props) {
 	const dispatch = useDispatch();
 	const login = useSelector(({ auth }) => auth.login);
+	console.log("login useSelector",login)
 	const { control, setValue, formState, handleSubmit, reset, trigger, setError } = useForm({
 		mode: 'onChange',
 		defaultValues,

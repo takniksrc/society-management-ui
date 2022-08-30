@@ -13,6 +13,7 @@ import axios from 'axios';
 import * as serviceWorker from './serviceWorker'; 
 import reportWebVitals from './reportWebVitals';
 
+
 axios.defaults.baseURL = 'http://localhost:8000/';
 axios.interceptors.request.use(request => {
 	console.log(request);
@@ -24,7 +25,8 @@ axios.interceptors.request.use(response => {
 	return response;
 });
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+<App />, document.getElementById('root'));
 
 reportWebVitals();
 

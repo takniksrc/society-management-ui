@@ -1,5 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { persistReducer, persistStore } from 'redux-persist';
+import thunk from 'redux-thunk';
+import storage from 'redux-persist/lib/storage';
 import createReducer from './rootReducer';
+import userSlice from '../auth/store/userSlice'
 
 if (process.env.NODE_ENV === 'development' && module.hot) {
 	module.hot.accept('./rootReducer', () => {
@@ -17,14 +21,24 @@ if (process.env.NODE_ENV === 'development') {
 	middlewares.push(logger);
 }
 
-const store = configureStore({
-	reducer: createReducer(),
-	middleware: getDefaultMiddleware =>
-		getDefaultMiddleware({
-			immutableCheck: false,
-			serializableCheck: false
-		}).concat(middlewares),
-	devTools: process.env.NODE_ENV === 'development'
+const persistConfig = {
+	key: 'root',
+	storage,
+	whitelist: ['auth/user']
+};
+
+const persistedReducer = persistReducer(persistConfig, userSlice);
+
+export const store = configureStore({
+	reducer: persistedReducer,
+	// middleware: getDefaultMiddleware =>
+	// 	getDefaultMiddleware({
+	// 		immutableCheck: false,
+	// 		serializableCheck: false
+	// 	}).concat(middlewares),
+
+	devTools: process.env.NODE_ENV === 'development',
+	middleware: [thunk]
 });
 
 store.asyncReducers = {};
@@ -38,4 +52,5 @@ export const injectReducer = (key, reducer) => {
 	return store;
 };
 
-export default store;
+// export default persistStore(store);
+export const persistor = persistStore(store);

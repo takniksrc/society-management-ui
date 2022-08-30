@@ -187,16 +187,25 @@ export const updateUserData = user => async (dispatch, getState) => {
 	}
 };
 
+// const initialState = {
+// 	role: [], // guest
+// 	data: {
+// 		displayName: 'John Doe',
+// 		photoURL: 'assets/images/avatars/Velazquez.jpg',
+// 		email: 'johndoe@withinpixels.com',
+// 		shortcuts: ['calendar', 'mail', 'contacts', 'todo']
+// 	}
+// };
+
 const initialState = {
 	role: [], // guest
 	data: {
-		displayName: 'John Doe',
-		photoURL: 'assets/images/avatars/Velazquez.jpg',
-		email: 'johndoe@withinpixels.com',
+		displayName: 'user',
+		photoURL: '',
+		email: 'user@user.com',
 		shortcuts: ['calendar', 'mail', 'contacts', 'todo']
 	}
 };
-
 const userSlice = createSlice({
 	name: 'auth/user',
 	initialState,
