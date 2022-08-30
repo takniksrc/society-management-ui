@@ -196,7 +196,7 @@ function ContactDialog(props) {
 
 					<div className="flex">
 						<div className="min-w-48 pt-20">
-							<Icon color="action">email</Icon>
+							<Icon color="action">contacts_outlined</Icon>
 						</div>
 						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
 							<InputLabel htmlFor="category-label-placeholder"> Role </InputLabel>

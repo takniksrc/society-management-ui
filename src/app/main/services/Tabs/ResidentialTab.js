@@ -14,7 +14,7 @@ import Button from '@material-ui/core/Button';
 function ResidentialTab(props) {
 	const methods = useFormContext();
 	const { control } = methods;
-	const [selectedCategory, setSelectedCategory] = useState('all');
+	const [selectedCategory, setSelectedCategory] = useState('');
 	const categories = [
 		{ id: 0, value: 'house', label: 'House', color: '#2196f3' },
 		{ id: 1, value: 'plot', label: 'Plot', color: '#2196f3' },
@@ -27,7 +27,7 @@ function ResidentialTab(props) {
 	return (
 		<div>
 			<FormControl className="flex w-full sm:w-320 -mx-4 mt-8 mb-16 ml-px" variant="outlined">
-				<InputLabel htmlFor="category-label-placeholder"> Category </InputLabel>
+				<InputLabel htmlFor="category-label-placeholder"> Property Type </InputLabel>
 				<Select
 					value={selectedCategory}
 					onChange={handleSelectedCategory}
@@ -39,9 +39,9 @@ function ResidentialTab(props) {
 						/>
 					}
 				>
-					<MenuItem value="all">
+					{/* <MenuItem value="all">
 						<em> All </em>
-					</MenuItem>
+					</MenuItem> */}
 					{categories.map(category => (
 						<MenuItem value={category.value} key={category.id}>
 							{category.label}

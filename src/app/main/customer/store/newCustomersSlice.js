@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/too
 import instance from 'axiosinstance';
 import { getCustomerData } from './customerSlice';
 
-export const getUsers = createAsyncThunk('users/getUsers', async (routeParams, { getState }) => {
+export const getCustomers = createAsyncThunk('customers/getCustomers', async (routeParams, { getState }) => {
 	routeParams = routeParams || getState().contactsApp.contacts.routeParams;
 	const response = await instance.get('/api/customers', {
 		params: routeParams
@@ -12,88 +12,88 @@ export const getUsers = createAsyncThunk('users/getUsers', async (routeParams, {
 	return { data, routeParams };
 });
 
-export const addUser = createAsyncThunk('users/addUser', async (contact, { dispatch, getState }) => {
+export const addUser = createAsyncThunk('customers/addUser', async (contact, { dispatch, getState }) => {
 	const response = await instance.post('/api/customers', { contact });
 	const data = await response.data;
 	console.log('I am new updated data', data);
-	dispatch(getUsers());
+	dispatch(getCustomers());
 
 	return data;
 });
-export const updateUser = createAsyncThunk('users/updateUser', async (user, { dispatch, getState }) => {
+export const updateUser = createAsyncThunk('customers/updateUser', async (user, { dispatch, getState }) => {
 	const response = await instance.post('/api/customers/{user}', { user });
-	// const response = await instance.post(`/api/users/${user}`);
+	// const response = await instance.post(`/api/customers/${user}`);
 	const data = await response.data;
 
-	dispatch(getUsers());
+	dispatch(getCustomers());
 
 	return data;
 });
 
-export const removeUser = createAsyncThunk('users/removeUser', async (userId, { dispatch, getState }) => {
+export const removeUser = createAsyncThunk('customers/removeUser', async (userId, { dispatch, getState }) => {
 	console.log('i am clicked');
 	await instance.post('/api/customers/{user}', { userId });
 
 	return userId;
 });
 
-export const removeUsers = createAsyncThunk('users/removeUsers', async (contactIds, { dispatch, getState }) => {
+export const removeUsers = createAsyncThunk('customers/removeUsers', async (contactIds, { dispatch, getState }) => {
 	await instance.post('/api/customers/{user}', { contactIds });
 
 	return contactIds;
 });
 
 export const toggleStarredContact = createAsyncThunk(
-	'users/toggleStarredContact',
+	'customers/toggleStarredContact',
 	async (contactId, { dispatch, getState }) => {
 		const response = await instance.post('/api/contacts-app/toggle-starred-contact', { contactId });
 		const data = await response.data;
 
 		dispatch(getCustomerData());
 
-		dispatch(getUsers());
+		dispatch(getCustomers());
 
 		return data;
 	}
 );
 
 export const toggleStarredContacts = createAsyncThunk(
-	'users/toggleStarredContacts',
+	'customers/toggleStarredContacts',
 	async (contactIds, { dispatch, getState }) => {
 		const response = await instance.post('/api/contacts-app/toggle-starred-contacts', { contactIds });
 		const data = await response.data;
 
 		dispatch(getCustomerData());
 
-		dispatch(getUsers());
+		dispatch(getCustomers());
 
 		return data;
 	}
 );
 
 export const setContactsStarred = createAsyncThunk(
-	'users/setContactsStarred',
+	'customers/setContactsStarred',
 	async (contactIds, { dispatch, getState }) => {
 		const response = await instance.post('/api/contacts-app/set-contacts-starred', { contactIds });
 		const data = await response.data;
 
 		dispatch(getCustomerData());
 
-		dispatch(getUsers());
+		dispatch(getCustomers());
 
 		return data;
 	}
 );
 
 export const setContactsUnstarred = createAsyncThunk(
-	'users/setContactsUnstarred',
+	'customers/setContactsUnstarred',
 	async (contactIds, { dispatch, getState }) => {
 		const response = await instance.post('/api/contacts-app/set-contacts-unstarred', { contactIds });
 		const data = await response.data;
 
 		dispatch(getCustomerData());
 
-		dispatch(getUsers());
+		dispatch(getCustomers());
 
 		return data;
 	}
@@ -101,18 +101,18 @@ export const setContactsUnstarred = createAsyncThunk(
 
 const contactsAdapter = createEntityAdapter({});
 
-export const { selectAll: selectUsers, selectById: selectUsersById } = contactsAdapter.getSelectors(
+export const { selectAll: selectCustomers, selectById: selectcustomersById } = contactsAdapter.getSelectors(
 	// console.log('I am contactsApp',contactsApp)
 	// state => ('what we write here')
-	state => state.newUsersSlice
+	state => state.newCustomersSlice
 );
 
-const newUsersSlice = createSlice({
-	name: 'users',
+const newCustomersSlice = createSlice({
+	name: 'customers',
 	initialState: contactsAdapter.getInitialState({
 		searchText: '',
 		routeParams: {},
-		newUsersSlice: {
+		newCustomersSlice: {
 			type: 'new',
 			props: {
 				open: false
@@ -128,7 +128,7 @@ const newUsersSlice = createSlice({
 			prepare: event => ({ payload: event.target.value || '' })
 		},
 		openNewContactDialog: (state, action) => {
-			state.newUsersSlice = {
+			state.newCustomersSlice = {
 				type: 'new',
 				props: {
 					open: true
@@ -137,7 +137,7 @@ const newUsersSlice = createSlice({
 			};
 		},
 		closeNewContactDialog: (state, action) => {
-			state.newUsersSlice = {
+			state.newCustomersSlice = {
 				type: 'new',
 				props: {
 					open: false
@@ -146,7 +146,7 @@ const newUsersSlice = createSlice({
 			};
 		},
 		openEditContactDialog: (state, action) => {
-			state.newUsersSlice = {
+			state.newCustomersSlice = {
 				type: 'edit',
 				props: {
 					open: true
@@ -155,7 +155,7 @@ const newUsersSlice = createSlice({
 			};
 		},
 		closeEditContactDialog: (state, action) => {
-			state.newUsersSlice = {
+			state.newCustomersSlice = {
 				type: 'edit',
 				props: {
 					open: false
@@ -169,7 +169,7 @@ const newUsersSlice = createSlice({
 		[addUser.fulfilled]: contactsAdapter.addOne,
 		[removeUsers.fulfilled]: (state, action) => contactsAdapter.removeMany(state, action.payload),
 		[removeUser.fulfilled]: (state, action) => contactsAdapter.removeOne(state, action.payload),
-		[getUsers.fulfilled]: (state, action) => {
+		[getCustomers.fulfilled]: (state, action) => {
 			const { data, routeParams } = action.payload;
 			contactsAdapter.setAll(state, data);
 			state.routeParams = routeParams;
@@ -184,6 +184,6 @@ export const {
 	closeNewContactDialog,
 	openEditContactDialog,
 	closeEditContactDialog
-} = newUsersSlice.actions;
+} = newCustomersSlice.actions;
 
-export default newUsersSlice.reducer;
+export default newCustomersSlice.reducer;

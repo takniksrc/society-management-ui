@@ -8,15 +8,15 @@ import { useMemo, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ContactsMultiSelectMenu from './ContactsMultiSelectMenu';
 import AllCustomers from './AllCustomers';
-import { openEditContactDialog, removeUser, toggleStarredContact, selectUsers } from './store/newUsersSlice';
+import { openEditContactDialog, removeUser, toggleStarredContact, selectCustomers } from './store/newCustomersSlice';
 
 function AllCustomersHead(props) {
 	const dispatch = useDispatch();
-	const customers = useSelector(selectUsers);
-	const searchText = useSelector(({ newUsersSlice }) => newUsersSlice.searchText);
+	const customers = useSelector(selectCustomers);
+	const searchText = useSelector(({ newCustomersSlice }) => newCustomersSlice.searchText);
 	console.log('I am customers', customers);
 	console.log('I am search text', searchText);
-	// const user = useSelector(({ newUsersSlice }) => newUsersSlice.user);
+	// const user = useSelector(({ newCustomersSlice }) => newCustomersSlice.user);
 	// console.log('I am user se', user);
 
 	const [filteredData, setFilteredData] = useState(null);

@@ -23,13 +23,27 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import _ from '@lodash';
 import * as yup from 'yup';
 
-import { removeUser, updateUser, addUser, closeNewContactDialog, closeEditContactDialog } from './store/newUsersSlice';
+import {
+	removeUser,
+	updateUser,
+	addUser,
+	closeNewContactDialog,
+	closeEditContactDialog
+} from './store/newCustomersSlice';
 
 function ContactDialog(props) {
 	const dispatch = useDispatch();
-	const contactDialog = useSelector(({ newUsersSlice }) => newUsersSlice.newUsersSlice);
+	const contactDialog = useSelector(({ newCustomersSlice }) => newCustomersSlice.newCustomersSlice);
 	console.log('I am clicked', contactDialog);
 	const [customerType, setCustomerType] = useState('');
+	const [propertyType, setPropertyType] = useState('');
+	const [propertySize, setPropertySize] = useState('');
+	const [meterPhase, setMeterPhase] = useState('');
+	const [meterType, setMeterType] = useState('');
+	const [meterStatus, setMeterStatus] = useState('');
+
+	console.log('clicked1', customerType);
+
 	const customerstype = [
 		{ id: 0, value: 'residential', label: 'Residential', color: '#2196f3' },
 		{ id: 1, value: 'commercial', label: 'Commercial', color: '#2196f3' },
@@ -37,8 +51,8 @@ function ContactDialog(props) {
 	];
 	const handleCustomerType = event => {
 		setCustomerType(event.target.value);
+		// console.log('clicked', customerType);
 	};
-	const [propertyType, setPropertyType] = useState('');
 	const propertiestype = [
 		{ id: 0, value: 'house', label: 'House', color: '#2196f3' },
 		{ id: 1, value: 'plot', label: 'Plot', color: '#2196f3' },
@@ -47,7 +61,6 @@ function ContactDialog(props) {
 	const handlePropertyType = event => {
 		setPropertyType(event.target.value);
 	};
-	const [propertySize, setPropertySize] = useState('');
 	const propertiessize = [
 		{ id: 0, value: '4marla', label: '4 Marla', color: '#2196f3' },
 		{ id: 1, value: '8marla', label: '8 Marla', color: '#2196f3' },
@@ -56,7 +69,6 @@ function ContactDialog(props) {
 	const handleProperty = event => {
 		setPropertySize(event.target.value);
 	};
-	const [meterPhase, setMeterPhase] = useState('');
 	const metersphase = [
 		{ id: 0, value: 'singlephase', label: 'Single Phase', color: '#2196f3' },
 		{ id: 1, value: '2phase', label: '2 Phase', color: '#2196f3' },
@@ -65,7 +77,6 @@ function ContactDialog(props) {
 	const handleMeterPhase = event => {
 		setMeterPhase(event.target.value);
 	};
-	const [meterType, setMeterType] = useState('');
 	const meterstype = [
 		{ id: 0, value: 'normal', label: 'Normal', color: '#2196f3' },
 		{ id: 1, value: 'mco', label: 'MCO', color: '#2196f3' }
@@ -73,7 +84,6 @@ function ContactDialog(props) {
 	const handleMeterType = event => {
 		setMeterType(event.target.value);
 	};
-	const [meterStatus, setMeterStatus] = useState('');
 	const metersstatus = [
 		{ id: 0, value: 'active', label: 'Active', color: '#2196f3' },
 		{ id: 1, value: 'temperorllydisconnect', label: 'Temporarlly Disconect', color: '#2196f3' },
@@ -82,7 +92,7 @@ function ContactDialog(props) {
 	const handleMeterStatus = event => {
 		setMeterStatus(event.target.value);
 	};
-
+	console.log('I am customer type', customerType);
 	const defaultValues = {
 		id: '',
 		reference_number: '',
@@ -250,7 +260,7 @@ function ContactDialog(props) {
 					</div>
 
 					<div className="flex">
-						<div className="min-w-48 pt-FF20">
+						<div className="min-w-48 pt-20">
 							<Icon color="action">contact_mail</Icon>
 						</div>
 						<Controller
@@ -344,7 +354,7 @@ function ContactDialog(props) {
 					</div>
 					<div className="flex">
 						<div className="min-w-48 pt-20">
-							<Icon color="action">email</Icon>
+							<Icon color="action">people_alt</Icon>
 						</div>
 						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
 							<InputLabel htmlFor="category-label-placeholder"> Customer Type </InputLabel>
@@ -369,7 +379,7 @@ function ContactDialog(props) {
 					</div>
 					<div className="flex">
 						<div className="min-w-48 pt-20">
-							<Icon color="action">email</Icon>
+							<Icon color="action">home_work</Icon>
 						</div>
 						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
 							<InputLabel htmlFor="category-label-placeholder"> Property Type </InputLabel>
@@ -395,7 +405,7 @@ function ContactDialog(props) {
 							</Select>
 						</FormControl>
 						<div className="min-w-48 pt-20 pl-12">
-							<Icon color="action">email</Icon>
+							<Icon color="action">home_work</Icon>
 						</div>
 						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
 							<InputLabel htmlFor="category-label-placeholder"> Property Size </InputLabel>
@@ -423,7 +433,7 @@ function ContactDialog(props) {
 					</div>
 					<div className="flex">
 						<div className="min-w-48 pt-20">
-							<Icon color="action">location_city</Icon>
+							<Icon color="action">dvr</Icon>
 						</div>
 						<Controller
 							control={control}
@@ -440,7 +450,7 @@ function ContactDialog(props) {
 							)}
 						/>
 						<div className="min-w-48 pt-20 pl-12">
-							<Icon color="action">email</Icon>
+							<Icon color="action">hdr_weak</Icon>
 						</div>
 						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
 							<InputLabel htmlFor="category-label-placeholder"> Meter Phase </InputLabel>
@@ -468,7 +478,7 @@ function ContactDialog(props) {
 					</div>
 					<div className="flex">
 						<div className="min-w-48 pt-20">
-							<Icon color="action">email</Icon>
+							<Icon color="action">dvr</Icon>
 						</div>
 						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
 							<InputLabel htmlFor="category-label-placeholder"> Meter Type </InputLabel>
@@ -494,7 +504,7 @@ function ContactDialog(props) {
 							</Select>
 						</FormControl>
 						<div className="min-w-48 pt-20 pl-12">
-							<Icon color="action">email</Icon>
+							<Icon color="action">dvr</Icon>
 						</div>
 						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
 							<InputLabel htmlFor="category-label-placeholder"> Meter Status </InputLabel>

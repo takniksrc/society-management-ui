@@ -16,7 +16,7 @@ import CustomersHeader from './CustomersHeader';
 import AllCustomersHead from './AllCustomersHead';
 import ContactDialog from './ContactDialog';
 import reducer from './store';
-import { getUsers } from './store/newUsersSlice';
+import { getCustomers } from './store/newCustomersSlice';
 import { getCustomerData } from './store/customerSlice';
 
 /**
@@ -48,7 +48,7 @@ const Customers = () => {
 	const routeParams = useParams();
 
 	useDeepCompareEffect(() => {
-		dispatch(getUsers(routeParams));
+		dispatch(getCustomers(routeParams));
 		dispatch(getCustomerData());
 	}, [dispatch, routeParams]);
 

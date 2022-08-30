@@ -14,10 +14,11 @@ import Button from '@material-ui/core/Button';
 function CommercialTab(props) {
 	const methods = useFormContext();
 	const { control } = methods;
-	const [selectedCategory, setSelectedCategory] = useState('all');
+	const [selectedCategory, setSelectedCategory] = useState('flat');
 	const categories = [
-		{ id: 1, value: 'plot', label: 'Plot', color: '#2196f3' },
-		{ id: 2, value: 'flat', label: 'Flat', color: '#2196f3' }
+		{ id: 1, value: 'flat', label: 'Flat', color: '#2196f3' },
+		{ id: 2, value: 'plaza', label: 'Plaza', color: '#2196f3' },
+
 	];
 	function handleSelectedCategory(event) {
 		setSelectedCategory(event.target.value);
@@ -26,7 +27,7 @@ function CommercialTab(props) {
 	return (
 		<div>
 			<FormControl className="flex w-full sm:w-320 -mx-4 mt-8 mb-16 ml-px" variant="outlined">
-				<InputLabel htmlFor="category-label-placeholder"> Category </InputLabel>
+				<InputLabel htmlFor="category-label-placeholder"> Property Type </InputLabel>
 				<Select
 					value={selectedCategory}
 					onChange={handleSelectedCategory}
@@ -38,9 +39,9 @@ function CommercialTab(props) {
 						/>
 					}
 				>
-					<MenuItem value="all">
+					{/* <MenuItem value="all">
 						<em> All </em>
-					</MenuItem>
+					</MenuItem> */}
 					{categories.map(category => (
 						<MenuItem value={category.value} key={category.id}>
 							{category.label}

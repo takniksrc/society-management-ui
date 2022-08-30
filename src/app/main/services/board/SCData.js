@@ -18,8 +18,6 @@ import Cabel from '../../../../assets/ServicesIcon/cabel.png';
 import Security from '../../../../assets/ServicesIcon/security.png';
 import Water from '../../../../assets/ServicesIcon/water.png';
 
-
-
 const useStyles = makeStyles(theme => ({
 	root: {},
 	board: {
@@ -35,15 +33,15 @@ function SCData(props) {
 	const dispatch = useDispatch();
 	// const boards = useSelector(selectBoards);
 	const boards = [
-	     {id:'1' , name: 'Aquifer', uri: 'aquifer',icon: Aquifer},
-		 {id:'2' , name: 'Garbage', uri: 'garbage',icon: Garbage},
-		 {id:'3' , name: 'Cleanliness', uri: 'cleanliness',icon: Cleanliness},
-		 {id:'4' , name: 'Cable', uri: 'cable',icon: Cabel},
-		 {id:'5' , name: 'Security', uri: 'security',icon: Security},
-		 {id:'6' , name: 'Water', uri: 'water',icon: Water},
-]
-   
-	console.log('I am boards',boards)
+		{ id: '1', name: 'Aquifer', uri: 'aquifer', icon: Aquifer },
+		{ id: '2', name: 'Garbage', uri: 'garbage', icon: Garbage },
+		{ id: '3', name: 'Cleanliness', uri: 'cleanliness', icon: Cleanliness },
+		{ id: '4', name: 'Cable', uri: 'cable', icon: Cabel },
+		{ id: '5', name: 'Security', uri: 'security', icon: Security },
+		{ id: '6', name: 'Water', uri: 'water', icon: Water }
+	];
+
+	console.log('I am boards', boards);
 
 	const classes = useStyles(props);
 
@@ -70,7 +68,7 @@ function SCData(props) {
 	return (
 		<div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>
 			<div className="flex flex-grow flex-shrink-0 flex-col items-center container px-16 md:px-24">
-			<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.1 } }}>
+				<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.1 } }}>
 					<Typography className="mt-44 sm:mt-88 text-32 sm:text-40 font-bold" color="inherit">
 						Services
 					</Typography>
@@ -93,7 +91,7 @@ function SCData(props) {
 								component={Link}
 							>
 								<Icon className="text-56" color="action">
-								    <img src={board.icon} alt='' />
+									<img src={board.icon} alt="" />
 								</Icon>
 								<Typography className="text-16 font-medium text-center pt-16 px-32" color="inherit">
 									{board.name}
@@ -101,7 +99,6 @@ function SCData(props) {
 							</Paper>
 						</motion.div>
 					))}
-					
 				</motion.div>
 			</div>
 		</div>

@@ -1,9 +1,9 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import newUsersSlice from './newUsersSlice';
+import newCustomersSlice from './newCustomersSlice';
 import customer from './customerSlice';
 
 const reducer = combineReducers({
-	newUsersSlice,
+	newCustomersSlice,
 	customer
 });
 

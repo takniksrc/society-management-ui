@@ -8,16 +8,16 @@ import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { selectMainTheme } from 'app/store/fuse/settingsSlice';
-import { openNewContactDialog ,setContactsSearchText} from './store/newUsersSlice';
+import { openNewContactDialog ,setContactsSearchText} from './store/newCustomersSlice';
 
 function CustomersHeader(props) {
 	const dispatch = useDispatch();
 	// const methods = useFormContext();
 	// const searchText = useSelector(({ contactsApp }) => contactsApp.contacts.searchText);
-	const searchText = useSelector(({ newUsersSlice }) => newUsersSlice.searchText);
+	const searchText = useSelector(({ newCustomersSlice }) => newCustomersSlice.searchText);
 
 	const mainTheme = useSelector(selectMainTheme);
-	const contactDialog = useSelector(({ newUsersSlice }) => newUsersSlice.newUsersSlice)
+	const contactDialog = useSelector(({ newCustomersSlice }) => newCustomersSlice.newCustomersSlice)
 
 	console.log('I am userin Users',contactDialog)
 
