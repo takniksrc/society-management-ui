@@ -84,7 +84,11 @@ class JwtService extends FuseUtils.EventEmitter {
 					console.log('response.data.accessToken', response.data.access_token);
 					this.setSession(response.data.access_token);
 					// resolve(response.data.user);
-					resolve({ redirectUrl: 'users', role: 'admin', data: { displayName: 'Fake User', email } });
+					resolve({
+						redirectUrl: 'users',
+						role: 'admin',
+						data: { displayName: 'Fake User', email, photoURL: 'assets/images/avatars/Velazquez.jpg' }
+					});
 				} else {
 					reject(response.data.error);
 				}

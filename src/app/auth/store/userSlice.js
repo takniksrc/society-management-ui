@@ -189,12 +189,14 @@ export const updateUserData = user => async (dispatch, getState) => {
 
 const initialState = {
 	role: [], // guest
-	data: {
-		displayName: 'John Doe',
-		photoURL: 'assets/images/avatars/Velazquez.jpg',
-		email: 'johndoe@withinpixels.com',
-		shortcuts: ['calendar', 'mail', 'contacts', 'todo']
-	}
+	data: JSON.parse(localStorage.getItem('user')).data
+		? JSON.parse(localStorage.getItem('user')).data
+		: {
+				displayName: 'John Doe',
+				photoURL: 'assets/images/avatars/Velazquez.jpg',
+				email: 'johndoe@withinpixels.com',
+				shortcuts: ['calendar', 'mail', 'contacts', 'todo']
+		  }
 };
 
 const userSlice = createSlice({
