@@ -54,7 +54,7 @@ function ContactDialog(props) {
 	const contactDialog = useSelector(({ newUsersSlice }) => newUsersSlice.newUsersSlice);
 	console.log('I am clicked', contactDialog);
 
-	const { control, watch, reset, handleSubmit, formState, getValues } = useForm({
+	const { control, watch, reset, handleSubmit, formState, getValues, register } = useForm({
 		mode: 'onChange',
 		defaultValues,
 		resolver: yupResolver(schema)
@@ -110,6 +110,7 @@ function ContactDialog(props) {
 	//  * Form Submit
 	//  */
 	function onSubmit(data) {
+		console.log('user data', data);
 		if (contactDialog.type === 'new') {
 			dispatch(addUser(data));
 		} else {
@@ -203,6 +204,9 @@ function ContactDialog(props) {
 							<Select
 								value={role}
 								onChange={handleRole}
+								inputProps={register('role', {
+									required: 'Please enter role'
+								})}
 								input={
 									<OutlinedInput
 										labelWidth={'category'.length * 9}

@@ -22,6 +22,7 @@ import { getCustomerData } from './store/customerSlice';
 /**
  * Form Validation Schema
  */
+
 const schema = yup.object().shape({
 	name: yup
 		.string()

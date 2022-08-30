@@ -12,15 +12,31 @@ export const getCustomers = createAsyncThunk('customers/getCustomers', async (ro
 	return { data, routeParams };
 });
 
-export const addUser = createAsyncThunk('customers/addUser', async (contact, { dispatch, getState }) => {
-	const response = await instance.post('/api/customers', { contact });
+export const addCustomer = createAsyncThunk('customers/addCustomer', async (contact, { dispatch, getState }) => {
+	const response = await instance.post('/api/customers', {
+	"refference_number": contact.reference_number,
+	"name":  contact.name,
+	"cnic": contact.cnic,
+	"phone_number": contact.phone,
+	"email": contact.email,
+	"customer_type_id": contact.customer_type,
+	"property_type_id": contact.property_type,
+	"property_size_id": contact.property_size,
+	"meter_number":contact.meter_number,
+	"meter_status": contact.meter_status,
+	"phase": contact.meter_phase,
+	"company": contact.company,
+	"sector_id": contact.sector_type,
+	"block_id": contact.block,
+	"street_address": contact.address
+});
 	const data = await response.data;
 	console.log('I am new updated data', data);
 	dispatch(getCustomers());
 
 	return data;
 });
-export const updateUser = createAsyncThunk('customers/updateUser', async (user, { dispatch, getState }) => {
+export const updateCustomer = createAsyncThunk('customers/updateCustomer', async (user, { dispatch, getState }) => {
 	const response = await instance.post('/api/customers/{user}', { user });
 	// const response = await instance.post(`/api/customers/${user}`);
 	const data = await response.data;
@@ -165,8 +181,8 @@ const newCustomersSlice = createSlice({
 		}
 	},
 	extraReducers: {
-		[updateUser.fulfilled]: contactsAdapter.upsertOne,
-		[addUser.fulfilled]: contactsAdapter.addOne,
+		[updateCustomer.fulfilled]: contactsAdapter.upsertOne,
+		[addCustomer.fulfilled]: contactsAdapter.addOne,
 		[removeUsers.fulfilled]: (state, action) => contactsAdapter.removeMany(state, action.payload),
 		[removeUser.fulfilled]: (state, action) => contactsAdapter.removeOne(state, action.payload),
 		[getCustomers.fulfilled]: (state, action) => {

@@ -17,19 +17,19 @@ const navigationConfig = [
 		children: [
 			{
 				id: 'profile',
-				title: 'cUSTOMER',
-				translate: 'CUSTOMER',
-				type: 'item',
-				icon: 'person',
-				url: '/customers'
-			},
-			{
-				id: 'profile',
 				title: 'User',
 				translate: 'USER',
 				type: 'item',
 				icon: 'person',
 				url: '/users'
+			},
+			{
+				id: 'profile',
+				title: 'cUSTOMER',
+				translate: 'CUSTOMER',
+				type: 'item',
+				icon: 'person',
+				url: '/customers'
 			},
 			{
 				id: 'analysis-report',
@@ -54,7 +54,7 @@ const navigationConfig = [
 				type: 'item',
 				icon: 'assessment',
 				url: '/services'
-			},
+			}
 		]
 	}
 ];

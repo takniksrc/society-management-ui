@@ -25,8 +25,8 @@ import * as yup from 'yup';
 
 import {
 	removeUser,
-	updateUser,
-	addUser,
+	updateCustomer,
+	addCustomer,
 	closeNewContactDialog,
 	closeEditContactDialog
 } from './store/newCustomersSlice';
@@ -96,28 +96,60 @@ function ContactDialog(props) {
 	const defaultValues = {
 		id: '',
 		reference_number: '',
+		name: '',
 		cnic: '',
 		phone: '',
-		name: '',
-		address: '',
-		block: '',
+		email: '',
+		customer_type: '1376caca-2897-11ed-a261-0242ac120002',
+		property_type: 'eefc5020-2896-11ed-a261-0242ac120002',
+		property_size: '2002be70-2897-11ed-a261-0242ac120002',
 		meter_number: '',
-		property_size: '',
-		property_type: '',
-		meter_type: '',
-		meter_status: meterStatus,
-		customer_type: customerType,
-		meter_phase: meterPhase
+		meter_status: '',
+		meter_phase: '123456789',
+		company: 'sms', //TODO
+		sector_type: '460d2b74-2896-11ed-a261-0242ac120002', //TODO
+		block: '9f65f3b2-2897-11ed-a261-0242ac120002',
+		address: ''
 	};
 
 	/**
 	 * Form Validation Schema
 	 */
 	const schema = yup.object().shape({
-		name: yup.string().required('You must enter a name')
+		name: yup.string().required('You must enter a name'),
+
+		reference_number: yup
+			.string()
+			.required('Required')
+			.matches(/^[0-9]+$/, 'Must be only digits')
+			.min(7, 'Must be exactly 7 digits')
+			.max(7, 'Must be exactly 7 digits'),
+
+		cnic: yup
+			.string()
+			.required('Required')
+			.matches(/^[0-9]+$/, 'Must be only digits')
+			.min(13, 'Must be exactly 13 digits')
+			.max(13, 'Must be exactly 13 digits'),
+
+		meter_number: yup
+			.string()
+			.required('Required')
+			.matches(/^[0-9]+$/, 'Must be only digits')
+			.min(7, 'Must be exactly 7 digits')
+			.max(7, 'Must be exactly 7 digits'),
+
+		phone: yup
+			.string()
+			.required('Required')
+			.matches(/^[0-9]+$/, 'Must be only digits')
+			.min(11, 'Must be exactly 11 digits')
+			.max(11, 'Must be exactly 11 digits')
+
+		// meter_phase: yup.string().required('Required').max(10, 'Phase must not be greater than 10 characters')
 	});
 
-	const { control, watch, reset, handleSubmit, formState, getValues } = useForm({
+	const { control, watch, reset, handleSubmit, formState, getValues, register } = useForm({
 		mode: 'onChange',
 		defaultValues,
 		resolver: yupResolver(schema)
@@ -175,9 +207,9 @@ function ContactDialog(props) {
 	function onSubmit(data) {
 		console.log('data in customer submit', data);
 		if (contactDialog.type === 'new') {
-			dispatch(addUser(data));
+			dispatch(addCustomer(data));
 		} else {
-			dispatch(updateUser({ ...contactDialog.data, ...data }));
+			dispatch(updateCustomer({ ...contactDialog.data, ...data }));
 		}
 		closeComposeDialog();
 	}
@@ -232,6 +264,8 @@ function ContactDialog(props) {
 									variant="outlined"
 									type="number"
 									fullWidth
+									error={!!errors.reference_number}
+									helperText={errors?.reference_number?.message}
 								/>
 							)}
 						/>
@@ -269,11 +303,14 @@ function ContactDialog(props) {
 							render={({ field }) => (
 								<TextField
 									{...field}
+									type="number"
 									className="mb-24"
 									label="CNIC"
 									id="cnic"
 									variant="outlined"
 									fullWidth
+									error={!!errors.cnic}
+									helperText={errors?.cnic?.message}
 								/>
 							)}
 						/>
@@ -292,7 +329,10 @@ function ContactDialog(props) {
 									label="Phone"
 									id="phone"
 									variant="outlined"
+									type="number"
 									fullWidth
+									error={!!errors.phone}
+									helperText={errors?.phone?.message}
 								/>
 							)}
 						/>
@@ -361,6 +401,9 @@ function ContactDialog(props) {
 							<Select
 								value={customerType}
 								onChange={handleCustomerType}
+								inputProps={register('customer_type', {
+									required: 'Please enter customer type'
+								})}
 								input={
 									<OutlinedInput
 										labelWidth={'category'.length * 9}
@@ -386,6 +429,9 @@ function ContactDialog(props) {
 							<Select
 								value={propertyType}
 								onChange={handlePropertyType}
+								inputProps={register('property_type', {
+									required: 'Please enter property type'
+								})}
 								input={
 									<OutlinedInput
 										labelWidth={'category'.length * 9}
@@ -394,9 +440,6 @@ function ContactDialog(props) {
 									/>
 								}
 							>
-								{/* <MenuItem value="all">
-									<em> All </em>
-								</MenuItem> */}
 								{propertiestype.map(category => (
 									<MenuItem value={category.value} key={category.id}>
 										{category.label}
@@ -412,6 +455,9 @@ function ContactDialog(props) {
 							<Select
 								value={propertySize}
 								onChange={handleProperty}
+								inputProps={register('property_size', {
+									required: 'Please enter property size'
+								})}
 								input={
 									<OutlinedInput
 										labelWidth={'category'.length * 9}
@@ -446,6 +492,8 @@ function ContactDialog(props) {
 									id="meter_number"
 									variant="outlined"
 									fullWidth
+									error={!!errors.meter_number}
+									helperText={errors?.meter_number?.message}
 								/>
 							)}
 						/>
@@ -457,6 +505,9 @@ function ContactDialog(props) {
 							<Select
 								value={meterPhase}
 								onChange={handleMeterPhase}
+								inputProps={register('meter_phase', {
+									required: 'Please enter meter phase'
+								})}
 								input={
 									<OutlinedInput
 										labelWidth={'category'.length * 9}
@@ -485,6 +536,9 @@ function ContactDialog(props) {
 							<Select
 								value={meterType}
 								onChange={handleMeterType}
+								inputProps={register('meter_type', {
+									required: 'Please enter meter type'
+								})}
 								input={
 									<OutlinedInput
 										labelWidth={'category'.length * 9}
@@ -511,6 +565,9 @@ function ContactDialog(props) {
 							<Select
 								value={meterStatus}
 								onChange={handleMeterStatus}
+								inputProps={register('meter_status', {
+									required: 'Please enter meter status'
+								})}
 								input={
 									<OutlinedInput
 										labelWidth={'category'.length * 9}
