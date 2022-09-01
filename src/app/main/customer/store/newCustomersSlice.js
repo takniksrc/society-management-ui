@@ -23,10 +23,11 @@ export const addCustomer = createAsyncThunk('customers/addCustomer', async (cont
 	"property_type_id": contact.property_type,
 	"property_size_id": contact.property_size,
 	"meter_number":contact.meter_number,
+	"meter_type":contact.meter_type,
 	"meter_status": contact.meter_status,
 	"phase": contact.meter_phase,
 	"company": contact.company,
-	"sector_id": contact.sector_type,
+	"sector_id": contact.sector,
 	"block_id": contact.block,
 	"street_address": contact.address
 });

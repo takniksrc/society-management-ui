@@ -49,6 +49,9 @@ function ContactDialog(props) {
 	console.log('customerTypes inside contact: ', customerTypes);
 
 	const [customerType, setCustomerType] = useState('');
+	const [sector, setSector] = useState('');
+	const [block, setBlock] = useState('');
+
 	const [propertyType, setPropertyType] = useState('');
 	const [propertySize, setPropertySize] = useState('');
 	const [meterPhase, setMeterPhase] = useState('');
@@ -70,42 +73,32 @@ function ContactDialog(props) {
 		setCustomerType(event.target.value);
 		// console.log('clicked', customerType);
 	};
-	const propertiestype = [
-		{ id: 0, value: 'house', label: 'House', color: '#2196f3' },
-		{ id: 1, value: 'plot', label: 'Plot', color: '#2196f3' },
-		{ id: 2, value: 'flat', label: 'Flat', color: '#2196f3' }
-	];
+	
+	const handleBlock = event => {
+		setBlock(event.target.value);
+		// console.log('clicked', customerType);
+	};
+	const handleSector = event => {
+		setSector(event.target.value);
+		// console.log('clicked', customerType);
+	};
+	
 	const handlePropertyType = event => {
 		setPropertyType(event.target.value);
 	};
-	const propertiessize = [
-		{ id: 0, value: '4marla', label: '4 Marla', color: '#2196f3' },
-		{ id: 1, value: '8marla', label: '8 Marla', color: '#2196f3' },
-		{ id: 2, value: '12marla', label: '12 Marla', color: '#2196f3' }
-	];
+	
 	const handleProperty = event => {
 		setPropertySize(event.target.value);
 	};
-	const metersphase = [
-		{ id: 0, value: 'singlephase', label: 'Single Phase', color: '#2196f3' },
-		{ id: 1, value: '2phase', label: '2 Phase', color: '#2196f3' },
-		{ id: 2, value: '3phase', label: '3 Phase', color: '#2196f3' }
-	];
+
 	const handleMeterPhase = event => {
 		setMeterPhase(event.target.value);
 	};
-	const meterstype = [
-		{ id: 0, value: 'normal', label: 'Normal', color: '#2196f3' },
-		{ id: 1, value: 'mco', label: 'MCO', color: '#2196f3' }
-	];
+	
 	const handleMeterType = event => {
 		setMeterType(event.target.value);
 	};
-	const metersstatus = [
-		{ id: 0, value: 'active', label: 'Active', color: '#2196f3' },
-		{ id: 1, value: 'temperorllydisconnect', label: 'Temporarlly Disconect', color: '#2196f3' },
-		{ id: 2, value: 'permanentdisconect', label: 'Permanent Disconect', color: '#2196f3' }
-	];
+
 	const handleMeterStatus = event => {
 		setMeterStatus(event.target.value);
 	};
@@ -122,9 +115,10 @@ function ContactDialog(props) {
 		property_size: '',
 		meter_number: '',
 		meter_status: '',
-		meter_phase: '123456789',
+		meter_phase: '',
+		meter_type:'',
 		company: 'sms', // TODO
-		sector_type: '', // TODO
+		sector: '',
 		block: '',
 		address: ''
 	};
@@ -402,20 +396,29 @@ function ContactDialog(props) {
 						<div className="min-w-48 pt-20 pl-16">
 							<Icon color="action">location_city</Icon>
 						</div>
-						<Controller
-							control={control}
-							name="block"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									label="Block"
-									id="block"
-									variant="outlined"
-									fullWidth
-								/>
-							)}
-						/>
+						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
+							<InputLabel htmlFor="category-label-placeholder"> Blocks </InputLabel>
+							<Select
+								value={block}
+								onChange={handleBlock}
+								inputProps={register('block', {
+									required: 'Please enter block'
+								})}
+								input={
+									<OutlinedInput
+										labelWidth={'category'.length * 9}
+										name="block"
+										id="category-label-placeholder"
+									/>
+								}
+							>
+								{configurationsData?.blocks?.map(category => (
+									<MenuItem value={category.id} key={category.id}>
+										{category.name}
+									</MenuItem>
+								))}
+							</Select>
+						</FormControl>
 					</div>
 					<div className="flex">
 						<div className="min-w-48 pt-20">
@@ -541,9 +544,9 @@ function ContactDialog(props) {
 								{/* <MenuItem value="all">
 									<em> All </em>
 								</MenuItem> */}
-								{metersphase.map(category => (
-									<MenuItem value={category.value} key={category.id}>
-										{category.label}
+								{configurationsData?.meter_phases?.map(category => (
+									<MenuItem value={category.name} key={category.name}>
+										{category.name}
 									</MenuItem>
 								))}
 							</Select>
@@ -572,9 +575,9 @@ function ContactDialog(props) {
 								{/* <MenuItem value="all">
 									<em> All </em>
 								</MenuItem> */}
-								{meterstype.map(category => (
-									<MenuItem value={category.value} key={category.id}>
-										{category.label}
+								{configurationsData?.meter_types?.map(category => (
+									<MenuItem value={category.name} key={category.name}>
+										{category.name}
 									</MenuItem>
 								))}
 							</Select>
@@ -601,9 +604,37 @@ function ContactDialog(props) {
 								{/* <MenuItem value="all">
 									<em> All </em>
 								</MenuItem> */}
-								{metersstatus.map(category => (
-									<MenuItem value={category.value} key={category.id}>
-										{category.label}
+								{configurationsData?.meter_statuses?.map(category => (
+									<MenuItem value={category.name} key={category.name}>
+										{category.name}
+									</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+					</div>
+					<div className="flex">
+						<div className="min-w-48 pt-20">
+							<Icon color="action">people_alt</Icon>
+						</div>
+						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
+							<InputLabel htmlFor="category-label-placeholder"> Sector</InputLabel>
+							<Select
+								value={sector}
+								onChange={handleSector}
+								inputProps={register('sector', {
+									required: 'Please enter sector'
+								})}
+								input={
+									<OutlinedInput
+										labelWidth={'category'.length * 9}
+										name="sector"
+										id="category-label-placeholder"
+									/>
+								}
+							>
+								{configurationsData?.sectors?.map(category => (
+									<MenuItem value={category.id} key={category.id}>
+										{category.name}
 									</MenuItem>
 								))}
 							</Select>
