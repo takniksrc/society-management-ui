@@ -3,6 +3,8 @@ import { showMessage } from 'app/store/fuse/messageSlice';
 import firebaseService from 'app/services/firebaseService';
 import jwtService from 'app/services/jwtService';
 import { setUserData } from './userSlice';
+import { get } from 'lodash';
+import { getConfigurations } from '../../fuse-configs/store/configSlice';
 
 export const submitLogin = ({ email, password }) => async dispatch => {
 	return jwtService
@@ -11,6 +13,7 @@ export const submitLogin = ({ email, password }) => async dispatch => {
 			console.log('user', user);
 			dispatch(setUserData(user));
 			localStorage.setItem('user', JSON.stringify(user));
+			dispatch(getConfigurations());
 
 			return dispatch(loginSuccess());
 		})

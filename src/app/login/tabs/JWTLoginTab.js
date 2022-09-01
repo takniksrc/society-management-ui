@@ -12,6 +12,7 @@ import { submitLogin } from 'app/auth/store/loginSlice';
 import * as yup from 'yup';
 import _ from '@lodash';
 
+
 /**
  * Form Validation Schema
  */
@@ -56,7 +57,9 @@ function JWTLoginTab(props) {
 	}, [login.errors, setError]);
 
 	function onSubmit(model) {
+		
 		dispatch(submitLogin(model));
+		
 	}
 
 	return (
