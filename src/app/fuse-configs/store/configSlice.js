@@ -3,10 +3,11 @@ import instance from 'axiosinstance';
 
 export const getConfigurations = createAsyncThunk('contactsApp/customer/getConfigurations', async () => {
 	const response = await instance.get('/api/system-configurations');
-	const data = await response.data.customer_types;
+	const data = await response.data;
 	console.log('I am customerTypes', data);
 	return data;
 });
+
 
 const configSlice = createSlice({
 	name: 'configSlice',
