@@ -46,31 +46,31 @@ function AllCustomersHead(props) {
 				className: 'font-medium',
 				sortable: true
 			},
-			{
-				Header: 'Property Size',
-				accessor: 'property_size',
-				sortable: true
-			},
-			{
-				Header: 'property Type',
-				accessor: 'property_type',
-				sortable: true
-			},
-			{
-				Header: 'Meter No',
-				accessor: 'meter_no',
-				sortable: true
-			},
-			{
-				Header: 'Meter Type',
-				accessor: 'meter_type',
-				sortable: true
-			},
-			{
-				Header: 'Billing Status',
-				accessor: 'billing_status',
-				sortable: true
-			},
+			// {
+			// 	Header: 'Property Size',
+			// 	accessor: 'property_size',
+			// 	sortable: true
+			// },
+			// {
+			// 	Header: 'property Type',
+			// 	accessor: 'property_type',
+			// 	sortable: true
+			// },
+			// {
+			// 	Header: 'Meter No',
+			// 	accessor: 'meter_no',
+			// 	sortable: true
+			// },
+			// {
+			// 	Header: 'Meter Type',
+			// 	accessor: 'meter_type',
+			// 	sortable: true
+			// },
+			// {
+			// 	Header: 'Billing Status',
+			// 	accessor: 'billing_status',
+			// 	sortable: true
+			// },
 			{
 				id: 'action',
 				width: 128,

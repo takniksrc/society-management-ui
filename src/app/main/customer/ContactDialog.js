@@ -26,6 +26,7 @@ import * as yup from 'yup';
 import { getPropertyTypes } from './store/propertyTypesSlice';
 import { getCustomerTypes } from './store/customerTypesSlice';
 import { getPropertySizes } from './store/propertySizesSlice';
+import { getConfigurations } from '../../fuse-configs/store/configSlice';
 
 import {
 	removeUser,
@@ -41,6 +42,9 @@ function ContactDialog(props) {
 	const propertyTypes = useSelector(({ propertyTypesSlice }) => propertyTypesSlice);
 	const propertySizes = useSelector(({ propertySizesSlice }) => propertySizesSlice);
 	const customerTypes = useSelector(({ customerTypesSlice }) => customerTypesSlice);
+	const configurationsData = useSelector(({ configSlice }) => configSlice);
+	console.log('configSlice inside contact : ', configurationsData);
+
 	console.log('propertyTypes inside contact : ', propertyTypes);
 	console.log('customerTypes inside contact: ', customerTypes);
 
@@ -53,6 +57,7 @@ function ContactDialog(props) {
 
 	useDeepCompareEffect(() => {
 		dispatch(getCustomerTypes());
+		dispatch(getConfigurations())
 	}, [dispatch]);
 
 	// const customerstype = [
