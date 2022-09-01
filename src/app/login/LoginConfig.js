@@ -27,6 +27,7 @@ const LoginConfig = {
 	routes: [
 		{
 			path: '/login',
+			exact:true,
 			component: Login
 		}
 	]

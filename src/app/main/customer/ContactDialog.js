@@ -20,8 +20,12 @@ import { useCallback, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
+import { useDeepCompareEffect } from '@fuse/hooks';
 import _ from '@lodash';
 import * as yup from 'yup';
+import { getPropertyTypes } from './store/propertyTypesSlice';
+import { getCustomerTypes } from './store/customerTypesSlice';
+import { getPropertySizes } from './store/propertySizesSlice';
 
 import {
 	removeUser,
@@ -34,7 +38,12 @@ import {
 function ContactDialog(props) {
 	const dispatch = useDispatch();
 	const contactDialog = useSelector(({ newCustomersSlice }) => newCustomersSlice.newCustomersSlice);
-	console.log('I am clicked', contactDialog);
+	const propertyTypes = useSelector(({ propertyTypesSlice }) => propertyTypesSlice);
+	const propertySizes = useSelector(({ propertySizesSlice }) => propertySizesSlice);
+	const customerTypes = useSelector(({ customerTypesSlice }) => customerTypesSlice);
+	console.log('propertyTypes inside contact : ', propertyTypes);
+	console.log('customerTypes inside contact: ', customerTypes);
+
 	const [customerType, setCustomerType] = useState('');
 	const [propertyType, setPropertyType] = useState('');
 	const [propertySize, setPropertySize] = useState('');
@@ -42,13 +51,16 @@ function ContactDialog(props) {
 	const [meterType, setMeterType] = useState('');
 	const [meterStatus, setMeterStatus] = useState('');
 
-	console.log('clicked1', customerType);
+	useDeepCompareEffect(() => {
+		dispatch(getCustomerTypes());
+	}, [dispatch]);
 
-	const customerstype = [
-		{ id: 0, value: 'residential', label: 'Residential', color: '#2196f3' },
-		{ id: 1, value: 'commercial', label: 'Commercial', color: '#2196f3' },
-		{ id: 2, value: 'construction', label: 'Construction', color: '#2196f3' }
-	];
+	// const customerstype = [
+	// 	{ id: 0, value: customerType.id, label: 'Residential', color: '#2196f3' },
+	// 	{ id: 1, value: customerType.id,, label: 'Commercial', color: '#2196f3' },
+	// 	{ id: 2, value: customerType.id,, label: 'Construction', color: '#2196f3' }
+	// ];
+
 	const handleCustomerType = event => {
 		setCustomerType(event.target.value);
 		// console.log('clicked', customerType);
@@ -100,15 +112,15 @@ function ContactDialog(props) {
 		cnic: '',
 		phone: '',
 		email: '',
-		customer_type: '1376caca-2897-11ed-a261-0242ac120002',
-		property_type: 'eefc5020-2896-11ed-a261-0242ac120002',
-		property_size: '2002be70-2897-11ed-a261-0242ac120002',
+		customer_type: '',
+		property_type: '',
+		property_size: '',
 		meter_number: '',
 		meter_status: '',
 		meter_phase: '123456789',
-		company: 'sms', //TODO
-		sector_type: '460d2b74-2896-11ed-a261-0242ac120002', //TODO
-		block: '9f65f3b2-2897-11ed-a261-0242ac120002',
+		company: 'sms', // TODO
+		sector_type: '', // TODO
+		block: '',
 		address: ''
 	};
 
@@ -160,6 +172,14 @@ function ContactDialog(props) {
 	const id = watch('id');
 	const name = watch('name');
 	const avatar = watch('avatar');
+
+	useEffect(() => {
+		dispatch(getPropertyTypes(customerType));
+	}, [customerType]);
+
+	useEffect(() => {
+		dispatch(getPropertySizes(propertyType));
+	}, [propertyType]);
 
 	// /**
 	//  * Initialize Dialog with Data
@@ -412,9 +432,9 @@ function ContactDialog(props) {
 									/>
 								}
 							>
-								{customerstype.map(category => (
-									<MenuItem value={category.value} key={category.id}>
-										{category.label}
+								{customerTypes?.map(category => (
+									<MenuItem value={category.id} key={category.id}>
+										{category.name}
 									</MenuItem>
 								))}
 							</Select>
@@ -440,9 +460,9 @@ function ContactDialog(props) {
 									/>
 								}
 							>
-								{propertiestype.map(category => (
-									<MenuItem value={category.value} key={category.id}>
-										{category.label}
+								{propertyTypes.map(category => (
+									<MenuItem value={category.id} key={category.id}>
+										{category.name}
 									</MenuItem>
 								))}
 							</Select>
@@ -466,12 +486,9 @@ function ContactDialog(props) {
 									/>
 								}
 							>
-								{/* <MenuItem value="all">
-									<em> All </em>
-								</MenuItem> */}
-								{propertiessize.map(category => (
-									<MenuItem value={category.value} key={category.id}>
-										{category.label}
+								{propertySizes.map(category => (
+									<MenuItem value={category.id} key={category.id}>
+										{category.name}
 									</MenuItem>
 								))}
 							</Select>

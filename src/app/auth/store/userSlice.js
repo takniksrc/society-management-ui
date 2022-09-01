@@ -8,6 +8,7 @@ import { showMessage } from 'app/store/fuse/messageSlice';
 import auth0Service from 'app/services/auth0Service';
 import firebaseService from 'app/services/firebaseService';
 import jwtService from 'app/services/jwtService';
+import JwtService from 'app/services/jwtService';
 
 export const setUserDataAuth0 = tokenData => async dispatch => {
 	const user = {
@@ -112,32 +113,37 @@ export const updateUserShortcuts = shortcuts => async (dispatch, getState) => {
 };
 
 export const logoutUser = () => async (dispatch, getState) => {
-	const { user } = getState().auth;
+	// const { user } = getState().auth;
 
-	if (!user.role || user.role.length === 0) {
-		// is guest
-		return null;
-	}
+	// if (!user.role || user.role.length === 0) {
+	// 	// is guest
+	// 	return null;
+	// }
+	
+
 
 	history.push({
-		pathname: '/'
+		pathname: '/login'
 	});
+	JwtService.logout()
+	// localStorage.removeItem('jwt_access_token');
+	// localStorage.removeItem('user');
+	
+	// switch (user.from) {
+	// 	case 'firebase': {
+	// 		firebaseService.signOut();
+	// 		break;
+	// 	}
+	// 	case 'auth0': {
+	// 		auth0Service.logout();
+	// 		break;
+	// 	}
+	// 	default: {
+	// 		jwtService.logout();
+	// 	}
+	// }
 
-	switch (user.from) {
-		case 'firebase': {
-			firebaseService.signOut();
-			break;
-		}
-		case 'auth0': {
-			auth0Service.logout();
-			break;
-		}
-		default: {
-			jwtService.logout();
-		}
-	}
-
-	dispatch(setInitialSettings());
+	// dispatch(setInitialSettings());
 
 	return dispatch(userLoggedOut());
 };
@@ -188,14 +194,14 @@ export const updateUserData = user => async (dispatch, getState) => {
 };
 
 const initialState = {
-	role: [], // guest
-	data: JSON.parse(localStorage.getItem('user')).data
-		? JSON.parse(localStorage.getItem('user')).data
+	role: JSON.parse(localStorage.getItem('user'))?.role ? JSON.parse(localStorage.getItem('user'))?.role : [],
+	data: JSON.parse(localStorage.getItem('user'))?.data
+		? JSON.parse(localStorage.getItem('user'))?.data
 		: {
-				displayName: 'John Doe',
+				displayName: 'No User',
 				photoURL: 'assets/images/avatars/Velazquez.jpg',
-				email: 'johndoe@withinpixels.com',
-				shortcuts: ['calendar', 'mail', 'contacts', 'todo']
+				email: 'no@user.com',
+				shortcuts: []
 		  }
 };
 

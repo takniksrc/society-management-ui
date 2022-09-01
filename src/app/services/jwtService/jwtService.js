@@ -86,8 +86,13 @@ class JwtService extends FuseUtils.EventEmitter {
 					// resolve(response.data.user);
 					resolve({
 						redirectUrl: 'users',
-						role: 'admin',
-						data: { displayName: 'Fake User', email, photoURL: 'assets/images/avatars/Velazquez.jpg' }
+						role: response.data.user.role,
+						data: {
+							displayName: response.data.user.name,
+							email: response.data.user.email,
+							photoURL: response.data.user.avatar
+						}
+						// data: { displayName: 'Fake User', email, photoURL: 'assets/images/avatars/Velazquez.jpg' }
 					});
 				} else {
 					reject(response.data.error);

@@ -1,4 +1,4 @@
-import { useEffect, useState ,useRef} from 'react';
+import { useEffect, useState, useRef } from 'react';
 import DemoContent from '@fuse/core/DemoContent';
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import { makeStyles } from '@material-ui/core/styles';
@@ -12,6 +12,7 @@ import * as yup from 'yup';
 import { useParams } from 'react-router-dom';
 import { useDeepCompareEffect } from '@fuse/hooks';
 import { useDispatch } from 'react-redux';
+import withReducer from 'app/store/withReducer';
 import CustomersHeader from './CustomersHeader';
 import AllCustomersHead from './AllCustomersHead';
 import ContactDialog from './ContactDialog';
@@ -65,6 +66,6 @@ const Customers = () => {
 			<ContactDialog />
 		</>
 	);
-}
+};
 
-export default Customers;
+export default withReducer('customers', reducer)(Customers);

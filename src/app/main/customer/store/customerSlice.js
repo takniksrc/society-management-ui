@@ -5,7 +5,6 @@ export const getCustomerData = createAsyncThunk('contactsApp/customer/getCustome
 	const response = await instance.get('/api/customers');
 	const data = await response.data;
 	// console.log('I am data',data)
-
 	return data;
 });
 

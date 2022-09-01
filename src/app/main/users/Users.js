@@ -51,7 +51,7 @@ const Users = () => {
 		console.log('routeParams :', routeParams);
 		dispatch(getUsers(routeParams));
 		// user list is not updating due to this  line has error "unauthorized"
-		// dispatch(getUserData());
+		 dispatch(getUserData());
 	}, [dispatch, routeParams]);
 
 	return (

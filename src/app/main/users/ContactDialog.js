@@ -66,6 +66,7 @@ function ContactDialog(props) {
 	const name = watch('name');
 	const avatar = watch('avatar');
 
+
 	// /**
 	//  * Initialize Dialog with Data
 	//  */
