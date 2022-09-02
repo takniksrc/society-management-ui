@@ -77,6 +77,8 @@ function AllUsersHead(props) {
 						<IconButton
 							onClick={ev => {
 								ev.stopPropagation();
+								console.log('i am ev in',row.original.id)
+
 								dispatch(removeUser(row.original.id));
 							}}
 						>

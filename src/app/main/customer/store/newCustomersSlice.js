@@ -14,23 +14,23 @@ export const getCustomers = createAsyncThunk('customers/getCustomers', async (ro
 
 export const addCustomer = createAsyncThunk('customers/addCustomer', async (contact, { dispatch, getState }) => {
 	const response = await instance.post('/api/customers', {
-	"refference_number": contact.reference_number,
-	"name":  contact.name,
-	"cnic": contact.cnic,
-	"phone_number": contact.phone,
-	"email": contact.email,
-	"customer_type_id": contact.customer_type,
-	"property_type_id": contact.property_type,
-	"property_size_id": contact.property_size,
-	"meter_number":contact.meter_number,
-	"meter_type":contact.meter_type,
-	"meter_status": contact.meter_status,
-	"phase": contact.meter_phase,
-	"company": contact.company,
-	"sector_id": contact.sector,
-	"block_id": contact.block,
-	"street_address": contact.address
-});
+		refference_number: contact.reference_number,
+		name: contact.name,
+		cnic: contact.cnic,
+		phone_number: contact.phone,
+		email: contact.email,
+		customer_type_id: contact.customer_type,
+		property_type_id: contact.property_type,
+		property_size_id: contact.property_size,
+		meter_number: contact.meter_number,
+		meter_type: contact.meter_type,
+		meter_status: contact.meter_status,
+		phase: contact.meter_phase,
+		company: contact.company,
+		sector_id: contact.sector,
+		block_id: contact.block,
+		street_address: contact.address
+	});
 	const data = await response.data;
 	console.log('I am new updated data', data);
 	dispatch(getCustomers());
@@ -47,12 +47,15 @@ export const updateCustomer = createAsyncThunk('customers/updateCustomer', async
 	return data;
 });
 
-export const removeUser = createAsyncThunk('customers/removeUser', async (userId, { dispatch, getState }) => {
-	console.log('i am clicked');
-	await instance.post('/api/customers/{user}', { userId });
+export const removeCustomer = createAsyncThunk(
+	'customers/removeCustomer',
+	async (customerId, { dispatch, getState }) => {
+		console.log('i am clicked',customerId);
+		await instance.delete(`/api/customers/${customerId}`);
 
-	return userId;
-});
+		return customerId;
+	}
+);
 
 export const removeUsers = createAsyncThunk('customers/removeUsers', async (contactIds, { dispatch, getState }) => {
 	await instance.post('/api/customers/{user}', { contactIds });
@@ -185,7 +188,7 @@ const newCustomersSlice = createSlice({
 		[updateCustomer.fulfilled]: contactsAdapter.upsertOne,
 		[addCustomer.fulfilled]: contactsAdapter.addOne,
 		[removeUsers.fulfilled]: (state, action) => contactsAdapter.removeMany(state, action.payload),
-		[removeUser.fulfilled]: (state, action) => contactsAdapter.removeOne(state, action.payload),
+		[removeCustomer.fulfilled]: (state, action) => contactsAdapter.removeOne(state, action.payload),
 		[getCustomers.fulfilled]: (state, action) => {
 			const { data, routeParams } = action.payload;
 			contactsAdapter.setAll(state, data);

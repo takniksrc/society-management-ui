@@ -29,7 +29,7 @@ import { getPropertySizes } from './store/propertySizesSlice';
 import { getConfigurations } from '../../fuse-configs/store/configSlice';
 
 import {
-	removeUser,
+	removeCustomer,
 	updateCustomer,
 	addCustomer,
 	closeNewContactDialog,
@@ -237,7 +237,7 @@ function ContactDialog(props) {
 	//  * Remove Event
 	//  */
 	function handleRemove() {
-		dispatch(removeUser(id));
+		dispatch(removeCustomer(id));
 		closeComposeDialog();
 	}
 

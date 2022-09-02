@@ -9,7 +9,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import ContactsMultiSelectMenu from './ContactsMultiSelectMenu';
 import AllCustomers from './AllCustomers';
 
-import { openEditContactDialog, removeUser, toggleStarredContact, selectCustomers } from './store/newCustomersSlice';
+import {
+	// eslint-disable-next-line import/named
+	removeCustomer,
+	openEditContactDialog,
+	toggleStarredContact,
+	selectCustomers
+} from './store/newCustomersSlice';
 
 function AllCustomersHead(props) {
 	const dispatch = useDispatch();
@@ -58,11 +64,13 @@ function AllCustomersHead(props) {
 	const customers = useMemo(
 		() =>
 			customersFromServer.map(newCustomer => {
+				console.log('newCustomer',newCustomer)
 				return {
+					id: newCustomer?.id,
 					name: newCustomer?.name,
 					property_size: newCustomer?.property_size.name,
 					property_type: newCustomer?.property_type.name,
-					meter_no: newCustomer?.meter.meter_number,
+					meter_number: newCustomer?.meter.meter_number,
 					meter_type: newCustomer?.meter.meter_type
 				};
 			}),
@@ -115,7 +123,7 @@ function AllCustomersHead(props) {
 			},
 			{
 				Header: 'Meter No',
-				accessor: 'meter_no',
+				accessor: 'meter_number',
 				sortable: true
 			},
 			{
@@ -149,7 +157,8 @@ function AllCustomersHead(props) {
 						<IconButton
 							onClick={ev => {
 								ev.stopPropagation();
-								dispatch(removeUser(row.original.id));
+								console.log('i am ev',row.original.id)
+								dispatch(removeCustomer(row.original.id));
 							}}
 						>
 							<Icon>delete</Icon>
