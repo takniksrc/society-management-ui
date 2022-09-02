@@ -22,56 +22,28 @@ function AllCustomersHead(props) {
 	// const customers = useSelector(selectCustomers);
 	const customersFromServer = useSelector(selectCustomers);
 
-	// {
-	// 	"id": "a6911a4f-ec77-4384-9f3e-90bd05775681",
-	// 	"refference_number": 1000000,
-	// 	"name": "Customer 1",
-	// 	"customer_type": {
-	// 		"id": "c80da619-c1ad-4bcd-8c9e-9bf880658592",
-	// 		"name": "Residential",
-	// 		"created_at": "2022-09-01T11:16:37.000000Z",
-	// 		"updated_at": "2022-09-01T11:16:37.000000Z"
-	// 	},
-	// 	"property_type": {
-	// 		"id": "f49fcd1b-2d9c-4865-87c0-841b0ca5792c",
-	// 		"name": "House",
-	// 		"created_at": "2022-09-01T11:16:37.000000Z",
-	// 		"updated_at": "2022-09-01T11:16:37.000000Z"
-	// 	},
-	// 	"property_size": {
-	// 		"id": "b761a144-d166-4d0c-969c-d2d696148adc",
-	// 		"name": "Residential House 7 Marla",
-	// 		"created_at": "2022-09-01T11:16:37.000000Z",
-	// 		"updated_at": "2022-09-01T11:16:37.000000Z"
-	// 	},
-	// 	"meter": {
-	// 		"id": "525bc8fa-4fb7-4536-ac37-aee268c743a3",
-	// 		"customer_name": "Customer 1",
-	// 		"refference_number": 1000000,
-	// 		"street_address": "A 1",
-	// 		"meter_type": "Normal",
-	// 		"meter_number": "2000000",
-	// 		"meter_status": "Active",
-	// 		"phase": "S/Phase",
-	// 		"company": "Tranfopower",
-	// 		"created_at": "2022-09-01T11:16:37.000000Z",
-	// 		"updated_at": "2022-09-01T11:16:37.000000Z"
-	// 	},
-	// 	"created_at": "2022-09-01T11:16:37.000000Z",
-	// 	"updated_at": "2022-09-01T11:16:37.000000Z"
-	// }
-
 	const customers = useMemo(
 		() =>
 			customersFromServer.map(newCustomer => {
-				console.log('newCustomer',newCustomer)
+				console.log('newCustomer', newCustomer);
 				return {
 					id: newCustomer?.id,
 					name: newCustomer?.name,
 					property_size: newCustomer?.property_size.name,
 					property_type: newCustomer?.property_type.name,
 					meter_number: newCustomer?.meter.meter_number,
-					meter_type: newCustomer?.meter.meter_type
+					meter_type: newCustomer?.meter.meter_type,
+					reference_number: newCustomer.refference_number,
+					cnic: newCustomer.cnic,
+					phone: newCustomer.phone,
+					email: newCustomer.email,
+					customer_type: newCustomer.customer_type,
+					meter_status: newCustomer.meter.status,
+					meter_phase: newCustomer.meter.phase,
+					company: 'sms',
+					sector: newCustomer.meter.sector,
+					block: newCustomer.meter.block,
+					address: newCustomer.meter.address
 				};
 			}),
 		[customersFromServer]
@@ -157,7 +129,7 @@ function AllCustomersHead(props) {
 						<IconButton
 							onClick={ev => {
 								ev.stopPropagation();
-								console.log('i am ev',row.original.id)
+								console.log('i am ev', row.original.id);
 								dispatch(removeCustomer(row.original.id));
 							}}
 						>

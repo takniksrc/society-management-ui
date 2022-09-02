@@ -34,6 +34,7 @@ export const addCustomer = createAsyncThunk('customers/addCustomer', async (cont
 	});
 	const data = await response.data;
 	console.log('I am new updated data', data);
+  
 	dispatch(getCustomers());
 
 	return data;
