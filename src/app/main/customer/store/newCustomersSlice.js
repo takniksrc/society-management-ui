@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
 import instance from 'axiosinstance';
 import { getCustomerData } from './customerSlice';
@@ -37,20 +38,38 @@ export const addCustomer = createAsyncThunk('customers/addCustomer', async (cont
 
 	return data;
 });
-export const updateCustomer = createAsyncThunk('customers/updateCustomer', async (user, { dispatch, getState }) => {
-	const response = await instance.post('/api/customers/{user}', { user });
-	// const response = await instance.post(`/api/customers/${user}`);
+export const updateCustomer = createAsyncThunk('customers/updateCustomer', async (contact, { dispatch, getState }) => {
+	console.log('i am clicked', contact.id);
+	const response = await instance.post(`/api/customers/${contact.id}`, {
+		
+		"refference_number": contact.reference_number,
+		"name": contact.name,
+		"cnic": contact.cnic,
+		"phone_number": contact.phone,
+		"email": contact.email,
+		"customer_type_id": contact.customer_type,
+		"property_type_id": contact.property_type,
+		"property_size_id": contact.property_size,
+		"meter_number": contact.meter_number,
+		"meter_type": contact.meter_type,
+		"meter_status": contact.meter_status,
+		"phase": contact.meter_phase,
+		"company": "sms",
+		"sector_id": contact.sector,
+		"block_id": contact.block,
+		"street_address": contact.address
+	}
+	);
 	const data = await response.data;
-
+	console.log(data);
 	dispatch(getCustomers());
-
 	return data;
 });
 
 export const removeCustomer = createAsyncThunk(
 	'customers/removeCustomer',
 	async (customerId, { dispatch, getState }) => {
-		console.log('i am clicked',customerId);
+		console.log('i am clicked', customerId);
 		await instance.delete(`/api/customers/${customerId}`);
 
 		return customerId;
