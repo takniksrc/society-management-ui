@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import instance from 'axiosinstance';
 import FuseUtils from '@fuse/utils';
 import history from '@history';
 import _ from '@lodash';
@@ -11,28 +12,11 @@ import { newBoard } from './boardsSlice';
 import { removeCard, updateCard } from './cardSlice';
 
 export const getBoard = createAsyncThunk('scrumboardApp/board/getBoard', async (params, { dispatch }) => {
-	try {
-		const response = await axios.get('/api/scrumboard-app/board', { params });
-		const data = await response.data;
+	
+		const response = await instance.get(`/api/services/${params}`, { params });
+		const data = await response.data.service;
 		console.log('I am boardSliceData',data)
 		return data;
-	} catch (error) {
-
-		dispatch(
-			showMessage({
-				message: error.response.data,
-				autoHideDuration: 2000,
-				anchorOrigin: {
-					vertical: 'top',
-					horizontal: 'right'
-				}
-			})
-		);
-		history.push({
-			pathname: '/scrumboard/boards'
-		});
-		return null;
-	}
 });
 
 export const reorderList = createAsyncThunk(

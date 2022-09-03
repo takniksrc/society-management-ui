@@ -21,6 +21,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import { Autocomplete } from '@material-ui/lab';
+import { getBoard } from '../store/boardSlice';
 // import { resetProduct, newProduct, getProduct } from '../store/productSlice';
 import reducer from '../store';
 import DescriptionTab from '../Tabs/DescriptionTab';
@@ -48,6 +49,11 @@ function SCDataTemplate(props) {
 	const theme = useTheme();
 	const [tabValue, setTabValue] = useState(0);
 	const pageLayout = useRef(null);
+	const board = useSelector(({ scrumboardApp }) => scrumboardApp.board);
+
+	// const boardData = useSelector(getBoard);
+	console.log('I am boardData in SCDataTemplate',board)
+
 
 	function handleTabChange(event, value) {
 		setTabValue(value);
@@ -57,6 +63,9 @@ function SCDataTemplate(props) {
 		defaultValues: {},
 		resolver: yupResolver(schema)
 	});
+	useEffect(() => {
+		dispatch(getBoard());
+	}, [dispatch])
 	const { reset, watch, control, onChange, formState } = methods;
 	return (
 		<FormProvider {...methods}>
@@ -120,14 +129,14 @@ function SCDataTemplate(props) {
 				content={
 					<div className="p-16 sm:p-24 max-w-2xl">
 						<div className={tabValue !== 0 ? 'hidden' : ''}>
-							<DescriptionTab />
+							<DescriptionTab board={board} />
 						</div>
 						<div className={tabValue !== 1 ? 'hidden' : ''}>
-							<ResidentialTab />
+							<ResidentialTab board={board} />
 						</div>
 
 						<div className={tabValue !== 2 ? 'hidden' : ''}>
-							<CommercialTab />
+							<CommercialTab board={board} />
 						</div>
 
 						{/* <div className={tabValue !== 3 ? 'hidden' : ''}>

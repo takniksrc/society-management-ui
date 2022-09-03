@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import reducer from '../store';
 import { selectBoards, newBoard, getBoards, resetBoards } from '../store/boardsSlice';
+import { getBoard } from '../store/boardSlice';
 import societyChargesIcon from '../../../../assets/ServicesIcon/society-charges-icon.png';
 import Aquifer from '../../../../assets/ServicesIcon/aquifer.png';
 import Garbage from '../../../../assets/ServicesIcon/garbage.png';
@@ -31,9 +32,9 @@ const useStyles = makeStyles(theme => ({
 
 function SCData(props) {
 	const dispatch = useDispatch();
-	// const boards = useSelector(selectBoards);
+	const boardsnew = useSelector(selectBoards);
 	const boards = [
-		{ id: '1', name: 'Aquifer', uri: 'aquifer', icon: Aquifer },
+		{ id: boardsnew?.id, name: boardsnew?.name, uri: 'aquifer', icon: boardsnew[0]?.name },
 		{ id: '2', name: 'Garbage', uri: 'garbage', icon: Garbage },
 		{ id: '3', name: 'Cleanliness', uri: 'cleanliness', icon: Cleanliness },
 		{ id: '4', name: 'Cable', uri: 'cable', icon: Cabel },
@@ -41,7 +42,7 @@ function SCData(props) {
 		{ id: '6', name: 'Water', uri: 'water', icon: Water }
 	];
 
-	console.log('I am boards', boards);
+	console.log('I am boards', boardsnew);
 
 	const classes = useStyles(props);
 
@@ -64,7 +65,11 @@ function SCData(props) {
 		hidden: { opacity: 0, y: 20 },
 		show: { opacity: 1, y: 0 }
 	};
-
+    function handleOpen(id) {
+		console.log('i am new id',id)
+		dispatch(getBoard(id));
+		
+	}
 	return (
 		<div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>
 			<div className="flex flex-grow flex-shrink-0 flex-col items-center container px-16 md:px-24">
@@ -79,16 +84,18 @@ function SCData(props) {
 					animate="show"
 					className="grid grid-cols-3 flex-wrap w-full justify-center py-32 px-16"
 				>
-					{boards.map(board => (
+					{boardsnew?.map(board => (
 						<motion.div variants={item} className="h-224 p-16" key={board.id}>
 							<Paper
-								to={`/services/boards/society-charges/${board.id}/${board.uri}`}
+								to={`/services/boards/society-charges/${board.id}/${board.name}`}
 								className={clsx(
 									classes.board,
 									'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
 								)}
 								role="button"
 								component={Link}
+								onClick={event => handleOpen(board.id)}
+
 							>
 								<Icon className="text-56" color="action">
 									<img src={board.icon} alt="" />

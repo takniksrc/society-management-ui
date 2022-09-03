@@ -38,7 +38,7 @@ export const addCustomer = createAsyncThunk('customers/addCustomer', async (cont
 	return data;
 });
 export const updateCustomer = createAsyncThunk('customers/updateCustomer', async (user, { dispatch, getState }) => {
-	const response = await instance.post('/api/customers/{user}', { user });
+	const response = await instance.post(`/api/customers/${user}`, { user });
 	// const response = await instance.post(`/api/customers/${user}`);
 	const data = await response.data;
 

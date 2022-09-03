@@ -1,11 +1,14 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
 import axios from 'axios';
+import instance from 'axiosinstance';
 import history from '@history';
 import BoardModel from '../model/BoardModel';
 
+
 export const getBoards = createAsyncThunk('scrumboardApp/boards/getBoards', async () => {
-	const response = await axios.get('/api/scrumboard-app/boards');
-	const data = await response.data;
+	const response = await instance.get('/api/services/propertySizeBased/get-services');
+	const data = await response.data.services;
+	console.log('I am data',data)
 
 	return data;
 });
