@@ -9,6 +9,8 @@ import customerReduces from '../main/customer/store/index';
 import propertyTypesSlice from '../main/customer/store/propertyTypesSlice';
 import propertySizesSlice from '../main/customer/store/propertySizesSlice';
 import configSlice from '../fuse-configs/store/configSlice';
+import customerSlice from '../main/customer/store/customerSlice';
+import userSlice from '../main/users/store/userSlice';
 
 const createReducer = asyncReducers => (state, action) => {
 	const combinedReducer = combineReducers({
@@ -22,7 +24,9 @@ const createReducer = asyncReducers => (state, action) => {
 		customerTypesSlice,
 		propertyTypesSlice,
 		propertySizesSlice,
-	
+		customerSlice,
+		userSlice,
+
 		...asyncReducers
 	});
 

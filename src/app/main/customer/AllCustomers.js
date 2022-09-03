@@ -40,6 +40,9 @@ const AllCustomers = ({ columns, data, onRowClick }) => {
 		{
 			columns,
 			data,
+			initialState: {
+				hiddenColumns: ['reference_number']
+			},
 			autoResetPage: true
 		},
 		useGlobalFilter,

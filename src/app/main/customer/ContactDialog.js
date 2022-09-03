@@ -60,7 +60,7 @@ function ContactDialog(props) {
 
 	useDeepCompareEffect(() => {
 		dispatch(getCustomerTypes());
-		dispatch(getConfigurations())
+		dispatch(getConfigurations());
 	}, [dispatch]);
 
 	// const customerstype = [
@@ -73,7 +73,7 @@ function ContactDialog(props) {
 		setCustomerType(event.target.value);
 		// console.log('clicked', customerType);
 	};
-	
+
 	const handleBlock = event => {
 		setBlock(event.target.value);
 		// console.log('clicked', customerType);
@@ -82,11 +82,12 @@ function ContactDialog(props) {
 		setSector(event.target.value);
 		// console.log('clicked', customerType);
 	};
-	
+
 	const handlePropertyType = event => {
+		console.log('event.target', event.target);
 		setPropertyType(event.target.value);
 	};
-	
+
 	const handleProperty = event => {
 		setPropertySize(event.target.value);
 	};
@@ -94,7 +95,7 @@ function ContactDialog(props) {
 	const handleMeterPhase = event => {
 		setMeterPhase(event.target.value);
 	};
-	
+
 	const handleMeterType = event => {
 		setMeterType(event.target.value);
 	};
@@ -116,7 +117,7 @@ function ContactDialog(props) {
 		meter_number: '',
 		meter_status: '',
 		meter_phase: '',
-		meter_type:'',
+		meter_type: '',
 		company: 'sms', // TODO
 		sector: '',
 		block: '',
