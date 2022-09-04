@@ -34,39 +34,33 @@ export const addCustomer = createAsyncThunk('customers/addCustomer', async (cont
 	});
 	const data = await response.data;
 	console.log('I am new updated data', data);
-  
+
 	dispatch(getCustomers());
 
 	return data;
 });
-<<<<<<< HEAD
-export const updateCustomer = createAsyncThunk('customers/updateCustomer', async (user, { dispatch, getState }) => {
-	const response = await instance.post(`/api/customers/${user}`, { user });
-	// const response = await instance.post(`/api/customers/${user}`);
-=======
+
 export const updateCustomer = createAsyncThunk('customers/updateCustomer', async (contact, { dispatch, getState }) => {
 	console.log('i am clicked', contact.id);
 	const response = await instance.post(`/api/customers/${contact.id}`, {
-		
-		"refference_number": contact.reference_number,
-		"name": contact.name,
-		"cnic": contact.cnic,
-		"phone_number": contact.phone,
-		"email": contact.email,
-		"customer_type_id": contact.customer_type,
-		"property_type_id": contact.property_type,
-		"property_size_id": contact.property_size,
-		"meter_number": contact.meter_number,
-		"meter_type": contact.meter_type,
-		"meter_status": contact.meter_status,
-		"phase": contact.meter_phase,
-		"company": "sms",
-		"sector_id": contact.sector,
-		"block_id": contact.block,
-		"street_address": contact.address
-	}
-	);
->>>>>>> 716eb68bee98c08c03ffc133c1b12a62122323bb
+		refference_number: contact.reference_number,
+		name: contact.name,
+		cnic: contact.cnic,
+		phone_number: contact.phone,
+		email: contact.email,
+		customer_type_id: contact.customer_type,
+		property_type_id: contact.property_type,
+		property_size_id: contact.property_size,
+		meter_number: contact.meter_number,
+		meter_type: contact.meter_type,
+		meter_status: contact.meter_status,
+		phase: contact.meter_phase,
+		company: 'sms',
+		sector_id: contact.sector,
+		block_id: contact.block,
+		street_address: contact.address
+	});
+
 	const data = await response.data;
 	console.log(data);
 	dispatch(getCustomers());
