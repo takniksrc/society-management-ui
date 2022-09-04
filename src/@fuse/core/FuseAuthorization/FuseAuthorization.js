@@ -53,8 +53,8 @@ class FuseAuthorization extends Component {
         */
 		if (!userRole || userRole.length === 0) {
 			history.push({
-				pathname: '/login',
-				state: { redirectUrl: pathname }
+				pathname: '/login'
+				// state: { redirectUrl: pathname }
 			});
 		} else {
 			/*
@@ -63,7 +63,8 @@ class FuseAuthorization extends Component {
         Redirect to dashboard or redirectUrl
         */
 			history.push({
-				pathname: redirectUrl
+				// pathname: redirectUrl
+				pathname: '/users'
 			});
 		}
 	}
