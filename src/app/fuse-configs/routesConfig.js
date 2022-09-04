@@ -9,44 +9,26 @@ import Login from 'app/login/Login';
 import LoginConfig from 'app/login/LoginConfig';
 import RegisterConfig from 'app/register/RegisterConfig';
 
-
-
-const routeConfigs = [LoginConfig ,RegisterConfig ,CustomersConfig, UsersConfig, AnalysisReportConfig, BillingConfig, ServicesConfig];
+const routeConfigs = [
+	LoginConfig,
+	RegisterConfig,
+	CustomersConfig,
+	UsersConfig,
+	AnalysisReportConfig,
+	BillingConfig,
+	ServicesConfig
+];
 
 const routes = [
 	// if you want to make whole app auth protected by default change defaultAuth for example:
 	// ...FuseUtils.generateRoutesFromConfigs(routeConfigs, ['admin','staff','user']),
 	// The individual route configs which has auth option won't be overridden.
 	...FuseUtils.generateRoutesFromConfigs(routeConfigs),
-		{
-			path: '/',
-			component: () => <Redirect to="/login" />
-		},
-		{
-			path: '/',
-			component: () => <Redirect to="/register" />
-		},
-	{
-		path: '/',
-		component: () => <Redirect to="/customers" />
-	},
-	{
-		path: '/',
-		component: () => <Redirect to="/users" />
-	},
-	{
-		path: '/',
-		component: () => <Redirect to="/analysisreport" />
-	},
-	{
-		path: '/',
-		component: () => <Redirect to="/billing" />
-	},
-	{
-		path: '/',
-		component: () => <Redirect to="/services" />
-	},
 
+	{
+		path: '/',
+		component: () => <Redirect to="/login" />
+	}
 ];
 
 export default routes;
