@@ -11,11 +11,15 @@ import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import Button from '@material-ui/core/Button';
 
-function ConstructionTab(props) {
+function CommercialTab(props) {
 	const methods = useFormContext();
 	const { control } = methods;
-	const [selectedCategory, setSelectedCategory] = useState('all');
-	const categories = [{ id: 1, value: 'plot', label: 'Plot', color: '#2196f3' }];
+	const [selectedCategory, setSelectedCategory] = useState('flat');
+	const categories = [
+		{ id: 1, value: 'flat', label: 'Flat', color: '#2196f3' },
+		{ id: 2, value: 'plaza', label: 'Plaza', color: '#2196f3' },
+
+	];
 	function handleSelectedCategory(event) {
 		setSelectedCategory(event.target.value);
 	}
@@ -23,7 +27,7 @@ function ConstructionTab(props) {
 	return (
 		<div>
 			<FormControl className="flex w-full sm:w-320 -mx-4 mt-8 mb-16 ml-px" variant="outlined">
-				<InputLabel htmlFor="category-label-placeholder"> Category </InputLabel>
+				<InputLabel htmlFor="category-label-placeholder"> Property Type </InputLabel>
 				<Select
 					value={selectedCategory}
 					onChange={handleSelectedCategory}
@@ -35,9 +39,9 @@ function ConstructionTab(props) {
 						/>
 					}
 				>
-					<MenuItem value="all">
+					{/* <MenuItem value="all">
 						<em> All </em>
-					</MenuItem>
+					</MenuItem> */}
 					{categories.map(category => (
 						<MenuItem value={category.value} key={category.id}>
 							{category.label}
@@ -47,7 +51,7 @@ function ConstructionTab(props) {
 			</FormControl>
 			<div className="flex mx-4 -mx-4 mt-24">
 				<Controller
-					name="5marla"
+					name="fivemarlacommercial"
 					control={control}
 					render={({ field }) => (
 						<TextField
@@ -55,7 +59,7 @@ function ConstructionTab(props) {
 							className="mt-8 mb-16 mx-4"
 							label="5 Marla"
 							autoFocus
-							id="5marla"
+							id="fivemarlacommercial"
 							variant="outlined"
 							fullWidth
 						/>
@@ -63,14 +67,14 @@ function ConstructionTab(props) {
 				/>
 
 				<Controller
-					name="7marla"
+					name="sevenmarlacommercial"
 					control={control}
 					render={({ field }) => (
 						<TextField
 							{...field}
 							className="mt-8 mb-16 mx-4"
 							label="7 Marla"
-							id="7marla"
+							id="sevenmarlacommercial"
 							variant="outlined"
 							fullWidth
 						/>
@@ -78,21 +82,21 @@ function ConstructionTab(props) {
 				/>
 
 				<Controller
-					name="10marla"
+					name="tenmarlacommercial"
 					control={control}
 					render={({ field }) => (
 						<TextField
 							{...field}
 							className="mt-8 mb-16 mx-4"
 							label="10 Marla"
-							id="10marla"
+							id="tenmarlacommercial"
 							variant="outlined"
 							fullWidth
 						/>
 					)}
 				/>
 			</div>
-			<div className="flex mx-4 -mx-4 mt-12">
+			{/* <div className="flex mx-4 -mx-4 mt-12">
 				<motion.div
 					className="flex"
 					initial={{ opacity: 0, x: 20 }}
@@ -117,9 +121,9 @@ function ConstructionTab(props) {
 						Remove
 					</Button>
 				</motion.div>
-			</div>
+			</div> */}
 		</div>
 	);
 }
 
-export default ConstructionTab;
+export default CommercialTab;

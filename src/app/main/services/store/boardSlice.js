@@ -18,6 +18,18 @@ export const getBoard = createAsyncThunk('scrumboardApp/board/getBoard', async (
 		console.log('I am boardSliceData',data)
 		return data;
 });
+export const saveBoard = createAsyncThunk(
+	'scrumboardApp/board/saveBoard',
+	async (boardData, { dispatch, getState }) => {
+		const { product } = getState();
+		console.log('I am product in save Product',product)
+
+		const response = await axios.post('/api/e-commerce-app/product/save', { ...product, ...boardData });
+		const data = await response.data;
+
+		return data;
+	}
+);
 
 export const reorderList = createAsyncThunk(
 	'scrumboardApp/board/reorderList',
@@ -204,10 +216,30 @@ const boardsSlice = createSlice({
 		resetBoard: (state, action) => null,
 		addLabel: (state, action) => {
 			state.labels = [...state.labels, action.payload];
+		},
+		newBoardAllValue: {
+			reducer: (state, action) => action.payload,
+			prepare: event => ({
+				payload: {
+					id: '',
+					description: '',
+					category: '',
+					fivemarla: '',
+					sevenmarla: '',
+					tenmarla: '',
+					onekanal: '',
+					twokanal: '',
+					fivemarlacommercial: '',
+					sevenmarlacommercial: '',
+					tenmarlacommercial: '',
+					active: true
+				}
+			})
 		}
 	},
 	extraReducers: {
 		[getBoard.fulfilled]: (state, action) => action.payload,
+		[saveBoard.fulfilled]: (state, action) => action.payload,
 		[reorderList.fulfilled]: (state, action) => {
 			state.lists = action.payload;
 		},
@@ -262,6 +294,5 @@ const boardsSlice = createSlice({
 	}
 });
 
-export const { resetBoard, addLabel } = boardsSlice.actions;
-
+export const { resetBoard,newBoardAllValue,addLabel} = boardsSlice.actions;
 export default boardsSlice.reducer;

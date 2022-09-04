@@ -39,11 +39,6 @@ export const addCustomer = createAsyncThunk('customers/addCustomer', async (cont
 
 	return data;
 });
-<<<<<<< HEAD
-export const updateCustomer = createAsyncThunk('customers/updateCustomer', async (user, { dispatch, getState }) => {
-	const response = await instance.post(`/api/customers/${user}`, { user });
-	// const response = await instance.post(`/api/customers/${user}`);
-=======
 export const updateCustomer = createAsyncThunk('customers/updateCustomer', async (contact, { dispatch, getState }) => {
 	console.log('i am clicked', contact.id);
 	const response = await instance.post(`/api/customers/${contact.id}`, {
@@ -66,7 +61,6 @@ export const updateCustomer = createAsyncThunk('customers/updateCustomer', async
 		"street_address": contact.address
 	}
 	);
->>>>>>> 716eb68bee98c08c03ffc133c1b12a62122323bb
 	const data = await response.data;
 	console.log(data);
 	dispatch(getCustomers());

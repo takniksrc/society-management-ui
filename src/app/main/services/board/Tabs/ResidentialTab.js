@@ -51,7 +51,7 @@ function ResidentialTab(props) {
 			</FormControl>
 			<div className="flex mx-4 -mx-4 mt-24">
 				<Controller
-					name="5marla"
+					name="fivemarla"
 					control={control}
 					render={({ field }) => (
 						<TextField
@@ -59,7 +59,7 @@ function ResidentialTab(props) {
 							className="mt-8 mb-16 mx-4"
 							label="5 Marla"
 							autoFocus
-							id="5marla"
+							id="fivemarla"
 							variant="outlined"
 							fullWidth
 						/>
@@ -67,14 +67,14 @@ function ResidentialTab(props) {
 				/>
 
 				<Controller
-					name="7marla"
+					name="sevenmarla"
 					control={control}
 					render={({ field }) => (
 						<TextField
 							{...field}
 							className="mt-8 mb-16 mx-4"
 							label="7 Marla"
-							id="7marla"
+							id="sevenmarla"
 							variant="outlined"
 							fullWidth
 						/>
@@ -82,14 +82,14 @@ function ResidentialTab(props) {
 				/>
 
 				<Controller
-					name="10marla"
+					name="tenmarla"
 					control={control}
 					render={({ field }) => (
 						<TextField
 							{...field}
 							className="mt-8 mb-16 mx-4"
 							label="10 Marla"
-							id="10marla"
+							id="tenmarla"
 							variant="outlined"
 							fullWidth
 						/>
@@ -98,7 +98,7 @@ function ResidentialTab(props) {
 			</div>
 			<div className="flex mx-4 -mx-4 mt-10">
 				<Controller
-					name="1kanal"
+					name="onekanal"
 					control={control}
 					render={({ field }) => (
 						<TextField
@@ -106,7 +106,7 @@ function ResidentialTab(props) {
 							className="mt-8 mb-16 mx-4"
 							label="1 Kanal"
 							autoFocus
-							id="1 Kanal"
+							id="onekanal"
 							variant="outlined"
 							fullWidth
 						/>
@@ -114,21 +114,21 @@ function ResidentialTab(props) {
 				/>
 
 				<Controller
-					name="2kanal"
+					name="twokanal"
 					control={control}
 					render={({ field }) => (
 						<TextField
 							{...field}
 							className="mt-8 mb-16 mx-4"
 							label="2 Kanal"
-							id="2kanal"
+							id="twokanal"
 							variant="outlined"
 							fullWidth
 						/>
 					)}
 				/>
 			</div>
-			<div className="flex mx-4 -mx-4 mt-12">
+			{/* <div className="flex mx-4 -mx-4 mt-12">
 				<motion.div
 					className="flex"
 					initial={{ opacity: 0, x: 20 }}
@@ -153,7 +153,7 @@ function ResidentialTab(props) {
 						Remove
 					</Button>
 				</motion.div>
-			</div>
+			</div> */}
 		</div>
 	);
 }

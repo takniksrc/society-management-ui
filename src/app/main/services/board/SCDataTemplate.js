@@ -17,17 +17,20 @@ import * as yup from 'yup';
 import Hidden from '@material-ui/core/Hidden';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
+
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import { Autocomplete } from '@material-ui/lab';
-import { getBoard } from '../store/boardSlice';
+// eslint-disable-next-line import/named
+import { saveBoard, getBoard } from '../store/boardSlice';
 // import { resetProduct, newProduct, getProduct } from '../store/productSlice';
+
 import reducer from '../store';
-import DescriptionTab from '../Tabs/DescriptionTab';
-import ResidentialTab from '../Tabs/ResidentialTab';
-import CommercialTab from '../Tabs/CommercialTab';
-import ConstructionTab from '../Tabs/ConstructionTab';
+import DescriptionTab from './Tabs/DescriptionTab';
+import ResidentialTab from './Tabs/ResidentialTab';
+import CommercialTab from './Tabs/CommercialTab';
+import ConstructionTab from './Tabs/ConstructionTab';
 // import ProductHeader from './ProductHeader';
 // import InventoryTab from './tabs/InventoryTab';
 // import PricingTab from './tabs/PricingTab';
@@ -48,25 +51,65 @@ function SCDataTemplate(props) {
 	const dispatch = useDispatch();
 	const theme = useTheme();
 	const [tabValue, setTabValue] = useState(0);
-	const pageLayout = useRef(null);
-	const board = useSelector(({ scrumboardApp }) => scrumboardApp.board);
-
-	// const boardData = useSelector(getBoard);
-	console.log('I am boardData in SCDataTemplate',board)
-
-
-	function handleTabChange(event, value) {
-		setTabValue(value);
-	}
+	// const methods = useFormContext();
 	const methods = useForm({
 		mode: 'onChange',
 		defaultValues: {},
 		resolver: yupResolver(schema)
 	});
+	const { formState, watch, getValues } = methods;
+	const { isValid, dirtyFields } = formState;
+	const [noProduct, setNoProduct] = useState(false);
+
+	const pageLayout = useRef(null);
+	const board = useSelector(({ scrumboardApp }) => scrumboardApp.board);
+	console.log('I am product', board);
+
+	const routeParams = useParams();
+	const form = watch();
+
+	// const boardData = useSelector(getBoard);
+	console.log('I am boardData in SCDataTemplate', board);
+
+	function handleTabChange(event, value) {
+		setTabValue(value);
+	}
+	const name = watch('name');
+
 	useEffect(() => {
 		dispatch(getBoard());
-	}, [dispatch])
-	const { reset, watch, control, onChange, formState } = methods;
+	}, [dispatch]);
+	function handleSaveProduct() {
+		dispatch(saveBoard(getValues()));
+	}
+	useDeepCompareEffect(() => {
+		function updateProductState() {
+			const { productId } = routeParams;
+
+			if (productId === 'new') {
+				/**
+				 * Create New Product data
+				 */
+			} else {
+				/**
+				 * Get Product data
+				 */
+				dispatch(getBoard(routeParams)).then(action => {
+					/**
+					 * If the requested product is not exist show message
+					 */
+					if (!action.payload) {
+						setNoProduct(true);
+					}
+				});
+			}
+		}
+
+		updateProductState();
+	}, [dispatch, routeParams]);
+	// if (_.isEmpty(form) || (board && routeParams.productId !== board.id && routeParams.productId !== 'new')) {
+	// 	return <FuseLoading />;
+	// }
 	return (
 		<FormProvider {...methods}>
 			<FusePageCarded
@@ -74,7 +117,8 @@ function SCDataTemplate(props) {
 					toolbar: 'p-0',
 					header: 'min-h-72 h-72 sm:h-136 sm:min-h-136'
 				}}
-				header={
+				header=
+				{ // {ProductHeader}
 					<div className="flex flex-1 items-center px-16 lg:px-24">
 						<Hidden lgUp>
 							<IconButton
@@ -88,6 +132,22 @@ function SCDataTemplate(props) {
 							<Icon>{theme.direction === 'ltr' ? 'arrow_back' : 'arrow_forward'}</Icon>
 						</IconButton>
 						<Typography className="flex-1 text-20 mx-16">Society Charges</Typography>
+						<Typography className="text-16 sm:text-20 truncate font-semibold">{name}</Typography>
+						<motion.div
+							className="flex"
+							initial={{ opacity: 0, x: 20 }}
+							animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
+						>
+							<Button
+								className="whitespace-nowrap mx-4"
+								variant="contained"
+								color="secondary"
+								disabled={_.isEmpty(dirtyFields) || !isValid}
+								onClick={handleSaveProduct}
+							>
+								Save
+							</Button>
+						</motion.div>
 					</div>
 				}
 				contentToolbar={
