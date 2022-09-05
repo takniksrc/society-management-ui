@@ -92,6 +92,23 @@ function EKServiceTemplate(props) {
 							<Icon>{theme.direction === 'ltr' ? 'arrow_back' : 'arrow_forward'}</Icon>
 						</IconButton>
 						<Typography className="flex-1 text-20 mx-16">{board?.name}</Typography>
+						<div className="flex mx-4 -mx-4 mt-12">
+							<motion.div
+								className="flex"
+								initial={{ opacity: 0, x: 20 }}
+								animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
+							>
+								<Button
+									className="whitespace-nowrap mx-4"
+									variant="contained"
+									color="secondary"
+									// disabled={_.isEmpty(dirtyFields) || !isValid}
+									// onClick={handleSaveProduct}
+								>
+									Save
+								</Button>
+							</motion.div>
+						</div>
 					</div>
 				}
 				contentToolbar={

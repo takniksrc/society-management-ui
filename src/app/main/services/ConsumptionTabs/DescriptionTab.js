@@ -30,30 +30,6 @@ function DescriptionTab(props) {
 					/>
 				)}
 			/>
-			<motion.div
-				className="flex"
-				initial={{ opacity: 0, x: 20 }}
-				animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
-			>
-				<Button
-					className="whitespace-nowrap mx-4"
-					variant="contained"
-					color="secondary"
-					// disabled={_.isEmpty(dirtyFields) || !isValid}
-					// onClick={handleSaveProduct}
-				>
-					Save
-				</Button>
-				<Button
-					className="whitespace-nowrap mx-4"
-					variant="contained"
-					color="secondary"
-					// onClick={handleRemoveProduct}
-					startIcon={<Icon className="hidden sm:flex">delete</Icon>}
-				>
-					Remove
-				</Button>
-			</motion.div>
 		</div>
 	);
 }

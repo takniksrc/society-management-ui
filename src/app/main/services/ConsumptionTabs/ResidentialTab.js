@@ -12,7 +12,6 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { motion } from 'framer-motion';
 
-
 function ResidentialTab(props) {
 	const methods = useFormContext();
 	const { control } = methods;
@@ -25,14 +24,14 @@ function ResidentialTab(props) {
 				</Typography>
 
 				<Controller
-					name="priceTaxExcl"
+					name="ResidentialStartUpper"
 					control={control}
 					render={({ field }) => (
 						<TextField
 							{...field}
 							className="mt-8 mb-16 mx-4"
 							label="Units"
-							id="priceTaxExcl"
+							id="ResidentialStart"
 							// InputProps={{
 							// 	startAdornment: <InputAdornment position="start">$</InputAdornment>
 							// }}
@@ -47,7 +46,7 @@ function ResidentialTab(props) {
 					End
 				</Typography>
 				<Controller
-					name="priceTaxIncl"
+					name="ResidentialEndUpper"
 					control={control}
 					render={({ field }) => (
 						<TextField
@@ -68,7 +67,7 @@ function ResidentialTab(props) {
 					Price
 				</Typography>
 				<Controller
-					name="taxRate"
+					name="ResidentialPriceUpper"
 					control={control}
 					render={({ field }) => (
 						<TextField
@@ -92,14 +91,14 @@ function ResidentialTab(props) {
 				</Typography>
 
 				<Controller
-					name="priceTaxExcl"
+					name="ResidentialStartMiddle"
 					control={control}
 					render={({ field }) => (
 						<TextField
 							{...field}
 							className="mt-8 mb-16 mx-4"
 							label="Units"
-							id="priceTaxExcl"
+							id="Residential_Flat_One_Size:"
 							// InputProps={{
 							// 	startAdornment: <InputAdornment position="start">$</InputAdornment>
 							// }}
@@ -114,7 +113,7 @@ function ResidentialTab(props) {
 					End
 				</Typography>
 				<Controller
-					name="priceTaxIncl"
+					name="ResidentialEndMiddle"
 					control={control}
 					render={({ field }) => (
 						<TextField
@@ -135,7 +134,7 @@ function ResidentialTab(props) {
 					Price
 				</Typography>
 				<Controller
-					name="taxRate"
+					name="ResidentialPriceMiddle"
 					control={control}
 					render={({ field }) => (
 						<TextField
@@ -159,7 +158,7 @@ function ResidentialTab(props) {
 				</Typography>
 
 				<Controller
-					name="priceTaxExcl"
+					name="ResidentialStartBottom"
 					control={control}
 					render={({ field }) => (
 						<TextField
@@ -181,7 +180,7 @@ function ResidentialTab(props) {
 					End
 				</Typography>
 				<Controller
-					name="priceTaxIncl"
+					name="ResidentialEndBottom"
 					control={control}
 					render={({ field }) => (
 						<TextField
@@ -202,7 +201,7 @@ function ResidentialTab(props) {
 					Price
 				</Typography>
 				<Controller
-					name="taxRate"
+					name="ResidentialPriceBottom"
 					control={control}
 					render={({ field }) => (
 						<TextField
@@ -219,32 +218,6 @@ function ResidentialTab(props) {
 						/>
 					)}
 				/>
-			</div>
-			<div className="flex mx-4 -mx-4 mt-12">
-				<motion.div
-					className="flex"
-					initial={{ opacity: 0, x: 20 }}
-					animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
-				>
-					<Button
-						className="whitespace-nowrap mx-4"
-						variant="contained"
-						color="secondary"
-						// disabled={_.isEmpty(dirtyFields) || !isValid}
-						// onClick={handleSaveProduct}
-					>
-						Save
-					</Button>
-					<Button
-						className="whitespace-nowrap mx-4"
-						variant="contained"
-						color="secondary"
-						// onClick={handleRemoveProduct}
-						startIcon={<Icon className="hidden sm:flex">delete</Icon>}
-					>
-						Remove
-					</Button>
-				</motion.div>
 			</div>
 		</div>
 	);

@@ -224,7 +224,7 @@ const boardsSlice = createSlice({
 					id: '',
 					description: '',
 					Residential_Flat_One_Size:"3003",
-					Residential_Plot_10_Marla:"300"
+					Residential_Plot_10_Marla:"3"
 				}
 			})
 		}
