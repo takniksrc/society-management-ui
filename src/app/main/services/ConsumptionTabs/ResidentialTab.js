@@ -21,7 +21,7 @@ function ResidentialTab(props) {
 		<div>
 			<div className="flex mx-4 -mx-4">
 				<Typography variant="subtitle1" className="py-16 font-semibold mr-8 mx-4">
-					Slab1
+					Start
 				</Typography>
 
 				<Controller
@@ -44,7 +44,7 @@ function ResidentialTab(props) {
 					)}
 				/>
 				<Typography variant="subtitle1" className="py-16 mx-4">
-					to
+					End
 				</Typography>
 				<Controller
 					name="priceTaxIncl"
@@ -88,7 +88,7 @@ function ResidentialTab(props) {
 			</div>
 			<div className="flex mx-4 -mx-4">
 				<Typography variant="subtitle1" className="py-16 font-semibold mr-8 mx-4">
-					Slab2
+					Start
 				</Typography>
 
 				<Controller
@@ -111,7 +111,7 @@ function ResidentialTab(props) {
 					)}
 				/>
 				<Typography variant="subtitle1" className="py-16 mx-4">
-					to
+					End
 				</Typography>
 				<Controller
 					name="priceTaxIncl"
@@ -155,7 +155,7 @@ function ResidentialTab(props) {
 			</div>
 			<div className="flex mx-4 -mx-4">
 				<Typography variant="subtitle1" className="py-16 font-semibold mr-8 mx-4">
-					Slab3
+					Start
 				</Typography>
 
 				<Controller
@@ -178,7 +178,7 @@ function ResidentialTab(props) {
 					)}
 				/>
 				<Typography variant="subtitle1" className="py-16 mx-4">
-					to
+					End
 				</Typography>
 				<Controller
 					name="priceTaxIncl"

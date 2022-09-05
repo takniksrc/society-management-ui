@@ -11,11 +11,11 @@ const ScrumboardAppConfig = {
 		// 	component: lazy(() => import('./board/Board'))
 		// },
 		{
-			path: '/services/boards/consumption-based-charges/1/electricity-khayaban-amin',
+			path: '/services/boards/consumption-based-charges/:boardId/:boardUri?',
 			component: lazy(() => import('./board/EKServiceTemplate'))
 		},
 		{
-			path: '/services/boards/consumption-based-charges/2/electricity-tip',
+			path: '/services/boards/consumption-based-charges/:boardId/electricity-tip',
 			component: lazy(() => import('./board/TIPService'))
 		},
 		{

@@ -9,10 +9,9 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import reducer from '../store';
-import { selectBoards, newBoard, getBoards, resetBoards } from '../store/boardsSlice';
+import { selectBoards, newBoard, getBoards, resetBoards,getConsumptionBoards } from '../store/boardsSlice';
 import societyChargesIcon from '../../../../assets/ServicesIcon/society-charges-icon.png';
 import consumptionChragesIcon from '../../../../assets/ServicesIcon/consumption-based-icon.png';
-
 
 const useStyles = makeStyles(theme => ({
 	root: {},
@@ -29,17 +28,14 @@ function Boards(props) {
 	const dispatch = useDispatch();
 	// const boards = useSelector(selectBoards);
 	const boards = [
-	     {id:'1' , name: 'Consumption Based Chrages', uri: 'consumption-based-charges',icon: consumptionChragesIcon},
-]
-    const boards2 = [
-     	{id:'2' , name: 'Society Charges', uri: 'society-charges',icon: societyChargesIcon}
-]
-	console.log('I am boards',boards)
+		{ id: '1', name: 'Consumption Based Chrages', uri: 'consumption-based-charges', icon: consumptionChragesIcon }
+	];
+	const boards2 = [{ id: '2', name: 'Society Charges', uri: 'society-charges', icon: societyChargesIcon }];
+	console.log('I am boards', boards);
 
 	const classes = useStyles(props);
 
 	useEffect(() => {
-		dispatch(getBoards());
 		return () => {
 			dispatch(resetBoards());
 		};
@@ -83,9 +79,10 @@ function Boards(props) {
 								)}
 								role="button"
 								component={Link}
+								onClick={() => dispatch(getConsumptionBoards())}
 							>
 								<Icon className="text-56" color="action">
-								    <img src={board.icon} alt='' />
+									<img src={board.icon} alt="" />
 								</Icon>
 								<Typography className="text-16 font-medium text-center pt-16 px-32" color="inherit">
 									{board.name}
@@ -103,9 +100,10 @@ function Boards(props) {
 								)}
 								role="button"
 								component={Link}
+								onClick={() => dispatch(getBoards())}
 							>
 								<Icon className="text-56" color="action">
-								    <img src={board.icon} alt='' />
+									<img src={board.icon} alt="" />
 								</Icon>
 								<Typography className="text-16 font-medium text-center pt-16 px-32" color="inherit">
 									{board.name}

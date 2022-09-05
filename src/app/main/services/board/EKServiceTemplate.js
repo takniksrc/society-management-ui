@@ -48,6 +48,10 @@ function EKServiceTemplate(props) {
 	const dispatch = useDispatch();
 	const theme = useTheme();
 	const pageLayout = useRef(null);
+	const board = useSelector(({ scrumboardApp }) => scrumboardApp.board);
+	console.log('I am product', board);
+
+
 
 	const [tabValue, setTabValue] = useState(0);
 
@@ -60,6 +64,15 @@ function EKServiceTemplate(props) {
 		resolver: yupResolver(schema)
 	});
 	const { reset, watch, control, onChange, formState } = methods;
+	useEffect(() => {
+		if (!board) {
+			return;
+		}
+		/**
+		 * Reset the form on product state changes
+		 */
+		reset(board);
+	}, [board, reset]);
 	return (
 		<FormProvider {...methods}>
 			<FusePageCarded
@@ -79,7 +92,7 @@ function EKServiceTemplate(props) {
                 <IconButton to="/services/boards/consumption-based-charges" component={Link}>
                     <Icon>{theme.direction === 'ltr' ? 'arrow_back' : 'arrow_forward'}</Icon>
                 </IconButton>
-                 <Typography className="flex-1 text-20 mx-16">Electricity khayaban e Amin</Typography>
+                 <Typography className="flex-1 text-20 mx-16">{board?.name}</Typography>
             </div>
 }
 				contentToolbar={

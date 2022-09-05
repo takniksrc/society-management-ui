@@ -9,7 +9,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import reducer from '../store';
-import { selectBoards, newBoard, getBoards, resetBoards } from '../store/boardsSlice';
+import { selectBoards, newBoard, getConsumptionBoards, resetBoards } from '../store/boardsSlice';
+import { getBoard } from '../store/boardSlice';
 import societyChargesIcon from '../../../../assets/ServicesIcon/society-charges-icon.png';
 import consumptionChragesIcon from '../../../../assets/ServicesIcon/consumption-based-icon.png';
 
@@ -27,10 +28,11 @@ const useStyles = makeStyles(theme => ({
 
 function CBData(props) {
 	const dispatch = useDispatch();
-	// const boards = useSelector(selectBoards);
-	const boards = [
-	     {id:'1' , name: 'Electricity Khaban-e-Amin', uri: 'electricity-khayaban-amin',icon: consumptionChragesIcon},
-]
+	const boards = useSelector(selectBoards);
+	console.log('newboards',boards)
+// 	const boards = [
+// 	     {id:'1' , name: 'Electricity Khaban-e-Amin', uri: 'electricity-khayaban-amin',icon: consumptionChragesIcon},
+// ]
     const boards2 = [
      	{id:'2' , name: 'Electricity TIP', uri: 'electricity-tip',icon: consumptionChragesIcon}
 ]
@@ -39,7 +41,7 @@ function CBData(props) {
 	const classes = useStyles(props);
 
 	useEffect(() => {
-		dispatch(getBoards());
+		dispatch(getConsumptionBoards());
 		return () => {
 			dispatch(resetBoards());
 		};
@@ -57,6 +59,11 @@ function CBData(props) {
 		hidden: { opacity: 0, y: 20 },
 		show: { opacity: 1, y: 0 }
 	};
+	function handleOpen(id) {
+		console.log('i am new id', id);
+		// alert(id);
+		dispatch(getBoard(id));
+	}
 
 	return (
 		<div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>
@@ -70,13 +77,14 @@ function CBData(props) {
 					{boards.map(board => (
 						<motion.div variants={item} className="h-224 p-16" key={board.id}>
 							<Paper
-								to={`/services/boards/consumption-based-charges/${board.id}/${board.uri}`}
+								to={`/services/boards/consumption-based-charges/${board.id}/${board.name}`}
 								className={clsx(
 									classes.board,
 									'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
 								)}
 								role="button"
 								component={Link}
+								onClick={event => handleOpen(board.id)}
 							>
 								<Icon className="text-56" color="action">
 								    <img src={board.icon} alt='' />
@@ -87,7 +95,7 @@ function CBData(props) {
 							</Paper>
 						</motion.div>
 					))}
-					{boards2.map(board => (
+					{/* {boards2.map(board => (
 						<motion.div variants={item} className="h-224 p-16" key={board.id}>
 							<Paper
 								to={`/services/boards/consumption-based-charges/${board.id}/${board.uri}`}
@@ -106,7 +114,7 @@ function CBData(props) {
 								</Typography>
 							</Paper>
 						</motion.div>
-					))}
+					))} */}
 					
 				</motion.div>
 			</div>
