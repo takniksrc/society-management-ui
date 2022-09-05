@@ -7,7 +7,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
 import withReducer from 'app/store/withReducer';
 import { motion } from 'framer-motion';
-import { useEffect, useState ,useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import _ from '@lodash';
@@ -51,8 +51,6 @@ function EKServiceTemplate(props) {
 	const board = useSelector(({ scrumboardApp }) => scrumboardApp.board);
 	console.log('I am product', board);
 
-
-
 	const [tabValue, setTabValue] = useState(0);
 
 	function handleTabChange(event, value) {
@@ -80,40 +78,46 @@ function EKServiceTemplate(props) {
 					toolbar: 'p-0',
 					header: 'min-h-72 h-72 sm:h-136 sm:min-h-136'
 				}}
-				header={<div className="flex flex-1 items-center px-16 lg:px-24" >
-                <Hidden lgUp>
-                    <IconButton
-                        onClick={ev => pageLayout.current.toggleLeftSidebar()}
-                        aria-label="open left sidebar"
-                    >
-                        <Icon>menu</Icon>
-                    </IconButton>
-                </Hidden>
-                <IconButton to="/services/boards/consumption-based-charges" component={Link}>
-                    <Icon>{theme.direction === 'ltr' ? 'arrow_back' : 'arrow_forward'}</Icon>
-                </IconButton>
-                 <Typography className="flex-1 text-20 mx-16">{board?.name}</Typography>
-            </div>
-}
+				header={
+					<div className="flex flex-1 items-center px-16 lg:px-24">
+						<Hidden lgUp>
+							<IconButton
+								onClick={ev => pageLayout.current.toggleLeftSidebar()}
+								aria-label="open left sidebar"
+							>
+								<Icon>menu</Icon>
+							</IconButton>
+						</Hidden>
+						<IconButton to="/services/boards/consumption-based-charges" component={Link}>
+							<Icon>{theme.direction === 'ltr' ? 'arrow_back' : 'arrow_forward'}</Icon>
+						</IconButton>
+						<Typography className="flex-1 text-20 mx-16">{board?.name}</Typography>
+					</div>
+				}
 				contentToolbar={
-                    <>
-					<Tabs
-						value={tabValue}
-						onChange={handleTabChange}
-						indicatorColor="primary"
-						textColor="primary"
-						variant="scrollable"
-						scrollButtons="auto"
-						classes={{ root: 'w-full h-64' }}
-					>
-						<Tab className="h-64" label="Description" />
-						<Tab className="h-64" label="Residential" />
-						<Tab className="h-64" label="Commercial" />
-						<Tab className="h-64" label="Construction" />
-						<Tab className="h-64" label="FPA" />
-
-					</Tabs>
-                    </>
+					<>
+						<Tabs
+							value={tabValue}
+							onChange={handleTabChange}
+							indicatorColor="primary"
+							textColor="primary"
+							variant="scrollable"
+							scrollButtons="auto"
+							classes={{ root: 'w-full h-64' }}
+						>
+							<Tab className="h-64" label="Description" />
+							{board?.servicePricing
+								? board?.servicePricing?.map(sp => {
+										console.log('i am sp', sp.customer_type.name);
+										return <Tab className="h-64" label={sp.customer_type.name} />;
+								  })
+								: ''}
+							{/* <Tab className="h-64" label="Residential" />
+							<Tab className="h-64" label="Commercial" />
+							<Tab className="h-64" label="Construction" />
+							<Tab className="h-64" label="FPA" /> */}
+						</Tabs>
+					</>
 				}
 				content={
 					<div className="p-16 sm:p-24 max-w-2xl">
@@ -131,13 +135,12 @@ function EKServiceTemplate(props) {
 							<ConstructionTab />
 						</div>
 						<div className={tabValue !== 4 ? 'hidden' : ''}>
-							<FPATab/>
+							<FPATab />
 						</div>
 					</div>
 				}
 				innerScroll
-			ref={pageLayout}
-
+				ref={pageLayout}
 			/>
 		</FormProvider>
 	);
