@@ -114,12 +114,15 @@ class JwtService extends FuseUtils.EventEmitter {
 			axios.defaults.headers.common.Authorization = `Bearer ${access_token}`;
 		} else {
 			localStorage.removeItem('jwt_access_token');
+			localStorage.removeItem('user');
 			delete axios.defaults.headers.common.Authorization;
 		}
 	};
 
 	logout = () => {
 		this.setSession(null);
+
+		
 	};
 
 	isAuthTokenValid = access_token => {

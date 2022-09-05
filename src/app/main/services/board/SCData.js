@@ -65,10 +65,10 @@ function SCData(props) {
 		hidden: { opacity: 0, y: 20 },
 		show: { opacity: 1, y: 0 }
 	};
-    function handleOpen(id) {
-		console.log('i am new id',id)
+	function handleOpen(id) {
+		console.log('i am new id', id);
+		// alert(id);
 		dispatch(getBoard(id));
-		
 	}
 	return (
 		<div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>
@@ -95,7 +95,6 @@ function SCData(props) {
 								role="button"
 								component={Link}
 								onClick={event => handleOpen(board.id)}
-
 							>
 								<Icon className="text-56" color="action">
 									<img src={board.icon} alt="" />

@@ -57,7 +57,7 @@ function SCDataTemplate(props) {
 		defaultValues: {},
 		resolver: yupResolver(schema)
 	});
-	const { formState, watch, getValues } = methods;
+	const { formState, watch, getValues, reset } = methods;
 	const { isValid, dirtyFields } = formState;
 	const [noProduct, setNoProduct] = useState(false);
 
@@ -76,40 +76,58 @@ function SCDataTemplate(props) {
 	}
 	const name = watch('name');
 
-	useEffect(() => {
-		dispatch(getBoard());
-	}, [dispatch]);
+	// useEffect(() => {
+	// 	dispatch(getBoard());
+	// }, [dispatch]);
 	function handleSaveProduct() {
 		dispatch(saveBoard(getValues()));
 	}
-	useDeepCompareEffect(() => {
-		function updateProductState() {
-			const { productId } = routeParams;
+	// useDeepCompareEffect(() => {
+	// 	function updateProductState() {
+	// 		const { productId } = routeParams;
 
-			if (productId === 'new') {
-				/**
-				 * Create New Product data
-				 */
-			} else {
-				/**
-				 * Get Product data
-				 */
-				dispatch(getBoard(routeParams)).then(action => {
-					/**
-					 * If the requested product is not exist show message
-					 */
-					if (!action.payload) {
-						setNoProduct(true);
-					}
-				});
-			}
+	// 		if (productId === 'new') {
+	// 			/**
+	// 			 * Create New Product data
+	// 			 */
+	// 		} else {
+	// 			/**
+	// 			 * Get Product data
+	// 			 */
+	// 			dispatch(getBoard(routeParams)).then(action => {
+	// 				/**
+	// 				 * If the requested product is not exist show message
+	// 				 */
+	// 				if (!action.payload) {
+	// 					setNoProduct(true);
+	// 				}
+	// 			});
+	// 		}
+	// 	}
+
+	// 	updateProductState();
+	// }, [dispatch, routeParams]);
+
+	useEffect(() => {
+		if (!board) {
+			return;
 		}
+		/**
+		 * Reset the form on product state changes
+		 */
+		reset(board);
+	}, [board, reset]);
 
-		updateProductState();
-	}, [dispatch, routeParams]);
-	// if (_.isEmpty(form) || (board && routeParams.productId !== board.id && routeParams.productId !== 'new')) {
-	// 	return <FuseLoading />;
-	// }
+	// useEffect(() => {
+	// 	return () => {
+	// 		/**
+	// 		 * Reset Product on component unload
+	// 		 */
+	// 		dispatch(resetProduct());
+	// 		setNoProduct(false);
+	// 	};
+	// }, [dispatch]);
+
 	return (
 		<FormProvider {...methods}>
 			<FusePageCarded
@@ -117,8 +135,8 @@ function SCDataTemplate(props) {
 					toolbar: 'p-0',
 					header: 'min-h-72 h-72 sm:h-136 sm:min-h-136'
 				}}
-				header=
-				{ // {ProductHeader}
+				header={
+					// {ProductHeader}
 					<div className="flex flex-1 items-center px-16 lg:px-24">
 						<Hidden lgUp>
 							<IconButton

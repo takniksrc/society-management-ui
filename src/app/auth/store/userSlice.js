@@ -119,16 +119,16 @@ export const logoutUser = () => async (dispatch, getState) => {
 	// 	// is guest
 	// 	return null;
 	// }
-	
+	dispatch(userLoggedOut());
 
+	JwtService.logout();
 
 	history.push({
 		pathname: '/login'
 	});
-	JwtService.logout()
 	// localStorage.removeItem('jwt_access_token');
 	// localStorage.removeItem('user');
-	
+
 	// switch (user.from) {
 	// 	case 'firebase': {
 	// 		firebaseService.signOut();
@@ -144,8 +144,6 @@ export const logoutUser = () => async (dispatch, getState) => {
 	// }
 
 	// dispatch(setInitialSettings());
-
-	return dispatch(userLoggedOut());
 };
 
 export const updateUserData = user => async (dispatch, getState) => {
@@ -198,9 +196,9 @@ const initialState = {
 	data: JSON.parse(localStorage.getItem('user'))?.data
 		? JSON.parse(localStorage.getItem('user'))?.data
 		: {
-				displayName: 'No User',
-				photoURL: 'assets/images/avatars/Velazquez.jpg',
-				email: 'no@user.com',
+				displayName: '',
+				photoURL: '',
+				email: '',
 				shortcuts: []
 		  }
 };
@@ -210,7 +208,9 @@ const userSlice = createSlice({
 	initialState,
 	reducers: {
 		setUser: (state, action) => action.payload,
-		userLoggedOut: (state, action) => initialState
+		userLoggedOut: (state, action) => {
+			state.role = '';
+		}
 	},
 	extraReducers: {}
 });

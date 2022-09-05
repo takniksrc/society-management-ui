@@ -10,9 +10,13 @@ import Select from '@material-ui/core/Select';
 import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import Button from '@material-ui/core/Button';
+import { useDispatch, useSelector } from 'react-redux';
+import { getConfigurations } from 'app/fuse-configs/store/configSlice';
 
 function ResidentialTab(props) {
 	const methods = useFormContext();
+	const dispatch = useDispatch();
+	const configurationsData = useSelector(({ configSlice }) => configSlice);
 	const { control } = methods;
 	const [selectedCategory, setSelectedCategory] = useState('');
 	const categories = [
@@ -24,48 +28,50 @@ function ResidentialTab(props) {
 		setSelectedCategory(event.target.value);
 	}
 
+	useEffect(() => {
+		dispatch(getConfigurations());
+	}, []);
+
 	return (
 		<div>
 			<FormControl className="flex w-full sm:w-320 -mx-4 mt-8 mb-16 ml-px" variant="outlined">
-				<InputLabel htmlFor="category-label-placeholder"> Property Type </InputLabel>
-				<Select
-					value={selectedCategory}
-					onChange={handleSelectedCategory}
-					input={
-						<OutlinedInput
-							labelWidth={'category'.length * 9}
-							name="category"
-							id="category-label-placeholder"
-						/>
-					}
-				>
-					{/* <MenuItem value="all">
-						<em> All </em>
-					</MenuItem> */}
-					{categories.map(category => (
-						<MenuItem value={category.value} key={category.id}>
-							{category.label}
-						</MenuItem>
-					))}
-				</Select>
+				{/* <InputLabel htmlFor="category-label-placeholder"> Property Type </InputLabel> */}
+				{configurationsData?.customer_types ? (
+					<h2>{configurationsData?.customer_types[1]?.name}</h2>
+				) : (
+					<h2>Residential</h2>
+				)}
 			</FormControl>
-			<div className="flex mx-4 -mx-4 mt-24">
-				<Controller
-					name="fivemarla"
-					control={control}
-					render={({ field }) => (
-						<TextField
-							{...field}
-							className="mt-8 mb-16 mx-4"
-							label="5 Marla"
-							autoFocus
-							id="fivemarla"
-							variant="outlined"
-							fullWidth
-						/>
-					)}
-				/>
 
+			{configurationsData?.customer_types[1].property_types
+				? configurationsData?.customer_types[1].property_types.map(pt => (
+						<>
+						
+							{pt.property_sizes.map(ps => (
+								<>
+									<h3>{ps.name.replace(/ /g, '_')}</h3>
+									<Controller
+										name={ps.name.replace(/ /g, '_')}
+										control={control}
+										render={({ field }) => (
+											<TextField
+												// {...field}
+												className="mt-8 mb-16 mx-4"
+												label={ps.name}
+												autoFocus
+												// id={ps.name}
+												variant="outlined"
+												fullWidth
+											/>
+										)}
+									/>
+								</>
+							))}
+						</>
+				  ))
+				: null}
+			{/* 
+			<div className="flex mx-4 -mx-4 mt-24">
 				<Controller
 					name="sevenmarla"
 					control={control}
@@ -127,32 +133,6 @@ function ResidentialTab(props) {
 						/>
 					)}
 				/>
-			</div>
-			{/* <div className="flex mx-4 -mx-4 mt-12">
-				<motion.div
-					className="flex"
-					initial={{ opacity: 0, x: 20 }}
-					animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
-				>
-					<Button
-						className="whitespace-nowrap mx-4"
-						variant="contained"
-						color="secondary"
-						// disabled={_.isEmpty(dirtyFields) || !isValid}
-						// onClick={handleSaveProduct}
-					>
-						Save
-					</Button>
-					<Button
-						className="whitespace-nowrap mx-4"
-						variant="contained"
-						color="secondary"
-						// onClick={handleRemoveProduct}
-						startIcon={<Icon className="hidden sm:flex">delete</Icon>}
-					>
-						Remove
-					</Button>
-				</motion.div>
 			</div> */}
 		</div>
 	);

@@ -12,17 +12,17 @@ import { newBoard } from './boardsSlice';
 import { removeCard, updateCard } from './cardSlice';
 
 export const getBoard = createAsyncThunk('scrumboardApp/board/getBoard', async (params, { dispatch }) => {
-	
-		const response = await instance.get(`/api/services/${params}`, { params });
-		const data = await response.data.service;
-		console.log('I am boardSliceData',data)
-		return data;
+	const response = await instance.get(`/api/services/${params}`, { params });
+	const data = await response.data.service;
+	console.log('I am boardSliceData', data);
+	return data;
 });
+
 export const saveBoard = createAsyncThunk(
 	'scrumboardApp/board/saveBoard',
 	async (boardData, { dispatch, getState }) => {
 		const { product } = getState();
-		console.log('I am product in save Product',product)
+		console.log('I am product in save Product', product);
 
 		const response = await axios.post('/api/e-commerce-app/product/save', { ...product, ...boardData });
 		const data = await response.data;
@@ -223,16 +223,8 @@ const boardsSlice = createSlice({
 				payload: {
 					id: '',
 					description: '',
-					category: '',
-					fivemarla: '',
-					sevenmarla: '',
-					tenmarla: '',
-					onekanal: '',
-					twokanal: '',
-					fivemarlacommercial: '',
-					sevenmarlacommercial: '',
-					tenmarlacommercial: '',
-					active: true
+					Residential_Flat_One_Size:"3003",
+					Residential_Plot_10_Marla:"300"
 				}
 			})
 		}
@@ -294,5 +286,5 @@ const boardsSlice = createSlice({
 	}
 });
 
-export const { resetBoard,newBoardAllValue,addLabel} = boardsSlice.actions;
+export const { resetBoard, newBoardAllValue, addLabel } = boardsSlice.actions;
 export default boardsSlice.reducer;

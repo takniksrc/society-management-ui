@@ -17,6 +17,8 @@ import AllUsersHead from './AllUsersHead';
 import ContactDialog from './ContactDialog';
 import reducer from './store';
 import { getUsers } from './store/newUsersSlice';
+import { getConfigurations } from '../../fuse-configs/store/configSlice';
+
 import { getUserData } from './store/userSlice';
 
 /**
@@ -50,6 +52,8 @@ const Users = () => {
 	useDeepCompareEffect(() => {
 		console.log('routeParams :', routeParams);
 		dispatch(getUsers(routeParams));
+		//getting cofigurations
+		dispatch(getConfigurations());
 		// user list is not updating due to this  line has error "unauthorized"
 		dispatch(getUserData());
 	}, [dispatch, routeParams]);

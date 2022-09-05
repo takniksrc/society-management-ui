@@ -10,8 +10,8 @@ function DescriptionTab(props) {
 	const methods = useFormContext();
 	const { control, formState } = methods;
 	const { errors } = formState;
-	const boardDescription = props.board?.description
-	console.log('i am boardDescription new',boardDescription)
+	const boardDescription = props.board?.description;
+	console.log('i am boardDescription new', boardDescription);
 
 	return (
 		<div>
