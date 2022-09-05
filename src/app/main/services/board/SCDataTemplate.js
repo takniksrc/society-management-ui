@@ -149,8 +149,8 @@ function SCDataTemplate(props) {
 						<IconButton to="/services/boards/society-charges" component={Link}>
 							<Icon>{theme.direction === 'ltr' ? 'arrow_back' : 'arrow_forward'}</Icon>
 						</IconButton>
-						<Typography className="flex-1 text-20 mx-16">Society Charges</Typography>
-						<Typography className="text-16 sm:text-20 truncate font-semibold">{name}</Typography>
+						<Typography className="flex-1 text-20 mx-16">{name}</Typography>
+						{/* <Typography className="text-16 sm:text-20 truncate font-semibold"></Typography> */}
 						<motion.div
 							className="flex"
 							initial={{ opacity: 0, x: 20 }}
