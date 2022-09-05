@@ -43,33 +43,48 @@ function ResidentialTab(props) {
 				)}
 			</FormControl>
 
-			{configurationsData?.customer_types[1].property_types
-				? configurationsData?.customer_types[1].property_types.map(pt => (
-						<>
-						
-							{pt.property_sizes.map(ps => (
-								<>
-									<h3>{ps.name.replace(/ /g, '_')}</h3>
-									<Controller
-										name={ps.name.replace(/ /g, '_')}
-										control={control}
-										render={({ field }) => (
-											<TextField
-												// {...field}
-												className="mt-8 mb-16 mx-4"
-												label={ps.name}
-												autoFocus
-												// id={ps.name}
-												variant="outlined"
-												fullWidth
-											/>
-										)}
-									/>
-								</>
-							))}
-						</>
-				  ))
+			{configurationsData?.customer_types
+				? configurationsData?.customer_types.map(ct => {
+						console.log('ct', ct);
+
+						return (
+							<>
+								{ct.name === 'Residential' &&
+									ct.property_types.map(pt => {
+										console.log('pt', pt);
+										return (
+											<>
+												{pt.property_sizes.map(ps => {
+													console.log('ps 23', ps.name);
+													return (
+														<>
+															<h3>{ps.name.replace(/ /g, '_')}</h3>
+															<Controller
+																name={ps.name.replace(/ /g, '_')}
+																control={control}
+																render={({ field }) => (
+																	<TextField
+																		// {...field}
+																		className="mt-8 mb-16 mx-4"
+																		label={ps.name}
+																		autoFocus
+																		// id={ps.name}
+																		variant="outlined"
+																		fullWidth
+																	/>
+																)}
+															/>
+														</>
+													);
+												})}
+											</>
+										);
+									})}
+							</>
+						);
+				  })
 				: null}
+
 			{/* 
 			<div className="flex mx-4 -mx-4 mt-24">
 				<Controller
