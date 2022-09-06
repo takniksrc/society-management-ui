@@ -18,18 +18,13 @@ export const getBoard = createAsyncThunk('scrumboardApp/board/getBoard', async (
 	const formValues = {
 		id: data.id,
 		description: data.description,
-		name: data.name,
-		ResidentialStartUpper: '',
-		ResidentialEndUpper: '0',
-		ResidentialPriceUpper: '0',
-		ResidentialStartMiddle: ''
+		name: data.name
 	};
 
 	data.servicePricing.map((sp, i) => {
 		sp.slabs.map(slab => {
-			console.log('sp slab start', sp.customer_type.name + slab.slab_start);
-			console.log('sp slab start', sp.customer_type.name + slab.slab_end);
-
+			formValues[`${sp.customer_type.name + slab.slab_start}`] = slab.slab_start;
+			formValues[`${sp.customer_type.name + slab.end}`] = slab.slab_end;
 		});
 	});
 
@@ -48,7 +43,7 @@ export const getBoard = createAsyncThunk('scrumboardApp/board/getBoard', async (
 	// 	return true;
 	// });
 	console.log('formValues', formValues);
-	return formValues;
+	return data;
 });
 
 export const saveBoard = createAsyncThunk(
