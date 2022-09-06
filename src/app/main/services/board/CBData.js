@@ -28,12 +28,8 @@ const useStyles = makeStyles(theme => ({
 function CBData(props) {
 	const dispatch = useDispatch();
 	const boards = useSelector(selectBoards);
-	console.log('newboards', boards);
-	// 	const boards = [
-	// 	     {id:'1' , name: 'Electricity Khaban-e-Amin', uri: 'electricity-khayaban-amin',icon: consumptionChragesIcon},
-	// ]
-	const boards2 = [{ id: '2', name: 'Electricity TIP', uri: 'electricity-tip', icon: consumptionChragesIcon }];
-	console.log('I am boards', boards);
+
+	console.log('I am cunsumbtion board in CBDATA', boards);
 
 	const classes = useStyles(props);
 
@@ -58,7 +54,6 @@ function CBData(props) {
 	};
 	function handleOpen(id) {
 		console.log('i am new id', id);
-		// alert(id);
 		dispatch(getConsumbtionBoard(id));
 	}
 
@@ -92,26 +87,6 @@ function CBData(props) {
 							</Paper>
 						</motion.div>
 					))}
-					{/* {boards2.map(board => (
-						<motion.div variants={item} className="h-224 p-16" key={board.id}>
-							<Paper
-								to={`/services/boards/consumption-based-charges/${board.id}/${board.uri}`}
-								className={clsx(
-									classes.board,
-									'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
-								)}
-								role="button"
-								component={Link}
-							>
-								<Icon className="text-56" color="action">
-								    <img src={board.icon} alt='' />
-								</Icon>
-								<Typography className="text-16 font-medium text-center pt-16 px-32" color="inherit">
-									{board.name}
-								</Typography>
-							</Paper>
-						</motion.div>
-					))} */}
 				</motion.div>
 			</div>
 		</div>

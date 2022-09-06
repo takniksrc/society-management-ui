@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import reducer from '../store';
-import { selectBoards, newBoard, getBoards, resetBoards,getConsumptionBoards } from '../store/boardsSlice';
+import { selectBoards, newBoard, getBoards, resetBoards, getConsumptionBoards } from '../store/boardsSlice';
 import societyChargesIcon from '../../../../assets/ServicesIcon/society-charges-icon.png';
 import consumptionChragesIcon from '../../../../assets/ServicesIcon/consumption-based-icon.png';
 
