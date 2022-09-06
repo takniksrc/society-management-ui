@@ -18,6 +18,10 @@ import Hidden from '@material-ui/core/Hidden';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+// import Tab from '@material-ui/core/Tab';
+import TabContext from '@material-ui/lab/TabContext';
+import TabList from '@material-ui/lab/TabList';
+import TabPanel from '@material-ui/lab/TabPanel';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import { Autocomplete } from '@material-ui/lab';
@@ -54,6 +58,7 @@ function EKServiceTemplate(props) {
 	const [tabValue, setTabValue] = useState(0);
 
 	function handleTabChange(event, value) {
+		console.log('I am value', value);
 		setTabValue(value);
 	}
 	const methods = useForm({
@@ -114,6 +119,35 @@ function EKServiceTemplate(props) {
 				}
 				contentToolbar={
 					<>
+						{/* <TabContext value={tabValue}>
+							<TabList
+								onChange={handleTabChange}
+								indicatorColor="primary"
+								textColor="primary"
+								variant="scrollable"
+								scrollButtons="auto"
+								classes={{ root: 'w-full h-64' }}
+							>
+								<Tab className="h-64" label="Description" />
+								{board?.servicePricing
+									? board?.servicePricing?.map(sp => {
+											console.log('i am sp', sp.customer_type.name);
+											setTabValue(sp.customer_type.id);
+
+											return (
+												<Tab
+													className="h-64"
+													label={sp.customer_type.name}
+													// value={sp.customer_type.id}
+												/>
+											);
+									  })
+									: ''}
+							</TabList>
+							<TabPanel value={tabValue}>Item One</TabPanel>
+						<TabPanel value={tabValue}>Item Two</TabPanel>
+						<TabPanel value={tabValue}>Item Three</TabPanel>
+						</TabContext> */}
 						<Tabs
 							value={tabValue}
 							onChange={handleTabChange}
@@ -127,14 +161,20 @@ function EKServiceTemplate(props) {
 							{board?.servicePricing
 								? board?.servicePricing?.map(sp => {
 										console.log('i am sp', sp.customer_type.name);
-										return <Tab className="h-64" label={sp.customer_type.name} />;
+										return (
+											<Tab
+												className="h-64"
+												label={sp.customer_type.name}
+												value={sp.customer_type.id}
+											/>
+										);
 								  })
 								: ''}
-							{/* <Tab className="h-64" label="Residential" />
+						</Tabs>
+						{/* <Tab className="h-64" label="Residential" />
 							<Tab className="h-64" label="Commercial" />
 							<Tab className="h-64" label="Construction" />
 							<Tab className="h-64" label="FPA" /> */}
-						</Tabs>
 					</>
 				}
 				content={
@@ -142,11 +182,11 @@ function EKServiceTemplate(props) {
 						<div className={tabValue !== 0 ? 'hidden' : ''}>
 							<DescriptionTab />
 						</div>
-						<div className={tabValue !== 1 ? 'hidden' : ''}>
-							<ResidentialTab TabType='Residential'/>
+						<div className={tabValue !== '018fbcf2-b382-4165-9f78-499453424893' ? 'hidden' : ''}>
+							<ResidentialTab TabType="Residential" />
 						</div>
-						<div className={tabValue !== 2 ? 'hidden' : ''}>
-							<CommercialTab TabType='Commercial'/>
+						<div className={tabValue !== 'd2b01e99-5d30-49a1-9528-b7640f13fe59' ? 'hidden' : ''}>
+							<CommercialTab TabType="Commercial" />
 						</div>
 
 						<div className={tabValue !== 3 ? 'hidden' : ''}>
