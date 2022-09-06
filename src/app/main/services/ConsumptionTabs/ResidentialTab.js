@@ -23,106 +23,97 @@ function ResidentialTab(props) {
 	return (
 		<div>
 			{/* <div className="flex mx-4 -mx-4"> */}
-				{board?.servicePricing?.map((sp, i) => {
-					console.log('I am sp', sp);
-					return (
-						<>
-							{sp.customer_type.name === props.TabType &&
-								sp.slabs.map(rp => {
-									console.log('I am rp', rp);
-									return (
-										<>
-											<div className="flex mx-4 -mx-4">
-												<Typography
-													variant="subtitle1"
-													className="py-16 font-semibold mr-8 mx-4"
-												>
-													Start
-												</Typography>
-												<Controller
-													name={props.TabType + sp.slabs.slab_start}
-													// name='abc'
-													control={control}
-													render={({ field }) => (
-														<TextField
-															{...field}
-															className="mt-8 mb-16 mx-4"
-															label="Units"
-															id="ResidentialStart"
-															// InputProps={{
-															// 	startAdornment: <InputAdornment position="start">$</InputAdornment>
-															// }}
-															type="number"
-															variant="outlined"
-															autoFocus
-															fullWidth
-														/>
-													)}
-												/>
-												<Typography variant="subtitle1" className="py-16 mx-4">
-													End
-												</Typography>
-												<Controller
-													name="ResidentialEndUpper"
-													control={control}
-													render={({ field }) => (
-														<TextField
-															{...field}
-															className="mt-8 mb-16 mx-4"
-															label="Units"
-															id="priceTaxIncl"
-															// InputProps={{
-															// 	startAdornment: <InputAdornment position="start">$</InputAdornment>
-															// }}
-															type="number"
-															variant="outlined"
-															fullWidth
-														/>
-													)}
-												/>
-												<Typography
-													variant="subtitle1"
-													className="py-16 font-semibold mx-4 ml-40 mr-8 mx-4"
-												>
-													Price
-												</Typography>
-												<Controller
-													name="ResidentialPriceUpper"
-													control={control}
-													render={({ field }) => (
-														<TextField
-															{...field}
-															className="mt-8 mb-16 mx-4"
-															label="Tax Included Price"
-															id="taxRate"
-															InputProps={{
-																startAdornment: (
-																	<InputAdornment position="start">
-																		PKR/Unit
-																	</InputAdornment>
-																)
-															}}
-															type="number"
-															variant="outlined"
-															fullWidth
-														/>
-													)}
-												/>
-											</div>
-										</>
-									);
-								})}
-							{/* if(sp.customer_type.name === 'Residential'){
-						setResidentialTab(board.servicePricing.map(rp,i)=>{
-							rp.slabs.map(slab=>{
-								console.log('I am slabs',slab)
-							})
-						})
-					} */}
-						</>
-					);
-				})}
-				{/* <Typography variant="subtitle1" className="py-16 font-semibold mr-8 mx-4">
+			{board?.servicePricing?.map((sp, i) => {
+				console.log('I am sp', sp);
+				return (
+					<>
+						{sp.customer_type.name === props.TabType &&
+							sp.slabs.map(rp => {
+								console.log('I am rp', rp);
+								return (
+									<>
+										<div className="flex mx-4 -mx-4">
+											<Typography variant="subtitle1" className="py-16 font-semibold mr-8 mx-4">
+												Start
+											</Typography>
+											{/* {rp.slab_start} */}
+											<Controller
+												// name={rp ? rp.slab_start : 'usman'}
+												name='abc'
+												control={control}
+												render={({ field }) => (
+													<TextField
+														{...field}
+														className="mt-8 mb-16 mx-4"
+														label={rp ? rp.slab_start : 'Units'}
+														id="ResidentialStart"
+														// InputProps={{
+														// 	startAdornment: <InputAdornment position="start">$</InputAdornment>
+														// }}
+														type="number"
+														variant="outlined"
+														autoFocus
+														fullWidth
+													/>
+												)}
+											/>
+											<Typography variant="subtitle1" className="py-16 mx-4">
+												End
+											</Typography>
+											<Controller
+												name="ResidentialEndUpper"
+												control={control}
+												render={({ field }) => (
+													<TextField
+														{...field}
+														className="mt-8 mb-16 mx-4"
+														label={rp ? rp.slab_end : 'Units'}
+														id="priceTaxIncl"
+														// InputProps={{
+														// 	startAdornment: <InputAdornment position="start">$</InputAdornment>
+														// }}
+														type="number"
+														variant="outlined"
+														fullWidth
+													/>
+												)}
+											/>
+											<Typography
+												variant="subtitle1"
+												className="py-16 font-semibold mx-4 ml-40 mr-8 mx-4"
+											>
+												Price
+											</Typography>
+											<Controller
+												name="ResidentialPriceUpper"
+												control={control}
+												render={({ field }) => (
+													<TextField
+														{...field}
+														className="mt-8 mb-16 mx-4"
+														label="Tax Included Price"
+														id="taxRate"
+														InputProps={{
+															startAdornment: (
+																<InputAdornment position="start">
+																	PKR/Unit
+																</InputAdornment>
+															)
+														}}
+														type="number"
+														variant="outlined"
+														fullWidth
+													/>
+												)}
+											/>
+										</div>
+									</>
+								);
+							})}
+					</>
+				);
+			})}
+			{/* <Typography variant="subtitle1" className="py-16 font-semibold mr-8 mx-4">
 					Start
 				</Typography>
 

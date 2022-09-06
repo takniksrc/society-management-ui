@@ -66,6 +66,7 @@ function EKServiceTemplate(props) {
 		if (!board) {
 			return;
 		}
+
 		/**
 		 * Reset the form on product state changes
 		 */

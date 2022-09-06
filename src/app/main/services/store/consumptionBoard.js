@@ -68,9 +68,9 @@ const consumptionBoard = createSlice({
 	extraReducers: {
 		[getBoard.fulfilled]: (state, action) => {
 			const formValues = {
-				id: data.id,
-				description: data.description,
-				name: data.name
+				id: action.payload.id,
+				description: action.payload.description,
+				name: action.payload.name
 			};
 
 			action.payload.servicePricing.map((sp, i) => {
