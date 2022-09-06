@@ -48,7 +48,7 @@ export const getBoard = createAsyncThunk('scrumboardApp/board/getBoard', async (
 	// 	return true;
 	// });
 	console.log('formValues', formValues);
-	return formValues;
+	return data;
 });
 
 export const saveBoard = createAsyncThunk(
