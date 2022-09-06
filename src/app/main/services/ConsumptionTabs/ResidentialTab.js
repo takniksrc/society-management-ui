@@ -17,7 +17,6 @@ function ResidentialTab(props) {
 	const methods = useFormContext();
 	const { control } = methods;
 	const board = useSelector(({ scrumboardApp }) => scrumboardApp.consumptionBoard);
-	console.log('board in Residentail Tab', board);
 	const [residentialTab, setResidentialTab] = useState('');
 	console.log('I am props', props);
 
@@ -29,7 +28,7 @@ function ResidentialTab(props) {
 				return (
 					<>
 						{sp.customer_type.name === props.TabType &&
-							sp.slabs.map(rp => {
+							sp.slabs.map((rp, i) => {
 								console.log('I am rp', rp);
 								return (
 									<>
@@ -39,15 +38,16 @@ function ResidentialTab(props) {
 											</Typography>
 											{/* {rp.slab_start} */}
 											<Controller
-												// name={rp ? rp.slab_start : 'usman'}
-												name="abc"
+												name={`${props.TabType}${rp.slab_start}`}
+												// name='abc'
 												control={control}
 												render={({ field }) => (
 													<TextField
 														{...field}
 														className="mt-8 mb-16 mx-4"
-														label={rp ? rp.slab_start : 'Units'}
+														label="Units"
 														id="ResidentialStart"
+														// value={i=== 0?rp.slab_start :rp}
 														// InputProps={{
 														// 	startAdornment: <InputAdornment position="start">$</InputAdornment>
 														// }}
@@ -62,7 +62,8 @@ function ResidentialTab(props) {
 												End
 											</Typography>
 											<Controller
-												name="ResidentialEndUpper"
+												name={`${props.TabType}${rp.slab_end}`}
+												// name="ResidentialEndUpper"
 												control={control}
 												render={({ field }) => (
 													<TextField
@@ -86,7 +87,8 @@ function ResidentialTab(props) {
 												Price
 											</Typography>
 											<Controller
-												name="ResidentialPriceUpper"
+												name={`${props.TabType}${rp.price_per_unit}`}
+												// name="ResidentialPriceUpper"
 												control={control}
 												render={({ field }) => (
 													<TextField

@@ -165,7 +165,7 @@ function EKServiceTemplate(props) {
 											<Tab
 												className="h-64"
 												label={sp.customer_type.name}
-												value={sp.customer_type.id}
+												value={sp.customer_type.name}
 											/>
 										);
 								  })
@@ -182,10 +182,10 @@ function EKServiceTemplate(props) {
 						<div className={tabValue !== 0 ? 'hidden' : ''}>
 							<DescriptionTab />
 						</div>
-						<div className={tabValue !== '018fbcf2-b382-4165-9f78-499453424893' ? 'hidden' : ''}>
+						<div className={tabValue !== 'Residential' ? 'hidden' : ''}>
 							<ResidentialTab TabType="Residential" />
 						</div>
-						<div className={tabValue !== 'd2b01e99-5d30-49a1-9528-b7640f13fe59' ? 'hidden' : ''}>
+						<div className={tabValue !== 'Commercial' ? 'hidden' : ''}>
 							<CommercialTab TabType="Commercial" />
 						</div>
 {/* 

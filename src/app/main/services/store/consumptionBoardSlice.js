@@ -57,38 +57,42 @@ const consumptionBoardSlice = createSlice({
 		resetBoard: (state, action) => null,
 		addLabel: (state, action) => {
 			state.labels = [...state.labels, action.payload];
-		},
-		newBoardAllValue: {
-			reducer: (state, action) => action.payload,
-			prepare: event => ({
-				payload: {
-					id: '',
-					description: '',
-					name:''
-				}
-			})
 		}
+		// newBoardAllValue: {
+		// 	reducer: (state, action) => action.payload,
+		// 	prepare: event => ({
+		// 		payload: {
+		// 			id: '',
+		// 			description: '',
+		// 			name:''
+		// 		}
+		// 	})
+		// }
 	},
 	extraReducers: {
-		[getConsumbtionBoard.fulfilled]: (state, action) => action.payload,
-		// 	const formValues = {
-		// 		id: action.payload.id,
-		// 		description: action.payload.description,
-		// 		name: action.payload.name
-		// 	};
+		[getConsumbtionBoard.fulfilled]: (state, action) => {
+			const formValues = {
+				id: action.payload.id,
+				description: action.payload.description,
+				name: action.payload.name
+			};
 
-		// 	action.payload.servicePricing.map((sp, i) => {
-		// 		sp.slabs.map(slab => {
-		// 			formValues[`${sp.customer_type.name + slab.slab_start}`] = slab.slab_start;
-		// 			formValues[`${sp.customer_type.name + slab.end}`] = slab.slab_end;
-		// 		});
-		// 	});
-		// 	alert('Here');
-		// 	state = formValues;
-		// },
+			action.payload.servicePricing.map((sp, i) => {
+				sp.slabs.sort((a, b) => {
+					return a.slab_start - b.slab_start;
+				});
+				console.log('sp.slabs', sp.slabs);
+				sp.slabs.map(slab => {
+					formValues[`${sp.customer_type.name + slab.slab_start}`] = slab.slab_start;
+					formValues[`${sp.customer_type.name + slab.end}`] = slab.slab_end;
+					formValues[`${sp.customer_type.name + slab.price_per_unit}`] = slab.price_per_unit;
+				});
+			});
+			return { ...action.payload, ...formValues };
+		},
 
 		[saveBoard.fulfilled]: (state, action) => action.payload
-	 }
+	}
 });
 
 export const { resetBoard, newBoardAllValue, addLabel } = consumptionBoardSlice.actions;

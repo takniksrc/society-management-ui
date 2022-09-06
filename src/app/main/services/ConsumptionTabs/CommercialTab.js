@@ -17,34 +17,34 @@ import { motion } from 'framer-motion';
 function CommercialTab(props) {
 	const methods = useFormContext();
 	const { control } = methods;
-	const board = useSelector(({ scrumboardApp }) => scrumboardApp.board);
+	const board = useSelector(({ scrumboardApp }) => scrumboardApp.consumptionBoard);
 
 
 	return (
 		<div>
 			{board?.servicePricing?.map((sp, i) => {
-				console.log('I am sp', sp);
+				console.log('I am sp in ct', sp);
 				return (
 					<>
 						{sp.customer_type.name === props.TabType &&
 							sp.slabs.map(rp => {
-								console.log('I am rp', rp);
+								console.log('I am rp in ct', rp);
 								return (
 									<>
 										<div className="flex mx-4 -mx-4">
 											<Typography variant="subtitle1" className="py-16 font-semibold mr-8 mx-4">
 												Start
 											</Typography>
-											{rp.slab_start}
+											{/* {rp.slab_start} */}
 											<Controller
 												// name={rp ? rp.slab_start : 'usman'}
-												name='abc'
+												name={`${props.TabType}${rp.slab_start}`}
 												control={control}
 												render={({ field }) => (
 													<TextField
 														{...field}
 														className="mt-8 mb-16 mx-4"
-														label={rp ? rp.slab_start : 'Units'}
+														label='Units'
 														id="ResidentialStart"
 														// InputProps={{
 														// 	startAdornment: <InputAdornment position="start">$</InputAdornment>
@@ -60,7 +60,8 @@ function CommercialTab(props) {
 												End
 											</Typography>
 											<Controller
-												name="ResidentialEndUpper"
+												// name="ResidentialEndUpper"
+												name={`${props.TabType}${rp.slab_end}`}
 												control={control}
 												render={({ field }) => (
 													<TextField
@@ -84,7 +85,8 @@ function CommercialTab(props) {
 												Price
 											</Typography>
 											<Controller
-												name="ResidentialPriceUpper"
+												// name="ResidentialPriceUpper"
+												name={`${props.TabType}${rp.price_per_unit}`}
 												control={control}
 												render={({ field }) => (
 													<TextField
