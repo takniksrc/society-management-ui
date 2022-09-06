@@ -15,18 +15,6 @@ export const getBoard = createAsyncThunk('scrumboardApp/board/getBoard', async (
 	const response = await instance.get(`/api/services/${params}`, { params });
 	const data = await response.data.service;
 	console.log('I am consuption', data);
-	const formValues = {
-		id: data.id,
-		description: data.description,
-		name: data.name
-	};
-
-	data.servicePricing.map((sp, i) => {
-		sp.slabs.map(slab => {
-			formValues[`${sp.customer_type.name + slab.slab_start}`] = slab.slab_start;
-			formValues[`${sp.customer_type.name + slab.end}`] = slab.slab_end;
-		});
-	});
 
 	// data.servicePricing.map((sp, i) => {
 	// 	//looping over customer type
@@ -42,7 +30,7 @@ export const getBoard = createAsyncThunk('scrumboardApp/board/getBoard', async (
 	// 	}
 	// 	return true;
 	// });
-	console.log('formValues', formValues);
+
 	return data;
 });
 
@@ -78,7 +66,22 @@ const consumptionBoard = createSlice({
 		}
 	},
 	extraReducers: {
-		[getBoard.fulfilled]: (state, action) => action.payload,
+		[getBoard.fulfilled]: (state, action) => {
+			const formValues = {
+				id: data.id,
+				description: data.description,
+				name: data.name
+			};
+
+			action.payload.servicePricing.map((sp, i) => {
+				sp.slabs.map(slab => {
+					formValues[`${sp.customer_type.name + slab.slab_start}`] = slab.slab_start;
+					formValues[`${sp.customer_type.name + slab.end}`] = slab.slab_end;
+				});
+			});
+
+			state = formValues;
+		},
 		[saveBoard.fulfilled]: (state, action) => action.payload
 	}
 });
