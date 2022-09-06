@@ -8,7 +8,7 @@ const scrumboardAppReducers = combineReducers({
 	boards,
 	board,
 	card,
-	consumptionBoard
+	consumptionBoard,
 });
 
 export default scrumboardAppReducers;

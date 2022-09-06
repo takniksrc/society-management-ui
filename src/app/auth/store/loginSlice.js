@@ -13,7 +13,7 @@ export const submitLogin = ({ email, password }) => async dispatch => {
 			console.log('user', user);
 			dispatch(setUserData(user));
 			localStorage.setItem('user', JSON.stringify(user));
-			dispatch(getConfigurations());
+			// dispatch(getConfigurations());
 
 			return dispatch(loginSuccess());
 		})

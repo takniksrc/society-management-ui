@@ -142,10 +142,10 @@ function EKServiceTemplate(props) {
 							<DescriptionTab />
 						</div>
 						<div className={tabValue !== 1 ? 'hidden' : ''}>
-							<ResidentialTab />
+							<ResidentialTab TabType='Residential'/>
 						</div>
 						<div className={tabValue !== 2 ? 'hidden' : ''}>
-							<CommercialTab />
+							<CommercialTab TabType='Commercial'/>
 						</div>
 
 						<div className={tabValue !== 3 ? 'hidden' : ''}>
