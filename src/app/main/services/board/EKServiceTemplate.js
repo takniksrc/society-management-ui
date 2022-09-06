@@ -49,7 +49,7 @@ function EKServiceTemplate(props) {
 	const theme = useTheme();
 	const pageLayout = useRef(null);
 	const board = useSelector(({ scrumboardApp }) => scrumboardApp.board);
-	console.log('I am product', board);
+	console.log('I am product board', board);
 
 	const [tabValue, setTabValue] = useState(0);
 
