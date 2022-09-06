@@ -69,7 +69,7 @@ function ResidentialTab(props) {
 													<TextField
 														{...field}
 														className="mt-8 mb-16 mx-4"
-														label={rp ? rp.slab_end : 'Units'}
+														label='Units'
 														id="priceTaxIncl"
 														// InputProps={{
 														// 	startAdornment: <InputAdornment position="start">$</InputAdornment>

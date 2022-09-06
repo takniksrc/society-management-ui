@@ -84,7 +84,7 @@ const consumptionBoardSlice = createSlice({
 				console.log('sp.slabs', sp.slabs);
 				sp.slabs.map(slab => {
 					formValues[`${sp.customer_type.name + slab.slab_start}`] = slab.slab_start;
-					formValues[`${sp.customer_type.name + slab.end}`] = slab.slab_end;
+					formValues[`${sp.customer_type.name + slab.slab_end}`] = slab.slab_end;
 					formValues[`${sp.customer_type.name + slab.price_per_unit}`] = slab.price_per_unit;
 				});
 			});
