@@ -223,8 +223,8 @@ const boardsSlice = createSlice({
 				payload: {
 					id: '',
 					description: '',
-					Residential_Flat_One_Size:"3003",
-					Residential_Plot_10_Marla:"3"
+					Residential_Flat_One_Size:"",
+					Residential_Plot_10_Marla:""
 				}
 			})
 		}
