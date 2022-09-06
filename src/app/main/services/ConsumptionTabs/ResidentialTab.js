@@ -16,7 +16,8 @@ import { motion } from 'framer-motion';
 function ResidentialTab(props) {
 	const methods = useFormContext();
 	const { control } = methods;
-	const board = useSelector(({ scrumboardApp }) => scrumboardApp.board);
+	const board = useSelector(({ scrumboardApp }) => scrumboardApp.consumptionBoard);
+	console.log('board in Residentail Tab', board);
 	const [residentialTab, setResidentialTab] = useState('');
 	console.log('I am props', props);
 
@@ -39,7 +40,7 @@ function ResidentialTab(props) {
 											{/* {rp.slab_start} */}
 											<Controller
 												// name={rp ? rp.slab_start : 'usman'}
-												name='abc'
+												name="abc"
 												control={control}
 												render={({ field }) => (
 													<TextField

@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import reducer from '../store';
 import { selectBoards, newBoard, getConsumptionBoards, resetBoards } from '../store/boardsSlice';
-import { getBoard } from '../store/consumptionBoard';
+import { getConsumbtionBoard } from '../store/consumptionBoardSlice';
 import societyChargesIcon from '../../../../assets/ServicesIcon/society-charges-icon.png';
 import consumptionChragesIcon from '../../../../assets/ServicesIcon/consumption-based-icon.png';
 
@@ -59,7 +59,7 @@ function CBData(props) {
 	function handleOpen(id) {
 		console.log('i am new id', id);
 		// alert(id);
-		dispatch(getBoard(id));
+		dispatch(getConsumbtionBoard(id));
 	}
 
 	return (
