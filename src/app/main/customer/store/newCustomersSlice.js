@@ -4,7 +4,7 @@ import instance from 'axiosinstance';
 import { getCustomerData } from './customerSlice';
 
 export const getCustomers = createAsyncThunk('customers/getCustomers', async (routeParams, { getState }) => {
-	routeParams = routeParams || getState().contactsApp.contacts.routeParams;
+	routeParams = routeParams || getState().newCustomersSlice.routeParams;
 	const response = await instance.get('/api/customers', {
 		params: routeParams
 	});

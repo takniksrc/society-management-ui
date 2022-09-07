@@ -6,7 +6,7 @@ import { update } from 'lodash';
 import { getUserData } from './userSlice';
 
 export const getUsers = createAsyncThunk('users/getUsers', async (routeParams, { getState }) => {
-	routeParams = routeParams || getState().contactsApp.contacts.routeParams;
+	routeParams = routeParams || getState().newUsersSlice.routeParams;
 	const response = await instance.get('/api/users', {
 		params: routeParams
 	});
