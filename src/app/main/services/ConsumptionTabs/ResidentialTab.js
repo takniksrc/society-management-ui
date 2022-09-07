@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import { motion } from 'framer-motion';
 
-
 function ResidentialTab(props) {
 	const methods = useFormContext();
 	const { control } = methods;
@@ -18,10 +17,6 @@ function ResidentialTab(props) {
 	const dispatch = useDispatch();
 
 	const board = useSelector(({ scrumboardApp }) => scrumboardApp.consumptionBoard);
-	console.log('Fields', fields);
-	const [residentialTab, setResidentialTab] = useState('');
-	console.log('I am REside', board);
-
 
 	return (
 		<div>
@@ -31,93 +26,96 @@ function ResidentialTab(props) {
 				return (
 					<>
 						{sp.customer_type.name === props.TabType &&
-							sp.slabs.map((rp, index) => {
-								console.log('I am rp', rp);
-								return (
-									<>
-										<div className="flex mx-4 -mx-4">
-											<Typography variant="subtitle1" className="py-16 font-semibold mr-8 mx-4">
-												Start
-											</Typography>
-											{/* {rp.slab_start} */}
-											<Controller
-												name={`servicePricing[${spIndex}].slabs[${index}].slab_start`}
-												control={control}
-												render={({ field }) => (
-													<TextField
-														{...field}
-														className="mt-8 mb-16 mx-4"
-														label="Units"
-														id="ResidentialStart"
-														// value={i=== 0?rp.slab_start :rp}
-														// InputProps={{
-														// 	startAdornment: <InputAdornment position="start">$</InputAdornment>
-														// }}
-														type="number"
-														variant="outlined"
-														autoFocus
-														fullWidth
-													/>
-												)}
-											/>
-											<Typography variant="subtitle1" className="py-16 mx-4">
-												End
-											</Typography>
-											<Controller
-												name={`servicePricing[${spIndex}].slabs[${index}].slab_end`}
-												control={control}
-												render={({ field }) => (
-													<TextField
-														{...field}
-														className="mt-8 mb-16 mx-4"
-														label="Units"
-														id="priceTaxIncl"
-														// InputProps={{
-														// 	startAdornment: <InputAdornment position="start">$</InputAdornment>
-														// }}
-														type="number"
-														variant="outlined"
-														fullWidth
-													/>
-												)}
-											/>
-											<Typography
-												variant="subtitle1"
-												className="py-16 font-semibold mx-4 ml-40 mr-8 mx-4"
-											>
-												Price
-											</Typography>
-											<Controller
-												name={`servicePricing[${spIndex}].slabs[${index}].price_per_unit`}
-												control={control}
-												render={({ field }) => (
-													<TextField
-														{...field}
-														className="mt-8 mb-16 mx-4"
-														label="Tax Included Price"
-														id="taxRate"
-														InputProps={{
-															startAdornment: (
-																<InputAdornment position="start">
-																	PKR/Unit
-																</InputAdornment>
-															)
-														}}
-														type="number"
-														variant="outlined"
-														fullWidth
-													/>
-												)}
-											/>
-										</div>
-									</>
-								);
-							})}
+							sp.slabs
+								.sort((a, b) => a.slab_start - b.slab_start)
+								.map((rp, index) => {
+									console.log('I am rp', rp);
+									return (
+										<>
+											<div className="flex mx-4 -mx-4">
+												<Typography
+													variant="subtitle1"
+													className="py-16 font-semibold mr-8 mx-4"
+												>
+													Start
+												</Typography>
+												{/* {rp.slab_start} */}
+												<Controller
+													name={`servicePricing[${spIndex}].slabs[${index}].slab_start`}
+													control={control}
+													render={({ field }) => (
+														<TextField
+															{...field}
+															className="mt-8 mb-16 mx-4"
+															label="Units"
+															id="ResidentialStart"
+															// value={i=== 0?rp.slab_start :rp}
+															// InputProps={{
+															// 	startAdornment: <InputAdornment position="start">$</InputAdornment>
+															// }}
+															type="number"
+															variant="outlined"
+															autoFocus
+															fullWidth
+														/>
+													)}
+												/>
+												<Typography variant="subtitle1" className="py-16 mx-4">
+													End
+												</Typography>
+												<Controller
+													name={`servicePricing[${spIndex}].slabs[${index}].slab_end`}
+													control={control}
+													render={({ field }) => (
+														<TextField
+															{...field}
+															className="mt-8 mb-16 mx-4"
+															label="Units"
+															id="priceTaxIncl"
+															// InputProps={{
+															// 	startAdornment: <InputAdornment position="start">$</InputAdornment>
+															// }}
+															type="number"
+															variant="outlined"
+															fullWidth
+														/>
+													)}
+												/>
+												<Typography
+													variant="subtitle1"
+													className="py-16 font-semibold mx-4 ml-40 mr-8 mx-4"
+												>
+													Price
+												</Typography>
+												<Controller
+													name={`servicePricing[${spIndex}].slabs[${index}].price_per_unit`}
+													control={control}
+													render={({ field }) => (
+														<TextField
+															{...field}
+															className="mt-8 mb-16 mx-4"
+															label="Tax Included Price"
+															id="taxRate"
+															InputProps={{
+																startAdornment: (
+																	<InputAdornment position="start">
+																		PKR/Unit
+																	</InputAdornment>
+																)
+															}}
+															type="number"
+															variant="outlined"
+															fullWidth
+														/>
+													)}
+												/>
+											</div>
+										</>
+									);
+								})}
 					</>
 				);
 			})}
-
-			
 		</div>
 	);
 }

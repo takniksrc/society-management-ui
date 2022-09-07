@@ -78,7 +78,7 @@ function CommercialTab(props) {
 																	console.log('ps 23', ps.name);
 																	return (
 																		<>
-																			{/* <h3>{ps.name.replace(/ /g, '_')}</h3> */}
+																			
 
 																			<Controller
 																				name={ps.name.replace(/ /g, '_')}
