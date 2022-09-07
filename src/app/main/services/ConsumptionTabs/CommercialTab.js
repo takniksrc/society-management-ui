@@ -28,7 +28,7 @@ function CommercialTab(props) {
 					<>
 						{sp.customer_type.name === props.TabType &&
 							sp.slabs.map(rp => {
-								console.log('I am rp in ct', rp);
+								console.log('I am rp in ct', rp.id);
 								return (
 									<>
 										<div className="flex mx-4 -mx-4">

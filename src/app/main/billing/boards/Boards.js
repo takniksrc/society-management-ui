@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import reducer from '../store';
 import { selectBoards, newBoard, getBoards, resetBoards } from '../store/boardsSlice';
+import { getConfigurations } from '../../../fuse-configs/store/configSlice';
 // import 'Closed' from '../../../../assets/ReportsIcon/monthly-report-status.png';
 
 const useStyles = makeStyles(theme => ({
@@ -25,6 +26,8 @@ const useStyles = makeStyles(theme => ({
 
 function Boards(props) {
 	const dispatch = useDispatch();
+	const configurationsData = useSelector(({ configSlice }) => configSlice);
+	console.log('configSlice inside billing Boards : ', configurationsData);
 	// const boards = useSelector(selectBoards);
 	const boards = [
 		{ id: '1', name: 'TIP', uri: 'electricity-bills', status: 'Closed' },
@@ -42,7 +45,9 @@ function Boards(props) {
 	const classes = useStyles(props);
 
 	useEffect(() => {
-		dispatch(getBoards());
+		// dispatch(getBoards());
+		dispatch(getConfigurations());
+
 		return () => {
 			dispatch(resetBoards());
 		};
@@ -101,7 +106,7 @@ function Boards(props) {
 							</Paper>
 						</motion.div>
 					))} */}
-					{boards.map((board, index) => {
+					{configurationsData?.blocks?.map((board, index) => {
 						return board.status === 'Closed' ? (
 							<motion.div variants={item} className="p-16" key={board.id}>
 								<Paper
