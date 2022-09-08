@@ -11,6 +11,7 @@ import propertySizesSlice from '../main/customer/store/propertySizesSlice';
 import configSlice from '../fuse-configs/store/configSlice';
 import customerSlice from '../main/customer/store/customerSlice';
 import userSlice from '../main/users/store/userSlice';
+import disconnectedmeterSlice from '../main/scrumboard/store/disconnectedmeterSlice'
 
 const createReducer = asyncReducers => (state, action) => {
 	const combinedReducer = combineReducers({
@@ -26,6 +27,7 @@ const createReducer = asyncReducers => (state, action) => {
 		propertySizesSlice,
 		customerSlice,
 		userSlice,
+		disconnectedmeterSlice,
 
 		...asyncReducers
 	});

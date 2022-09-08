@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import reducer from '../store';
 import { selectBoards, newBoard, getBoards, resetBoards } from '../store/boardsSlice';
+import { getMetersDetails } from '../store/disconnectedmeterSlice';
 import MonthlyIcon from '../../../../assets/ReportsIcon/monthly-report-icon.png';
 import DisconnectIcon from '../../../../assets/ReportsIcon/wpf_disconnected.png';
 import PermanentDisconnectIcon from '../../../../assets/ReportsIcon/mdi_pipe-disconnected.png';
@@ -36,27 +37,27 @@ function Boards(props) {
 	const dispatch = useDispatch();
 	// const boards = useSelector(selectBoards);
 	const boards = [
-	{id: '32gfhaf1', name: 'Monthly Electricity Bill', uri: 'acme-frontend-application',icon: MonthlyIcon},
-	{id: '32gfhaf2', name: 'Disconnected Order', uri: 'acme-frontend-application',icon: DisconnectIcon},
-	{id: '32gfhaf3', name: 'Permanent Disconnection Order', uri: 'acme-frontend-application',icon: PermanentDisconnectIcon},
-	{id: '32gfhaf4', name: 'Re-Connection', uri: 'acme-frontend-application',icon: ReConnectionIcon},
-	{id: '32gfhaf5', name: 'Rise and Fall of Units', uri: 'acme-frontend-application',icon: RaiseAndFallIcon},
-	{id: '32gfhaf6', name: 'Daily Amount Recieved', uri: 'acme-frontend-application',icon: DailyAmountIcon},
-	{id: '32gfhaf7', name: 'Arrear List with Proper Age', uri: 'acme-frontend-application',icon: ArrearListIcon},
-	{id: '32gfhaf8', name: 'New Meters added (Month wise)', uri: 'acme-frontend-application',icon: NewMetersIcon},
-	{id: '32gfhaf9', name: 'Meter Change Order (Month wise)', uri: 'acme-frontend-application',icon: MeterChangeIcon},
-	{id: '32gfhaf10', name: 'Faulty Meter Report', uri: 'acme-frontend-application',icon: FaultyMeterIcon}
+	{id: '32gfhaf1', name: 'Monthly Electricity Bill', url: 'acme-frontend-application',icon: MonthlyIcon},
+	{id: '7c652537-6b9f-455d-9942-5a0eabda8014', name: 'Disconnected Order', url: 'temporarily_disconnected_order',icon: DisconnectIcon},
+	{id: '32gfhaf3', name: 'Permanent Disconnection Order', url: 'permanent_disconnection_order',icon: PermanentDisconnectIcon},
+	{id: '32gfhaf4', name: 'Re-Connection', url: 'acme-frontend-application',icon: ReConnectionIcon},
+	{id: '32gfhaf5', name: 'Rise and Fall of Units', url: 'acme-frontend-application',icon: RaiseAndFallIcon},
+	{id: '32gfhaf6', name: 'Daily Amount Recieved', url: 'acme-frontend-application',icon: DailyAmountIcon},
+	{id: '32gfhaf7', name: 'Arrear List with Proper Age', url: 'acme-frontend-application',icon: ArrearListIcon},
+	{id: '32gfhaf8', name: 'New Meters added (Month wise)', url: 'acme-frontend-application',icon: NewMetersIcon},
+	{id: '32gfhaf9', name: 'Meter Change Order (Month wise)', url: 'acme-frontend-application',icon: MeterChangeIcon},
+	{id: '32gfhaf10', name: 'Faulty Meter Report', url: 'acme-frontend-application',icon: FaultyMeterIcon}
 ]
 	console.log('I am boards',boards)
 
 	const classes = useStyles(props);
 
-	useEffect(() => {
-		dispatch(getBoards());
-		return () => {
-			dispatch(resetBoards());
-		};
-	}, [dispatch]);
+	// useEffect(() => {
+	// 	dispatch(getBoards());
+	// 	return () => {
+	// 		dispatch(resetBoards());
+	// 	};
+	// }, [dispatch]);
 
 	const container = {
 		show: {
@@ -70,6 +71,15 @@ function Boards(props) {
 		hidden: { opacity: 0, y: 20 },
 		show: { opacity: 1, y: 0 }
 	};
+	// const handleAPI=(params)=>{
+	// 	console.log('I am clicked',params)
+	// 	dispatch(getMetersDetails(params))
+	// }
+	function handleOpen(url) {
+		console.log('i am new id', url);
+		// alert(id);
+		dispatch(getMetersDetails(url));
+	}
 
 	return (
 		<div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>
@@ -89,13 +99,14 @@ function Boards(props) {
 					{boards.map(board => (
 						<motion.div variants={item} className="w-224 h-224 p-16" key={board.id}>
 							<Paper
-								to={`/analysisreport/boards/${board.id}/${board.uri}`}
+								to={`/analysisreport/boards/${board.url}`}
 								className={clsx(
 									classes.board,
 									'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
 								)}
 								role="button"
 								component={Link}
+								onClick={event => handleOpen(board.url)}
 							>
 								<Icon className="text-56" color="action">
 								    <img src={board.icon} />

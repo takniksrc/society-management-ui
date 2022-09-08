@@ -7,8 +7,12 @@ const ScrumboardAppConfig = {
 	},
 	routes: [
 		{
-			path: '/analysisreport/boards/:boardId/:boardUri?',
-			component: lazy(() => import('./board/Board'))
+			path: '/analysisreport/boards/temporarily_disconnected_order',
+			component: lazy(() => import('./board/DisconnectedMeter/disconnectedMeter'))
+		},
+		{
+			path: '/analysisreport/boards/permanent_disconnection_order',
+			component: lazy(() => import('./board/PermanentlyDisconnectedMeter/disconnectedMeter'))
 		},
 		{
 			path: '/analysisreport/boards',
