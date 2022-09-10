@@ -3,6 +3,7 @@ import FuseUtils from '@fuse/utils';
 import PropertyConfig from 'app/main/Property/PropertyConfig';
 import UsersConfig from 'app/main/users/UsersConfig';
 
+
 const routeConfigs = [ UsersConfig, PropertyConfig];
 
 const routes = [
