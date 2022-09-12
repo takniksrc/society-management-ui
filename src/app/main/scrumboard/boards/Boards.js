@@ -37,10 +37,10 @@ const useStyles = makeStyles(theme => ({
 function Boards(props) {
 	const dispatch = useDispatch();
 	// const boards = useSelector(selectBoards);
-	const monthlyReportDownload =[
-		{id: '32gfhaf1', name: 'Monthly Electricity Bill', url: 'monthly_electricity_bill',icon: MonthlyIcon},
-	]
+	// const monthlyReportDownload =[
+	// ]
 	const boards = [
+	{id: '32gfhaf1', name: 'Monthly Electricity Bill', url: 'monthly_electricity_bill',icon: MonthlyIcon},
 	{id: '7c652537-6b9f-455d-9942-5a0eabda8014', name: 'Disconnected Order', url: 'temporarily_disconnected_order',icon: DisconnectIcon},
 	{id: '32gfhaf3', name: 'Permanent Disconnection Order', url: 'permanent_disconnection_order',icon: PermanentDisconnectIcon},
 	{id: '32gfhaf4', name: 'Re-Connection', url: 'acme-frontend-application',icon: ReConnectionIcon},
@@ -102,7 +102,7 @@ function Boards(props) {
 					animate="show"
 					className="flex flex-wrap w-full justify-center py-32 px-16"
 				>
-					{monthlyReportDownload.map(board => (
+					{/* {monthlyReportDownload.map(board => (
 						<motion.div variants={item} className="w-224 h-224 p-16" key={board.id}>
 							<Paper
 								to={`/analysisreport/boards/${board.url}`}
@@ -122,7 +122,7 @@ function Boards(props) {
 								</Typography>
 							</Paper>
 						</motion.div>
-					))}
+					))} */}
 					{boards.map(board => (
 						<motion.div variants={item} className="w-224 h-224 p-16" key={board.id}>
 							<Paper

@@ -6,25 +6,39 @@ import { update } from 'lodash';
 export const getDownloadFile = createAsyncThunk('reports/getDownloadFile', async (routeParams, { getState }) => {
 	console.log('I am params in download', routeParams);
 	routeParams = routeParams || getState().disconnectedmeterSlice.routeParams;
-	const response = await instance.get(`/api/reports/${routeParams}`, {
-		params: routeParams
-	});
-	console.log('I am response in download',response)
+	// const response = await instance.get(`/api/reports/${routeParams}`, {
+	// 	params: routeParams
+	// });
+	const response = await instance({
+		url: `/api/reports/${routeParams}`,
+		method: 'GET',
+		responseType: 'blob',
+	  }).then((response) => {
+	console.log('I am response in download hh',response)
+		 const url = window.URL.createObjectURL(new Blob([response.data]));
+		 const link = document.createElement('a');
+		 link.href = url;
+		 link.setAttribute('download', 'Fabric Excel Format.xlsx');
+		 document.body.appendChild(link);
+		 link.click();
+	  });
+	}
 	// const data = await response.data.disconnected_order;
 	// const data = await response.data.permanent_disconnection_order;
 	// const data = await response.data[routeParams];
 
-	const data = await response.blob().then(blob => {
-		let url = window.URL.createObjectURL(blob);
-		let a = document.createElement('a');
-		a.href = url;
-		a.download = 'employees.json';
-		a.click();
-	});
-
-	console.log('I am data', data);
-	return { data, routeParams };
-});
+	// const data = await response.data.blob().then(blob => {
+	// 	let url = window.URL.createObjectURL(blob);
+	// 	let a = document.createElement('a');
+	// 	a.href = url;
+	// 	a.download = 'employees.json';
+	// 	a.click();
+	// });
+		
+	// console.log('I am data', data);
+	// return { data, routeParams };
+// }
+);
 // export const getDownloadFile = createAsyncThunk('reports/getDownloadFile', async (params, { dispatch }) => {
 // 	const response = await instance.get(`/api/reports/${params}`,{ params });
 // 	const data = await response.data;
@@ -75,10 +89,10 @@ const disconnectedmeterSlice = createSlice({
 	},
 	extraReducers: {
 		[getDownloadFile.fulfilled]: (state, action) => {
-			const { data, routeParams } = action.payload;
-			contactsAdapter.setAll(state, data);
-			state.routeParams = routeParams;
-			state.searchText = '';
+			// const { data, routeParams } = action.payload;
+			// contactsAdapter.setAll(state, data);
+			// state.routeParams = routeParams;
+			// state.searchText = '';
 		}
 	}
 });

@@ -51,7 +51,7 @@ function UsersHeader(props) {
 
 			<div className="flex flex-1 items-center justify-center px-12">
 				<ThemeProvider theme={mainTheme}>
-					<Paper
+					{/* <Paper
 						component={motion.div}
 						initial={{ y: -20, opacity: 0 }}
 						animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
@@ -70,7 +70,7 @@ function UsersHeader(props) {
 							}}
 							onChange={ev => dispatch(setContactsSearchText(ev))}
 						/>
-					</Paper>
+					</Paper> */}
 				</ThemeProvider>
 			</div>
 		</div>

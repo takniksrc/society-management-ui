@@ -3,133 +3,93 @@ import FuseUtils from '@fuse/utils';
 import Avatar from '@material-ui/core/Avatar';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { useMemo, useEffect, useState } from 'react';
+import Paper from '@material-ui/core/Paper';
 import { useDispatch, useSelector } from 'react-redux';
+import clsx from 'clsx';
+import { Link } from 'react-router-dom';
+
 // import ContactsMultiSelectMenu from './ContactsMultiSelectMenu';
 import AllUsers from './AllUsers';
 import { selectUsers } from '../../store/disconnectedmeterSlice';
+import { getDownloadFile } from '../../store/downloadFileBoard';
+
+const useStyles = makeStyles(theme => ({
+	root: {},
+	board: {
+		cursor: 'pointer',
+		transitionProperty: 'box-shadow border-color',
+		transitionDuration: theme.transitions.duration.short,
+		transitionTimingFunction: theme.transitions.easing.easeInOut
+	},
+	newBoard: {}
+}));
 
 function AllUsersHead(props) {
 	const dispatch = useDispatch();
-	const contacts = useSelector(selectUsers);
-	const searchText = useSelector(({ disconnectedmeterSlice }) => disconnectedmeterSlice.searchText);
-	console.log('I am contacts in download', contacts);
-	console.log('I am search text', searchText);
+	// const contacts = useSelector(selectUsers);
+	const classes = useStyles(props);
+	// const searchText = useSelector(({ disconnectedmeterSlice }) => disconnectedmeterSlice.searchText);
+	// console.log('I am contacts in download', contacts);
+	// console.log('I am search text', searchText);
 	// const user = useSelector(({ newUsersSlice }) => newUsersSlice.user);
 	// console.log('I am user se', user);
+	const monthlyReportDownload = [
+		{ id: '32gfhaf1', name: 'Download File', url: 'monthly_electricity_bill', icon: 'get_app' }
+	];
 
-	const [filteredData, setFilteredData] = useState(null);
-	console.log('I am filtered', filteredData);
-	
-	function handleFile(){
-		
+	// const [filteredData, setFilteredData] = useState(null);
+	// console.log('I am filtered', filteredData);
+
+	function handleDownload(url) {
+		dispatch(getDownloadFile(url));
 	}
-
-	const columns = useMemo(
-		() => [
-			{
-				Header: ({ selectedFlatRows }) => {
-					const selectedRowIds = selectedFlatRows.map(row => row.original.id);
-
-					return (
-						selectedFlatRows.length > 0 && <ContactsMultiSelectMenu selectedContactIds={selectedRowIds} />
-					);
-				},
-				accessor: 'avatar',
-				// Cell: ({ row }) => {
-				// 	return <Avatar className="mx-8" alt={row.original.name} src={row.original.avatar} />;
-				// },
-				className: 'justify-center',
-				width: 64,
-				sortable: false
-			},
-			{
-				Header: 'Refference Number',
-				accessor: 'refference_number',
-				className: 'font-medium',
-				sortable: true
-			},
-			{
-				Header: 'Address',
-				accessor: 'street_address',
-				sortable: true
-			},
-			{
-				Header: 'Meter No',
-				accessor: 'meter_number',
-				sortable: true
-			},
-			{
-				Header: 'Phase',
-				accessor: 'phase',
-				sortable: true
-			},
-			{
-				Header: 'Current Reading',
-				accessor: 'reading_value',
-				sortable: true
-			},
-			{
-				Header: 'Meter Pic.',
-				accessor: 'meter_snaphot',
-				sortable: true
-			},
-			{
-				id: 'action',
-				width: 128,
-				sortable: false,
-				Cell: ({ row }) => (
-					<div className="flex items-center">
-						{/* <IconButton
-							onClick={ev => {
-								ev.stopPropagation();
-								dispatch(toggleStarredContact(row.original.id));
-							}}
-						>
-							{user.starred && user.starred.includes(row.original.id) ? (
-								<Icon className="text-yellow-700">star</Icon>
-							) : (
-								<Icon>star_border</Icon>
-							)}
-						</IconButton> */}
-
-					</div>
-				)
+	const container = {
+		show: {
+			transition: {
+				staggerChildren: 0.1
 			}
-		],
-		[dispatch]
-	);
-	useEffect(() => {
-		function getFilteredArray(entities, _searchText) {
-			if (_searchText.length === 0) {
-				return contacts;
-			}
-			return FuseUtils.filterArrayByString(contacts, _searchText);
 		}
+	};
 
-		if (contacts) {
-			setFilteredData(getFilteredArray(contacts, searchText));
-		}
-	}, [contacts, searchText]);
-
-	// if (!filteredData) {
-	// 	return null;
-	// }
-
-	// if (filteredData.length === 0) {
-	// 	return (
-	// 		<div className="flex flex-1 items-center justify-center h-full">
-	// 			<Typography color="textSecondary" variant="h5">
-	// 				There are no Reports!
-	// 			</Typography>
-	// 		</div>
-	// 	);
-	// }
+	const item = {
+		hidden: { opacity: 0, y: 20 },
+		show: { opacity: 1, y: 0 }
+	};
 
 	return (
 		<motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}>
-			<button onClick={handleFile}>Download</button>
+			<motion.div
+				variants={container}
+				initial="hidden"
+				animate="show"
+				className="flex flex-wrap w-full justify-center py-32 px-16"
+			>
+				{monthlyReportDownload.map(board => (
+					<motion.div variants={item} className="w-224 h-224 p-16" key={board.id}>
+						<Paper
+							// to={`/analysisreport/boards/${board.url}`}
+							className={clsx(
+								classes.board,
+								'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
+							)}
+							role="button"
+							// component={Link}
+							onClick={event => handleDownload(board.url)}
+						>
+							<Icon className="text-56" color="action">
+								get_app
+							</Icon>
+							<Typography className="text-16 font-medium text-center pt-16 px-32" color="inherit">
+								{board.name}
+							</Typography>
+						</Paper>
+					</motion.div>
+				))}
+			</motion.div>
+
 			{/* <AllUsers
 				columns={columns}
 				data={filteredData}
