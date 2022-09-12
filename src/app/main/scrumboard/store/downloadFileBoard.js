@@ -9,9 +9,11 @@ export const getDownloadFile = createAsyncThunk('reports/getDownloadFile', async
 	const response = await instance.get(`/api/reports/${routeParams}`, {
 		params: routeParams
 	});
-	
+	console.log('I am response in download',response)
 	// const data = await response.data.disconnected_order;
 	// const data = await response.data.permanent_disconnection_order;
+	// const data = await response.data[routeParams];
+
 	const data = await response.blob().then(blob => {
 		let url = window.URL.createObjectURL(blob);
 		let a = document.createElement('a');
