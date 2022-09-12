@@ -11,6 +11,8 @@ import { Link } from 'react-router-dom';
 import reducer from '../store';
 import { selectBoards, newBoard, getBoards, resetBoards } from '../store/boardsSlice';
 import { getConfigurations } from '../../../fuse-configs/store/configSlice';
+import boardSlice from 'app/main/scrumboard/store/boardSlice';
+import { getBlocksStatus } from '../store/billingBlocksSlice';
 // import 'Closed' from '../../../../assets/ReportsIcon/monthly-report-status.png';
 
 const useStyles = makeStyles(theme => ({
@@ -27,20 +29,9 @@ const useStyles = makeStyles(theme => ({
 function Boards(props) {
 	const dispatch = useDispatch();
 	const configurationsData = useSelector(({ configSlice }) => configSlice);
+	const billingBlocksStatuses = useSelector(state => state.scrumboardApp.billingBlocksSlice);
 	console.log('configSlice inside billing Boards : ', configurationsData);
-	// const boards = useSelector(selectBoards);
-	const boards = [
-		{ id: '1', name: 'TIP', uri: 'electricity-bills', status: 'Closed' },
-		{ id: '2', name: 'A', uri: 'electricity-bills', status: 'Closed' },
-		{ id: '3', name: 'B', uri: 'electricity-bills', status: 'Closed' },
-		{ id: '4', name: 'C', uri: 'electricity-bills', status: 'OnGoing' },
-		{ id: '5', name: 'D', uri: 'electricity-bills', status: 'Closed' },
-		{ id: '6', name: 'E', uri: 'electricity-bills', status: 'Closed' },
-		{ id: '7', name: 'F', uri: 'electricity-bills', status: 'Closed' },
-		{ id: '8', name: 'G', uri: 'electricity-bills', status: 'Closed' },
-		{ id: '9', name: 'H', uri: 'electricity-bills', status: 'Closed' }
-	];
-	console.log('I am boards', boards);
+	console.log('billingBlockSlice inside billing Boards : ', billingBlocksStatuses);
 
 	const classes = useStyles(props);
 
@@ -66,6 +57,12 @@ function Boards(props) {
 		show: { opacity: 1, y: 0 }
 	};
 
+	useEffect(() => {
+		configurationsData?.sectors?.map((sector, index) => {
+			dispatch(getBlocksStatus(sector.id));
+		});
+	}, []);
+
 	return (
 		<div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>
 			<div className="flex flex-grow flex-shrink-0 flex-col items-center container px-16 md:px-24">
@@ -81,36 +78,12 @@ function Boards(props) {
 					animate="show"
 					className="flex flex-wrap w-full justify-center py-32 px-16"
 				>
-					{/* {boards.map(board => (
-						<motion.div variants={item} className="p-16" key={board.id}>
-							<Paper
-								to={`/billing/boards/${board.id}/${board.uri}`}
-								className={clsx(
-									classes.board,
-									'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
-								)}
-								role="button"
-								component={Link}
-							>
-								<Typography className="text-16 font-medium text-center pt-16 px-32 font-bold " color="inherit">
-									{board.name}
-								</Typography>
-								<div className="flex mx-16 space-x-7">
-									<Typography variant="subtitle1" className="py-16 font-semibold ">
-										Status :
-									</Typography>
-									<Typography className="text-16 font-medium text-center pt-16" color="inherit">
-										{board.status}
-									</Typography>
-								</div>
-							</Paper>
-						</motion.div>
-					))} */}
-					{configurationsData?.blocks?.map((board, index) => {
-						return board.status === 'Closed' ? (
+					{billingBlocksStatuses?.map((board, index) => {
+						console.log('blocks', board);
+						return board.billing_status === 'closed' ? (
 							<motion.div variants={item} className="p-16" key={board.id}>
 								<Paper
-									to={`/billing/boards/${board.id}/${board.uri}`}
+									to={`/billing/boards/${board.id}`}
 									className={clsx(
 										classes.board,
 										'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
@@ -126,10 +99,10 @@ function Boards(props) {
 									</Typography>
 									<div className="flex mx-16 space-x-7">
 										<Typography variant="subtitle1" className="py-16 font-semibold ">
-											Status :
+											Status :{' '}
 										</Typography>
 										<Typography className="text-16 font-medium text-center pt-16" color="inherit">
-											{board.status}
+											{board.billing_status}
 										</Typography>
 									</div>
 								</Paper>
@@ -156,13 +129,14 @@ function Boards(props) {
 											Status :
 										</Typography>
 										<Typography className="text-16 font-medium text-center pt-16" color="inherit">
-											{board.status}
+											{board.billing_status}
 										</Typography>
 									</div>
 								</Paper>
 							</motion.div>
 						);
 					})}
+
 					{/* <motion.div variants={item} className="w-224 h-224 p-16">
 						<Paper
 							className={clsx(
