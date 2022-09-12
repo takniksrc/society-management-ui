@@ -46,6 +46,24 @@ function AllUsersHead(props) {
 	function handleDownload(url) {
 		dispatch(getDownloadFile(url));
 	}
+	// 	instance({
+	// 		url: '/api/reports/monthly_electricity_bill',
+	// 		method: 'GET',
+	// 		responseType: 'blob'
+	// 	})
+	// 		.then(response => {
+	// 			console.log('I am response in download hh', response);
+	// 			const url = window.URL.createObjectURL(new Blob([response?.data]));
+	// 			const link = document.createElement('a');
+	// 			link.href = url;
+	// 			link?.setAttribute('download', 'Fabric Excel Format.xlsx');
+	// 			document.body?.appendChild(link);
+	// 			link.click();
+	// 		})
+	// 		.catch(err => console.log('I am errror', err));
+	// }
+	// }
+	// 	}
 	const container = {
 		show: {
 			transition: {
@@ -76,7 +94,7 @@ function AllUsersHead(props) {
 								'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
 							)}
 							role="button"
-							// component={Link}
+							component={Link}
 							onClick={event => handleDownload(board.url)}
 						>
 							<Icon className="text-56" color="action">

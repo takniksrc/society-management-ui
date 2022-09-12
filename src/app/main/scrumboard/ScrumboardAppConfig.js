@@ -10,6 +10,10 @@ const ScrumboardAppConfig = {
 			path: '/analysisreport/boards/monthly_electricity_bill',
 			component: lazy(() => import('./board/MonthlyElectricityBill/monthlyElectricity'))
 		},
+		// {
+		// 	path: '/analysisreport/boards/monthly_electricity_bill',
+		// 	component: lazy(() => import('./board/Monthly/disconnectedMeter'))
+		// },
 		{
 			path: '/analysisreport/boards/meter_change_order',
 			component: lazy(() => import('./board/meterChangeOrder/disconnectedMeter'))

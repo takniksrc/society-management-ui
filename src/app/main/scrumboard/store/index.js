@@ -9,8 +9,8 @@ const scrumboardAppReducers = combineReducers({
 	boards,
 	board,
 	card,
-	disconnectedmeterSlice,
-	downloadFileBoard
+	disconnectedmeterSlice
+	// downloadFileBoard
 });
 
 export default scrumboardAppReducers;
