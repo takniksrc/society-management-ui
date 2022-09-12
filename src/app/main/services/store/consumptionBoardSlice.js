@@ -22,18 +22,6 @@ export const getConsumbtionBoard = createAsyncThunk(
 	}
 );
 
-// export const saveProduct = createAsyncThunk(
-//     'eCommerceApp/product/saveProduct',
-//     async (productData, { dispatch, getState }) => {
-//         const { product } = getState().eCommerceApp;
-
-//         const response = await axios.post('/api/e-commerce-app/product/save', { ...product, ...productData });
-//         const data = await response.data;
-
-//         return data;
-//     }
-// );
-
 export const updateConsumbtionBoard = createAsyncThunk(
 	'scrumboardApp/board/updateConsumbtionBoard',
 	async (consumbtionBoardData, { dispatch, getState }) => {
