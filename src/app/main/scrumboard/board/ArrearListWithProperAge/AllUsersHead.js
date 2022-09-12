@@ -41,6 +41,12 @@ function AllUsersHead(props) {
 				sortable: false
 			},
 			{
+				Header: 'Name',
+				accessor: 'name',
+				className: 'font-medium',
+				sortable: true
+			},
+			{
 				Header: 'Refference Number',
 				accessor: 'refference_number',
 				className: 'font-medium',
@@ -57,18 +63,18 @@ function AllUsersHead(props) {
 				sortable: true
 			},
 			{
-				Header: 'Phase',
-				accessor: 'phase',
+				Header: 'Reports Month',
+				accessor: 'report_month',
 				sortable: true
 			},
 			{
-				Header: 'Current Reading',
-				accessor: 'reading_value',
+				Header: 'month',
+				accessor: 'month',
 				sortable: true
 			},
 			{
-				Header: 'Meter Pic.',
-				accessor: 'meter_snaphot',
+				Header: 'Arrears',
+				accessor: 'arrears',
 				sortable: true
 			},
 			{
@@ -117,7 +123,7 @@ function AllUsersHead(props) {
 		return (
 			<div className="flex flex-1 items-center justify-center h-full">
 				<Typography color="textSecondary" variant="h5">
-					There are no Reports!
+					There are no Arrears!
 				</Typography>
 			</div>
 		);

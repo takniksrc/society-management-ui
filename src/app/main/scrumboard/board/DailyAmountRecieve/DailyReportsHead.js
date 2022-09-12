@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AllUsers from './AllUsers';
 import { selectUsers } from '../../store/disconnectedmeterSlice';
 
-function AllUsersHead(props) {
+function DailyReportsHead(props) {
 	const dispatch = useDispatch();
 	const contacts = useSelector(selectUsers);
 	const searchText = useSelector(({ disconnectedmeterSlice }) => disconnectedmeterSlice.searchText);
@@ -41,34 +41,15 @@ function AllUsersHead(props) {
 				sortable: false
 			},
 			{
-				Header: 'Refference Number',
-				accessor: 'refference_number',
+				Header: 'Date',
+				accessor: 'date',
 				className: 'font-medium',
 				sortable: true
 			},
 			{
-				Header: 'Address',
-				accessor: 'street_address',
-				sortable: true
-			},
-			{
-				Header: 'Meter No',
-				accessor: 'meter_number',
-				sortable: true
-			},
-			{
-				Header: 'Phase',
-				accessor: 'phase',
-				sortable: true
-			},
-			{
-				Header: 'Current Reading',
-				accessor: 'reading_value',
-				sortable: true
-			},
-			{
-				Header: 'Meter Pic.',
-				accessor: 'meter_snaphot',
+				Header: 'Amount',
+				accessor: 'amount',
+				className: 'font-medium',
 				sortable: true
 			},
 			{
@@ -117,7 +98,7 @@ function AllUsersHead(props) {
 		return (
 			<div className="flex flex-1 items-center justify-center h-full">
 				<Typography color="textSecondary" variant="h5">
-					There are no Reports!
+					There are no Arrears!
 				</Typography>
 			</div>
 		);
@@ -138,4 +119,4 @@ function AllUsersHead(props) {
 	);
 }
 
-export default AllUsersHead;
+export default DailyReportsHead;

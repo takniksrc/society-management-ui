@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import reducer from '../store';
 import { selectBoards, newBoard, getBoards, resetBoards } from '../store/boardsSlice';
 import { getMetersDetails } from '../store/disconnectedmeterSlice';
+import { getDownloadFile } from '../store/downloadFileBoard';
 import MonthlyIcon from '../../../../assets/ReportsIcon/monthly-report-icon.png';
 import DisconnectIcon from '../../../../assets/ReportsIcon/wpf_disconnected.png';
 import PermanentDisconnectIcon from '../../../../assets/ReportsIcon/mdi_pipe-disconnected.png';
@@ -36,17 +37,19 @@ const useStyles = makeStyles(theme => ({
 function Boards(props) {
 	const dispatch = useDispatch();
 	// const boards = useSelector(selectBoards);
+	const monthlyReportDownload =[
+		{id: '32gfhaf1', name: 'Monthly Electricity Bill', url: 'monthly_electricity_bill',icon: MonthlyIcon},
+	]
 	const boards = [
-	{id: '32gfhaf1', name: 'Monthly Electricity Bill', url: 'acme-frontend-application',icon: MonthlyIcon},
 	{id: '7c652537-6b9f-455d-9942-5a0eabda8014', name: 'Disconnected Order', url: 'temporarily_disconnected_order',icon: DisconnectIcon},
 	{id: '32gfhaf3', name: 'Permanent Disconnection Order', url: 'permanent_disconnection_order',icon: PermanentDisconnectIcon},
 	{id: '32gfhaf4', name: 'Re-Connection', url: 'acme-frontend-application',icon: ReConnectionIcon},
-	{id: '32gfhaf5', name: 'Rise and Fall of Units', url: 'acme-frontend-application',icon: RaiseAndFallIcon},
-	{id: '32gfhaf6', name: 'Daily Amount Recieved', url: 'acme-frontend-application',icon: DailyAmountIcon},
-	{id: '32gfhaf7', name: 'Arrear List with Proper Age', url: 'acme-frontend-application',icon: ArrearListIcon},
-	{id: '32gfhaf8', name: 'New Meters added (Month wise)', url: 'acme-frontend-application',icon: NewMetersIcon},
-	{id: '32gfhaf9', name: 'Meter Change Order (Month wise)', url: 'acme-frontend-application',icon: MeterChangeIcon},
-	{id: '32gfhaf10', name: 'Faulty Meter Report', url: 'acme-frontend-application',icon: FaultyMeterIcon}
+	{id: '32gfhaf5', name: 'Rise and Fall of Units', url: 'rise_and_fall_of_unit',icon: RaiseAndFallIcon},
+	{id: '32gfhaf6', name: 'Daily Amount Recieved', url: 'daily_amount_receive',icon: DailyAmountIcon},
+	{id: '32gfhaf7', name: 'Arrear List with Proper Age', url: 'arrear_list_with_proper_age',icon: ArrearListIcon},
+	{id: '32gfhaf8', name: 'New Meters added (Month wise)', url: 'new_meter',icon: NewMetersIcon},
+	{id: '32gfhaf9', name: 'Meter Change Order (Month wise)', url: 'meter_change_order',icon: MeterChangeIcon},
+	{id: '32gfhaf10', name: 'Faulty Meter Report', url: 'faulty_meter',icon: FaultyMeterIcon}
 ]
 	console.log('I am boards',boards)
 
@@ -80,6 +83,10 @@ function Boards(props) {
 		// alert(id);
 		dispatch(getMetersDetails(url));
 	}
+	function handleDownload(url){
+		dispatch(getDownloadFile(url));
+		
+	}
 
 	return (
 		<div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>
@@ -89,13 +96,33 @@ function Boards(props) {
 						Analysis Report
 					</Typography>
 				</motion.div>
-
 				<motion.div
 					variants={container}
 					initial="hidden"
 					animate="show"
 					className="flex flex-wrap w-full justify-center py-32 px-16"
 				>
+					{monthlyReportDownload.map(board => (
+						<motion.div variants={item} className="w-224 h-224 p-16" key={board.id}>
+							<Paper
+								to={`/analysisreport/boards/${board.url}`}
+								className={clsx(
+									classes.board,
+									'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
+								)}
+								role="button"
+								component={Link}
+								onClick={event => handleDownload(board.url)}
+							>
+								<Icon className="text-56" color="action">
+								    <img src={board.icon} />
+								</Icon>
+								<Typography className="text-16 font-medium text-center pt-16 px-32" color="inherit">
+									{board.name}
+								</Typography>
+							</Paper>
+						</motion.div>
+					))}
 					{boards.map(board => (
 						<motion.div variants={item} className="w-224 h-224 p-16" key={board.id}>
 							<Paper
@@ -117,26 +144,6 @@ function Boards(props) {
 							</Paper>
 						</motion.div>
 					))}
-					{/* <motion.div variants={item} className="w-224 h-224 p-16">
-						<Paper
-							className={clsx(
-								classes.board,
-								classes.newBoard,
-								'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg outline-none'
-							)}
-							onClick={() => dispatch(newBoard())}
-							onKeyDown={() => dispatch(newBoard())}
-							role="button"
-							tabIndex={0}
-						>
-							<Icon className="text-56" color="secondary">
-								add_circle
-							</Icon>
-							<Typography className="text-16 font-medium text-center pt-16 px-32" color="inherit">
-								Add new board
-							</Typography>
-						</Paper>
-					</motion.div> */}
 				</motion.div>
 			</div>
 		</div>

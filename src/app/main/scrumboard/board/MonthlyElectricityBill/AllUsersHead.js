@@ -14,13 +14,17 @@ function AllUsersHead(props) {
 	const dispatch = useDispatch();
 	const contacts = useSelector(selectUsers);
 	const searchText = useSelector(({ disconnectedmeterSlice }) => disconnectedmeterSlice.searchText);
-	console.log('I am contacts in meters', contacts);
+	console.log('I am contacts in download', contacts);
 	console.log('I am search text', searchText);
 	// const user = useSelector(({ newUsersSlice }) => newUsersSlice.user);
 	// console.log('I am user se', user);
 
 	const [filteredData, setFilteredData] = useState(null);
 	console.log('I am filtered', filteredData);
+	
+	function handleFile(){
+		
+	}
 
 	const columns = useMemo(
 		() => [
@@ -109,23 +113,24 @@ function AllUsersHead(props) {
 		}
 	}, [contacts, searchText]);
 
-	if (!filteredData) {
-		return null;
-	}
+	// if (!filteredData) {
+	// 	return null;
+	// }
 
-	if (filteredData.length === 0) {
-		return (
-			<div className="flex flex-1 items-center justify-center h-full">
-				<Typography color="textSecondary" variant="h5">
-					There are no Reports!
-				</Typography>
-			</div>
-		);
-	}
+	// if (filteredData.length === 0) {
+	// 	return (
+	// 		<div className="flex flex-1 items-center justify-center h-full">
+	// 			<Typography color="textSecondary" variant="h5">
+	// 				There are no Reports!
+	// 			</Typography>
+	// 		</div>
+	// 	);
+	// }
 
 	return (
 		<motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}>
-			<AllUsers
+			<button onClick={handleFile}>Download</button>
+			{/* <AllUsers
 				columns={columns}
 				data={filteredData}
 				// onRowClick={(ev, row) => {
@@ -133,7 +138,7 @@ function AllUsersHead(props) {
 				// 		dispatch(openEditContactDialog(row.original));
 				// 	}
 				// }}
-			/>
+			/> */}
 		</motion.div>
 	);
 }

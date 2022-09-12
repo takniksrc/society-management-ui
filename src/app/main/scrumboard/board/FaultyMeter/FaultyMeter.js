@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AllUsers from './AllUsers';
 import { selectUsers } from '../../store/disconnectedmeterSlice';
 
-function AllUsersHead(props) {
+function FaultyMeter(props) {
 	const dispatch = useDispatch();
 	const contacts = useSelector(selectUsers);
 	const searchText = useSelector(({ disconnectedmeterSlice }) => disconnectedmeterSlice.searchText);
@@ -41,7 +41,7 @@ function AllUsersHead(props) {
 				sortable: false
 			},
 			{
-				Header: 'Refference Number',
+				Header: 'Reference No.',
 				accessor: 'refference_number',
 				className: 'font-medium',
 				sortable: true
@@ -49,26 +49,25 @@ function AllUsersHead(props) {
 			{
 				Header: 'Address',
 				accessor: 'street_address',
+				className: 'font-medium',
 				sortable: true
 			},
 			{
-				Header: 'Meter No',
+				Header: 'Meter No.',
 				accessor: 'meter_number',
+				className: 'font-medium',
 				sortable: true
 			},
 			{
 				Header: 'Phase',
 				accessor: 'phase',
+				className: 'font-medium',
 				sortable: true
 			},
 			{
-				Header: 'Current Reading',
-				accessor: 'reading_value',
-				sortable: true
-			},
-			{
-				Header: 'Meter Pic.',
-				accessor: 'meter_snaphot',
+				Header: 'Picture',
+				accessor: 'meter_snapshot',
+				className: 'font-medium',
 				sortable: true
 			},
 			{
@@ -117,7 +116,7 @@ function AllUsersHead(props) {
 		return (
 			<div className="flex flex-1 items-center justify-center h-full">
 				<Typography color="textSecondary" variant="h5">
-					There are no Reports!
+					There are no Arrears!
 				</Typography>
 			</div>
 		);
@@ -138,4 +137,4 @@ function AllUsersHead(props) {
 	);
 }
 
-export default AllUsersHead;
+export default FaultyMeter;

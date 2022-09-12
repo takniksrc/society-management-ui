@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AllUsers from './AllUsers';
 import { selectUsers } from '../../store/disconnectedmeterSlice';
 
-function AllUsersHead(props) {
+function NewMeter(props) {
 	const dispatch = useDispatch();
 	const contacts = useSelector(selectUsers);
 	const searchText = useSelector(({ disconnectedmeterSlice }) => disconnectedmeterSlice.searchText);
@@ -47,7 +47,13 @@ function AllUsersHead(props) {
 				sortable: true
 			},
 			{
-				Header: 'Address',
+				Header: 'Name',
+				accessor: 'name',
+				className: 'font-medium',
+				sortable: true
+			},
+			{
+				Header: 'Location',
 				accessor: 'street_address',
 				sortable: true
 			},
@@ -62,13 +68,13 @@ function AllUsersHead(props) {
 				sortable: true
 			},
 			{
-				Header: 'Current Reading',
-				accessor: 'reading_value',
+				Header: 'Make',
+				accessor: 'make',
 				sortable: true
 			},
 			{
-				Header: 'Meter Pic.',
-				accessor: 'meter_snaphot',
+				Header: 'Connection Date',
+				accessor: 'connection_date',
 				sortable: true
 			},
 			{
@@ -138,4 +144,4 @@ function AllUsersHead(props) {
 	);
 }
 
-export default AllUsersHead;
+export default NewMeter;
