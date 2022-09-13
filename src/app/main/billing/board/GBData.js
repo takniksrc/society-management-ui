@@ -28,6 +28,7 @@ import consumptionChragesIcon from '../../../../assets/ServicesIcon/consumption-
 const defaultValues = {
 	id: '',
 	dueDate: new Date(),
+	file:'',
 	labels: []
 };
 const useStyles = makeStyles(theme => ({
@@ -76,47 +77,56 @@ function GBData(props) {
 		title: yup.string().required('You must enter a title')
 	});
 
-	const { watch, handleSubmit, formState, reset, control, setValue } = useForm({
+	const { watch, handleSubmit, formState, reset, register, control, setValue } = useForm({
 		mode: 'onChange',
-		defaultValues,
-		resolver: yupResolver(schema)
+		defaultValues
+		// resolver: yupResolver(schema)
 	});
-
-	function onSubmit(model) {
+	// const handleForm = data => console.log('I am data', data);
+	const handleForm = async (model) => {
 		alert(JSON.stringify(model));
 		console.log('model', model);
+		const formData = new FormData();
+		formData.append('file', model.file[0]);
+		formData.append('')
+
+		const res = await fetch('http://localhost:5000/upload-file', {
+			method: 'POST',
+			body: formData
+		}).then(res => res.json());
+		alert(JSON.stringify(`${res.message}, status: ${res.status}`));
 		// dispatch(submitLogin(model));
-	}
+	};
 	const dueDate = watch('deuDate');
 	const startDate = watch('startDate');
 
 	const { errors, isValid, dirtyFields } = formState;
 
 	return (
-		<div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>
-			<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.1 } }}>
-				<Typography className="mt-14 sm:mt-48 sm:py-11 text-32 sm:text-40 font-bold" color="inherit">
-					Electricity Billing
-				</Typography>
-			</motion.div>
-			<div className="flex flex-grow flex-shrink-0 flex-col items-center container px-16 md:px-24">
-				<motion.div
-					variants={container}
-					initial="hidden"
-					animate="show"
-					className="grid grid-cols-1 flex-wrap w-full justify-center py-32"
-				>
-					<motion.div variants={item} className="h-auto p-16" key={1}>
-						<Paper
-							// to={`/services/boards/consumption-based-charges/${board.id}/${board.uri}`}
-							className={clsx(
-								classes.board,
-								'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
-							)}
-							role="button"
-							component={Link}
-						>
-							<form onSubmit={handleSubmit(onSubmit)}>
+		// <form onSubmit={handleSubmit(data => console.log('I am data', data))}>
+		<form onSubmit={handleSubmit(handleForm)}>
+			<div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>
+				<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.1 } }}>
+					<Typography className="mt-14 sm:mt-48 sm:py-11 text-32 sm:text-40 font-bold" color="inherit">
+						Electricity Billing
+					</Typography>
+				</motion.div>
+
+				<div className="flex flex-grow flex-shrink-0 flex-col items-center container px-16 md:px-24">
+					<motion.div
+						variants={container}
+						initial="hidden"
+						animate="show"
+						className="grid grid-cols-1 flex-wrap w-full justify-center py-32"
+					>
+						<motion.div variants={item} className="h-auto p-16" key={1}>
+							<Paper
+								// to={`/services/boards/consumption-based-charges/${board.id}/${board.uri}`}
+								className={clsx(
+									classes.board,
+									'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
+								)}
+							>
 								<div className=" flex flex-wrap w-full justify-center py-32 px-16">
 									<div className="flex -mx-4 " style={{ margin: '1.3rem' }}>
 										<Controller
@@ -148,7 +158,26 @@ function GBData(props) {
 											</Typography>
 										</div>
 										<div>
-											<UploadButtons />
+											<input type="file" {...register('file')} />
+											{/* <Controller
+												control={control}
+												name='file'
+												render={({ field }) => {
+													return (
+														<TextInput
+															fullWidth
+															{...field}
+															label="Subir archivo"
+															type="file"
+															onChange={event => field.onChange(event.target.files)}
+															InputLabelProps={{
+																shrink: true
+															}}
+														/>
+													);
+												}}
+											/> */}
+											{/* <UploadButtons /> */}
 										</div>
 									</div>
 								</div>
@@ -165,12 +194,12 @@ function GBData(props) {
 										Generate Bills
 									</Button>
 								</div>
-							</form>
-						</Paper>
+							</Paper>
+						</motion.div>
 					</motion.div>
-				</motion.div>
+				</div>
 			</div>
-		</div>
+		</form>
 	);
 }
 

@@ -12,7 +12,7 @@ import { useMemo, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ContactsMultiSelectMenu from './ContactsMultiSelectMenu';
 import AllBills from './AllBills';
-import { openEditContactDialog, removeUser, toggleStarredContact, selectUsers } from '../store/newUsersSlice';
+import { openEditContactDialog, removeUser, selectUsers } from '../store/newUsersSlice';
 import BillsBellowSection from './BillsBellowSection';
 import BillsMiddleSection from './BillsMiddleSection';
 
@@ -28,8 +28,10 @@ const useStyles = makeStyles(theme => ({
 }));
 function AllBillsHead(props) {
 	const contacts = useSelector(selectUsers);
+	const GetBills = useSelector(state => state.scrumboardApp.getBillsSlice);
+	console.log('i am contacts in all',GetBills)
 	const searchText = useSelector(({ newUsersSlice }) => newUsersSlice.searchText);
-	console.log('i am contacts in all',contacts)
+	
 	const container = {
 		show: {
 			transition: {

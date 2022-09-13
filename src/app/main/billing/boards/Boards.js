@@ -11,8 +11,9 @@ import { Link } from 'react-router-dom';
 import reducer from '../store';
 import { selectBoards, newBoard, getBoards, resetBoards } from '../store/boardsSlice';
 import { getConfigurations } from '../../../fuse-configs/store/configSlice';
-import boardSlice from 'app/main/scrumboard/store/boardSlice';
 import { getBlocksStatus } from '../store/billingBlocksSlice';
+// import { getBills } from '../store/getBillsSlice';
+import { getBills } from '../store/newUsersSlice';
 // import 'Closed' from '../../../../assets/ReportsIcon/monthly-report-status.png';
 
 const useStyles = makeStyles(theme => ({
@@ -40,7 +41,7 @@ function Boards(props) {
 		dispatch(getConfigurations());
 
 		return () => {
-			dispatch(resetBoards());
+			// dispatch(resetBoards());
 		};
 	}, [dispatch]);
 
@@ -61,7 +62,7 @@ function Boards(props) {
 		configurationsData?.sectors?.map((sector, index) => {
 			dispatch(getBlocksStatus(sector.id));
 		});
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>
@@ -110,13 +111,16 @@ function Boards(props) {
 						) : (
 							<motion.div variants={item} className="p-16" key={board.id}>
 								<Paper
-									to={`/billing/boards/${board.id}/${board.uri}/billing`}
+									to={`/billing/boards/${board.id}/billing`}
 									className={clsx(
 										classes.board,
 										'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
 									)}
 									role="button"
 									component={Link}
+									onClick={() => dispatch(getBills(board.id))}
+
+									// onChange={dispatch(getBills(board.id))}
 								>
 									<Typography
 										className="text-16 font-medium text-center pt-16 px-32 font-bold "

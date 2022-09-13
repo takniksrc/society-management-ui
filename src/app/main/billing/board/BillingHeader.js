@@ -16,7 +16,9 @@ function BillingHeader(props) {
 	const dispatch = useDispatch();
 	// const methods = useFormContext();
 	// const searchText = useSelector(({ contactsApp }) => contactsApp.contacts.searchText);
-	const searchText = useSelector(({ newUsersSlice }) => newUsersSlice.searchText);
+	const GetBills = useSelector(state => state.scrumboardApp.getBillsSlice);
+	console.log('i am contacts in all',GetBills)
+	// const searchText = useSelector(({ newUsersSlice }) => newUsersSlice.searchText);
 	const theme = useTheme();
 	const mainTheme = useSelector(selectMainTheme);
 	const contactDialog = useSelector(({ newUsersSlice }) => newUsersSlice.newUsersSlice);

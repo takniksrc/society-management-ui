@@ -22,7 +22,7 @@ import { motion } from 'framer-motion';
 import _ from '@lodash';
 import * as yup from 'yup';
 
-import { removeUser, updateUser, addUser, closeNewContactDialog, closeEditContactDialog } from '../store/newUsersSlice';
+import { removeUser, closeNewContactDialog, closeEditContactDialog } from '../store/newUsersSlice';
 
 const defaultValues = {
 	id: '',
@@ -104,9 +104,9 @@ function ContactDialog(props) {
 	//  */
 	function onSubmit(data) {
 		if (contactDialog.type === 'new') {
-			dispatch(addUser(data));
+			// dispatch(addUser(data));
 		} else {
-			dispatch(updateUser({ ...contactDialog.data, ...data }));
+			// dispatch(updateUser({ ...contactDialog.data, ...data }));
 		}
 		closeComposeDialog();
 	}
