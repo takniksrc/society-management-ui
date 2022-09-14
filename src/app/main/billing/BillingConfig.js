@@ -6,10 +6,6 @@ const ScrumboardAppConfig = {
 		layout: {}
 	},
 	routes: [
-		// {
-		// 	path: '/billing/boards/:boardId/:boardUri?',
-		// 	component: lazy(() => import('./board/Board'))
-		// },
 		{
 			path: '/billing/boards/1/electrcity-bills/billing',
 			component: lazy(() => import('./board/GBDataTemplate'))

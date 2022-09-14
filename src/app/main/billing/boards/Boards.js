@@ -12,8 +12,8 @@ import reducer from '../store';
 import { selectBoards, newBoard, getBoards, resetBoards } from '../store/boardsSlice';
 import { getConfigurations } from '../../../fuse-configs/store/configSlice';
 import { getBlocksStatus } from '../store/billingBlocksSlice';
-// import { getBills } from '../store/getBillsSlice';
-import { getBills } from '../store/newUsersSlice';
+import { getBills } from '../store/getBillsSlice';
+// import { getBills } from '../store/newUsersSlice';
 // import 'Closed' from '../../../../assets/ReportsIcon/monthly-report-status.png';
 
 const useStyles = makeStyles(theme => ({

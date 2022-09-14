@@ -19,16 +19,16 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import reducer from '../store';
 // import { selectBoards, newBoard, getBoards, resetBoards } from '../store/boardsSlice';
 import societyChargesIcon from '../../../../assets/ServicesIcon/society-charges-icon.png';
 import consumptionChragesIcon from '../../../../assets/ServicesIcon/consumption-based-icon.png';
-
+import instance from 'axiosinstance';
 const defaultValues = {
 	id: '',
 	dueDate: new Date(),
-	file:'',
+	file: '',
 	labels: []
 };
 const useStyles = makeStyles(theme => ({
@@ -44,6 +44,7 @@ const useStyles = makeStyles(theme => ({
 
 function GBData(props) {
 	const dispatch = useDispatch();
+	const history = useHistory();
 	// const boards = useSelector(selectBoards);
 	const boards = [
 		{ id: '1', name: 'Electricity Khaban-e-Amin', uri: 'electricity-khayaban-amin', icon: consumptionChragesIcon }
@@ -82,20 +83,49 @@ function GBData(props) {
 		defaultValues
 		// resolver: yupResolver(schema)
 	});
-	// const handleForm = data => console.log('I am data', data);
-	const handleForm = async (model) => {
-		alert(JSON.stringify(model));
-		console.log('model', model);
-		const formData = new FormData();
-		formData.append('file', model.file[0]);
-		formData.append('')
 
-		const res = await fetch('http://localhost:5000/upload-file', {
-			method: 'POST',
-			body: formData
-		}).then(res => res.json());
-		alert(JSON.stringify(`${res.message}, status: ${res.status}`));
-		// dispatch(submitLogin(model));
+	function formatDate(date) {
+		var d = new Date(date),
+			month = '' + (d.getMonth() + 1),
+			day = '' + d.getDate(),
+			year = d.getFullYear();
+
+		if (month.length < 2) month = '0' + month;
+		if (day.length < 2) day = '0' + day;
+
+		return [day, month, year].join('-');
+	}
+	// const handleForm = data => console.log('I am data', data);
+	const handleForm = async model => {
+		const FormData = require('form-data');
+		const data = new FormData();
+
+		data.append('due_date', formatDate(model.dueDate));
+		data.append('block_id', props.blockId);
+		model.file ? data.append('fpa_file', model.file[0]) : null;
+		instance
+			.post('/api/bills/generate', data)
+			.then(function (response) {
+				if (response.status === 201) {
+					history.push('/billing/boards/1/electrcity-bills/billing');
+				}
+				console.log(JSON.stringify(response));
+			})
+			.catch(function (error) {
+				alert('Error while generating');
+			});
+
+		// const config = {
+		// 	method: 'post',
+		// 	url: 'http://localhost:8000/api/bills/generate',
+		// 	data:data
+		// };
+
+		// instance(config)
+
+		// data.append('fpa_file', fs.createReadStream('/C:/Users/Admin/Downloads/fpa august -22 (4).xlsx'))
+
+		console.log('model', model);
 	};
 	const dueDate = watch('deuDate');
 	const startDate = watch('startDate');

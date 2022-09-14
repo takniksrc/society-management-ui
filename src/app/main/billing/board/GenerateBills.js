@@ -32,16 +32,18 @@ function GenerateBills(props) {
 	const routeParams = useParams();
 	const classes = useStyles(props);
 	const pageLayout = useRef(null);
+	console.log('routeParams', routeParams);
+
 	return (
 		<FusePageSimple
-		style={{left:'auto'}}
+			style={{ left: 'auto' }}
 			classes={{
 				content: 'flex flex-col flex-auto overflow-hidden',
-				header: 'h-72 min-h-72 lg:ltr:rounded-bl-20 lg:rtl:rounded-br-20 left-auto',
+				header: 'h-72 min-h-72 lg:ltr:rounded-bl-20 lg:rtl:rounded-br-20 left-auto'
 				// sidebar: 'border-0'
 			}}
 			header={
-				<div className="flex flex-1 items-center px-16 lg:px-24" >
+				<div className="flex flex-1 items-center px-16 lg:px-24">
 					<Hidden lgUp>
 						<IconButton
 							onClick={ev => pageLayout.current.toggleLeftSidebar()}
@@ -53,11 +55,10 @@ function GenerateBills(props) {
 					<IconButton to="/billing/boards" component={Link}>
 						<Icon>{theme.direction === 'ltr' ? 'arrow_back' : 'arrow_forward'}</Icon>
 					</IconButton>
-					 <Typography className="flex-1 text-20 mx-16">Generate Bills</Typography>
+					<Typography className="flex-1 text-20 mx-16">Generate Bills</Typography>
 				</div>
 			}
-			content={<GBData/>}
-			
+			content={<GBData blockId={routeParams.boardId} />}
 			innerScroll
 			ref={pageLayout}
 		/>
