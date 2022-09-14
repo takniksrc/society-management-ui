@@ -23,6 +23,7 @@ import _ from '@lodash';
 import * as yup from 'yup';
 
 import { removeUser, closeNewContactDialog, closeEditContactDialog } from '../store/newUsersSlice';
+import { Card } from '@material-ui/core';
 
 const defaultValues = {
 	id: '',
@@ -132,22 +133,23 @@ function ContactDialog(props) {
 		>
 			<AppBar position="static" elevation={0}>
 				<Toolbar className="flex w-full">
-					<Typography variant="subtitle1" color="inherit">
-						{contactDialog?.type === 'new' ? 'New Bill' : 'Edit Bill'}
+					<Typography variant="h6" color="inherit" className="pt-8">
+						{contactDialog.data?.customer_name}
 					</Typography>
+
 					<motion.div
 						initial={{ opacity: 0, x: 20 }}
 						animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
 						className="flex flex-2 ml-auto flex-row items-center justify-center ml-14 space-x-10 mt-10 "
 					>
-						<Button
+						{/* <Button
 							variant="contained"
 							color="secondary"
 							className="w-full"
 							// onClick={ev => dispatch(openNewContactDialog())}
 						>
 							<PictureAsPdfIcon />
-						</Button>
+						</Button> */}
 						<Button
 							variant="contained"
 							color="secondary"
@@ -158,29 +160,38 @@ function ContactDialog(props) {
 						</Button>
 					</motion.div>
 				</Toolbar>
-				<div className="flex flex-col items-center justify-center pb-24">
-					{contactDialog?.type === 'edit' && (
-						<Typography variant="h6" color="inherit" className="pt-8">
-							{name}
-						</Typography>
-					)}
-				</div>
 			</AppBar>
+
 			<form noValidate onSubmit={handleSubmit(onSubmit)} className="flex flex-col md:overflow-hidden">
 				<DialogContent classes={{ root: 'p-24' }}>
-					<div className="flex">
+					<div style={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
+						<Card style={{ padding: '2rem' }}>
+							<Typography color="error">Due Date: {contactDialog?.data?.due_date}</Typography>
+							<Typography>
+								Units: {contactDialog?.data?.current_reading - contactDialog?.data?.previous_reading}{' '}
+							</Typography>
+							<Typography>Previous Reading: {contactDialog.data?.previous_reading} </Typography>
+							<Typography>Arrears: {contactDialog.data?.arrears}</Typography>
+							<Typography>Total FPA: {contactDialog.data?.fpa_charges}</Typography>
+							<Typography>Current Bill: {contactDialog.data?.electricity_charges}</Typography>
+							<Typography>Society Charges: {contactDialog.data?.society_charges}</Typography>
+							<Typography>Total Payables: {contactDialog.data?.total_bill} </Typography>
+						</Card>
+						{/* <Typography>Payables After Due Date:{contactDialog.due_date} </Typography> */}
+
+						{/* <div className="flex">
 						<div className="min-w-48 pt-20">
 							<Icon color="action">account_circle</Icon>
 						</div>
 						<Controller
 							control={control}
-							name="name"
+							name="customer_name"
 							render={({ field }) => (
 								<TextField
 									{...field}
 									className="mb-24"
 									label="Name"
-									id="name"
+									id="customer_name"
 									error={!!errors.name}
 									helperText={errors?.name?.message}
 									variant="outlined"
@@ -190,6 +201,7 @@ function ContactDialog(props) {
 							)}
 						/>
 					</div>
+
 					<div className="flex">
 						<div className="min-w-48 pt-20">
 							<Icon color="action">email</Icon>
@@ -209,6 +221,7 @@ function ContactDialog(props) {
 							)}
 						/>
 					</div>
+
 					<div className="flex">
 						<div className="min-w-48 pt-20">
 							<Icon color="action">house</Icon>
@@ -227,46 +240,86 @@ function ContactDialog(props) {
 								/>
 							)}
 						/>
-					</div>
-					<div className="flex">
-						<div className="min-w-48 pt-20">
-							<Icon color="action">email</Icon>
-						</div>
-						<Controller
-							control={control}
-							name="meter_no"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									label="Meter No"
-									id="meter_no"
-									variant="outlined"
-									fullWidth
+					</div> */}
+						<Card style={{ padding: '2rem' }}>
+							<div className="flex">
+								<Controller
+									control={control}
+									name="current_reading"
+									render={({ field }) => (
+										<TextField
+											{...field}
+											type="number"
+											className="mb-24"
+											label="Current Reading"
+											id="current_reading"
+											variant="outlined"
+											fullWidth
+										/>
+									)}
 								/>
-							)}
-						/>
-					</div>
-					<div className="flex">
-						<div className="min-w-48 pt-20">
-							<Icon color="action">email</Icon>
-						</div>
-						<Controller
-							control={control}
-							name="total_units"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									label="Total Units"
-									id="total_units"
-									variant="outlined"
-									fullWidth
+							</div>
+
+							<div className="flex">
+								<Controller
+									control={control}
+									name="discount"
+									render={({ field }) => (
+										<TextField
+											{...field}
+											type="number"
+											className="mb-24"
+											label="Discount"
+											id="discount"
+											variant="outlined"
+											fullWidth
+										/>
+									)}
 								/>
-							)}
-						/>
+							</div>
+							<div className="px-16">
+								<Button
+									variant="contained"
+									color="secondary"
+									type="submit"
+									disabled={_.isEmpty(dirtyFields) || !isValid}
+								>
+									Update Bill
+								</Button>
+							</div>
+						</Card>
 					</div>
-					<div className="flex">
+					<Card style={{ padding: '2rem' }}>
+						<div className="flex">
+							<Controller
+								control={control}
+								name="paid_amount"
+								render={({ field }) => (
+									<TextField
+										{...field}
+										type="number"
+										className="mb-24"
+										label="Paid Amount"
+										id="discont"
+										variant="outlined"
+										fullWidth
+									/>
+								)}
+							/>
+						</div>
+						<div className="px-16">
+							<Button
+								variant="contained"
+								color="secondary"
+								type="submit"
+								disabled={_.isEmpty(dirtyFields) || !isValid}
+							>
+								Add Payment
+							</Button>
+						</div>
+					</Card>
+
+					{/* <div className="flex">
 						<div className="min-w-48 pt-20">
 							<Icon color="action">email</Icon>
 						</div>
@@ -287,6 +340,7 @@ function ContactDialog(props) {
 							)}
 						/>
 					</div>
+
 					<div className="flex">
 						<div className="min-w-48 pt-20">
 							<Icon color="action">email</Icon>
@@ -306,6 +360,7 @@ function ContactDialog(props) {
 							)}
 						/>
 					</div>
+
 					<div className="flex">
 						<div className="min-w-48 pt-20">
 							<Icon color="action">email</Icon>
@@ -324,7 +379,8 @@ function ContactDialog(props) {
 								/>
 							)}
 						/>
-					</div>
+					</div> 
+				
 					<div className="flex">
 						<div className="min-w-48 pt-20">
 							<Icon color="action">email</Icon>
@@ -344,6 +400,7 @@ function ContactDialog(props) {
 							)}
 						/>
 					</div>
+
 					<div className="flex">
 						<div className="min-w-48 pt-20">
 							<Icon color="action">email</Icon>
@@ -363,6 +420,7 @@ function ContactDialog(props) {
 							)}
 						/>
 					</div>
+
 					<div className="flex">
 						<div className="min-w-48 pt-20">
 							<Icon color="action">email</Icon>
@@ -382,6 +440,7 @@ function ContactDialog(props) {
 							)}
 						/>
 					</div>
+
 					<div className="flex">
 						<div className="min-w-48 pt-20">
 							<Icon color="action">email</Icon>
@@ -401,6 +460,7 @@ function ContactDialog(props) {
 							)}
 						/>
 					</div>
+
 					<div className="flex">
 						<div className="min-w-48 pt-20">
 							<Icon color="action">email</Icon>
@@ -420,6 +480,7 @@ function ContactDialog(props) {
 							)}
 						/>
 					</div>
+
 					<div className="flex">
 						<div className="min-w-48 pt-20">
 							<Icon color="action">email</Icon>
@@ -439,6 +500,7 @@ function ContactDialog(props) {
 							)}
 						/>
 					</div>
+
 					<div className="flex">
 						<div className="min-w-48 pt-20">
 							<Icon color="action">email</Icon>
@@ -457,10 +519,10 @@ function ContactDialog(props) {
 								/>
 							)}
 						/>
-					</div>
+					</div> */}
 				</DialogContent>
 
-				{contactDialog?.type === 'new' ? (
+				{/* {contactDialog?.type === 'new' ? (
 					<DialogActions className="justify-between p-4 pb-16">
 						<div className="px-16">
 							<Button
@@ -485,11 +547,9 @@ function ContactDialog(props) {
 								Save
 							</Button>
 						</div>
-						{/* <IconButton onClick={handleRemove}>
-							<Icon>delete</Icon>
-						</IconButton> */}
+					
 					</DialogActions>
-				)}
+				)} */}
 			</form>
 		</Dialog>
 	);

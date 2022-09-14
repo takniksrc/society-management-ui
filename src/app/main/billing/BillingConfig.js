@@ -23,9 +23,14 @@ const ScrumboardAppConfig = {
 			component: lazy(() => import('./boards/Boards'))
 		},
 		{
+			path: '/billing/pdf-bill',
+			component: lazy(() => import('./invoices/compact/CompactInvoicePage'))
+		},
+		{
 			path: '/billing',
 			component: () => <Redirect to="/billing/boards" />
 		}
+		
 	]
 };
 

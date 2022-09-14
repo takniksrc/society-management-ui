@@ -29,9 +29,9 @@ const useStyles = makeStyles(theme => ({
 function AllBillsHead(props) {
 	const contacts = useSelector(selectUsers);
 	const GetBills = useSelector(state => state.scrumboardApp.getBillsSlice);
-	console.log('i am contacts in all',GetBills)
+	console.log('i am contacts in all', GetBills);
 	const searchText = useSelector(({ newUsersSlice }) => newUsersSlice.searchText);
-	
+
 	const container = {
 		show: {
 			transition: {
@@ -47,31 +47,6 @@ function AllBillsHead(props) {
 
 	return (
 		<motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}>
-            <div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>
-			<div className="flex flex-grow flex-shrink-0 flex-col items-center container px-16 md:px-24">
-				<motion.div
-					variants={container}
-					initial="hidden"
-					animate="show"
-					className="grid grid-cols-1 flex-wrap w-full justify-center pt-16 "
-				>
-					<motion.div variants={item} className="h-auto p-16" key={1}>
-					<Paper
-							className={clsx(
-								classes.board,
-								'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
-							)}
-							role="button"
-							component={Link}
-						>
-							487 Bills Generated
-						</Paper>
-					</motion.div>
-				</motion.div>
-			</div>
-			</div>
-			{/* <BillsMiddleSection /> */}
-
 			<BillsBellowSection />
 		</motion.div>
 	);

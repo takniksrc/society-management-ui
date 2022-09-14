@@ -140,22 +140,22 @@ function BillsBellowSection(props) {
 
 	const columns = useMemo(
 		() => [
-			{
-				Header: ({ selectedFlatRows }) => {
-					const selectedRowIds = selectedFlatRows.map(row => row.original.id);
+			// {
+			// 	Header: ({ selectedFlatRows }) => {
+			// 		const selectedRowIds = selectedFlatRows.map(row => row.original.id);
 
-					return (
-						selectedFlatRows.length > 0 && <ContactsMultiSelectMenu selectedContactIds={selectedRowIds} />
-					);
-				},
-				accessor: 'avatar',
-				// Cell: ({ row }) => {
-				// 	return <Avatar className="mx-8" alt={row.original.name} src={row.original.avatar} />;
-				// },
-				className: 'justify-center',
-				width: 64,
-				sortable: false
-			},
+			// 		return (
+			// 			selectedFlatRows.length > 0 && <ContactsMultiSelectMenu selectedContactIds={selectedRowIds} />
+			// 		);
+			// 	},
+			// 	accessor: 'avatar',
+			// 	// Cell: ({ row }) => {
+			// 	// 	return <Avatar className="mx-8" alt={row.original.name} src={row.original.avatar} />;
+			// 	// },
+			// 	className: 'justify-center',
+			// 	width: 64,
+			// 	sortable: false
+			// },
 			{
 				Header: 'Name',
 				accessor: 'customer_name',
@@ -233,23 +233,6 @@ function BillsBellowSection(props) {
 				Header: 'Payment Status',
 				accessor: 'payment_status',
 				sortable: true
-			},
-			{
-				id: 'action',
-				width: 128,
-				sortable: false,
-				Cell: ({ row }) => (
-					<div className="flex items-center">
-						<IconButton
-							onClick={ev => {
-								ev.stopPropagation();
-								dispatch(removeUser(row.original.id));
-							}}
-						>
-							<Icon>delete</Icon>
-						</IconButton>
-					</div>
-				)
 			}
 		],
 		[dispatch]
