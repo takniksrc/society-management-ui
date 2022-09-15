@@ -17,6 +17,14 @@ const navigationConfig = [
 		children: [
 			{
 				id: 'profile',
+				title: 'DashBoard',
+				translate: 'DASHBOARD',
+				type: 'item',
+				icon: 'person',
+				url: '/dashboards/analytics'
+			},
+			{
+				id: 'profile',
 				title: 'User',
 				translate: 'USER',
 				type: 'item',
