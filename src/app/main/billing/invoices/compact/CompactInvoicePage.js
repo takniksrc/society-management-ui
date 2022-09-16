@@ -1,17 +1,45 @@
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { darken } from '@material-ui/core/styles/colorManipulator';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import TableContainer from '@material-ui/core/TableContainer';
+import Paper from '@material-ui/core/Paper';
+
 import Typography from '@material-ui/core/Typography';
+import { Link, useParams } from 'react-router-dom';
+import { useDeepCompareEffect } from '@fuse/hooks';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { getBillsData } from '../../store/billsWithIdSlice';
+
+const StyledTableCell = withStyles(theme => ({
+	head: {
+		backgroundColor: theme.palette.common.black,
+		color: theme.palette.common.white
+	},
+	body: {
+		fontSize: 14
+	}
+}))(TableCell);
+
+const StyledTableRow = withStyles(theme => ({
+	root: {
+		'&:nth-of-type(odd)': {
+			backgroundColor: theme.palette.action.hover
+		}
+	}
+}))(TableRow);
+function createData(name, previousreading, currentreading, paymentstatus) {
+	return { name, previousreading, currentreading, paymentstatus };
+}
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -31,6 +59,12 @@ const useStyles = makeStyles(theme => ({
 
 function CompactInvoicePage() {
 	const classes = useStyles();
+	const routeParams = useParams();
+	console.log('i am routeParams in invoice', routeParams);
+	const dispatch = useDispatch();
+	const GetBillsData = useSelector(state => state.scrumboardApp?.getBills);
+	console.log('i am GetBills', GetBillsData);
+
 	const [invoice, setInvoice] = useState({
 		id: '5725a6802d',
 		from: {
@@ -96,12 +130,62 @@ function CompactInvoicePage() {
 		discount: '120.60',
 		total: '9000'
 	});
+	useDeepCompareEffect(() => {
+		dispatch(getBillsData(routeParams));
+	}, [dispatch, routeParams]);
 	const formatter = new Intl.NumberFormat('en-US', {
 		style: 'currency',
-		currency: 'USD',
+		currency: 'PKR',
 		minimumFractionDigits: 2
 	});
+	const [bills, setBills] = useState({
+		id: 'fc58317d-546b-418f-8c93-abf0f7ccd49c',
+		customer_id: '1fbdbe5d-9036-412c-a655-ba26589238b6',
+		customer_name: 'Customer 4',
+		address: 'A 4',
+		meter_number: '2000004',
+		meter_type: 'Normal',
+		property_type: 'Shop',
+		property_size: 'Commercial Shop 4 Marla',
+		billing_month: 'Aug-22',
+		issue_date: '15-09-2022',
+		due_date: '20-09-2022',
+		charges_type: 'approximately',
+		services: [
+			{
+				id: 1,
+				title: 'Society Charges',
+				price: 4800,
+				society_charges: 4800
+			},
+			{
+				id: 2,
+				title: 'Electricity Charges',
+				price: 0,
+				electricity_charges: 0
+			},
+			{
+				id: 3,
+				title: 'FPA Charges',
+				price: 0,
 
+				fpa_charges: 0
+			},
+			{
+				id: 4,
+				title: 'Arrears',
+				price: 0,
+				arrears: 0
+			}
+		],
+		previous_reading: 0,
+		current_reading: 0,
+		discount: null,
+		total_bill: 4800,
+		payment_status: 'Unpaid',
+		amount_paid: 0
+	});
+	const rows = [createData('Status', bills.previous_reading, bills.current_reading, bills.payment_status)];
 	return (
 		<div className={clsx(classes.root, 'flex-grow flex-shrink-0 p-0 sm:p-64 print:p-0 overflow-auto')}>
 			{invoice && (
@@ -113,7 +197,7 @@ function CompactInvoicePage() {
 					<Card className="mx-auto w-xl print:w-full print:p-8 print:shadow-none rounded-none sm:rounded-20">
 						<CardContent className="p-88 print:p-0">
 							<Typography color="textSecondary" className="mb-32">
-								{invoice.date}
+								{bills.issue_date}
 							</Typography>
 
 							<div className="flex justify-between">
@@ -136,13 +220,20 @@ function CompactInvoicePage() {
 													</Typography>
 												</td>
 											</tr>
-
+											<tr>
+												<td>
+													<Typography color="textSecondary">Refference No.</Typography>
+												</td>
+												<td className="px-16">
+													<Typography>{bills.customer_id}</Typography>
+												</td>
+											</tr>
 											<tr>
 												<td>
 													<Typography color="textSecondary">INVOICE DATE</Typography>
 												</td>
 												<td className="px-16">
-													<Typography>{invoice.date}</Typography>
+													<Typography>{bills.issue_date}</Typography>
 												</td>
 											</tr>
 
@@ -151,7 +242,15 @@ function CompactInvoicePage() {
 													<Typography color="textSecondary">DUE DATE</Typography>
 												</td>
 												<td className="px-16">
-													<Typography>{invoice.dueDate}</Typography>
+													<Typography>{bills.due_date}</Typography>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<Typography color="textSecondary">Billing Month</Typography>
+												</td>
+												<td className="px-16">
+													<Typography>{bills.billing_month}</Typography>
 												</td>
 											</tr>
 										</tbody>
@@ -196,30 +295,56 @@ function CompactInvoicePage() {
 									</div>
 								</div>
 							</div>
-
 							<div className="mt-64">
-								<Table className="simple">
+								<TableContainer>
+									<Table className={classes.table} aria-label="customized table">
+										<TableHead>
+											<TableRow>
+												<TableCell className='border border-slate-300'>Status</TableCell>
+												<TableCell className='border border-slate-300' align="center">Previous Reading</TableCell>
+												<TableCell className='border border-slate-300' align="center">Current Reading</TableCell>
+												<TableCell className='border border-slate-300' align="center">Payment Status</TableCell>
+											</TableRow>
+										</TableHead>
+										<TableBody>
+											{rows.map(row => (
+												<TableRow key={row.id}>
+													<TableCell className='border border-slate-300' component="th" scope="row">
+														{row.name}
+													</TableCell>
+													<TableCell className='border border-slate-300' align="center">
+														{row.previousreading}
+													</TableCell>
+													<TableCell className='border border-slate-300' align="center">
+														{row.currentreading}
+													</TableCell>
+													<TableCell className='border border-slate-300' align="center">
+														{row.paymentstatus}
+													</TableCell>
+												</TableRow>
+											))}
+										</TableBody>
+									</Table>
+								</TableContainer>
+							</div>
+							<div className="mt-64">
+								<Table 
+								className="border-separate border border-slate-400"
+								// className="simple"
+								>
 									<TableHead>
 										<TableRow>
-											<TableCell>SERVICE</TableCell>
-											<TableCell>UNIT</TableCell>
-											<TableCell align="right">UNIT PRICE</TableCell>
-											<TableCell align="right">QUANTITY</TableCell>
-											<TableCell align="right">TOTAL</TableCell>
+											<TableCell className='border border-slate-300'>SERVICES</TableCell>
+											<TableCell className='border border-slate-300' align="right">AMOUNT</TableCell>
 										</TableRow>
 									</TableHead>
 									<TableBody>
-										{invoice.services.map(service => (
+										{bills.services.map(service => (
 											<TableRow key={service.id}>
-												<TableCell>
+												<TableCell className='border border-slate-300'>
 													<Typography variant="subtitle1">{service.title}</Typography>
 												</TableCell>
-												<TableCell>{service.unit}</TableCell>
-												<TableCell align="right">
-													{formatter.format(service.unitPrice)}
-												</TableCell>
-												<TableCell align="right">{service.quantity}</TableCell>
-												<TableCell align="right">{formatter.format(service.total)}</TableCell>
+												<TableCell className='border border-slate-300' align="right">{service.price}</TableCell>
 											</TableRow>
 										))}
 									</TableBody>
@@ -243,11 +368,11 @@ function CompactInvoicePage() {
 													variant="subtitle1"
 													color="textSecondary"
 												>
-													{formatter.format(invoice.subtotal)}
+													{formatter.format(bills.total_bill)}
 												</Typography>
 											</TableCell>
 										</TableRow>
-										<TableRow>
+										{/* <TableRow>
 											<TableCell>
 												<Typography
 													className="font-normal"
@@ -266,7 +391,7 @@ function CompactInvoicePage() {
 													{formatter.format(invoice.tax)}
 												</Typography>
 											</TableCell>
-										</TableRow>
+										</TableRow> */}
 										<TableRow>
 											<TableCell>
 												<Typography
@@ -283,7 +408,7 @@ function CompactInvoicePage() {
 													variant="subtitle1"
 													color="textSecondary"
 												>
-													{formatter.format(invoice.discount)}
+													{formatter.format(bills.discount === null ? 0 : bills.discount)}
 												</Typography>
 											</TableCell>
 										</TableRow>
@@ -295,7 +420,7 @@ function CompactInvoicePage() {
 											</TableCell>
 											<TableCell align="right">
 												<Typography className="font-light" variant="h4" color="textSecondary">
-													{formatter.format(invoice.total)}
+													{formatter.format(bills.total_bill)}
 												</Typography>
 											</TableCell>
 										</TableRow>
