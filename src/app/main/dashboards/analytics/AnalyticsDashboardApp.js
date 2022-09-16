@@ -13,7 +13,7 @@ import { selectWidgetsEntities, getCharts } from './store/widgetsSlice';
 function AnalyticsDashboardApp() {
 	const dispatch = useDispatch();
 	const Charts = useSelector(({ analyticsDashboardApp }) => analyticsDashboardApp.widgets);
-	console.log('i am new charts', Charts?.ka_electricity_connection?.total_connection);
+	console.log('i am new charts', Charts?.total_payments?.total_receiveble);
 	const [meter, setMeter] = useState({
 		series: [
 			Charts?.meter_types?.meter_type_normal,
@@ -80,69 +80,33 @@ function AnalyticsDashboardApp() {
 			]
 		}
 	});
+	console.log(
+		'I am valiue',
+		// (Charts?.total_payments?.total_received
+		(2400 / Charts?.total_payments?.total_receiveble) * 100
+	);
 	const [payment, setPayemnt] = useState({
-		series: [Charts?.total_payments?.total_received === null ? 50 : Charts?.total_payments?.total_received],
+		series: [
+			(
+				((Charts?.total_payments?.total_received === null ? 2000 : Charts?.total_payments?.total_received) /
+					Charts?.total_payments?.total_receiveble) *
+				100
+			).toFixed(2)
+		],
 		options: {
 			chart: {
 				height: 350,
-				type: 'radialBar',
-				offsetY: -10
+				type: 'radialBar'
 			},
 			plotOptions: {
 				radialBar: {
-					startAngle: -135,
-					endAngle:
-						Charts?.total_payments?.total_receiveble === null
-							? 135
-							: Charts?.total_payments?.total_receiveble,
-					dataLabels: {
-						name: {
-							fontSize: '16px',
-							color: undefined,
-							offsetY: 120
-						},
-						value: {
-							offsetY: 76,
-							fontSize: '22px',
-							color: undefined,
-							formatter: function (val) {
-								return val;
-							}
-						}
+					hollow: {
+						size: '70%'
 					}
 				}
 			},
-			fill: {
-				type: 'gradient',
-				gradient: {
-					shade: 'dark',
-					shadeIntensity: 0.15,
-					inverseColors: false,
-					opacityFrom: 1,
-					opacityTo: 1,
-					stops: [0, 50, 65, 91]
-				}
-			},
-			stroke: {
-				dashArray: 4
-			},
-			labels: ['Recieved Payments']
+			labels: ['Total Recieved']
 		}
-
-		// 	responsive: [
-		// 		{
-		// 			breakpoint: 480,
-		// 			options: {
-		// 				chart: {
-		// 					width: 200
-		// 				},
-		// 				legend: {
-		// 					position: 'bottom'
-		// 				}
-		// 			}
-		// 		}
-		// 	]
-		// }
 	});
 
 	const [state, setstate] = useState({
@@ -158,7 +122,10 @@ function AnalyticsDashboardApp() {
 		options: {
 			chart: {
 				type: 'bar',
-				height: 350
+				height: 350,
+				toolbar: {
+					show: false
+				}
 			},
 			plotOptions: {
 				bar: {
@@ -180,7 +147,7 @@ function AnalyticsDashboardApp() {
 			},
 			yaxis: {
 				title: {
-					text: 'Connectoins'
+					text: 'Connections'
 				}
 			},
 			fill: {
@@ -208,7 +175,10 @@ function AnalyticsDashboardApp() {
 		options: {
 			chart: {
 				type: 'bar',
-				height: 350
+				height: 350,
+				toolbar: {
+					show: false
+				}
 			},
 			plotOptions: {
 				bar: {
@@ -239,7 +209,7 @@ function AnalyticsDashboardApp() {
 			tooltip: {
 				y: {
 					formatter: function (val) {
-						return  val + ' connections';
+						return val + ' connections';
 					}
 				}
 			}
@@ -252,7 +222,7 @@ function AnalyticsDashboardApp() {
 				height: 350,
 				type: 'radialBar',
 				toolbar: {
-					show: true
+					show: false
 				}
 			},
 			plotOptions: {
@@ -329,18 +299,18 @@ function AnalyticsDashboardApp() {
 
 	useEffect(() => {
 		dispatch(getCharts());
-		setstate({
-			...state,
-			series: [
-				{
-					name: 'Connections',
-					data: [
-						Charts?.ka_electricity_connection?.total_connection,
-						Charts?.ka_electricity_connection?.new_connection
-					]
-				}
-			]
-		});
+		// setstate({
+		// 	...state,
+		// 	series: [
+		// 		{
+		// 			name: 'Connections',
+		// 			data: [
+		// 				Charts?.ka_electricity_connection?.total_connection,
+		// 				Charts?.ka_electricity_connection?.new_connection
+		// 			]
+		// 		}
+		// 	]
+		// });
 	}, [dispatch]);
 
 	// if (_.isEmpty(widgets)) {
@@ -369,7 +339,7 @@ function AnalyticsDashboardApp() {
 		>
 			<Card className="w-3/12 rounded-20 shadow m-28 min-h-[30%]">
 				{/* <ReactApexChart options={payment.options} series={payment.series} type="pie" height={350} /> */}
-				<ReactApexChart options={payment.options} series={payment.series} type="radialBar" height={350}/>
+				<ReactApexChart options={payment.options} series={payment.series} type="radialBar" height={350} />
 			</Card>
 			<Card className="w-3/12 rounded-20 shadow m-28">
 				<ReactApexChart options={state.options} series={state.series} type="bar" height={350} />
