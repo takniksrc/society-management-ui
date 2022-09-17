@@ -21,7 +21,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import ContactsMultiSelectMenu from './ContactsMultiSelectMenu';
 import reducer from '../store';
@@ -104,7 +104,7 @@ function BillsBellowSection(props) {
 
 	const { errors, isValid, dirtyFields } = formState;
 	const bills = useSelector(state => state.scrumboardApp.getBillsSlice);
-	console.log('i am bills in all', bills);
+	console.log('i am bills in all', bills[0]?.id);
 
 	// const dispatch = useDispatch();
 	// const contacts = useSelector(selectUsers);
@@ -112,7 +112,10 @@ function BillsBellowSection(props) {
 	const searchText = useSelector(({ newUsersSlice }) => newUsersSlice.searchText);
 
 	const [filteredData, setFilteredData] = useState(null);
-	console.log('I am filtered', filteredData);
+	console.log('I am filtered in bellow', filteredData);
+	const routeParams = useParams();
+	console.log('i am routeParams', routeParams);
+
 	// {
 	// 	"id": "1c394275-bcc0-4076-98b3-a1e17105d6e0",
 	// 	"customer_id": "f4998917-cb4f-4692-b4d9-33211e4f8460",
@@ -318,7 +321,8 @@ function BillsBellowSection(props) {
 											variant="contained"
 											color="secondary"
 											className="w-full"
-											onClick={ev => dispatch(openNewContactDialog())}
+											to={`/billing/${bills.id}/pdf-bill`}
+											component={Link}
 										>
 											Upload Payemnts
 										</Button>
@@ -401,7 +405,8 @@ function BillsBellowSection(props) {
 										variant="contained"
 										color="secondary"
 										className="w-full"
-										onClick={ev => dispatch(openNewContactDialog())}
+										to={`/billing/${bills[0]?.id}/pdf-bill`}
+										component={Link}
 									>
 										Upload Payemnts
 									</Button>
