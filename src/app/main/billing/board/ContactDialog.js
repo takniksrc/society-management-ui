@@ -216,7 +216,7 @@ function ContactDialog(props) {
 						</Card>
 					</div>
 				</DialogContent>
-			</form>
+			</form> 
 		</Dialog>
 	);
 }
