@@ -6,7 +6,9 @@ import newUsersSlice from './newUsersSlice';
 import billingSlice from './billingSlice';
 import billingBlocksSlice from './billingBlocksSlice';
 import getBillsSlice from './getBillsSlice';
-import getBills from './billsWithIdSlice';
+import billWithIdSlice from './billWithIdSlice';
+import billsWithBlockIdSlice from './billsWithBlockIdSlice'
+
 
 const scrumboardAppReducers = combineReducers({
 	boards,
@@ -16,7 +18,8 @@ const scrumboardAppReducers = combineReducers({
 	billingSlice,
 	billingBlocksSlice,
 	getBillsSlice,
-	getBills
+	billWithIdSlice,
+	billsWithBlockIdSlice
 });
 
 export default scrumboardAppReducers;

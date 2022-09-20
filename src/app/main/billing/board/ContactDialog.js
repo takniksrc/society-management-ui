@@ -18,6 +18,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { DateTimePicker } from '@material-ui/pickers';
 import PrintIcon from '@material-ui/icons/Print';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
+import { Link, useParams } from 'react-router-dom';
+
 import { motion } from 'framer-motion';
 import _ from '@lodash';
 import * as yup from 'yup';
@@ -26,9 +28,11 @@ import instance from 'axiosinstance';
 import { removeUser, closeNewContactDialog, closeEditContactDialog } from '../store/newUsersSlice';
 import { Card } from '@material-ui/core';
 
-const defaultValues = {
+const defaultValuesDiscount = {
 	current_reading: '',
-	discount: '',
+	discount: ''
+};
+const defaultValuesPaidAmount = {
 	paid_amount: ''
 };
 
@@ -41,7 +45,20 @@ function ContactDialog(props) {
 
 	const { control, watch, reset, handleSubmit, formState, getValues, register } = useForm({
 		mode: 'onChange',
-		defaultValues
+		defaultValuesDiscount
+	});
+
+	const {
+		control: controlPaidValues,
+		watch: watchPaidValues,
+		reset: resetPaidValues,
+		handleSubmit: handleSubmitPaidValues,
+		formState: formStatePaidValues,
+		getValues: getValuesPaidValues,
+		register: registerPaidValues
+	} = useForm({
+		mode: 'onChange',
+		defaultValuesPaidAmount
 	});
 
 	const { isValid, dirtyFields, errors } = formState;
@@ -53,15 +70,18 @@ function ContactDialog(props) {
 	//  */
 	const initDialog = useCallback(() => {
 		reset({
-			...defaultValues,
+			...defaultValuesDiscount,
 			current_reading: contactDialog.data?.current_reading
+		});
 
-			//, discount: contactDialog.data?.discount
+		resetPaidValues({
+			...defaultValuesPaidAmount,
+			paid_amount: contactDialog.data?.paid_amount
 		});
 
 		//call the api for data
 		console.log('id', contactDialog?.data?.id);
-		instance.get(`/bills/${contactDialog?.data?.id}`).then(res => setBillData(res.data));
+		instance.get(`/api/bills/${contactDialog?.data?.id}`).then(res => setBillData(res.data));
 	}, [contactDialog.data, contactDialog.type, reset]);
 
 	/**
@@ -73,21 +93,37 @@ function ContactDialog(props) {
 		}
 	}, [contactDialog.props.open, initDialog]);
 
-	// /**
-	//  * Close Dialog
-	//  */
 	function closeComposeDialog() {
 		return contactDialog.type === 'edit' ? dispatch(closeEditContactDialog()) : dispatch(closeNewContactDialog());
 	}
-	const onSubmit = data => console.log('data', data);
-	// /**
-	//  * Form Submit
-	//  */
-	// function onSubmit(data) {
-	// 	console.log('data on submit', data);
 
-	// 	// closeComposeDialog();
-	// }
+	const onSubmitDiscountValuesForm = data => {
+		console.log('data in discount', data);
+		instance
+			.post(`/api/bills/${contactDialog?.data?.id}`, {
+				current_reading: parseInt(data.current_reading),
+				discount: parseInt(data.discount)
+			})
+			.then(function (response) {
+				console.log('response', JSON.stringify(response.data));
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	};
+	const onSubmitPaidValuesForm = data => {
+		console.log('data in paid', data);
+		instance
+			.post(`/api/bills/payment/${contactDialog?.data?.id}`, {
+				amount: data.paid_amount
+			})
+			.then(function (response) {
+				console.log('response', JSON.stringify(response.data));
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	};
 
 	return (
 		<Dialog
@@ -99,45 +135,41 @@ function ContactDialog(props) {
 			fullWidth
 			maxWidth="sm"
 		>
-			<form noValidate onSubmit={handleSubmit(onSubmit)} className="flex flex-col md:overflow-hidden">
-				<AppBar position="static" elevation={0}>
-					<Toolbar className="flex w-full">
-						<Typography variant="h6" color="inherit" className="pt-8">
-							{contactDialog.data?.customer_name}
-						</Typography>
+			<AppBar position="static" elevation={0}>
+				<Toolbar className="flex w-full">
+					<Typography variant="h6" color="inherit" className="pt-8">
+						{contactDialog.data?.customer_name}
+					</Typography>
 
-						<motion.div
-							initial={{ opacity: 0, x: 20 }}
-							animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
-							className="flex flex-2 ml-auto flex-row items-center justify-center ml-14 space-x-10 mt-10 "
-						>
-							<Button
-								variant="contained"
-								color="secondary"
-								className="w-full"
-								// onClick={ev => dispatch(openNewContactDialog())}
-							>
-								<PrintIcon />
-							</Button>
-						</motion.div>
-					</Toolbar>
-				</AppBar>
+					<motion.div
+						initial={{ opacity: 0, x: 20 }}
+						animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
+						className="flex flex-2 ml-auto flex-row items-center justify-center ml-14 space-x-10 mt-10 "
+					>
+						<Button variant="contained" to={`/billing/${contactDialog.data?.id}/pdf-bill`} component={Link}>
+							<PrintIcon />
+						</Button>
+					</motion.div>
+				</Toolbar>
+			</AppBar>
 
-				<DialogContent classes={{ root: 'p-24' }}>
-					<Card style={{ padding: '2rem' }}>
-						<Typography color="error">Due Date: {contactDialog?.data?.due_date}</Typography>
-						<Typography>
-							Units: {contactDialog?.data?.current_reading - contactDialog?.data?.previous_reading}{' '}
-						</Typography>
-						<Typography>Previous Reading: {contactDialog.data?.previous_reading} </Typography>
-						<Typography>Arrears: {contactDialog.data?.arrears}</Typography>
-						<Typography>Total FPA: {contactDialog.data?.fpa_charges}</Typography>
-						<Typography>Current Bill: {contactDialog.data?.electricity_charges}</Typography>
-						<Typography>Society Charges: {contactDialog.data?.society_charges}</Typography>
-						<Typography>Total Payables: {contactDialog.data?.total_bill} </Typography>
-					</Card>
-					<div className="flex gap-36 mt-24">
-						<Card className="w-1/2 p-24">
+			<DialogContent classes={{ root: 'p-24' }}>
+				<Card style={{ padding: '2rem' }}>
+					<Typography color="error">Due Date: {contactDialog?.data?.due_date}</Typography>
+					<Typography>
+						Units: {contactDialog?.data?.current_reading - contactDialog?.data?.previous_reading}{' '}
+					</Typography>
+					<Typography>Previous Reading: {contactDialog.data?.previous_reading} </Typography>
+					<Typography>Arrears: {contactDialog.data?.arrears}</Typography>
+					<Typography>Total FPA: {contactDialog.data?.fpa_charges}</Typography>
+					<Typography>Current Bill: {contactDialog.data?.electricity_charges}</Typography>
+					<Typography>Society Charges: {contactDialog.data?.society_charges}</Typography>
+					<Typography>Total Payables: {contactDialog.data?.total_bill} </Typography>
+				</Card>
+
+				<div className="flex gap-36 mt-24">
+					<form className="w-1/2" noValidate onSubmit={handleSubmit(onSubmitDiscountValuesForm)}>
+						<Card className="p-24">
 							<div>
 								<Controller
 									control={control}
@@ -184,11 +216,12 @@ function ContactDialog(props) {
 								</Button>
 							</div>
 						</Card>
-
-						<Card className="w-1/2 p-24">
+					</form>
+					<form className="w-1/2" noValidate onSubmit={handleSubmitPaidValues(onSubmitPaidValuesForm)}>
+						<Card className="p-24">
 							<div className="flex">
 								<Controller
-									control={control}
+									control={controlPaidValues}
 									name="paid_amount"
 									render={({ field }) => (
 										<TextField
@@ -214,9 +247,9 @@ function ContactDialog(props) {
 								</Button>
 							</div>
 						</Card>
-					</div>
-				</DialogContent>
-			</form> 
+					</form>
+				</div>
+			</DialogContent>
 		</Dialog>
 	);
 }

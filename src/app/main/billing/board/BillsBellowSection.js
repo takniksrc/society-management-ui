@@ -310,20 +310,15 @@ function BillsBellowSection(props) {
 										className="flex flex-1 items-center justify-center px-12 space-x-20 basis-1/2"
 									>
 										<Button
-											variant="contained"
-											color="secondary"
-											className="w-full"
-											onClick={ev => dispatch(openNewContactDialog())}
+													variant="contained"
+													color="secondary"
+													className="w-full"
+													component={Link}
+													to={`billing/pdf-bills/${routeParams.boardId}`}
 										>
 											Download PDF
 										</Button>
-										<Button
-											variant="contained"
-											color="secondary"
-											className="w-full"
-											to={`/billing/${bills.id}/pdf-bill`}
-											component={Link}
-										>
+										<Button variant="contained" color="secondary" className="w-full">
 											Upload Payemnts
 										</Button>
 									</motion.div>
@@ -397,17 +392,12 @@ function BillsBellowSection(props) {
 										variant="contained"
 										color="secondary"
 										className="w-full"
-										onClick={ev => dispatch(openNewContactDialog())}
+										component={Link}
+										to={`/billing/pdf-bills/${routeParams.boardId}`}
 									>
 										Download PDF
 									</Button>
-									<Button
-										variant="contained"
-										color="secondary"
-										className="w-full"
-										to={`/billing/${bills[0]?.id}/pdf-bill`}
-										component={Link}
-									>
+									<Button variant="contained" color="secondary" className="w-full">
 										Upload Payemnts
 									</Button>
 								</motion.div>

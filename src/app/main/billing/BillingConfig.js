@@ -24,7 +24,11 @@ const ScrumboardAppConfig = {
 		},
 		{
 			path: '/billing/:billsId/pdf-bill',
-			component: lazy(() => import('./invoices/compact/CompactInvoicePage'))
+			component: lazy(() => import('./invoices/BillTempelate'))
+		},
+		{
+			path: '/billing/pdf-bills/:blockId',
+			component: lazy(() => import('./invoices/BillTempelateMultiple'))
 		},
 		{
 			path: '/billing',
