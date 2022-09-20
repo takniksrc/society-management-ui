@@ -107,11 +107,10 @@ function BillsMiddleSection(props) {
 	const [selectedCategory, setSelectedCategory] = useState('house');
 	const payment = [
 		{ id: 0, value: 'card', label: 'Card', color: '#2196f3' },
-		{ id: 1, value: 'cash', label: 'Cash', color: '#2196f3' },
+		{ id: 1, value: 'cash', label: 'Cash', color: '#2196f3' }
 	];
 	const [serie, setSerie] = useState('daily');
 	const [payments, setPayments] = useState('card');
-
 
 	const data = [
 		{ id: 0, value: 'daily', label: 'Daily', color: '#2196f3' },
@@ -123,7 +122,7 @@ function BillsMiddleSection(props) {
 	}
 	// const dispatch = useDispatch();
 	const contacts = useSelector(selectUsers);
-	const allBills = contacts[0]?.customer
+	const allBills = contacts[0]?.customer;
 	const searchText = useSelector(({ newUsersSlice }) => newUsersSlice.searchText);
 	console.log('I am customers bills', allBills);
 	console.log('I am search text', searchText);
@@ -241,8 +240,6 @@ function BillsMiddleSection(props) {
 	// }
 
 	return (
-		
-
 		<div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>
 			<div className="flex flex-grow flex-shrink-0 flex-col items-center container px-16 md:px-24">
 				<motion.div
@@ -361,10 +358,7 @@ function BillsMiddleSection(props) {
 					</motion.div>
 				</motion.div>
 			</div>
-
-
 		</div>
-	
 	);
 }
 
