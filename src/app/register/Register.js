@@ -84,30 +84,30 @@ function Register() {
 							className="w-full mb-32"
 						>
 							<Tab
-								icon={
-									<img
-										className="h-40 p-4 bg-black rounded-12"
-										src="assets/images/logos/jwt.svg"
-										alt="firebase"
-									/>
-								}
+								// icon={
+								// 	<img
+								// 		className="h-40 p-4 bg-black rounded-12"
+								// 		src="assets/images/logos/jwt.svg"
+								// 		alt="firebase"
+								// 	/>
+								// }
 								className="min-w-0"
-								label="JWT"
+								label="Register with User"
 							/>
-							<Tab
+							{/* <Tab
 								icon={<img className="h-40" src="assets/images/logos/firebase.svg" alt="firebase" />}
 								className="min-w-0"
 								label="Firebase"
-							/>
+							/> */}
 							<Tab
-								icon={<img className="h-40" src="assets/images/logos/auth0.svg" alt="auth0" />}
+								// icon={<img className="h-40" src="assets/images/logos/auth0.svg" alt="auth0" />}
 								className="min-w-0"
-								label="Auth0"
+								label="Register with Google"
 							/>
 						</Tabs>
 
 						{selectedTab === 0 && <JWTRegisterTab />}
-						{selectedTab === 1 && <FirebaseRegisterTab />}
+						{/* {selectedTab === 1 && <FirebaseRegisterTab />} */}
 						{selectedTab === 2 && <Auth0RegisterTab />}
 					</CardContent>
 
@@ -132,14 +132,13 @@ function Register() {
 						>
 							<Typography variant="h3" color="inherit" className="font-semibold leading-tight">
 								Welcome <br />
-								to the <br /> FUSE React!
+								to the <br /> Society Management system!
 							</Typography>
 						</motion.div>
 
 						<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.3 } }}>
 							<Typography variant="subtitle1" color="inherit" className="mt-32">
-								Powerful and professional admin template for Web Applications, CRM, CMS, Admin Panels
-								and more.
+								Society Management System simplify and automate societies' operations.
 							</Typography>
 						</motion.div>
 					</div>

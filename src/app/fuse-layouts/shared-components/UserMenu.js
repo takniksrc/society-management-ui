@@ -14,6 +14,7 @@ import { logoutUser } from 'app/auth/store/userSlice';
 function UserMenu(props) {
 	const dispatch = useDispatch();
 	const user = useSelector(({ auth }) => auth.user);
+	console.log('I am user after role ',user)
 
 	const [userMenu, setUserMenu] = useState(null);
 
