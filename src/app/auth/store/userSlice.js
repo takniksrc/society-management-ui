@@ -11,11 +11,12 @@ import jwtService from 'app/services/jwtService';
 import JwtService from 'app/services/jwtService';
 
 export const setUserDataAuth0 = tokenData => async dispatch => {
+	console.log('tokenData',tokenData)
 	const user = {
 		role: ['admin'],
 		from: 'auth0',
 		data: {
-			displayName: tokenData.username || tokenData.name,
+			name: tokenData.username || tokenData.name,
 			photoURL: tokenData.picture,
 			email: tokenData.email,
 			settings:
@@ -58,7 +59,7 @@ export const createUserSettingsFirebase = authUser => async (dispatch, getState)
 		from: 'firebase',
 		role: ['admin'],
 		data: {
-			displayName: authUser.displayName,
+			name: authUser.name,
 			email: authUser.email,
 			settings: { ...fuseDefaultSettings }
 		}
@@ -196,9 +197,10 @@ const initialState = {
 	data: JSON.parse(localStorage.getItem('user'))?.data
 		? JSON.parse(localStorage.getItem('user'))?.data
 		: {
-				displayName: '',
+				name: '',
 				photoURL: '',
 				email: '',
+				role:'',
 				shortcuts: []
 		  }
 };

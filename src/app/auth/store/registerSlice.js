@@ -27,7 +27,7 @@ export const registerWithFirebase = model => async dispatch => {
 
 		return () => false;
 	}
-	const { email, password, displayName } = model;
+	const { name,password,email,role } = model;
 
 	return firebaseService.auth
 		.createUserWithEmailAndPassword(email, password)
@@ -35,8 +35,9 @@ export const registerWithFirebase = model => async dispatch => {
 			dispatch(
 				createUserSettingsFirebase({
 					...response.user,
-					displayName,
-					email
+					name,
+					email,
+					role
 				})
 			);
 

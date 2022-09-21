@@ -89,7 +89,7 @@ class JwtService extends FuseUtils.EventEmitter {
 						redirectUrl: 'users',
 						role: response.data.user.role,
 						data: {
-							displayName: response.data.user.name,
+							name: response.data.user.name,
 							email: response.data.user.email,
 							photoURL: response.data.user.avatar
 						}
