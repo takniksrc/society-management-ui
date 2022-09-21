@@ -10,7 +10,7 @@ export const getBlocksStatus = createAsyncThunk('contactsApp/user/BillingBlocksS
 });
 
 const billingBlocksSlice = createSlice({
-	name: 'BillingBlocksSlice',
+	name: 'billingBlocksSlice',
 	initialState: [],
 	reducers: {},
 	extraReducers: {

@@ -25,6 +25,7 @@ import reducer from '../store';
 import societyChargesIcon from '../../../../assets/ServicesIcon/society-charges-icon.png';
 import consumptionChragesIcon from '../../../../assets/ServicesIcon/consumption-based-icon.png';
 import instance from 'axiosinstance';
+
 const defaultValues = {
 	id: '',
 	dueDate: new Date(),
@@ -45,21 +46,7 @@ const useStyles = makeStyles(theme => ({
 function GBData(props) {
 	const dispatch = useDispatch();
 	const history = useHistory();
-	// const boards = useSelector(selectBoards);
-	const boards = [
-		{ id: '1', name: 'Electricity Khaban-e-Amin', uri: 'electricity-khayaban-amin', icon: consumptionChragesIcon }
-	];
-	console.log('I am boards', boards);
-
 	const classes = useStyles(props);
-	// const [value, setValue] = React.useState<DateRange<Date>>([null, null]);
-
-	// useEffect(() => {
-	// 	dispatch(getBoards());
-	// 	return () => {
-	// 		dispatch(resetBoards());
-	// 	};
-	// }, [dispatch]);
 
 	const container = {
 		show: {
@@ -133,7 +120,6 @@ function GBData(props) {
 	const { errors, isValid, dirtyFields } = formState;
 
 	return (
-		// <form onSubmit={handleSubmit(data => console.log('I am data', data))}>
 		<form onSubmit={handleSubmit(handleForm)}>
 			<div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>
 				<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.1 } }}>
@@ -189,38 +175,11 @@ function GBData(props) {
 										</div>
 										<div>
 											<input type="file" {...register('file')} />
-											{/* <Controller
-												control={control}
-												name='file'
-												render={({ field }) => {
-													return (
-														<TextInput
-															fullWidth
-															{...field}
-															label="Subir archivo"
-															type="file"
-															onChange={event => field.onChange(event.target.files)}
-															InputLabelProps={{
-																shrink: true
-															}}
-														/>
-													);
-												}}
-											/> */}
-											{/* <UploadButtons /> */}
 										</div>
 									</div>
 								</div>
 								<div className="px-16">
-									<Button
-										type="submit"
-										variant="contained"
-										color="secondary"
-										// to="/billing/boards/1/electrcity-bills/billing"
-										// component={Link}
-
-										// disabled={_.isEmpty(dirtyFields) || !isValid}
-									>
+									<Button type="submit" variant="contained" color="secondary">
 										Generate Bills
 									</Button>
 								</div>

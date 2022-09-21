@@ -34,6 +34,7 @@ import {
 	selectUsers
 } from '../store/newUsersSlice';
 import { selectBoards, newBoard, getBoards, resetBoards } from '../store/boardsSlice';
+
 import societyChargesIcon from '../../../../assets/ServicesIcon/society-charges-icon.png';
 import consumptionChragesIcon from '../../../../assets/ServicesIcon/consumption-based-icon.png';
 import AllBills from './AllBills';
@@ -61,23 +62,15 @@ function BillsBellowSection(props) {
 	const mainTheme = useSelector(selectMainTheme);
 
 	const dispatch = useDispatch();
-	// const boards = useSelector(selectBoards);
-	// const searchText = useSelector(({ newUsersSlice }) => newUsersSlice.searchText);
-
-	const boards = [
-		{ id: '1', name: 'Electricity Khaban-e-Amin', uri: 'electricity-khayaban-amin', icon: consumptionChragesIcon }
-	];
-	console.log('I am boards', boards);
 
 	const classes = useStyles(props);
-	// const [value, setValue] = React.useState<DateRange<Date>>([null, null]);
 
-	// useEffect(() => {
-	// 	dispatch(getBoards());
-	// 	return () => {
-	// 		dispatch(resetBoards());
-	// 	};
-	// }, [dispatch]);
+	useEffect(() => {
+		// dispatch();
+		return () => {
+			// dispatch(resetBoards());
+		};
+	}, [dispatch]);
 
 	const container = {
 		show: {
@@ -103,12 +96,8 @@ function BillsBellowSection(props) {
 	});
 
 	const { errors, isValid, dirtyFields } = formState;
-	const bills = useSelector(state => state.scrumboardApp.getBillsSlice);
-	console.log('i am bills in all', bills[0]?.id);
+	const bills = useSelector(state => state.scrumboardApp.AllBillsSlice);
 
-	// const dispatch = useDispatch();
-	// const contacts = useSelector(selectUsers);
-	const allBills = bills;
 	const searchText = useSelector(({ newUsersSlice }) => newUsersSlice.searchText);
 
 	const [filteredData, setFilteredData] = useState(null);
@@ -116,49 +105,8 @@ function BillsBellowSection(props) {
 	const routeParams = useParams();
 	console.log('i am routeParams', routeParams);
 
-	// {
-	// 	"id": "1c394275-bcc0-4076-98b3-a1e17105d6e0",
-	// 	"customer_id": "f4998917-cb4f-4692-b4d9-33211e4f8460",
-	// 	"customer_name": "Customer 2",
-	// 	"address": "A 2",
-	// 	"meter_number": "2000002",
-	// 	"meter_type": "MCO",
-	// 	"property_type": "House",
-	// 	"property_size": "Residential House 7 Marla",
-	// 	"billing_month": "Aug-22",
-	// 	"issue_date": "12-09-2022",
-	// 	"due_date": "20-09-2022",
-	// 	"charges_type": "calculated",
-	// 	"society_charges": 2400,
-	// 	"electricity_charges": 35720,
-	// 	"fpa_charges": 670.87,
-	// 	"arrears": 2200,
-	// 	"previous_reading": 2715,
-	// 	"current_reading": 3658,
-	// 	"discount": null,
-	// 	"total_bill": 40990.87,
-	// 	"payment_status": "Unpaid",
-	// 	"amount_paid": 0
-	// }
-
 	const columns = useMemo(
 		() => [
-			// {
-			// 	Header: ({ selectedFlatRows }) => {
-			// 		const selectedRowIds = selectedFlatRows.map(row => row.original.id);
-
-			// 		return (
-			// 			selectedFlatRows.length > 0 && <ContactsMultiSelectMenu selectedContactIds={selectedRowIds} />
-			// 		);
-			// 	},
-			// 	accessor: 'avatar',
-			// 	// Cell: ({ row }) => {
-			// 	// 	return <Avatar className="mx-8" alt={row.original.name} src={row.original.avatar} />;
-			// 	// },
-			// 	className: 'justify-center',
-			// 	width: 64,
-			// 	sortable: false
-			// },
 			{
 				Header: 'Name',
 				accessor: 'customer_name',
@@ -310,11 +258,11 @@ function BillsBellowSection(props) {
 										className="flex flex-1 items-center justify-center px-12 space-x-20 basis-1/2"
 									>
 										<Button
-													variant="contained"
-													color="secondary"
-													className="w-full"
-													component={Link}
-													to={`billing/pdf-bills/${routeParams.boardId}`}
+											variant="contained"
+											color="secondary"
+											className="w-full"
+											component={Link}
+											to={`billing/pdf-bills/${routeParams.boardId}`}
 										>
 											Download PDF
 										</Button>

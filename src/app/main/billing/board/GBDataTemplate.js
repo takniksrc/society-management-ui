@@ -36,8 +36,8 @@ const useStyles = makeStyles({
 const GBDataTemplate = () => {
 	const classes = useStyles();
 	const [tabValue, setTabValue] = useState(0);
-	const GetBills = useSelector(state => state.scrumboardApp.getBillsSlice);
-	console.log('i am GetBills',GetBills)
+	//const GetBills = useSelector(state => state.scrumboardApp.getBillsSlice);
+   //console.log('i am GetBills',GetBills)
 
 	const methods = useForm({
 		mode: 'onChange',

@@ -12,9 +12,8 @@ import reducer from '../store';
 import { selectBoards, newBoard, getBoards, resetBoards } from '../store/boardsSlice';
 import { getConfigurations } from '../../../fuse-configs/store/configSlice';
 import { getBlocksStatus } from '../store/billingBlocksSlice';
-import { getBills } from '../store/getBillsSlice';
-// import { getBills } from '../store/newUsersSlice';
-// import 'Closed' from '../../../../assets/ReportsIcon/monthly-report-status.png';
+import { getBills } from '../store/AllBillsSlice';
+import { resetBills } from '../store/AllBillsSlice';
 
 const useStyles = makeStyles(theme => ({
 	root: {},
@@ -36,15 +35,6 @@ function Boards(props) {
 
 	const classes = useStyles(props);
 
-	useEffect(() => {
-		// dispatch(getBoards());
-		dispatch(getConfigurations());
-
-		return () => {
-			// dispatch(resetBoards());
-		};
-	}, [dispatch]);
-
 	const container = {
 		show: {
 			transition: {
@@ -59,6 +49,8 @@ function Boards(props) {
 	};
 
 	useEffect(() => {
+		dispatch(resetBills([]));
+		dispatch(getConfigurations());
 		configurationsData?.sectors?.map((sector, index) => {
 			dispatch(getBlocksStatus(sector.id));
 		});
@@ -81,7 +73,7 @@ function Boards(props) {
 				>
 					{billingBlocksStatuses?.map((board, index) => {
 						console.log('blocks', board);
-						return board.billing_status === 'closed' ? (
+						return board.billing_status === 'closed' || board.billing_status === 'init-in-progress' ? (
 							<motion.div variants={item} className="p-16" key={board.id}>
 								<Paper
 									to={`/billing/boards/${board.id}`}
@@ -119,8 +111,6 @@ function Boards(props) {
 									role="button"
 									component={Link}
 									onClick={() => dispatch(getBills(board.id))}
-
-									// onChange={dispatch(getBills(board.id))}
 								>
 									<Typography
 										className="text-16 font-medium text-center pt-16 px-32 font-bold "

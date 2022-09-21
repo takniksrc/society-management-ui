@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import instance from 'axiosinstance';
 
-export const getBills = createAsyncThunk('contactsApp/user/BillingBlocksSlice', async sectorId => {
+export const getBills = createAsyncThunk('contactsApp/user/AllBillsSlice', async sectorId => {
 	console.log('sectorId', sectorId);
 	const response = await instance.get(`/api/bills/get-bills/${sectorId}`);
 	const data = await response.data.bills;
@@ -9,13 +9,17 @@ export const getBills = createAsyncThunk('contactsApp/user/BillingBlocksSlice', 
 	return data;
 });
 
-const getBillsSlice = createSlice({
-	name: 'BillingBlocksSlice',
+const AllBillsSlice = createSlice({
+	name: 'AllBillsSlice',
 	initialState: [],
-	reducers: {},
+	reducers: {
+		resetBills: (state, action) => action.payload
+	},
+
 	extraReducers: {
 		[getBills.fulfilled]: (state, action) => action.payload
 	}
 });
 
-export default getBillsSlice.reducer;
+export default AllBillsSlice.reducer;
+export const { resetBills } = AllBillsSlice.actions;
