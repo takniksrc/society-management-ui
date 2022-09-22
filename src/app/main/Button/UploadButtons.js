@@ -21,11 +21,13 @@ export default function UploadButtons() {
 		<div className={classes.root}>
 			<input accept="image/*" className={classes.input} id="contained-button-file" multiple type="file" />
 			<label htmlFor="contained-button-file">
-      <Button variant="outlined" 
+				<Button
+					variant="outlined"
 					className="flex w-full w-2/6 sm:w-320 -mx-4 mt-6 mb-16 ml-px"
-          color="primary">
-  Upload
-</Button>
+					color="primary"
+				>
+					Upload
+				</Button>
 				{/* <Button
 					className="flex w-full sm:w-320 -mx-4 mt-6 mb-16 ml-px"
 					variant="outlined"

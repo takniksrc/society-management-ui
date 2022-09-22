@@ -8,10 +8,11 @@ import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+
 import * as yup from 'yup';
 import { useParams } from 'react-router-dom';
 import { useDeepCompareEffect } from '@fuse/hooks';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import ContactDialog from './ContactDialog';
 import reducer from '../store';
 import BillingHeader from './BillingHeader';
@@ -35,6 +36,9 @@ const useStyles = makeStyles({
 const GBDataTemplate = () => {
 	const classes = useStyles();
 	const [tabValue, setTabValue] = useState(0);
+	//const GetBills = useSelector(state => state.scrumboardApp.getBillsSlice);
+   //console.log('i am GetBills',GetBills)
+
 	const methods = useForm({
 		mode: 'onChange',
 		defaultValues: {},
@@ -47,10 +51,10 @@ const GBDataTemplate = () => {
 	const pageLayout = useRef(null);
 	const routeParams = useParams();
 
-	useDeepCompareEffect(() => {
-		dispatch(getUsers(routeParams));
-		dispatch(getBillingData());
-	}, [dispatch, routeParams]);
+	// useDeepCompareEffect(() => {
+	// 	dispatch(getUsers(routeParams));
+	// 	dispatch(getBillingData());
+	// }, [dispatch, routeParams]);
 
 	return (
 		<>

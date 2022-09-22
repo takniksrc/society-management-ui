@@ -21,7 +21,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import ContactsMultiSelectMenu from './ContactsMultiSelectMenu';
 import reducer from '../store';
@@ -34,6 +34,7 @@ import {
 	selectUsers
 } from '../store/newUsersSlice';
 import { selectBoards, newBoard, getBoards, resetBoards } from '../store/boardsSlice';
+
 import societyChargesIcon from '../../../../assets/ServicesIcon/society-charges-icon.png';
 import consumptionChragesIcon from '../../../../assets/ServicesIcon/consumption-based-icon.png';
 import AllBills from './AllBills';
@@ -42,7 +43,7 @@ const defaultValues = {
 	id: '',
 	title: '',
 	notes: '',
-	startDate: new Date(),
+
 	dueDate: new Date(),
 	labels: []
 };
@@ -61,21 +62,13 @@ function BillsBellowSection(props) {
 	const mainTheme = useSelector(selectMainTheme);
 
 	const dispatch = useDispatch();
-	// const boards = useSelector(selectBoards);
-	// const searchText = useSelector(({ newUsersSlice }) => newUsersSlice.searchText);
-
-	const boards = [
-		{ id: '1', name: 'Electricity Khaban-e-Amin', uri: 'electricity-khayaban-amin', icon: consumptionChragesIcon }
-	];
-	console.log('I am boards', boards);
 
 	const classes = useStyles(props);
-	// const [value, setValue] = React.useState<DateRange<Date>>([null, null]);
 
 	useEffect(() => {
-		dispatch(getBoards());
+		// dispatch();
 		return () => {
-			dispatch(resetBoards());
+			// dispatch(resetBoards());
 		};
 	}, [dispatch]);
 
@@ -91,6 +84,7 @@ function BillsBellowSection(props) {
 		hidden: { opacity: 0, y: 20 },
 		show: { opacity: 1, y: 0 }
 	};
+
 	const methods = useFormContext();
 	const schema = yup.object().shape({
 		title: yup.string().required('You must enter a title')
@@ -100,130 +94,113 @@ function BillsBellowSection(props) {
 		defaultValues,
 		resolver: yupResolver(schema)
 	});
-	const dueDate = watch('deuDate');
-	const startDate = watch('startDate');
 
 	const { errors, isValid, dirtyFields } = formState;
-	const [selectedCategory, setSelectedCategory] = useState('house');
-	const payment = [
-		{ id: 0, value: 'card', label: 'Card', color: '#2196f3' },
-		{ id: 1, value: 'cash', label: 'Cash', color: '#2196f3' }
-	];
-	const [serie, setSerie] = useState('daily');
-	const [payments, setPayments] = useState('card');
+	const bills = useSelector(state => state.scrumboardApp.AllBillsSlice);
 
-	const data = [
-		{ id: 0, value: 'daily', label: 'Daily', color: '#2196f3' },
-		{ id: 1, value: 'weekly', label: 'Weekly', color: '#2196f3' },
-		{ id: 2, value: 'monthly', label: 'Monthly', color: '#2196f3' }
-	];
-	function handleSelectedCategory(event) {
-		setSelectedCategory(event.target.value);
-	}
-	// const dispatch = useDispatch();
-	const contacts = useSelector(selectUsers);
-	const allBills = contacts[0]?.customer;
 	const searchText = useSelector(({ newUsersSlice }) => newUsersSlice.searchText);
-	console.log('I am customers bills', allBills);
-	console.log('I am search text', searchText);
-	// const user = useSelector(({ newUsersSlice }) => newUsersSlice.user);
-	// console.log('I am user se', user);
+
 	const [filteredData, setFilteredData] = useState(null);
-	console.log('I am filtered', filteredData);
+	console.log('I am filtered in bellow', filteredData);
+	const routeParams = useParams();
+	console.log('i am routeParams', routeParams);
 
 	const columns = useMemo(
 		() => [
 			{
-				Header: ({ selectedFlatRows }) => {
-					const selectedRowIds = selectedFlatRows.map(row => row.original.id);
-
-					return (
-						selectedFlatRows.length > 0 && <ContactsMultiSelectMenu selectedContactIds={selectedRowIds} />
-					);
-				},
-				accessor: 'avatar',
-				// Cell: ({ row }) => {
-				// 	return <Avatar className="mx-8" alt={row.original.name} src={row.original.avatar} />;
-				// },
-				className: 'justify-center',
-				width: 64,
-				sortable: false
-			},
-			{
 				Header: 'Name',
-				accessor: 'name',
+				accessor: 'customer_name',
 				className: 'font-medium',
 				sortable: true
 			},
 			{
-				Header: 'Property Size',
-				accessor: 'property_type_id',
+				Header: 'Address',
+				accessor: 'address',
 				sortable: true
 			},
 			{
-				Header: 'Property Type',
-				accessor: 'streetAddress',
+				Header: 'Meter Number',
+				accessor: 'meter_number',
 				sortable: true
 			},
 			{
-				Header: 'Meter No.',
-				accessor: 'customerId',
+				Header: 'Issue Date',
+				accessor: 'issue_date',
+				sortable: true
+			},
+			{
+				Header: 'Due Date',
+				accessor: 'due_date',
 				sortable: true
 			},
 			{
 				Header: 'Meter Type',
-				accessor: 'phone_number',
+				accessor: 'meter_type',
 				sortable: true
 			},
 			{
-				Header: 'billing Status',
-				accessor: 'customer_type_id',
+				Header: 'Billing Month',
+				accessor: 'billing_month',
 				sortable: true
 			},
 			{
-				id: 'action',
-				width: 128,
-				sortable: false,
-				Cell: ({ row }) => (
-					<div className="flex items-center">
-						{/* <IconButton
-							onClick={ev => {
-								ev.stopPropagation();
-								dispatch(toggleStarredContact(row.original.id));
-							}}
-						>
-							{user.starred && user.starred.includes(row.original.id) ? (
-								<Icon className="text-yellow-700">star</Icon>
-							) : (
-								<Icon>star_border</Icon>
-							)}
-						</IconButton> */}
-						<IconButton
-							onClick={ev => {
-								ev.stopPropagation();
-								dispatch(removeUser(row.original.id));
-							}}
-						>
-							<Icon>delete</Icon>
-						</IconButton>
-					</div>
-				)
+				Header: 'Charges Type',
+				accessor: 'charges_type',
+				sortable: true
+			},
+
+			{
+				Header: 'Electricity Charges',
+				accessor: 'electricity_charges',
+				sortable: true
+			},
+
+			{
+				Header: 'Society Charges',
+				accessor: 'society_charges',
+				sortable: true
+			},
+			{
+				Header: 'Totl Bill',
+				accessor: 'total_bill',
+				sortable: true
+			},
+			{
+				Header: 'Discount',
+				accessor: 'discount',
+				sortable: true
+			},
+			{
+				Header: ' Amount Paid',
+				accessor: 'amount_paid',
+				sortable: true
+			},
+			{
+				Header: 'Arrears',
+				accessor: 'arrears',
+				sortable: true
+			},
+			{
+				Header: 'Payment Status',
+				accessor: 'payment_status',
+				sortable: true
 			}
 		],
 		[dispatch]
 	);
+
 	useEffect(() => {
 		function getFilteredArray(entities, _searchText) {
 			if (_searchText.length === 0) {
-				return contacts;
+				return bills;
 			}
-			return FuseUtils.filterArrayByString(contacts, _searchText);
+			return FuseUtils.filterArrayByString(bills, _searchText);
 		}
 
-		if (contacts) {
-			setFilteredData(getFilteredArray(contacts, searchText));
+		if (bills) {
+			setFilteredData(getFilteredArray(bills, searchText));
 		}
-	}, [contacts, searchText]);
+	}, [bills, searchText]);
 
 	if (!filteredData) {
 		return null;
@@ -274,35 +251,6 @@ function BillsBellowSection(props) {
 											</Paper>
 										</ThemeProvider>
 									</div>
-									<div className="flex flex-row items-center justify-between m-24 space-x-20 basis-1/4">
-										<FormControl className="" variant="filled">
-											<Select
-												classes={{ select: 'py-8' }}
-												value={serie}
-												onChange={ev => setSerie(ev.target.value)}
-											>
-												{data.map(category => (
-													<MenuItem value={category.value} key={category.id}>
-														{category.label}
-													</MenuItem>
-												))}
-											</Select>
-										</FormControl>
-
-										<FormControl className="" variant="filled">
-											<Select
-												classes={{ select: 'py-8' }}
-												value={payments}
-												onChange={ev => setPayments(ev.target.value)}
-											>
-												{payment.map(pay => (
-													<MenuItem value={pay.value} key={pay.id}>
-														{pay.label}
-													</MenuItem>
-												))}
-											</Select>
-										</FormControl>
-									</div>
 
 									<motion.div
 										initial={{ opacity: 0, x: 20 }}
@@ -313,16 +261,12 @@ function BillsBellowSection(props) {
 											variant="contained"
 											color="secondary"
 											className="w-full"
-											onClick={ev => dispatch(openNewContactDialog())}
+											component={Link}
+											to={`billing/pdf-bills/${routeParams.boardId}`}
 										>
 											Download PDF
 										</Button>
-										<Button
-											variant="contained"
-											color="secondary"
-											className="w-full"
-											onClick={ev => dispatch(openNewContactDialog())}
-										>
+										<Button variant="contained" color="secondary" className="w-full">
 											Upload Payemnts
 										</Button>
 									</motion.div>
@@ -386,35 +330,6 @@ function BillsBellowSection(props) {
 										</Paper>
 									</ThemeProvider>
 								</div>
-								<div className="flex flex-row items-center justify-between m-24 space-x-20 basis-1/4">
-									<FormControl className="" variant="filled">
-										<Select
-											classes={{ select: 'py-8' }}
-											value={serie}
-											onChange={ev => setSerie(ev.target.value)}
-										>
-											{data.map(category => (
-												<MenuItem value={category.value} key={category.id}>
-													{category.label}
-												</MenuItem>
-											))}
-										</Select>
-									</FormControl>
-
-									<FormControl className="" variant="filled">
-										<Select
-											classes={{ select: 'py-8' }}
-											value={payments}
-											onChange={ev => setPayments(ev.target.value)}
-										>
-											{payment.map(pay => (
-												<MenuItem value={pay.value} key={pay.id}>
-													{pay.label}
-												</MenuItem>
-											))}
-										</Select>
-									</FormControl>
-								</div>
 
 								<motion.div
 									initial={{ opacity: 0, x: 20 }}
@@ -425,16 +340,12 @@ function BillsBellowSection(props) {
 										variant="contained"
 										color="secondary"
 										className="w-full"
-										onClick={ev => dispatch(openNewContactDialog())}
+										component={Link}
+										to={`/billing/pdf-bills/${routeParams.boardId}`}
 									>
 										Download PDF
 									</Button>
-									<Button
-										variant="contained"
-										color="secondary"
-										className="w-full"
-										onClick={ev => dispatch(openNewContactDialog())}
-									>
+									<Button variant="contained" color="secondary" className="w-full">
 										Upload Payemnts
 									</Button>
 								</motion.div>
@@ -444,7 +355,7 @@ function BillsBellowSection(props) {
 								<AllBills
 									columns={columns}
 									// data={[filteredData[0].customer]}
-									data={filteredData.map(newData => newData?.customer)}
+									data={filteredData}
 									onRowClick={(ev, row) => {
 										if (row) {
 											dispatch(openEditContactDialog(row.original));

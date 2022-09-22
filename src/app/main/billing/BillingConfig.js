@@ -6,20 +6,16 @@ const ScrumboardAppConfig = {
 		layout: {}
 	},
 	routes: [
-		// {
-		// 	path: '/billing/boards/:boardId/:boardUri?',
-		// 	component: lazy(() => import('./board/Board'))
-		// },
 		{
 			path: '/billing/boards/1/electrcity-bills/billing',
 			component: lazy(() => import('./board/GBDataTemplate'))
 		},
 		{
-			path: '/billing/boards/:boardId/:boardUri?/billing',
+			path: '/billing/boards/:boardId/billing',
 			component: lazy(() => import('./board/GBDataTemplate'))
 		},
 		{
-			path: '/billing/boards/:boardId/:boardUri?',
+			path: '/billing/boards/:boardId',
 			component: lazy(() => import('./board/GenerateBills'))
 		},
 		{
@@ -27,9 +23,18 @@ const ScrumboardAppConfig = {
 			component: lazy(() => import('./boards/Boards'))
 		},
 		{
+			path: '/billing/:billsId/pdf-bill',
+			component: lazy(() => import('./invoices/BillTempelate'))
+		},
+		{
+			path: '/billing/pdf-bills/:blockId',
+			component: lazy(() => import('./invoices/BillTempelateMultiple'))
+		},
+		{
 			path: '/billing',
 			component: () => <Redirect to="/billing/boards" />
 		}
+		
 	]
 };
 

@@ -2,10 +2,9 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const getBillingData = createAsyncThunk('contactsApp/user/getBillingData', async () => {
-	
 	const response = await axios.get('/api/bills');
 	const data = await response.data;
-	// console.log('I am data',data)
+	console.log('Bills', data);
 
 	return data;
 });
