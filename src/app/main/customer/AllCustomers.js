@@ -41,7 +41,7 @@ const AllCustomers = ({ columns, data, onRowClick }) => {
 			columns,
 			data,
 			initialState: {
-				hiddenColumns: ['reference_number']
+				hiddenColumns: ['reference_number'] //The reows which want to remove add here and get values from backend
 			},
 			autoResetPage: true
 		},

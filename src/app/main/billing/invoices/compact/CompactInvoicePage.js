@@ -859,7 +859,7 @@ function CompactInvoicePage(props) {
 								</motion.div>
 							</>
 					  ))
-					: HBlockBills?.map(bill => (
+					: bills?.map(bill => (
 							<>
 								<motion.div
 									style={{ marginBottom: '2rem' }}
@@ -999,14 +999,14 @@ function CompactInvoicePage(props) {
 															<TableRow>
 																<TableCell className="border border-black border-slate-300">
 																	<Typography variant="subtitle1">
-																		Society Charges
+																		Arrears
 																	</Typography>
 																</TableCell>
 																<TableCell
 																	className="border border-black border-slate-300"
 																	align="right"
 																>
-																	{bill.society_charges}
+																	{bill.arrears}
 																</TableCell>
 															</TableRow>
 															{bill.society_services.map(societyCharges => (
