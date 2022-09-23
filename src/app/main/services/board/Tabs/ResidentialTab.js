@@ -49,25 +49,6 @@ function ResidentialTab(props) {
 	console.log('Fields in Residenatial board tab', fields);
 	return (
 		<div>
-			{/* <FormControl className="flex w-full sm:w-320 -mx-4 mt-8 mb-16 ml-px" variant="outlined">
-				
-				{configurationsData?.customer_types ? (
-					configurationsData?.customer_types.map(ct => {
-						console.log('ct in up', ct);
-						
-						return (
-							<>
-								{ct.name === 'Residential' &&
-									ct.property_types.map(pt => {
-										return <>{pt.name}</>;
-									})}
-							</>
-						);
-					})
-				) : (
-					<h2>Residential</h2>
-				)}
-			</FormControl> */}
 			<motion.div
 				className="flex flex-wrap py-24"
 				// variants={container}
@@ -78,26 +59,23 @@ function ResidentialTab(props) {
 					console.log('sp in board', propertySize);
 
 					return (
-						<>
-							{propertySize?.customer_type === 'Residential' && (
-								<p>Hello</p>
-								// <Controller
-								// 	name="abc"
-								// 	control={control}
-								// 	render={({ field }) => (
-								// 		<TextField
-								// 			// {...field}
-								// 			className="mt-8 mb-16 mx-4"
-								// 			label={propertySize.property_size.name}
-								// 			autoFocus
-								// 			// id={ps.name}
-								// 			variant="outlined"
-								// 			fullWidth
-								// 		/>
-								// 	)}
-								// />
-							)}
-						</>
+						propertySize?.customer_type === 'Residential' && (
+							<Controller
+								name={`servicePricing[${propertySizeIndex}].price_per_unit`}
+								control={control}
+								render={({ field }) => (
+									<TextField
+										{...field}
+										className="mt-8 mb-16 mx-4"
+										label={propertySize.property_size.name}
+										autoFocus
+										// id={}
+										variant="outlined"
+										fullWidth
+									/>
+								)}
+							/>
+						)
 					);
 				})}
 			</motion.div>

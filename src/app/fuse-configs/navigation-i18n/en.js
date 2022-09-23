@@ -5,7 +5,8 @@ const locale = {
 	ANALYSISREPORT: 'Analysis Report',
 	SERVICES: 'Services',
 	BILLING: 'Billing',
-	CUSTOMER: 'Customer'
+	CUSTOMER: 'Customer',
+	DASHBOARD : 'Dashboard'
 };
 
 export default locale;

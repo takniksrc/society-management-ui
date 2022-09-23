@@ -24,33 +24,22 @@ import TextField from '@material-ui/core/TextField';
 import { Autocomplete } from '@material-ui/lab';
 // eslint-disable-next-line import/named
 import { saveBoard, getBoard } from '../store/boardSlice';
-// import { resetProduct, newProduct, getProduct } from '../store/productSlice';
+import { updateSocietyChargesServiceBoard, getSocietyChargesServiceBoard } from '../store/societyChargesServiceSlice';
 
 import reducer from '../store';
 import DescriptionTab from './Tabs/DescriptionTab';
 import ResidentialTab from './Tabs/ResidentialTab';
 import CommercialTab from './Tabs/CommercialTab';
 import ConstructionTab from './Tabs/ConstructionTab';
-// import ProductHeader from './ProductHeader';
-// import InventoryTab from './tabs/InventoryTab';
-// import PricingTab from './tabs/PricingTab';
-// import ProductImagesTab from './tabs/ProductImagesTab';
-// import ShippingTab from './tabs/ShippingTab';
 
-/**
- * Form Validation Schema
- */
 const schema = yup.object().shape({
-	name: yup
-		.string()
-		.required('You must enter a product name')
-		.min(5, 'The product name must be at least 5 characters')
+	name: yup.string()
 });
 
 function SCDataTemplate(props) {
 	const dispatch = useDispatch();
 	const theme = useTheme();
-	const board = useSelector(({ scrumboardApp }) => scrumboardApp.board);
+	const board = useSelector(({ scrumboardApp }) => scrumboardApp.societyChargesServiceSlice);
 
 	const methods = useForm({
 		mode: 'onChange',
@@ -59,12 +48,7 @@ function SCDataTemplate(props) {
 	});
 	const { reset, watch, control, onChange, formState, getValues } = methods;
 
-	const [tabValue, setTabValue] = useState(0);
-
-	function handleUpdateConsumptionBoard() {
-		const data = getValues();
-		//dispatch(updateConsumbtionBoard({ ...data, tabValue }));
-	}
+	const [tabValue, setTabValue] = useState('Description');
 
 	const { isValid, dirtyFields } = formState;
 
@@ -77,15 +61,17 @@ function SCDataTemplate(props) {
 
 	function handleTabChange(event, value) {
 		setTabValue(value);
+		console.log('tabValue', tabValue);
 	}
 	const name = watch('name');
 
-	function handleSaveProduct() {
-		dispatch(saveBoard(getValues()));
+	function handleSaveSocietyCharges() {
+		dispatch(updateSocietyChargesServiceBoard(getValues()));
 	}
 
 	useEffect(() => {
 		if (!board) {
+		
 			return;
 		}
 
@@ -125,7 +111,7 @@ function SCDataTemplate(props) {
 								variant="contained"
 								color="secondary"
 								disabled={_.isEmpty(dirtyFields) || !isValid}
-								onClick={handleSaveProduct}
+								onClick={handleSaveSocietyCharges}
 							>
 								Save
 							</Button>
@@ -143,16 +129,15 @@ function SCDataTemplate(props) {
 							scrollButtons="auto"
 							classes={{ root: 'w-full h-64' }}
 						>
-							<Tab className="h-64" label="Description" />
-							<Tab className="h-64" label="Residential" />
-							<Tab className="h-64" label="Commercial" />
-							{/* <Tab className="h-64" label="Construction" /> */}
+							<Tab id="Description" className="h-64" label="Description" value="Description" />
+							<Tab id="Residential4" className="h-64" label="Residential" value="Residential" />
+							<Tab id="Commercial" className="h-64" label="Commercial" value="Commercial" />
 						</Tabs>
 					</>
 				}
 				content={
 					<div className="p-16 sm:p-24 max-w-2xl">
-						<div className={tabValue !== 0 ? 'hidden' : ''}>
+						<div className={tabValue !== 'Description' ? 'hidden' : ''}>
 							<DescriptionTab />
 						</div>
 						<div className={tabValue !== 'Residential' ? 'hidden' : ''}>

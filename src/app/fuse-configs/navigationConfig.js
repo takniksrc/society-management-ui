@@ -17,27 +17,11 @@ const navigationConfig = [
 		children: [
 			{
 				id: 'profile',
-				title: 'DashBoard',
+				title: 'Dashboard',
 				translate: 'DASHBOARD',
 				type: 'item',
 				icon: 'person',
 				url: '/dashboards/analytics'
-			},
-			{
-				id: 'profile',
-				title: 'User',
-				translate: 'USER',
-				type: 'item',
-				icon: 'person',
-				url: '/users'
-			},
-			{
-				id: 'profile',
-				title: 'cUSTOMER',
-				translate: 'CUSTOMER',
-				type: 'item',
-				icon: 'person',
-				url: '/customers'
 			},
 			{
 				id: 'analysis-report',
@@ -48,12 +32,12 @@ const navigationConfig = [
 				url: '/analysisreport'
 			},
 			{
-				id: 'Billing',
-				title: 'Billing',
-				translate: 'BILLING',
+				id: 'profile',
+				title: 'cUSTOMER',
+				translate: 'CUSTOMER',
 				type: 'item',
-				icon: 'assessment',
-				url: '/billing'
+				icon: 'person',
+				url: '/customers'
 			},
 			{
 				id: 'Services',
@@ -62,6 +46,22 @@ const navigationConfig = [
 				type: 'item',
 				icon: 'assessment',
 				url: '/services'
+			},
+			{
+				id: 'Billing',
+				title: 'Billing',
+				translate: 'BILLING',
+				type: 'item',
+				icon: 'assessment',
+				url: '/billing'
+			},
+			{
+				id: 'profile',
+				title: 'User',
+				translate: 'USER',
+				type: 'item',
+				icon: 'person',
+				url: '/users'
 			}
 		]
 	}

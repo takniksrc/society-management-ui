@@ -18,6 +18,7 @@ import Cleanliness from '../../../../assets/ServicesIcon/cleanliness.png';
 import Cabel from '../../../../assets/ServicesIcon/cabel.png';
 import Security from '../../../../assets/ServicesIcon/security.png';
 import Water from '../../../../assets/ServicesIcon/water.png';
+import { getSocietyChargesServiceBoard } from '../store/societyChargesServiceSlice';
 
 const useStyles = makeStyles(theme => ({
 	root: {},
@@ -33,14 +34,6 @@ const useStyles = makeStyles(theme => ({
 function SCData(props) {
 	const dispatch = useDispatch();
 	const boardsnew = useSelector(selectBoards);
-	const boards = [
-		{ id: boardsnew?.id, name: boardsnew?.name, uri: 'aquifer', icon: boardsnew[0]?.name },
-		{ id: '2', name: 'Garbage', uri: 'garbage', icon: Garbage },
-		{ id: '3', name: 'Cleanliness', uri: 'cleanliness', icon: Cleanliness },
-		{ id: '4', name: 'Cable', uri: 'cable', icon: Cabel },
-		{ id: '5', name: 'Security', uri: 'security', icon: Security },
-		{ id: '6', name: 'Water', uri: 'water', icon: Water }
-	];
 
 	console.log('I am boards', boardsnew);
 
@@ -49,7 +42,7 @@ function SCData(props) {
 	useEffect(() => {
 		dispatch(getBoards());
 		return () => {
-			dispatch(resetBoards());
+			//dispatch(resetBoards());
 		};
 	}, [dispatch]);
 
@@ -67,8 +60,7 @@ function SCData(props) {
 	};
 	function handleOpen(id) {
 		console.log('i am new id', id);
-		// alert(id);
-		dispatch(getBoard(id));
+		dispatch(getSocietyChargesServiceBoard(id));
 	}
 	return (
 		<div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>

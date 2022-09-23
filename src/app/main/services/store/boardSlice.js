@@ -22,12 +22,17 @@ export const saveBoard = createAsyncThunk(
 	'scrumboardApp/board/saveBoard',
 	async (boardData, { dispatch, getState }) => {
 		const { product } = getState();
-		console.log('I am product in save Product', product);
+		console.log('I am product in save Product', boardData);
+		const newData = {
+			service_id: boardData.id,
+			name: boardData.name,
+			description: boardData.description,
+			service_prices: boardData.servicePricing
+		};
 
-		const response = await axios.post('/api/e-commerce-app/product/save', { ...product, ...boardData });
+		const response = await instance.post(`/api/services/${boardData.id}/propertySizeBased`, { ...newData });
 		const data = await response.data;
-
-		return data;
+		return newData;
 	}
 );
 
@@ -223,8 +228,8 @@ const boardsSlice = createSlice({
 				payload: {
 					id: '',
 					description: '',
-					Residential_Flat_One_Size:"",
-					Residential_Plot_10_Marla:""
+					Residential_Flat_One_Size: '',
+					Residential_Plot_10_Marla: ''
 				}
 			})
 		}

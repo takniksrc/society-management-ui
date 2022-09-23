@@ -22,6 +22,7 @@ import Select from '@material-ui/core/Select';
 import _ from '@lodash';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import * as yup from 'yup';
+import { roles } from '../../fuse-configs/constants';
 
 import { removeUser, updateUser, addUser, closeNewContactDialog, closeEditContactDialog } from './store/newUsersSlice';
 
@@ -41,11 +42,7 @@ const schema = yup.object().shape({
 
 function ContactDialog(props) {
 	const [role, setRole] = useState('');
-	const roles = [
-		{ id: 0, value: 'admin', label: 'Admin', color: '#2196f3' },
-		{ id: 1, value: 'worker', label: 'Worker', color: '#2196f3' },
-		{ id: 2, value: 'accountant', label: 'Accountant', color: '#2196f3' }
-	];
+
 	const handleRole = event => {
 		setRole(event.target.value);
 	};
@@ -65,7 +62,6 @@ function ContactDialog(props) {
 	const id = watch('id');
 	const name = watch('name');
 	const avatar = watch('avatar');
-
 
 	// /**
 	//  * Initialize Dialog with Data

@@ -89,7 +89,7 @@ function GBData(props) {
 
 		data.append('due_date', formatDate(model.dueDate));
 		data.append('block_id', props.blockId);
-		model.file ? data.append('fpa_file', model.file[0]) : null;
+		model.file.length !== 0 ? data.append('fpa_file', model.file[0]) : null;
 		instance
 			.post('/api/bills/generate', data)
 			.then(function (response) {

@@ -36,8 +36,7 @@ function BillTempelate() {
 			{
 				id: '1',
 				title: 'Prototype & Design',
-				detail:
-					'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus accumsan, quam sed eleifend imperdiet.',
+				detail: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus accumsan, quam sed eleifend imperdiet.',
 				unit: 'Hour',
 				unitPrice: '12.00',
 				quantity: '240',
@@ -46,8 +45,7 @@ function BillTempelate() {
 			{
 				id: '2',
 				title: 'Coding',
-				detail:
-					'Vestibulum ligula sem, rutrum et libero id, porta vehicula metus. Cras dapibus neque sit amet laoreet vestibulum.',
+				detail: 'Vestibulum ligula sem, rutrum et libero id, porta vehicula metus. Cras dapibus neque sit amet laoreet vestibulum.',
 				unit: 'Hour',
 				unitPrice: '10.50',
 				quantity: '350',
@@ -56,8 +54,7 @@ function BillTempelate() {
 			{
 				id: '3',
 				title: 'Testing',
-				detail:
-					'Pellentesque luctus efficitur neque in finibus. Integer ut nunc in augue maximus porttitor id id nulla. In vitae erat.',
+				detail: 'Pellentesque luctus efficitur neque in finibus. Integer ut nunc in augue maximus porttitor id id nulla. In vitae erat.',
 				unit: 'Hour',
 				unitPrice: '4.00',
 				quantity: '50',
@@ -66,8 +63,7 @@ function BillTempelate() {
 			{
 				id: '4',
 				title: 'Documentation & Training',
-				detail:
-					'Pellentesque luctus efficitur neque in finibus. Integer ut nunc in augue maximus porttitor id id nulla. In vitae erat.',
+				detail: 'Pellentesque luctus efficitur neque in finibus. Integer ut nunc in augue maximus porttitor id id nulla. In vitae erat.',
 				unit: 'Hour',
 				unitPrice: '6.50',
 				quantity: '260',
@@ -84,7 +80,6 @@ function BillTempelate() {
 		dispatch(getBillData(routeParams.billsId));
 	}, [dispatch, routeParams]);
 
-	
 	return <CompactInvoicePage invoice={invoice} bills={[{ ...GetBillsData }]} />;
 }
 
