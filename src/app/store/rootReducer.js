@@ -11,8 +11,9 @@ import propertySizesSlice from '../main/customer/store/propertySizesSlice';
 import configSlice from '../fuse-configs/store/configSlice';
 import customerSlice from '../main/customer/store/customerSlice';
 import userSlice from '../main/users/store/userSlice';
-
-const createReducer = asyncReducers => (state, action) => {
+import dataSlice from 'app/shared-components/notificationPanel/store/dataSlice';
+import state from 'app/shared-components/notificationPanel/store/stateSlice'
+ const createReducer = asyncReducers => (state, action) => {
 	const combinedReducer = combineReducers({
 		auth,
 		fuse,
@@ -26,6 +27,8 @@ const createReducer = asyncReducers => (state, action) => {
 		propertySizesSlice,
 		customerSlice,
 		userSlice,
+		dataSlice,
+		state,
 
 		...asyncReducers
 	});

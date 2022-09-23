@@ -26,6 +26,17 @@ import societyChargesIcon from '../../../../assets/ServicesIcon/society-charges-
 import consumptionChragesIcon from '../../../../assets/ServicesIcon/consumption-based-icon.png';
 import instance from 'axiosinstance';
 
+import NotificationModel from '../../../shared-components/notificationPanel/model/NotificationModel';
+import NotificationCard from '../../../shared-components/notificationPanel/NotificationCard';
+import NotificationTemplate from './../../../shared-components/notificationPanel/NotificationTemplate';
+import {
+	getNotifications,
+	addNotification,
+	dismissAll,
+	dismissItem,
+	selectNotifications
+} from '../../../shared-components/notificationPanel/store/dataSlice';
+
 const defaultValues = {
 	id: '',
 	dueDate: new Date(),
@@ -44,6 +55,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function GBData(props) {
+	const state = useSelector(({ notificationPanel }) => notificationPanel.state);
+	const notifications = useSelector(selectNotifications);
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const classes = useStyles(props);
@@ -71,6 +84,10 @@ function GBData(props) {
 		// resolver: yupResolver(schema)
 	});
 
+	function createNotification(obj) {
+		dispatch(addNotification(NotificationModel(obj)));
+	}
+
 	function formatDate(date) {
 		var d = new Date(date),
 			month = '' + (d.getMonth() + 1),
@@ -86,6 +103,11 @@ function GBData(props) {
 	const handleForm = async model => {
 		const FormData = require('form-data');
 		const data = new FormData();
+
+		setTimeout(
+			() => createNotification({ message: 'Great Job! this is awesome.', options: { variant: 'success' } }),
+			4000
+		);
 
 		data.append('due_date', formatDate(model.dueDate));
 		data.append('block_id', props.blockId);
