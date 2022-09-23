@@ -37,9 +37,9 @@ function AllUsersHead(props) {
 					);
 				},
 				accessor: 'avatar',
-				// Cell: ({ row }) => {
-				// 	return <Avatar className="mx-8" alt={row.original.name} src={row.original.avatar} />;
-				// },
+				Cell: ({ row }) => {
+					return <Avatar className="mx-8" alt={row.original.name} src={row.original.avatar} />;
+				},
 				className: 'justify-center',
 				width: 64,
 				sortable: false

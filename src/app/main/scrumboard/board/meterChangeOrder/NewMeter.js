@@ -47,14 +47,9 @@ function NewMeter(props) {
 				sortable: true
 			},
 			{
-				Header: 'Name',
-				accessor: 'name',
-				className: 'font-medium',
-				sortable: true
-			},
-			{
-				Header: 'Location',
+				Header: 'Address',
 				accessor: 'street_address',
+				className: 'font-medium',
 				sortable: true
 			},
 			{
@@ -68,13 +63,13 @@ function NewMeter(props) {
 				sortable: true
 			},
 			{
-				Header: 'Make',
-				accessor: 'make',
+				Header: 'Current Reading',
+				accessor: 'reading_value',
 				sortable: true
 			},
 			{
-				Header: 'Connection Date',
-				accessor: 'connection_date',
+				Header: 'Meter Picture',
+				accessor: 'meter_snapshot',
 				sortable: true
 			},
 			{
