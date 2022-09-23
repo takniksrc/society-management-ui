@@ -26,7 +26,11 @@ function AllUsersHead(props) {
 		() => [
 			{
 				Header: ({ selectedFlatRows }) => {
-					const selectedRowIds = selectedFlatRows.map(row => row.original.id);
+					const selectedRowIds = selectedFlatRows.map(
+						row =>
+							// console.log('i am row',row.original))
+							row.original.id
+					);
 
 					return (
 						selectedFlatRows.length > 0 && <ContactsMultiSelectMenu selectedContactIds={selectedRowIds} />
@@ -77,7 +81,7 @@ function AllUsersHead(props) {
 						<IconButton
 							onClick={ev => {
 								ev.stopPropagation();
-								console.log('i am ev in',row.original.id)
+								console.log('i am ev in', row.original.id);
 
 								dispatch(removeUser(row.original.id));
 							}}

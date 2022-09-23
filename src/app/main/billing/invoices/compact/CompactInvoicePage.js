@@ -179,7 +179,7 @@ function CompactInvoicePage(props) {
 				id="section-to-print"
 				className={clsx(classes.root, 'flex-grow flex-shrink-0 p-0 sm:p-64 print:p-0 overflow-auto ')}
 			>
-				{bills[0].charges_type === 'calculated'
+				{bills[0]?.charges_type === 'calculated'
 					? bills?.map(bill => (
 							<>
 								<motion.div
@@ -1009,7 +1009,7 @@ function CompactInvoicePage(props) {
 																	{bill.arrears}
 																</TableCell>
 															</TableRow>
-															{bill.society_services.map(societyCharges => (
+															{bill?.society_services?.map(societyCharges => (
 																<TableRow>
 																	<TableCell className="border border-black border-slate-300">
 																		<Typography variant="subtitle1">
