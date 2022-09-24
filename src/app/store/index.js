@@ -1,5 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import createReducer from './rootReducer';
+import storage from 'redux-persist/lib/storage';
+import { persistReducer, persistStore } from 'redux-persist';
+import thunk from 'redux-thunk';
+
+const persistConfig = {
+	key: 'root',
+	storage
+};
 
 if (process.env.NODE_ENV === 'development' && module.hot) {
 	module.hot.accept('./rootReducer', () => {
@@ -17,8 +25,10 @@ if (process.env.NODE_ENV === 'development') {
 	middlewares.push(logger);
 }
 
-const store = configureStore({
-	reducer: createReducer(),
+const persistedReducer = persistReducer(persistConfig, createReducer);
+
+export const store = configureStore({
+	reducer: persistedReducer,
 	middleware: getDefaultMiddleware =>
 		getDefaultMiddleware({
 			immutableCheck: false,
@@ -38,4 +48,6 @@ export const injectReducer = (key, reducer) => {
 	return store;
 };
 
-export default store;
+// export default store;
+
+export const persistor = persistStore(store);
