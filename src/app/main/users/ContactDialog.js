@@ -37,7 +37,8 @@ const defaultValues = {
  * Form Validation Schema
  */
 const schema = yup.object().shape({
-	name: yup.string().required('You must enter a name')
+	name: yup.string().required('You must enter a name'),
+	email: yup.string().email().required('Email must be valid email')
 });
 
 function ContactDialog(props) {
@@ -182,11 +183,14 @@ function ContactDialog(props) {
 							render={({ field }) => (
 								<TextField
 									{...field}
+									type="email"
 									className="mb-24"
 									label="Email"
 									id="email"
 									variant="outlined"
 									fullWidth
+									error={!!errors.email}
+									helperText={errors?.email?.message}
 								/>
 							)}
 						/>

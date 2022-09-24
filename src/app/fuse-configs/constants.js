@@ -4,4 +4,7 @@ const roles = [
 	{ id: 2, value: 'accountant', label: 'Accountant', color: '#2196f3' },
 	{ id: 3, value: 'meterReader', label: 'Meter Reader', color: '#2196f3' }
 ];
-export { roles };
+
+const RESIDENTIAL = 'Residential';
+const COMMERCIAL = 'Commercial';
+export { roles, RESIDENTIAL, COMMERCIAL };

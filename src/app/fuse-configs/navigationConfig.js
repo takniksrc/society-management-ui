@@ -2,6 +2,7 @@ import i18next from 'i18next';
 import ar from './navigation-i18n/ar';
 import en from './navigation-i18n/en';
 import tr from './navigation-i18n/tr';
+import authRoles from '../auth/authRoles';
 
 i18next.addResourceBundle('en', 'navigation', en);
 i18next.addResourceBundle('tr', 'navigation', tr);
@@ -14,6 +15,7 @@ const navigationConfig = [
 		translate: 'APPLICATIONS',
 		type: 'group',
 		icon: 'apps',
+		// auth: authRoles.accountant,
 		children: [
 			{
 				id: 'profile',
@@ -21,6 +23,7 @@ const navigationConfig = [
 				translate: 'DASHBOARD',
 				type: 'item',
 				icon: 'person',
+
 				url: '/dashboards/analytics'
 			},
 			{
@@ -53,7 +56,8 @@ const navigationConfig = [
 				translate: 'BILLING',
 				type: 'item',
 				icon: 'assessment',
-				url: '/billing'
+				url: '/billing',
+				auth: authRoles.accountant
 			},
 			{
 				id: 'profile',

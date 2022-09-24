@@ -23,11 +23,11 @@ const LoginConfig = {
 			}
 		}
 	},
-	auth: authRoles.onlyGuest,
+	// auth: authRoles.onlyGuest,
 	routes: [
 		{
 			path: '/login',
-			exact:true,
+			exact: true,
 			component: Login
 		}
 	]

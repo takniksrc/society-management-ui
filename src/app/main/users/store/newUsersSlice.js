@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
 // import instance from 'instance';
 import instance from 'axiosinstance';
+import { hideMessage, showMessage } from 'app/store/fuse/messageSlice';
+
 import { update } from 'lodash';
 
 import { getUserData } from './userSlice';
@@ -18,19 +20,21 @@ export const getUsers = createAsyncThunk('users/getUsers', async (routeParams, {
 export const addUser = createAsyncThunk('users/addUser', async (contact, { dispatch, getState }) => {
 	console.log('contact before submit', contact);
 	// eslint-disable-next-line prettier/prettier
+
 	const response = await instance.post('/api/users', { email: contact.email, role: contact.role });
 	const data = await response.data;
 	console.log('I am new updated data', data);
 	dispatch(getUsers());
-
 	return data;
 });
 export const updateUser = createAsyncThunk('users/updateUser', async (user, { dispatch, getState }) => {
 	// eslint-disable-next-line prettier/prettier
-	
-	const response = await instance.post(`/api/users/${user.id}`,
-	// eslint-disable-next-line prettier/prettier
-	{"email": user.email, "role":user.role });
+
+	const response = await instance.post(
+		`/api/users/${user.id}`,
+		// eslint-disable-next-line prettier/prettier
+		{ email: user.email, role: user.role }
+	);
 	// const response = await instance.post(`/api/users/${user}`);
 	const data = await response.data;
 

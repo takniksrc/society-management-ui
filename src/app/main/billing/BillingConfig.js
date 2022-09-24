@@ -1,10 +1,12 @@
 import { lazy } from 'react';
 import { Redirect } from 'react-router-dom';
+import { authRoles } from 'app/auth';
 
 const ScrumboardAppConfig = {
 	settings: {
 		layout: {}
 	},
+	auth: authRoles.accountant,
 	routes: [
 		{
 			path: '/billing/boards/1/electrcity-bills/billing',
@@ -34,7 +36,6 @@ const ScrumboardAppConfig = {
 			path: '/billing',
 			component: () => <Redirect to="/billing/boards" />
 		}
-		
 	]
 };
 

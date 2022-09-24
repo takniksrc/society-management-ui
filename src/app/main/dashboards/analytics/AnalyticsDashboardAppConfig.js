@@ -6,6 +6,7 @@ const AnalyticsDashboardAppConfig = {
 			config: {}
 		}
 	},
+	
 	routes: [
 		{
 			path: '/dashboards/analytics',
