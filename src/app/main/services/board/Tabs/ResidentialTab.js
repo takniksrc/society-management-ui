@@ -84,3 +84,47 @@ function ResidentialTab(props) {
 }
 
 export default ResidentialTab;
+
+{/* <motion.div className="w-full pb-24  sm:p-16">
+	<Card className="flex flex-col h-auto shadow h-fit">
+		<div
+			className="flex flex-shrink-0 items-center justify-between px-24 h-64"
+			style={
+				{
+					// background: category.color,
+					// color: theme.palette.getContrastText(category.color)
+				}
+			}
+		>
+			<Typography className="font-medium truncate" color="inherit">
+				{pt.name}
+			</Typography>
+		</div>
+		<CardContent className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10 flex-auto items-center justify-center h-fit flex h-auto">
+			{pt.property_sizes.map(ps => {
+				console.log('ps 23', ps.name);
+				return (
+					<>
+						
+
+						<Controller
+							name={`servicePricing[${propertySizeIndex}].price_per_unit`}
+							control={control}
+							render={({ field }) => (
+								<TextField
+									{...field}
+									className="mt-8 mb-16 mx-4"
+									label={propertySize.property_size.name}
+									autoFocus
+									// id={}
+									variant="outlined"
+									fullWidth
+								/>
+							)}
+						/>
+					</>
+				);
+			})}
+		</CardContent>
+	</Card>
+</motion.div>; */}
