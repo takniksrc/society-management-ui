@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import instance from 'axiosinstance';
+import { getBlocksStatus } from 'app/main/billing/store/billingBlocksSlice';
+import { useDispatch } from 'react-redux';
 
 export const getConfigurations = createAsyncThunk('contactsApp/customer/getConfigurations', async () => {
 	const response = await instance.get('/api/system-configurations');
-	const data = await response.data;
-	console.log('I am customerTypes', data);
-	return data;
-});
 
+	return response.data;
+});
 
 const configSlice = createSlice({
 	name: 'configSlice',

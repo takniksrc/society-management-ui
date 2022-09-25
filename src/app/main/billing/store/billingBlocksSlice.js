@@ -4,9 +4,8 @@ import instance from 'axiosinstance';
 export const getBlocksStatus = createAsyncThunk('contactsApp/user/BillingBlocksSlice', async sectorId => {
 	console.log('sectorId', sectorId);
 	const response = await instance.get(`/api/sectors/${sectorId}/blocks/get-block-status`);
-	const data = await response.data.blocks;
-	console.log('data in getBlocksStatus', data);
-	return data;
+	console.log('data in getBlocksStatus', response.data);
+	return response.data.blocks;
 });
 
 const billingBlocksSlice = createSlice({

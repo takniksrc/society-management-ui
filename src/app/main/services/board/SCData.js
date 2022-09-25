@@ -59,7 +59,6 @@ function SCData(props) {
 		show: { opacity: 1, y: 0 }
 	};
 	function handleOpen(id) {
-		console.log('i am new id', id);
 		dispatch(getSocietyChargesServiceBoard(id));
 	}
 	return (

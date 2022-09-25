@@ -3,10 +3,8 @@ import instance from 'axiosinstance';
 
 export const getCharts = createAsyncThunk('analyticsDashboardApp/widgets/getCharts', async () => {
 	const response = await instance.get('/api/dashboard');
-	const data = await response.data;
-	console.log('I am dta',data)
 
-	return data;
+	return response.data;
 });
 
 const widgetsAdapter = createEntityAdapter({});
@@ -20,7 +18,7 @@ const widgetsSlice = createSlice({
 	initialState: widgetsAdapter.getInitialState({}),
 	reducers: {},
 	extraReducers: {
-		[getCharts.fulfilled]: (state, action)=>action.payload
+		[getCharts.fulfilled]: (state, action) => action.payload
 	}
 });
 

@@ -13,6 +13,9 @@ import customerSlice from '../main/customer/store/customerSlice';
 import userSlice from '../main/users/store/userSlice';
 import disconnectedmeterSlice from '../main/scrumboard/store/disconnectedmeterSlice'
 
+import billingBlocksSlice from 'app/main/billing/store/billingBlocksSlice';
+// import AllBillsSlice from 'app/main/billing/store/AllBillsSlice';
+// import billWithIdSlice from 'app/main/billing/store/billWithIdSlice';
 
 const createReducer = asyncReducers => (state, action) => {
 	const combinedReducer = combineReducers({
@@ -29,6 +32,8 @@ const createReducer = asyncReducers => (state, action) => {
 		customerSlice,
 		userSlice,
 		disconnectedmeterSlice,
+		billingBlocksSlice,
+
 
 		...asyncReducers
 	});

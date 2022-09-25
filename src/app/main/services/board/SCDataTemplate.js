@@ -71,7 +71,6 @@ function SCDataTemplate(props) {
 
 	useEffect(() => {
 		if (!board) {
-		
 			return;
 		}
 

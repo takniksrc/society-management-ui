@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import withReducer from 'app/store/withReducer';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import reducer from '../store';
@@ -48,11 +48,12 @@ function Boards(props) {
 		show: { opacity: 1, y: 0 }
 	};
 
+
 	useEffect(() => {
 		dispatch(resetBills([]));
-		dispatch(getConfigurations());
-		configurationsData?.sectors?.map((sector, index) => {
-			dispatch(getBlocksStatus(sector.id));
+		dispatch(getConfigurations()).then(data => {
+			console.log('I am promise returend', data)
+			dispatch(getBlocksStatus(data.payload.sectors[0].id));
 		});
 	}, [dispatch]);
 
