@@ -50,7 +50,7 @@ function ContactDialog(props) {
 
 	const [customerType, setCustomerType] = useState('');
 	const [sector, setSector] = useState('');
-	const [block, setBlock] = useState('');
+	const [block, setBlock] = useState('A');
 
 	const [propertyType, setPropertyType] = useState('');
 	const [propertySize, setPropertySize] = useState('');
@@ -109,7 +109,7 @@ function ContactDialog(props) {
 		reference_number: '',
 		name: '',
 		cnic: '',
-		phone: '',
+		phone_number: '',
 		email: '',
 		customer_type: '',
 		property_type: '',
@@ -120,8 +120,8 @@ function ContactDialog(props) {
 		meter_type: '',
 		company: 'sms', // TODO
 		sector: '',
-		block: '',
-		address: ''
+		block: 'A',
+		street_address: ''
 	};
 
 	/**
@@ -151,7 +151,7 @@ function ContactDialog(props) {
 			.min(7, 'Must be exactly 7 digits')
 			.max(7, 'Must be exactly 7 digits'),
 
-		phone: yup
+		phone_number: yup
 			.string()
 			.required('Required')
 			.matches(/^[0-9]+$/, 'Must be only digits')
@@ -161,7 +161,7 @@ function ContactDialog(props) {
 		// meter_phase: yup.string().required('Required').max(10, 'Phase must not be greater than 10 characters')
 	});
 
-	const { control, watch, reset, handleSubmit, formState, getValues, register } = useForm({
+	const { control, watch, reset, handleSubmit, formState, getValues, register ,setValue} = useForm({
 		mode: 'onChange',
 		defaultValues,
 		resolver: yupResolver(schema)
@@ -191,6 +191,8 @@ function ContactDialog(props) {
 		console.log('inCallback');
 		if (contactDialog.type === 'edit' && contactDialog.data) {
 			reset({ ...contactDialog.data });
+			setCustomerType(contactDialog.data.customer_type[0]);
+			setValue('customer_type', contactDialog.data.customer_type[0]);
 		}
 
 		/**
@@ -341,18 +343,18 @@ function ContactDialog(props) {
 						</div>
 						<Controller
 							control={control}
-							name="phone"
+							name="phone_number"
 							render={({ field }) => (
 								<TextField
 									{...field}
 									className="mb-24"
 									label="Phone"
-									id="phone"
+									id="phone_number"
 									variant="outlined"
 									type="number"
 									fullWidth
-									error={!!errors.phone}
-									helperText={errors?.phone?.message}
+									error={!!errors.phone_number}
+									helperText={errors?.phone_number?.message}
 								/>
 							)}
 						/>
@@ -382,13 +384,13 @@ function ContactDialog(props) {
 						</div>
 						<Controller
 							control={control}
-							name="address"
+							name="street_address"
 							render={({ field }) => (
 								<TextField
 									{...field}
 									className="mb-24"
 									label="Address"
-									id="address"
+									id="street_address"
 									variant="outlined"
 									fullWidth
 								/>
@@ -402,15 +404,12 @@ function ContactDialog(props) {
 							<Select
 								value={block}
 								onChange={handleBlock}
+								name="block"
 								inputProps={register('block', {
 									required: 'Please enter block'
 								})}
 								input={
-									<OutlinedInput
-										labelWidth={'category'.length * 9}
-										name="block"
-										id="category-label-placeholder"
-									/>
+									<OutlinedInput labelWidth={'category'.length * 9} id="category-label-placeholder" />
 								}
 							>
 								{configurationsData?.blocks?.map(category => (
@@ -430,13 +429,13 @@ function ContactDialog(props) {
 							<Select
 								value={customerType}
 								onChange={handleCustomerType}
+								name="customer_type"
 								inputProps={register('customer_type', {
 									required: 'Please enter customer type'
 								})}
 								input={
 									<OutlinedInput
 										labelWidth={'category'.length * 9}
-										name="customer_type"
 										id="category-label-placeholder"
 									/>
 								}

@@ -23,7 +23,6 @@ const navigationConfig = [
 				translate: 'DASHBOARD',
 				type: 'item',
 				icon: 'person',
-
 				url: '/dashboards/analytics'
 			},
 			{

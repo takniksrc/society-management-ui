@@ -333,9 +333,9 @@ function BillsBellowSection(props) {
 										animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
 										className="flex flex-1 items-center justify-center px-12 space-x-20 basis-1/2"
 									>
-										<div>
+										{/* <div>
 											<input type="file" {...register('file')} />
-										</div>
+										</div> */}
 										<Button
 											variant="contained"
 											color="secondary"
