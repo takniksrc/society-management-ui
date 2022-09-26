@@ -111,26 +111,7 @@ function Boards(props) {
 							</Paper>
 						</motion.div>
 					))}
-					{/* <motion.div variants={item} className="w-224 h-224 p-16">
-						<Paper
-							className={clsx(
-								classes.board,
-								classes.newBoard,
-								'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg outline-none'
-							)}
-							onClick={() => dispatch(newBoard())}
-							onKeyDown={() => dispatch(newBoard())}
-							role="button"
-							tabIndex={0}
-						>
-							<Icon className="text-56" color="secondary">
-								add_circle
-							</Icon>
-							<Typography className="text-16 font-medium text-center pt-16 px-32" color="inherit">
-								Add new board
-							</Typography>
-						</Paper>
-					</motion.div> */}
+				
 				</motion.div>
 			</div>
 		</div>

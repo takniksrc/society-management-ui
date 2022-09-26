@@ -10,7 +10,7 @@ import CardModel from '../model/CardModel';
 import ListModel from '../model/ListModel';
 import reorder, { reorderQuoteMap } from './reorder';
 import { newBoard } from './boardsSlice';
-import { removeCard, updateCard } from './cardSlice';
+
 
 export const getSocietyChargesServiceBoard = createAsyncThunk(
 	'scrumboardApp/board/getSocietyChargesServiceBoard',

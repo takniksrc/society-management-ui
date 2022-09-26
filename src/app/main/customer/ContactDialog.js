@@ -50,7 +50,10 @@ function ContactDialog(props) {
 	console.log('propertyTypes inside contact : ', propertyTypes);
 	console.log('customerTypes inside contact: ', customerTypes);
 
-	const [customerType, setCustomerType] = useState('');
+	const [customerType, setCustomerType] = useState({
+		id: '96d16a4d-d7fa-4863-a2e2-f9d7018d1645',
+		name: 'Commercial'
+	});
 	const [sector, setSector] = useState('');
 	const [block, setBlock] = useState('A');
 
@@ -65,13 +68,8 @@ function ContactDialog(props) {
 		dispatch(getConfigurations());
 	}, [dispatch]);
 
-	// const customerstype = [
-	// 	{ id: 0, value: customerType.id, label: 'Residential', color: '#2196f3' },
-	// 	{ id: 1, value: customerType.id,, label: 'Commercial', color: '#2196f3' },
-	// 	{ id: 2, value: customerType.id,, label: 'Construction', color: '#2196f3' }
-	// ];
-
 	const handleCustomerType = event => {
+		console.log('event target value', event.target.value);
 		setCustomerType(event.target.value);
 		// console.log('clicked', customerType);
 	};
@@ -163,7 +161,7 @@ function ContactDialog(props) {
 		// meter_phase: yup.string().required('Required').max(10, 'Phase must not be greater than 10 characters')
 	});
 
-	const { control, watch, reset, handleSubmit, formState, getValues, register ,setValue} = useForm({
+	const { control, watch, reset, handleSubmit, formState, getValues, register, setValue } = useForm({
 		mode: 'onChange',
 		defaultValues,
 		resolver: yupResolver(schema)
@@ -190,11 +188,11 @@ function ContactDialog(props) {
 		/**
 		 * Dialog type: 'edit'
 		 */
-		console.log('inCallback',contactDialog.data);
+		console.log('inCallback', contactDialog.data);
 		if (contactDialog.type === 'edit' && contactDialog.data) {
 			reset({ ...contactDialog.data });
-			setCustomerType(contactDialog.data.customer_type.name);
-			setValue('customer_type', contactDialog.data.customer_type.name);
+			//setCustomerType(contactDialog.data.customer_type.name);
+			setValue('customer_type', contactDialog.data.customer_type.id);
 		}
 
 		/**
@@ -215,6 +213,7 @@ function ContactDialog(props) {
 	useEffect(() => {
 		if (contactDialog.props.open) {
 			initDialog();
+	
 		}
 	}, [contactDialog.props.open, initDialog]);
 
@@ -436,10 +435,7 @@ function ContactDialog(props) {
 									required: 'Please enter customer type'
 								})}
 								input={
-									<OutlinedInput
-										labelWidth={'category'.length * 9}
-										id="category-label-placeholder"
-									/>
+									<OutlinedInput labelWidth={'category'.length * 9} id="category-label-placeholder" />
 								}
 							>
 								{customerTypes?.map(category => (

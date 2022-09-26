@@ -44,7 +44,7 @@ function CommercialTab(props) {
 				initial="hidden"
 				animate="show"
 			>
-				{configurationsData?.customer_types
+				{/* {configurationsData?.customer_types
 					? configurationsData?.customer_types.map(ct => {
 							console.log('ct', ct);
 
@@ -55,63 +55,100 @@ function CommercialTab(props) {
 											console.log('pt', pt);
 
 											return (
-												<>
-													<motion.div className="w-full pb-24  sm:p-16">
-														<Card className="flex flex-col h-auto shadow h-fit">
-															<div
-																className="flex flex-shrink-0 items-center justify-between px-24 h-64"
-																style={
-																	{
-																		// background: category.color,
-																		// color: theme.palette.getContrastText(category.color)
-																	}
-																}
-															>
-																<Typography
-																	className="font-medium truncate"
-																	color="inherit"
-																>
-																	{pt.name}
-																</Typography>
-															</div>
-															<CardContent className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10 flex-auto items-center justify-center h-fit flex h-auto">
-																{fields?.map((propertySize, propertySizeIndex) => {
-																	console.log('sp in board', propertySize);
+												<> */}
+				<motion.div className="w-full pb-24  sm:p-16">
+					<Card className="flex flex-col h-auto shadow h-fit">
+						<div
+							className="flex flex-shrink-0 items-center justify-between px-24 h-64"
+							style={
+								{
+									// background: category.color,
+									// color: theme.palette.getContrastText(category.color)
+								}
+							}
+						>
+							<Typography className="font-medium truncate" color="inherit">
+								Shop
+							</Typography>
+						</div>
+						<CardContent className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10 flex-auto items-center justify-center h-fit flex h-auto">
+							{fields?.map((propertySize, propertySizeIndex) => {
+								console.log('sp in board', propertySize);
 
-																	return (
-																		propertySize?.customer_type ===
-																			'Commercial' && (
-																			<Controller
-																				name={`servicePricing[${propertySizeIndex}].price_per_unit`}
-																				control={control}
-																				render={({ field }) => (
-																					<TextField
-																						{...field}
-																						className="mt-8 mb-16 mx-4"
-																						label={
-																							propertySize.property_size
-																								.name
-																						}
-																						autoFocus
-																						// id={}
-																						variant="outlined"
-																						fullWidth
-																					/>
-																				)}
-																			/>
-																		)
-																	);
-																})}
-															</CardContent>
-														</Card>
-													</motion.div>
-												</>
+								return (
+									propertySize?.customer_type === 'Commercial' &&
+						        	propertySize?.property_size?.name.includes('Shop') && (
+										<Controller
+											name={`servicePricing[${propertySizeIndex}].price_per_unit`}
+											control={control}
+											render={({ field }) => (
+												<TextField
+													{...field}
+													className="mt-8 mb-16 mx-4"
+													label={propertySize.property_size.name}
+													autoFocus
+													// id={}
+													variant="outlined"
+													fullWidth
+												/>
+											)}
+										/>
+									)
+								);
+							})}
+						</CardContent>
+					</Card>
+				</motion.div>
+				<motion.div className="w-full pb-24  sm:p-16">
+					<Card className="flex flex-col h-auto shadow h-fit">
+						<div
+							className="flex flex-shrink-0 items-center justify-between px-24 h-64"
+							style={
+								{
+									// background: category.color,
+									// color: theme.palette.getContrastText(category.color)
+								}
+							}
+						>
+							<Typography className="font-medium truncate" color="inherit">
+								Plaza
+							</Typography>
+						</div>
+						<CardContent className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10 flex-auto items-center justify-center h-fit flex h-auto">
+							{fields?.map((propertySize, propertySizeIndex) => {
+								console.log('sp in board', propertySize);
+
+								return (
+									propertySize?.customer_type === 'Commercial' &&
+						        	propertySize?.property_size?.name.includes('Plaza') && (
+										<Controller
+											name={`servicePricing[${propertySizeIndex}].price_per_unit`}
+											control={control}
+											render={({ field }) => (
+												<TextField
+													{...field}
+													className="mt-8 mb-16 mx-4"
+													label={propertySize.property_size.name}
+													autoFocus
+													// id={}
+													variant="outlined"
+													fullWidth
+												/>
+											)}
+										/>
+									)
+								);
+							})}
+						</CardContent>
+					</Card>
+				</motion.div>
+				{/* </>
 											);
 										})}
 								</>
 							);
 					  })
-					: null}
+					: null} */}
 			</motion.div>
 			{/* <FormControl className="flex w-full sm:w-320 -mx-4 mt-8 mb-16 ml-px" variant="outlined">
 				<InputLabel htmlFor="category-label-placeholder"> Property Type </InputLabel>

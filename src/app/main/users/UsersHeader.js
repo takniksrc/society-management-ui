@@ -17,9 +17,9 @@ function UsersHeader(props) {
 	const searchText = useSelector(({ newUsersSlice }) => newUsersSlice.searchText);
 
 	const mainTheme = useSelector(selectMainTheme);
-	const contactDialog = useSelector(({ newUsersSlice }) => newUsersSlice.newUsersSlice)
+	const contactDialog = useSelector(({ newUsersSlice }) => newUsersSlice.newUsersSlice);
 
-	console.log('I am userin Users',contactDialog)
+	console.log('I am userin Users', contactDialog);
 
 	return (
 		<div className="flex flex-1 w-full items-center justify-between">
@@ -67,15 +67,15 @@ function UsersHeader(props) {
 					</Paper>
 				</ThemeProvider>
 			</div>
-            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}>
-			<Button
-						variant="contained"
-						color="secondary"
-						className="w-full"
-						onClick={ev => dispatch(openNewContactDialog())}
-					>
-						Add New User
-					</Button>
+			<motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}>
+				<Button
+					variant="contained"
+					color="secondary"
+					className="w-full"
+					onClick={ev => dispatch(openNewContactDialog())}
+				>
+					Add New User
+				</Button>
 			</motion.div>
 		</div>
 	);

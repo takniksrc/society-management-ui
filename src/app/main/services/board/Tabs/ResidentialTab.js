@@ -49,43 +49,237 @@ function ResidentialTab(props) {
 	console.log('Fields in Residenatial board tab', fields);
 	return (
 		<div>
-			<motion.div
-				className="flex flex-wrap py-24"
+			<motion.div className="w-full pb-24  sm:p-16">
+				<Card className="flex flex-col h-auto shadow h-fit">
+					<div
+						className="flex flex-shrink-0 items-center justify-between px-24 h-64"
+						style={
+							{
+								// background: category.color,
+								// color: theme.palette.getContrastText(category.color)
+							}
+						}
+					>
+						<Typography className="font-medium truncate" color="inherit">
+							Plot
+						</Typography>
+					</div>
+					<CardContent className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10 flex-auto items-center justify-center h-fit flex h-auto">
+						{fields?.map((propertySize, propertySizeIndex) => {
+							console.log('sp in board', propertySize);
+
+							return (
+								propertySize?.customer_type === 'Residential' &&
+								propertySize?.property_size?.name.includes('Plot') && (
+									<Controller
+										name={`servicePricing[${propertySizeIndex}].price_per_unit`}
+										control={control}
+										render={({ field }) => (
+											<TextField
+												{...field}
+												className="mt-8 mb-16 mx-4"
+												label={propertySize.property_size.name}
+												autoFocus
+												// id={}
+												variant="outlined"
+												fullWidth
+											/>
+										)}
+									/>
+								)
+							);
+						})}
+					</CardContent>
+				</Card>
+			</motion.div>
+
+			<motion.div className="w-full pb-24  sm:p-16">
+				<Card className="flex flex-col h-auto shadow h-fit">
+					<div
+						className="flex flex-shrink-0 items-center justify-between px-24 h-64"
+						style={
+							{
+								// background: category.color,
+								// color: theme.palette.getContrastText(category.color)
+							}
+						}
+					>
+						<Typography className="font-medium truncate" color="inherit">
+							House
+						</Typography>
+					</div>
+					<CardContent className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10 flex-auto items-center justify-center h-fit flex h-auto">
+						{fields?.map((propertySize, propertySizeIndex) => {
+							console.log('sp in board', propertySize);
+
+							return (
+								propertySize?.customer_type === 'Residential' &&
+								propertySize?.property_size?.name.includes('House') && (
+									<Controller
+										name={`servicePricing[${propertySizeIndex}].price_per_unit`}
+										control={control}
+										render={({ field }) => (
+											<TextField
+												{...field}
+												className="mt-8 mb-16 mx-4"
+												label={propertySize.property_size.name}
+												autoFocus
+												// id={}
+												variant="outlined"
+												fullWidth
+											/>
+										)}
+									/>
+								)
+							);
+						})}
+					</CardContent>
+				</Card>
+			</motion.div>
+
+			<motion.div className="w-full pb-24  sm:p-16">
+				<Card className="flex flex-col h-auto shadow h-fit">
+					<div
+						className="flex flex-shrink-0 items-center justify-between px-24 h-64"
+						style={
+							{
+								// background: category.color,
+								// color: theme.palette.getContrastText(category.color)
+							}
+						}
+					>
+						<Typography className="font-medium truncate" color="inherit">
+							Flat
+						</Typography>
+					</div>
+					<CardContent className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10 flex-auto items-center justify-center h-fit flex h-auto">
+						{fields?.map((propertySize, propertySizeIndex) => {
+							console.log('sp in board', propertySize);
+
+							return (
+								propertySize?.customer_type === 'Residential' &&
+								propertySize?.property_size?.name.includes('Flat') && (
+									<Controller
+										name={`servicePricing[${propertySizeIndex}].price_per_unit`}
+										control={control}
+										render={({ field }) => (
+											<TextField
+												{...field}
+												className="mt-8 mb-16 mx-4"
+												label={propertySize.property_size.name}
+												autoFocus
+												// id={}
+												variant="outlined"
+												fullWidth
+											/>
+										)}
+									/>
+								)
+							);
+						})}
+					</CardContent>
+				</Card>
+			</motion.div>
+			{/* <motion.div
+				className="flex flex-col"
 				// variants={container}
 				initial="hidden"
 				animate="show"
 			>
-				{fields?.map((propertySize, propertySizeIndex) => {
-					console.log('sp in board', propertySize);
+				<Card className="p-24 m-24">
+					<Typography>Plot</Typography>
+					{fields?.map((propertySize, propertySizeIndex) => {
+						console.log('sp in board', propertySize);
 
-					return (
-						propertySize?.customer_type === 'Residential' && (
-							<Controller
-								name={`servicePricing[${propertySizeIndex}].price_per_unit`}
-								control={control}
-								render={({ field }) => (
-									<TextField
-										{...field}
-										className="mt-8 mb-16 mx-4"
-										label={propertySize.property_size.name}
-										autoFocus
-										// id={}
-										variant="outlined"
-										fullWidth
-									/>
-								)}
-							/>
-						)
-					);
-				})}
-			</motion.div>
+						return (
+							propertySize?.customer_type === 'Residential' &&
+							propertySize?.property_size?.name.includes('Plot') && (
+								<Controller
+									name={`servicePricing[${propertySizeIndex}].price_per_unit`}
+									control={control}
+									render={({ field }) => (
+										<TextField
+											{...field}
+											className="mt-8 mb-16 mx-4"
+											label={propertySize.property_size.name}
+											autoFocus
+											// id={}
+											variant="outlined"
+											fullWidth
+										/>
+									)}
+								/>
+							)
+						);
+					})}
+				</Card>
+
+				<Card className="p-24 m-24">
+					<Typography>House</Typography>
+
+					{fields?.map((propertySize, propertySizeIndex) => {
+						console.log('sp in board', propertySize);
+
+						return (
+							propertySize?.customer_type === 'Residential' &&
+							propertySize?.property_size?.name.includes('House') && (
+								<Controller
+									name={`servicePricing[${propertySizeIndex}].price_per_unit`}
+									control={control}
+									render={({ field }) => (
+										<TextField
+											{...field}
+											className="mt-8 mb-16 mx-4"
+											label={propertySize.property_size.name}
+											autoFocus
+											// id={}
+											variant="outlined"
+											fullWidth
+										/>
+									)}
+								/>
+							)
+						);
+					})}
+				</Card>
+
+				<Card className="p-24 m-24">
+					<Typography>Flat</Typography>
+
+					{fields?.map((propertySize, propertySizeIndex) => {
+						console.log('sp in board', propertySize);
+
+						return (
+							propertySize?.customer_type === 'Residential' &&
+							propertySize?.property_size?.name.includes('Flat') && (
+								<Controller
+									name={`servicePricing[${propertySizeIndex}].price_per_unit`}
+									control={control}
+									render={({ field }) => (
+										<TextField
+											{...field}
+											className="mt-8 mb-16 mx-4"
+											label={propertySize.property_size.name}
+											autoFocus
+											// id={}
+											variant="outlined"
+											fullWidth
+										/>
+									)}
+								/>
+							)
+						);
+					})}
+				</Card>
+			</motion.div> */}
 		</div>
 	);
 }
 
 export default ResidentialTab;
 
-{/* <motion.div className="w-full pb-24  sm:p-16">
+{
+	/* <motion.div className="w-full pb-24  sm:p-16">
 	<Card className="flex flex-col h-auto shadow h-fit">
 		<div
 			className="flex flex-shrink-0 items-center justify-between px-24 h-64"
@@ -127,4 +321,5 @@ export default ResidentialTab;
 			})}
 		</CardContent>
 	</Card>
-</motion.div>; */}
+</motion.div>; */
+}

@@ -68,95 +68,8 @@ function CompactInvoicePage(props) {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 
-	const rows = [
-		createData('Jan', 159, 6.0, 24, 4.0),
-		createData('Feb', 237, 9.0, 37, 4.3),
-		createData('Mar', 262, 16.0, 24, 6.0),
-		createData('April', 305, 3.7, 67, 4.3),
-		createData('May', 356, 16.0, 49, 3.9),
-		createData('June', 159, 6.0, 24, 4.0),
-		createData('July', 237, 9.0, 37, 4.3),
-		createData('Aug', 262, 16.0, 24, 6.0),
-		createData('Sept', 305, 3.7, 67, 4.3),
-		createData('Oct', 356, 16.0, 49, 3.9),
-		createData('Nov', 305, 3.7, 67, 4.3),
-		createData('Decem', 356, 16.0, 49, 3.9)
-	];
 	console.log('type', bills);
-	const HBlockBills = [
-		{
-			id: '6903a35d-bc76-4eb0-93ed-bcaf9901d02f',
-			customer_id: 'aba72db1-e0f9-4c9a-a101-317ec4659b94',
-			customer_name: 'Customer 5',
-			address: 'H/1',
-			property_type: 'House',
-			property_size: 'Residential House 2 Kanal',
-			billing_month: 'Aug-22',
-			issue_date: '20-09-2022',
-			due_date: '20-09-2022',
-			charges_type: 'society-charges',
-			society_charges: 6000,
-			phase: 'S/Phase',
-			refference_number: '1234567',
-			society_services: [
-				{
-					id: '2a41ff63-c80c-4590-be9c-e3d8a65d80f9',
-					bill_id: '6903a35d-bc76-4eb0-93ed-bcaf9901d02f',
-					service_name: 'Aquifer',
-					service_price: 1000,
-					created_at: '2022-09-20T09:29:16.000000Z',
-					updated_at: '2022-09-20T09:29:16.000000Z'
-				},
-				{
-					id: '2baf1fb0-af22-4c97-b2ef-a93abfcb99dd',
-					bill_id: '6903a35d-bc76-4eb0-93ed-bcaf9901d02f',
-					service_name: 'Water',
-					service_price: 1000,
-					created_at: '2022-09-20T09:29:16.000000Z',
-					updated_at: '2022-09-20T09:29:16.000000Z'
-				},
-				{
-					id: '3c28ad46-bf0b-42a5-8433-7ece5ea6afef',
-					bill_id: '6903a35d-bc76-4eb0-93ed-bcaf9901d02f',
-					service_name: 'Cable',
-					service_price: 1000,
-					created_at: '2022-09-20T09:29:16.000000Z',
-					updated_at: '2022-09-20T09:29:16.000000Z'
-				},
-				{
-					id: 'c9ab9a12-3635-4321-93cb-29a5d7592946',
-					bill_id: '6903a35d-bc76-4eb0-93ed-bcaf9901d02f',
-					service_name: 'Garbage',
-					service_price: 1000,
-					created_at: '2022-09-20T09:29:16.000000Z',
-					updated_at: '2022-09-20T09:29:16.000000Z'
-				},
-				{
-					id: 'e2f392f9-d1f0-429e-a873-6d87c66bdbf0',
-					bill_id: '6903a35d-bc76-4eb0-93ed-bcaf9901d02f',
-					service_name: 'Clenaliness',
-					service_price: 1000,
-					created_at: '2022-09-20T09:29:16.000000Z',
-					updated_at: '2022-09-20T09:29:16.000000Z'
-				},
-				{
-					id: 'f8133b99-1392-4301-aa04-40baba85a617',
-					bill_id: '6903a35d-bc76-4eb0-93ed-bcaf9901d02f',
-					service_name: 'Security',
-					service_price: 1000,
-					created_at: '2022-09-20T09:29:16.000000Z',
-					updated_at: '2022-09-20T09:29:16.000000Z'
-				}
-			],
-			arrears: 2500,
-			arrears_age: 2,
-			discount: null,
-			total_bill: 8500,
-			payment_status: 'Unpaid',
-			amount_paid: 0,
-			payment_history: []
-		}
-	];
+
 
 	const formatter = new Intl.NumberFormat('en-US', {
 		style: 'currency',
@@ -182,7 +95,7 @@ function CompactInvoicePage(props) {
 				className={clsx(classes.root, 'flex-grow flex-shrink-0 p-0 sm:p-64 print:p-0 overflow-auto ')}
 			>
 				{bills[0]?.charges_type === 'calculated'
-					? bills?.map(bill => (
+					? bills?.map((bill, index) => (
 							<>
 								<motion.div
 									style={{ marginBottom: '2rem' }}
@@ -228,24 +141,6 @@ function CompactInvoicePage(props) {
 														>
 															Consumer Copy
 														</Typography>
-
-
-														{/* {bill.street_address && (
-															<Typography
-																className="text-center text-base"
-																color="inherit"
-															>
-																{bill.street_address}
-															</Typography>
-														)}
-														{bill.property_size && (
-															<Typography
-																className="text-center text-base"
-																color="inherit"
-															>
-																{bill.property_size}
-															</Typography>
-														)} */}
 													</div>
 													<div className="border-black border-1 outline-2">
 														<div>
@@ -352,8 +247,7 @@ function CompactInvoicePage(props) {
 														{bill.current_reading}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center  text-base">
-														{/* {bill.meter.phase} */}
-														0
+														{/* {bill.meter.phase} */}0
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
 														{bill.current_reading - bill.previous_reading}
@@ -374,48 +268,11 @@ function CompactInvoicePage(props) {
 														-
 													</div>
 												</div>
-												{/* <div className="flex justify-between">
-												<div>
-													<table className="mr-24">
-														<tbody>
-															<tr>
-																<td className="pb-4 px-16 border border-slate-300">
-																	<Typography variant="h6" color="textSecondary">
-																		Refference No
-																	</Typography>
-																</td>
-																<td className="pb-4 px-16 border border-slate-300">
-																	<Typography className="font-light" variant="h6">
-																		{bill.meter?.refference_number}
-																	</Typography>
-																</td>
-															</tr>
 
-															<tr>
-																<td className="pb-4 px-16 border border-slate-300">
-																	<Typography color="textSecondary">
-																		Due Date
-																	</Typography>
-																</td>
-																<td className="pb-4 px-16 border border-slate-300">
-																	<Typography>{bill.due_date}</Typography>
-																</td>
-															</tr>
-															<tr>
-																<td className="pb-4 px-16 border border-slate-300">
-																	<Typography color="textSecondary">
-																		Billing Month
-																	</Typography>
-																</td>
-																<td className="pb-4 px-16 border border-slate-300">
-																	<Typography>{bill.billing_month}</Typography>
-																</td>
-															</tr>
-														</tbody>
-													</table>
-												</div>
-											</div> */}
-												<div className="grid grid-cols-2 grid-rows-2" style={{gridTemplateRows: 'max-content'}}>
+												<div
+													className="grid grid-cols-2 grid-rows-2"
+													style={{ gridTemplateRows: 'max-content' }}
+												>
 													<div>
 														<TableContainer>
 															<Table
@@ -454,49 +311,56 @@ function CompactInvoicePage(props) {
 																	</TableRow>
 																</TableHead>
 																<TableBody>
-																	{rows.map(row => (
-																		<TableRow key={row.id}>
-																			<TableCell
-																				className="border-2 border-black border-slate-300"
-																				component="th"
-																				scope="row"
-																			>
-																				{row.month}
-																			</TableCell>
-																			<TableCell
-																				className="border-2 border-black border-slate-300"
-																				align="center"
-																			>
-																				{row.unit}
-																			</TableCell>
-																			<TableCell
-																				className="border-2 border-black border-slate-300"
-																				align="center"
-																			>
-																				{row.amount}
-																			</TableCell>
-																			<TableCell
-																				className="border-2 border-black border-slate-300"
-																				align="center"
-																			>
-																				{row.date}
-																			</TableCell>
-																			<TableCell
-																				className="border-2 border-black border-slate-300"
-																				align="center"
-																			>
-																				{row.Tamount}
-																			</TableCell>
-																		</TableRow>
-																	))}
+																	{bills[index]?.bill_history
+																		?.map(item => {
+																			return createData(
+																				item?.billing_month,
+																				item?.units,
+																				item?.bill_amount,
+																				item?.billing_month,
+																				item.paid_amount
+																			);
+																		})
+																		.map(row => (
+																			<TableRow key={row.id}>
+																				<TableCell
+																					className="border-2 border-black border-slate-300"
+																					component="th"
+																					scope="row"
+																				>
+																					{row.month}
+																				</TableCell>
+																				<TableCell
+																					className="border-2 border-black border-slate-300"
+																					align="center"
+																				>
+																					{row.unit}
+																				</TableCell>
+																				<TableCell
+																					className="border-2 border-black border-slate-300"
+																					align="center"
+																				>
+																					{row.amount}
+																				</TableCell>
+																				<TableCell
+																					className="border-2 border-black border-slate-300"
+																					align="center"
+																				>
+																					{row.date}
+																				</TableCell>
+																				<TableCell
+																					className="border-2 border-black border-slate-300"
+																					align="center"
+																				>
+																					{row.Tamount}
+																				</TableCell>
+																			</TableRow>
+																		))}
 																</TableBody>
 															</Table>
 														</TableContainer>
 													</div>
-													{/* <div
-														className="grid grid-cols-1"
-														// style={{ display: 'flow-root' }}
-													> */}
+
 													<div className="grid grid-cols-4">
 														<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
 															Current Bill
@@ -601,112 +465,7 @@ function CompactInvoicePage(props) {
 														/>
 													</div>
 												</div>
-												{/* <div>
-												<Table
-													className="border-separate border border-slate-400"
-													// className="simple"
-												>
-													<TableHead>
-														<TableRow>
-															<TableCell className="border border-slate-300">
-																Services
-															</TableCell>
-															<TableCell
-																className="border border-slate-300"
-																align="right"
-															>
-																Amount
-															</TableCell>
-														</TableRow>
-													</TableHead>
-													<TableBody>
-														<TableRow>
-															<TableCell className="border border-slate-300">
-																<Typography variant="subtitle1">
-																	Society Charges
-																</Typography>
-															</TableCell>
-															<TableCell
-																className="border border-slate-300"
-																align="right"
-															>
-																{bill.society_charges}
-															</TableCell>
-														</TableRow>
 
-														<TableRow>
-															<TableCell className="border border-slate-300">
-																<Typography variant="subtitle1">
-																	Electricity Charges
-																</Typography>
-															</TableCell>
-															<TableCell
-																className="border border-slate-300"
-																align="right"
-															>
-																{bill.electricity_charges}
-															</TableCell>
-														</TableRow>
-
-														<TableRow>
-															<TableCell className="border border-slate-300">
-																<Typography variant="subtitle1">FPA Charges</Typography>
-															</TableCell>
-															<TableCell
-																className="border border-slate-300"
-																align="right"
-															>
-																{bill.fpa_charges}
-															</TableCell>
-														</TableRow>
-													</TableBody>
-												</Table>
-
-												<Table className="simple mt-32">
-													<TableBody>
-														<TableRow>
-															<TableCell>
-																<Typography
-																	className="font-normal"
-																	variant="subtitle1"
-																	color="textSecondary"
-																>
-																	Discount
-																</Typography>
-															</TableCell>
-															<TableCell align="right">
-																<Typography
-																	className="font-normal"
-																	variant="subtitle1"
-																	color="textSecondary"
-																>
-																	{bill.discount === null ? 0 : bill.discount}
-																</Typography>
-															</TableCell>
-														</TableRow>
-														<TableRow>
-															<TableCell>
-																<Typography
-																	className="font-light"
-																	variant="h4"
-																	color="textSecondary"
-																>
-																	TOTAL
-																</Typography>
-															</TableCell>
-															<TableCell align="right">
-																<Typography
-																	className="font-light"
-																	variant="h4"
-																	color="textSecondary"
-																>
-																	{formatter.format(bill.total_bill)}
-																</Typography>
-															</TableCell>
-														</TableRow>
-													</TableBody>
-												</Table>
-											</div> */}
 												<div className="grid grid-col-3 grid-flow-col ">
 													<div className="border-black border-1 outline-2 place-items-center">
 														<Typography className="text-center text-lg font-bold">
@@ -810,51 +569,6 @@ function CompactInvoicePage(props) {
 														{bill.bill_after_due_date}
 													</div>
 												</div>
-												{/* Sms Alert */}
-												{/* <div className="flex">
-													<div className="border-black border-1 flex-1 p-10 outline-2 place-items-center font-semibold text-base">
-														Please Provide Your Number for SMS alert
-													</div>
-													<div className="border-black border-1 outline-2 p-10 px-16 place-items-center  font-semibold text-base">
-														-
-													</div>
-													<div className="border-black border-1 outline-2 p-10 px-16 place-items-center font-semibold text-base">
-														-
-													</div>
-													<div className="border-black border-1 outline-2 p-10 px-16 place-items-center font-semibold text-base">
-														-
-													</div>
-													<div className="border-black border-1 outline-2 p-10 px-16 place-items-center font-semibold text-base">
-														-
-													</div>
-													<div className="border-black border-1 outline-2 p-10 px-16 place-items-center font-semibold text-base">
-														-
-													</div>
-													<div className="border-black border-1 outline-2  p-10 px-16 place-items-center font-semibold text-base">
-														-
-													</div>
-													<div className="border-black border-1 outline-2 p-10 px-16  place-items-center font-semibold text-base">
-														-
-													</div>
-													<div className="border-black border-1 outline-2  p-10 px-16 place-items-center font-semibold text-base">
-														-
-													</div>
-													<div className="border-black border-1 outline-2  p-10 px-16 place-items-center font-semibold text-base">
-														-
-													</div>
-													<div className="border-black border-1 outline-2  p-10 px-16 place-items-center font-semibold text-base">
-														-
-													</div>
-													<div className="border-black border-1 outline-2  p-10 px-16 place-items-center font-semibold text-base">
-														-
-													</div>
-												</div> */}
-
-												{/* <div className="border-black border-1">
-													<Typography className="mb-24 print:mb-12" variant="body1">
-														Please pay within 15 days. Thank you for your business.
-													</Typography>
-												</div> */}
 											</div>
 										</CardContent>
 									</Card>
@@ -1001,9 +715,7 @@ function CompactInvoicePage(props) {
 														<TableBody>
 															<TableRow>
 																<TableCell className="border border-black border-slate-300">
-																	<Typography variant="subtitle1">
-																		Arrears
-																	</Typography>
+																	<Typography variant="subtitle1">Arrears</Typography>
 																</TableCell>
 																<TableCell
 																	className="border border-black border-slate-300"
@@ -1230,50 +942,6 @@ function CompactInvoicePage(props) {
 														{bill.bill_after_due_date}
 													</div>
 												</div>
-												{/* <div className="flex">
-													<div className="border-black border-1 flex-1 p-10 outline-2 place-items-center font-semibold text-base">
-														Please Provide Your Number for SMS alert
-													</div>
-													<div className="border-black border-1 outline-2 p-10 px-16 place-items-center  font-semibold text-base">
-														-
-													</div>
-													<div className="border-black border-1 outline-2 p-10 px-16 place-items-center font-semibold text-base">
-														-
-													</div>
-													<div className="border-black border-1 outline-2 p-10 px-16 place-items-center font-semibold text-base">
-														-
-													</div>
-													<div className="border-black border-1 outline-2 p-10 px-16 place-items-center font-semibold text-base">
-														-
-													</div>
-													<div className="border-black border-1 outline-2 p-10 px-16 place-items-center font-semibold text-base">
-														-
-													</div>
-													<div className="border-black border-1 outline-2  p-10 px-16 place-items-center font-semibold text-base">
-														-
-													</div>
-													<div className="border-black border-1 outline-2 p-10 px-16  place-items-center font-semibold text-base">
-														-
-													</div>
-													<div className="border-black border-1 outline-2  p-10 px-16 place-items-center font-semibold text-base">
-														-
-													</div>
-													<div className="border-black border-1 outline-2  p-10 px-16 place-items-center font-semibold text-base">
-														-
-													</div>
-													<div className="border-black border-1 outline-2  p-10 px-16 place-items-center font-semibold text-base">
-														-
-													</div>
-													<div className="border-black border-1 outline-2  p-10 px-16 place-items-center font-semibold text-base">
-														-
-													</div>
-												</div> */}
-
-												{/* <div className="border-black border-1">
-													<Typography className="mb-24 print:mb-12" variant="body1">
-														Please pay within 15 days. Thank you for your business.
-													</Typography>
-												</div> */}
 											</div>
 										</CardContent>
 									</Card>
@@ -1287,34 +955,3 @@ function CompactInvoicePage(props) {
 }
 
 export default CompactInvoicePage;
-
-/**
-
- Use the following elements to add breaks to your pages. This will make sure that the section in between
- these elements will be printed on a new page. The following two elements must be used before and after the
- page content that you want to show as a new page. So, you have to wrap your content with them.
-
- Elements:
- ---------
- <div className="page-break-after"></div>
- <div className="page-break-before"></div>
-
-
- Example:
- --------
-
- Initial page content!
-
- <div className="page-break-after"></div>
- <div className="page-break-before"></div>
-
- This is the second page!
-
- <div className="page-break-after"></div>
- <div className="page-break-before"></div>
-
- This is the third page!
-
- <div className="page-break-after"></div>
- <div className="page-break-before"></div>
- * */

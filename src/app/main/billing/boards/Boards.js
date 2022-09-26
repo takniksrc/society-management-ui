@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 function Boards(props) {
 	const dispatch = useDispatch();
 	const configurationsData = useSelector(({ configSlice }) => configSlice);
-	const billingBlocksStatuses = useSelector(state => state.scrumboardApp.billingBlocksSlice);
+	const billingBlocksStatuses = useSelector(state => state.billingBlocksSlice);
 	console.log('configSlice inside billing Boards : ', configurationsData);
 	console.log('billingBlockSlice inside billing Boards : ', billingBlocksStatuses);
 
@@ -40,7 +40,7 @@ function Boards(props) {
 				staggerChildren: 0.1
 			}
 		}
-	};
+	};''
 
 	const item = {
 		hidden: { opacity: 0, y: 20 },
@@ -73,10 +73,11 @@ function Boards(props) {
 					animate="show"
 					className="flex flex-wrap w-full justify-center py-32 px-16"
 				>
-					{billingBlocksStatuses?.map((board, index) => {
+					{
+					billingBlocksStatuses?.map((board, index) => {
 						console.log('blocks', board);
 						return board.billing_status === 'closed' || board.billing_status === 'init-in-progress' ? (
-							<motion.div variants={item} className="p-16" key={board.id}>
+							<motion.div variants={item} className="p-16 w-4/12"  key={board.id}>
 								<Paper
 									to={`/billing/boards/${board.id}`}
 									className={clsx(
@@ -87,7 +88,7 @@ function Boards(props) {
 									component={Link}
 								>
 									<Typography
-										className="text-16 font-medium text-center pt-16 px-32 font-bold "
+										className="text-2xl font-large text-center pt-16 px-32 font-bold "
 										color="inherit"
 									>
 										{board.name}
@@ -97,13 +98,17 @@ function Boards(props) {
 											Status :{' '}
 										</Typography>
 										<Typography className="text-16 font-medium text-center pt-16" color="inherit">
-											{board.billing_status}
+											{board.billing_status === 'closed'
+												? 'Closed'
+												: board.billing_status === 'init-in-progress'
+												? 'Initialization in progress'
+												: board.billing_status}
 										</Typography>
 									</div>
 								</Paper>
 							</motion.div>
 						) : (
-							<motion.div variants={item} className="p-16" key={board.id}>
+							<motion.div variants={item} className="p-16  w-4/12" key={board.id}>
 								<Paper
 									to={`/billing/boards/${board.id}/billing`}
 									className={clsx(
@@ -115,7 +120,7 @@ function Boards(props) {
 									onClick={() => dispatch(getBills(board.id))}
 								>
 									<Typography
-										className="text-16 font-medium text-center pt-16 px-32 font-bold "
+										className="text-2xl font-medium text-center pt-16 px-32 font-bold "
 										color="inherit"
 									>
 										{board.name}
@@ -125,7 +130,7 @@ function Boards(props) {
 											Status :
 										</Typography>
 										<Typography className="text-16 font-medium text-center pt-16" color="inherit">
-											{board.billing_status}
+											{board.billing_status === 'ongoing' ? 'On going' : board.billing_status}
 										</Typography>
 									</div>
 								</Paper>

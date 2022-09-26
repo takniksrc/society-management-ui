@@ -1,5 +1,6 @@
 import FuseUtils from '@fuse/utils/FuseUtils';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -19,6 +20,12 @@ import { DateTimePicker } from '@material-ui/pickers';
 import PrintIcon from '@material-ui/icons/Print';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import { Link, useParams } from 'react-router-dom';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import TableContainer from '@material-ui/core/TableContainer';
 
 import { motion } from 'framer-motion';
 import _ from '@lodash';
@@ -27,11 +34,13 @@ import instance from 'axiosinstance';
 
 import { removeUser, closeNewContactDialog, closeEditContactDialog } from '../store/newUsersSlice';
 import { Card } from '@material-ui/core';
+import { forEach } from 'lodash';
 
 const defaultValuesDiscount = {
 	current_reading: '',
 	discount: ''
 };
+
 const defaultValuesPaidAmount = {
 	paid_amount: ''
 };
@@ -42,6 +51,13 @@ function ContactDialog(props) {
 	const [billData, setBillData] = useState({});
 	console.log('I am cliked data ', contactDialog);
 	console.log('billData', billData);
+	const StyledTableRow = withStyles(theme => ({
+		root: {
+			'&:nth-of-type(odd)': {
+				backgroundColor: 'lightgrey'
+			}
+		}
+	}))(TableRow);
 
 	const { control, watch, reset, handleSubmit, formState, getValues, register } = useForm({
 		mode: 'onChange',
@@ -60,6 +76,9 @@ function ContactDialog(props) {
 		mode: 'onChange',
 		defaultValuesPaidAmount
 	});
+	function createData(month, unit, amount, date, Tamount) {
+		return { month, unit, amount, date, Tamount };
+	}
 
 	const { isValid, dirtyFields, errors } = formState;
 
@@ -80,7 +99,7 @@ function ContactDialog(props) {
 		});
 
 		//call the api for data
-		console.log('id', contactDialog?.data?.id);
+		console.log('bill', contactDialog);
 		instance.get(`/api/bills/${contactDialog?.data?.id}`).then(res => setBillData(res.data));
 	}, [contactDialog.data, contactDialog.type, reset]);
 
@@ -133,7 +152,7 @@ function ContactDialog(props) {
 			{...contactDialog.props}
 			onClose={closeComposeDialog}
 			fullWidth
-			maxWidth="sm"
+			maxWidth="md"
 		>
 			<AppBar position="static" elevation={0}>
 				<Toolbar className="flex w-full">
@@ -154,100 +173,213 @@ function ContactDialog(props) {
 			</AppBar>
 
 			<DialogContent classes={{ root: 'p-24' }}>
-				<Card style={{ padding: '2rem' }}>
-					<Typography color="error">Due Date: {contactDialog?.data?.due_date}</Typography>
-					<Typography>
-						Units: {contactDialog?.data?.current_reading - contactDialog?.data?.previous_reading}{' '}
-					</Typography>
-					<Typography>Previous Reading: {contactDialog.data?.previous_reading} </Typography>
-					<Typography>Arrears: {contactDialog.data?.arrears}</Typography>
-					<Typography>Total FPA: {contactDialog.data?.fpa_charges}</Typography>
-					<Typography>Current Bill: {contactDialog.data?.electricity_charges}</Typography>
-					<Typography>Society Charges: {contactDialog.data?.society_charges}</Typography>
-					<Typography>Total Payables: {contactDialog.data?.total_bill} </Typography>
-				</Card>
+				<div className="flex gap-36">
+					<Card className="w-3/5" style={{ padding: '2rem' }}>
+						<TableContainer>
+							<Table aria-label="customized table">
+								<TableHead>
+									<StyledTableRow>
+										<TableCell className="border-2 border-black border-slate-300">Month</TableCell>
+										<TableCell className="border-2 border-black border-slate-300" align="center">
+											Unit
+										</TableCell>
+										<TableCell className="border-2 border-black border-slate-300" align="center">
+											Amount
+										</TableCell>
+										<TableCell className="border-2 border-black border-slate-300" align="center">
+											Date
+										</TableCell>
+										<TableCell className="border-2 border-black border-slate-300" align="center">
+											Amount
+										</TableCell>
+									</StyledTableRow>
+								</TableHead>
+								<TableBody>
+									{contactDialog.data?.bill_history
+										?.map((item, index) => {
+											return createData(
+												item?.billing_month,
+												item?.units,
+												item?.bill_amount,
+												item?.billing_month,
+												item.paid_amount
+											);
+										})
+										.map(row => (
+											<TableRow key={row.id}>
+												<TableCell
+													className="border-2 border-black border-slate-300"
+													component="th"
+													scope="row"
+												>
+													{row.month}
+												</TableCell>
+												<TableCell
+													className="border-2 border-black border-slate-300"
+													align="center"
+												>
+													{row.unit}
+												</TableCell>
+												<TableCell
+													className="border-2 border-black border-slate-300"
+													align="center"
+												>
+													{row.amount}
+												</TableCell>
+												<TableCell
+													className="border-2 border-black border-slate-300"
+													align="center"
+												>
+													{row.date}
+												</TableCell>
+												<TableCell
+													className="border-2 border-black border-slate-300"
+													align="center"
+												>
+													{row.Tamount}
+												</TableCell>
+											</TableRow>
+										))}
 
-				<div className="flex gap-36 mt-24">
-					<form className="w-1/2" noValidate onSubmit={handleSubmit(onSubmitDiscountValuesForm)}>
-						<Card className="p-24">
-							<div>
-								<Controller
-									control={control}
-									name="current_reading"
-									render={({ field }) => (
-										<TextField
-											{...field}
-											type="number"
-											className="mb-24"
-											label="Current Reading"
-											id="current_reading"
-											variant="outlined"
-											fullWidth
-										/>
-									)}
-								/>
-							</div>
+									{[...Array(parseInt(12 - 3)).keys()]
+										?.map(item => {
+											return createData(item, item, item, item, item);
+										})
+										.map(row => (
+											<TableRow key={row.id}>
+												<TableCell
+													className="border-2 border-black border-slate-300"
+													component="th"
+													scope="row"
+												>
+													{row.month}
+												</TableCell>
+												<TableCell
+													className="border-2 border-black border-slate-300"
+													align="center"
+												>
+													{row.unit}
+												</TableCell>
+												<TableCell
+													className="border-2 border-black border-slate-300"
+													align="center"
+												>
+													{row.amount}
+												</TableCell>
+												<TableCell
+													className="border-2 border-black border-slate-300"
+													align="center"
+												>
+													{row.date}
+												</TableCell>
+												<TableCell
+													className="border-2 border-black border-slate-300"
+													align="center"
+												>
+													{row.Tamount}
+												</TableCell>
+											</TableRow>
+										))}
+								</TableBody>
+							</Table>
+						</TableContainer>
+					</Card>
 
-							<div className="flex">
-								<Controller
-									control={control}
-									name="discount"
-									render={({ field }) => (
-										<TextField
-											{...field}
-											type="number"
-											className="mb-24"
-											label="Discount"
-											id="discount"
-											variant="outlined"
-											fullWidth
-										/>
-									)}
-								/>
-							</div>
-							<div className="px-16">
-								<Button
-									variant="contained"
-									color="secondary"
-									type="submit"
-									// disabled={_.isEmpty(dirtyFields) || !isValid}
-								>
-									Update Bill
-								</Button>
-							</div>
+					<div className="flex w-2/5	 flex-col gap-24">
+						<Card className="w-full" style={{ padding: '2rem' }}>
+							<Typography color="error">Due Date: {contactDialog?.data?.due_date}</Typography>
+							<Typography>
+								Units: {contactDialog?.data?.current_reading - contactDialog?.data?.previous_reading}{' '}
+							</Typography>
+							<Typography>Previous Reading: {contactDialog.data?.previous_reading} </Typography>
+							<Typography>Arrears: {contactDialog.data?.arrears}</Typography>
+							<Typography>Total FPA: {contactDialog.data?.fpa_charges}</Typography>
+							<Typography>Current Bill: {contactDialog.data?.electricity_charges}</Typography>
+							<Typography>Society Charges: {contactDialog.data?.society_charges}</Typography>
+							<Typography>Total Payables: {contactDialog.data?.total_bill} </Typography>
 						</Card>
-					</form>
-					<form className="w-1/2" noValidate onSubmit={handleSubmitPaidValues(onSubmitPaidValuesForm)}>
-						<Card className="p-24">
-							<div className="flex">
-								<Controller
-									control={controlPaidValues}
-									name="paid_amount"
-									render={({ field }) => (
-										<TextField
-											{...field}
-											type="number"
-											className="mb-24"
-											label="Paid Amount"
-											id="discont"
-											variant="outlined"
-											fullWidth
-										/>
-									)}
-								/>
-							</div>
-							<div className="px-16">
-								<Button
-									variant="contained"
-									color="secondary"
-									type="submit"
-									// disabled={_.isEmpty(dirtyFields) || !isValid}
-								>
-									Add Payment
-								</Button>
-							</div>
-						</Card>
-					</form>
+
+						<form className="w-full" noValidate onSubmit={handleSubmit(onSubmitDiscountValuesForm)}>
+							<Card className="p-24">
+								<div>
+									<Controller
+										control={control}
+										name="current_reading"
+										render={({ field }) => (
+											<TextField
+												{...field}
+												type="number"
+												className="mb-24"
+												label="Current Reading"
+												id="current_reading"
+												variant="outlined"
+												fullWidth
+											/>
+										)}
+									/>
+								</div>
+
+								<div className="flex">
+									<Controller
+										control={control}
+										name="discount"
+										render={({ field }) => (
+											<TextField
+												{...field}
+												type="number"
+												className="mb-24"
+												label="Discount"
+												id="discount"
+												variant="outlined"
+												fullWidth
+											/>
+										)}
+									/>
+								</div>
+								<div className="px-16">
+									<Button
+										variant="contained"
+										color="secondary"
+										type="submit"
+										// disabled={_.isEmpty(dirtyFields) || !isValid}
+									>
+										Update Bill
+									</Button>
+								</div>
+							</Card>
+						</form>
+						<form className="w-full" noValidate onSubmit={handleSubmitPaidValues(onSubmitPaidValuesForm)}>
+							<Card className="p-24">
+								<div className="flex">
+									<Controller
+										control={controlPaidValues}
+										name="paid_amount"
+										render={({ field }) => (
+											<TextField
+												{...field}
+												type="number"
+												className="mb-24"
+												label="Paid Amount"
+												id="discont"
+												variant="outlined"
+												fullWidth
+											/>
+										)}
+									/>
+								</div>
+								<div className="px-16">
+									<Button
+										variant="contained"
+										color="secondary"
+										type="submit"
+										// disabled={_.isEmpty(dirtyFields) || !isValid}
+									>
+										Add Payment
+									</Button>
+								</div>
+							</Card>
+						</form>
+					</div>
 				</div>
 			</DialogContent>
 		</Dialog>
