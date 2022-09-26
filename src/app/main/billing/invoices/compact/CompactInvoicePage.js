@@ -69,16 +69,18 @@ function CompactInvoicePage(props) {
 	const dispatch = useDispatch();
 
 	const rows = [
-		createData('Nov', 159, 6.0, 24, 4.0),
-		createData('Nov', 237, 9.0, 37, 4.3),
-		createData('Nov', 262, 16.0, 24, 6.0),
+		createData('Jan', 159, 6.0, 24, 4.0),
+		createData('Feb', 237, 9.0, 37, 4.3),
+		createData('Mar', 262, 16.0, 24, 6.0),
+		createData('April', 305, 3.7, 67, 4.3),
+		createData('May', 356, 16.0, 49, 3.9),
+		createData('June', 159, 6.0, 24, 4.0),
+		createData('July', 237, 9.0, 37, 4.3),
+		createData('Aug', 262, 16.0, 24, 6.0),
+		createData('Sept', 305, 3.7, 67, 4.3),
+		createData('Oct', 356, 16.0, 49, 3.9),
 		createData('Nov', 305, 3.7, 67, 4.3),
-		createData('Nov', 356, 16.0, 49, 3.9),
-		createData('Nov', 159, 6.0, 24, 4.0),
-		createData('Nov', 237, 9.0, 37, 4.3),
-		createData('Nov', 262, 16.0, 24, 6.0),
-		createData('Nov', 305, 3.7, 67, 4.3),
-		createData('Nov', 356, 16.0, 49, 3.9)
+		createData('Decem', 356, 16.0, 49, 3.9)
 	];
 	console.log('type', bills);
 	const HBlockBills = [
@@ -278,7 +280,7 @@ function CompactInvoicePage(props) {
 														Reference Number
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
-														{bill.customer_id}
+														{bill.meter.refference_number}
 													</div>
 												</div>
 												<div className="grid grid-cols-5 grid-rows-1">
@@ -350,7 +352,8 @@ function CompactInvoicePage(props) {
 														{bill.current_reading}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center  text-base">
-														{bill.meter.phase}
+														{/* {bill.meter.phase} */}
+														0
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
 														{bill.current_reading - bill.previous_reading}
@@ -499,49 +502,49 @@ function CompactInvoicePage(props) {
 															Current Bill
 														</div>
 														<div className="border-black border-1 outline-2 place-items-center text-base">
-															{bill.customer_name}
+															{bill.total_bill}
 														</div>
 														<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
 															Total arrears
 														</div>
 														<div className="border-black border-1 outline-2 place-items-center text-base">
-															{bill.customer_name}
+															{bill.arrears}
 														</div>
 														<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
 															Advance
 														</div>
 														<div className="border-black border-1 outline-2 place-items-center text-base">
-															{bill.customer_name}
+															{}
 														</div>
 														<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
 															Adjustment
 														</div>
 														<div className="border-black border-1 outline-2 place-items-center text-base">
-															{bill.customer_name}
+															{bill.fpa_charges}
 														</div>
 														<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
 															Subsidy
 														</div>
 														<div className="border-black border-1 outline-2 place-items-center text-base">
-															{bill.customer_name}
+															{}
 														</div>
 														<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
 															L.P Surcharge
 														</div>
 														<div className="border-black border-1 outline-2 place-items-center text-base">
-															{bill.customer_name}
+															{bill.late_surcharge}
 														</div>
 														<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
 															PayAble within Due Date
 														</div>
 														<div className="border-black border-1 outline-2 place-items-center text-base">
-															{bill.customer_name}
+															{bill.total_bill}
 														</div>
 														<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
 															PayAble after Due Date
 														</div>
 														<div className="border-black border-1 outline-2 place-items-center text-base">
-															{bill.customer_name}
+															{bill.bill_after_due_date}
 														</div>
 													</div>
 													{/* </div> */}
@@ -786,25 +789,25 @@ function CompactInvoicePage(props) {
 														{bill.refference_number}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
-														{bill.customer_id}
-													</div>
-													<div className="border-black border-1 outline-2 place-items-center  text-base">
-														{bill.phase}
-													</div>
-													<div className="border-black border-1 outline-2 place-items-center text-base">
 														{bill.billing_month}
 													</div>
-													<div className="border-black border-1 outline-2 place-items-center text-base">
+													<div className="border-black border-1 outline-2 place-items-center  text-base">
 														{bill.issue_date}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
 														{bill.due_date}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
-														{bill.issue_date}
+														{bill.total_bill}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
-														{bill.due_date}
+														{bill.society_charges}
+													</div>
+													<div className="border-black border-1 outline-2 place-items-center text-base">
+														{bill.total_bill}
+													</div>
+													<div className="border-black border-1 outline-2 place-items-center text-base">
+														{bill.bill_after_due_date}
 													</div>
 												</div>
 												{/* Sms Alert */}
@@ -847,11 +850,11 @@ function CompactInvoicePage(props) {
 													</div>
 												</div> */}
 
-												<div className="border-black border-1">
+												{/* <div className="border-black border-1">
 													<Typography className="mb-24 print:mb-12" variant="body1">
 														Please pay within 15 days. Thank you for your business.
 													</Typography>
-												</div>
+												</div> */}
 											</div>
 										</CardContent>
 									</Card>
@@ -961,7 +964,7 @@ function CompactInvoicePage(props) {
 													</div>
 
 													<div className="border-black border-1 outline-2 place-items-center text-base">
-														{bill?.meter?.meter_number}
+														{bill?.meter_number}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center  text-base">
 														{bill.phase}
@@ -1206,25 +1209,25 @@ function CompactInvoicePage(props) {
 														{bill.refference_number}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
-														{bill.customer_id}
-													</div>
-													<div className="border-black border-1 outline-2 place-items-center  text-base">
-														{bill.phase}
-													</div>
-													<div className="border-black border-1 outline-2 place-items-center text-base">
 														{bill.billing_month}
 													</div>
-													<div className="border-black border-1 outline-2 place-items-center text-base">
+													<div className="border-black border-1 outline-2 place-items-center  text-base">
 														{bill.issue_date}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
 														{bill.due_date}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
-														{bill.issue_date}
+														{bill.total_bill}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
-														{bill.due_date}
+														{bill.society_charges}
+													</div>
+													<div className="border-black border-1 outline-2 place-items-center text-base">
+														{bill.total_bill}
+													</div>
+													<div className="border-black border-1 outline-2 place-items-center text-base">
+														{bill.bill_after_due_date}
 													</div>
 												</div>
 												{/* <div className="flex">
@@ -1266,11 +1269,11 @@ function CompactInvoicePage(props) {
 													</div>
 												</div> */}
 
-												<div className="border-black border-1">
+												{/* <div className="border-black border-1">
 													<Typography className="mb-24 print:mb-12" variant="body1">
 														Please pay within 15 days. Thank you for your business.
 													</Typography>
-												</div>
+												</div> */}
 											</div>
 										</CardContent>
 									</Card>

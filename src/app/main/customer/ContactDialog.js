@@ -39,11 +39,13 @@ import {
 function ContactDialog(props) {
 	const dispatch = useDispatch();
 	const contactDialog = useSelector(({ newCustomersSlice }) => newCustomersSlice.newCustomersSlice);
+
 	const propertyTypes = useSelector(({ propertyTypesSlice }) => propertyTypesSlice);
 	const propertySizes = useSelector(({ propertySizesSlice }) => propertySizesSlice);
 	const customerTypes = useSelector(({ customerTypesSlice }) => customerTypesSlice);
 	const configurationsData = useSelector(({ configSlice }) => configSlice);
 	console.log('configSlice inside contact : ', configurationsData);
+	console.log('contactDialog inside contact : ', contactDialog);
 
 	console.log('propertyTypes inside contact : ', propertyTypes);
 	console.log('customerTypes inside contact: ', customerTypes);
@@ -188,11 +190,11 @@ function ContactDialog(props) {
 		/**
 		 * Dialog type: 'edit'
 		 */
-		console.log('inCallback');
+		console.log('inCallback',contactDialog.data);
 		if (contactDialog.type === 'edit' && contactDialog.data) {
 			reset({ ...contactDialog.data });
-			setCustomerType(contactDialog.data.customer_type[0]);
-			setValue('customer_type', contactDialog.data.customer_type[0]);
+			setCustomerType(contactDialog.data.customer_type.name);
+			setValue('customer_type', contactDialog.data.customer_type.name);
 		}
 
 		/**
