@@ -22,32 +22,33 @@ function AllCustomersHead(props) {
 	// const customers = useSelector(selectCustomers);
 	const customersFromServer = useSelector(selectCustomers);
 
-	const customers = useMemo(
-		() =>
-			customersFromServer.map(newCustomer => {
-				console.log('newCustomer', newCustomer);
-				return {
-					id: newCustomer?.id,
-					name: newCustomer?.name,
-					property_size: newCustomer?.property_size?.name,
-					property_type: newCustomer?.property_type?.name,
-					meter_number: newCustomer?.meter?.meter_number,
-					meter_type: newCustomer?.meter?.meter_type,
-					reference_number: newCustomer?.refference_number,
-					cnic: newCustomer?.cnic,
-					phone: newCustomer?.phone,
-					email: newCustomer?.email,
-					customer_type: newCustomer?.customer_type,
-					meter_status: newCustomer?.meter?.status,
-					meter_phase: newCustomer?.meter?.phase,
-					company: 'sms',
-					sector: newCustomer?.meter?.sector,
-					block: newCustomer?.meter?.block,
-					address: newCustomer?.meter?.address
-				};
-			}),
-		[customersFromServer]
-	);
+	// const customers = useMemo(
+	// 	() =>
+	// 		customersFromServer.map(newCustomer => {
+	// 			console.log('newCustomer', newCustomer);
+	// 			return {
+	// 				id: newCustomer?.id,
+	// 				name: newCustomer?.name,
+	// 				property_size: newCustomer?.property_size?.name,
+	// 				property_type: newCustomer?.property_type?.name,
+	// 				meter_number: newCustomer?.meter?.meter_number,
+	// 				meter_type: newCustomer?.meter?.meter_type,
+	// 				reference_number: newCustomer?.refference_number,
+	// 				cnic: newCustomer?.cnic,
+	// 				phone: newCustomer?.phone,
+	// 				email: newCustomer?.email,
+	// 				customer_type: newCustomer?.customer_type,
+	// 				meter_status: newCustomer?.meter?.status,
+	// 				meter_phase: newCustomer?.meter?.phase,
+	// 				company: 'sms',
+	// 				sector: newCustomer?.meter?.sector,
+	// 				block: newCustomer?.meter?.block,
+	// 				address: newCustomer?.meter?.address
+	// 			};
+	// 		}),
+	// 	[customersFromServer]
+	// );
+	
 
 	const searchText = useSelector(({ newCustomersSlice }) => newCustomersSlice.searchText);
 	console.log('I am customers', customers);

@@ -70,12 +70,10 @@ function SCDataTemplate(props) {
 	}
 
 	useEffect(() => {
-		if (!board) {
-			return;
-		}
-
-		reset(board);
-	}, [board, reset]);
+		dispatch(getSocietyChargesServiceBoard(routeParams.boardId)).then(data => {
+			reset(data.payload);
+		});
+	}, [reset]);
 
 	return (
 		<FormProvider {...methods}>

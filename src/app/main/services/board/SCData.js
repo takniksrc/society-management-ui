@@ -58,9 +58,9 @@ function SCData(props) {
 		hidden: { opacity: 0, y: 20 },
 		show: { opacity: 1, y: 0 }
 	};
-	function handleOpen(id) {
-		dispatch(getSocietyChargesServiceBoard(id));
-	}
+	// function handleOpen(id) {
+	// 	dispatch(getSocietyChargesServiceBoard(id));
+	// }
 	return (
 		<div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>
 			<div className="flex flex-grow flex-shrink-0 flex-col items-center container px-16 md:px-24">
@@ -85,7 +85,7 @@ function SCData(props) {
 								)}
 								role="button"
 								component={Link}
-								onClick={event => handleOpen(board.id)}
+								// onClick={event => handleOpen(board.id)}
 							>
 								<Icon className="text-56" color="action">
 									<img src={board.icon} alt="" />

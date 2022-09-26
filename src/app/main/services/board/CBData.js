@@ -54,7 +54,7 @@ function CBData(props) {
 	};
 	function handleOpen(id) {
 		console.log('i am new id', id);
-		dispatch(getConsumbtionBoard(id));
+		//dispatch(getConsumbtionBoard(id));
 	}
 
 	return (
@@ -76,7 +76,7 @@ function CBData(props) {
 								)}
 								role="button"
 								component={Link}
-								onClick={event => handleOpen(board.id)}
+								//onClick={event => handleOpen(board.id)}
 							>
 								<Icon className="text-56" color="action">
 									<img src={board.icon} alt="" />

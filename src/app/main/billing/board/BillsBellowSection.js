@@ -39,13 +39,8 @@ import societyChargesIcon from '../../../../assets/ServicesIcon/society-charges-
 import consumptionChragesIcon from '../../../../assets/ServicesIcon/consumption-based-icon.png';
 import AllBills from './AllBills';
 
-const defaultValues = {
-	id: '',
-	title: '',
-	notes: '',
-
-	dueDate: new Date(),
-	labels: []
+const defaultValuesss = {
+	file: ''
 };
 const useStyles = makeStyles(theme => ({
 	root: {},
@@ -86,14 +81,15 @@ function BillsBellowSection(props) {
 	};
 
 	const methods = useFormContext();
-	const schema = yup.object().shape({
-		title: yup.string().required('You must enter a title')
-	});
-	const { watch, handleSubmit, formState, reset, control, setValue } = useForm({
+
+	const { watch, handleSubmit, formState, reset, register, control, setValue } = useForm({
 		mode: 'onChange',
-		defaultValues,
-		resolver: yupResolver(schema)
+		defaultValuesss
+		// resolver: yupResolver(schema)
 	});
+	const handleForm = data => {
+		console.log('fadfasd', data);
+	};
 
 	const { errors, isValid, dirtyFields } = formState;
 	const bills = useSelector(state => state.scrumboardApp.AllBillsSlice);
@@ -287,88 +283,93 @@ function BillsBellowSection(props) {
 	}
 
 	return (
-		<div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>
-			<div className="flex flex-grow flex-shrink-0 flex-col items-center container px-16 md:px-24">
-				<motion.div
-					variants={container}
-					initial="hidden"
-					animate="show"
-					className="grid grid-cols-1 flex-wrap w-full justify-center py-16 "
-				>
-					<motion.div variants={item} className="h-auto p-16" key={1}>
-						<Paper
-							// to={`/services/boards/consumption-based-charges/${board.id}/${board.uri}`}
-							className={clsx(
-								classes.board,
-								'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
-							)}
-							role="button"
-							component={Link}
-						>
-							<div className=" flex flex-wrap w-full justify-center px-16 flex-row">
-								<div className="flex flex-1 items-center justify-center basis-1/4">
-									<ThemeProvider theme={mainTheme}>
-										<Paper
-											component={motion.div}
-											initial={{ y: -20, opacity: 0 }}
-											animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
-											className="flex items-center w-full max-w-512 px-8 py-4 rounded-16 shadow"
-										>
-											<Icon color="action">search</Icon>
+		<form noValidate onSubmit={handleSubmit(handleForm)}>
+			<div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>
+				<div className="flex flex-grow flex-shrink-0 flex-col items-center container px-16 md:px-24">
+					<motion.div
+						variants={container}
+						initial="hidden"
+						animate="show"
+						className="grid grid-cols-1 flex-wrap w-full justify-center py-16 "
+					>
+						<motion.div variants={item} className="h-auto p-16" key={1}>
+							<Paper
+								// to={`/services/boards/consumption-based-charges/${board.id}/${board.uri}`}
+								className={clsx(
+									classes.board,
+									'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
+								)}
+								role="button"
+								component={Link}
+							>
+								<div className=" flex flex-wrap w-full justify-center px-16 flex-row">
+									<div className="flex flex-1 items-center justify-center basis-1/4">
+										<ThemeProvider theme={mainTheme}>
+											<Paper
+												component={motion.div}
+												initial={{ y: -20, opacity: 0 }}
+												animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
+												className="flex items-center w-full max-w-512 px-8 py-4 rounded-16 shadow"
+											>
+												<Icon color="action">search</Icon>
 
-											<Input
-												placeholder="Search for anything"
-												className="flex flex-1 px-16"
-												disableUnderline
-												fullWidth
-												value={searchText}
-												inputProps={{
-													'aria-label': 'Search'
-												}}
-												onChange={ev => dispatch(setContactsSearchText(ev))}
-											/>
-										</Paper>
-									</ThemeProvider>
+												<Input
+													placeholder="Search for anything"
+													className="flex flex-1 px-16"
+													disableUnderline
+													fullWidth
+													value={searchText}
+													inputProps={{
+														'aria-label': 'Search'
+													}}
+													onChange={ev => dispatch(setContactsSearchText(ev))}
+												/>
+											</Paper>
+										</ThemeProvider>
+									</div>
+
+									<motion.div
+										initial={{ opacity: 0, x: 20 }}
+										animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
+										className="flex flex-1 items-center justify-center px-12 space-x-20 basis-1/2"
+									>
+										<div>
+											<input type="file" {...register('file')} />
+										</div>
+										<Button
+											variant="contained"
+											color="secondary"
+											className="w-full"
+											component={Link}
+											to={`/billing/pdf-bills/${routeParams.boardId}`}
+										>
+											Download PDF
+										</Button>
+										<Button type="submit" variant="contained" color="secondary">
+											Upload Payment
+										</Button>
+									</motion.div>
 								</div>
 
-								<motion.div
-									initial={{ opacity: 0, x: 20 }}
-									animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
-									className="flex flex-1 items-center justify-center px-12 space-x-20 basis-1/2"
-								>
-									<Button
-										variant="contained"
-										color="secondary"
-										className="w-full"
-										component={Link}
-										to={`/billing/pdf-bills/${routeParams.boardId}`}
-									>
-										Download PDF
-									</Button>
-									<Button variant="contained" color="secondary" className="w-full">
-										Upload Payemnts
-									</Button>
-								</motion.div>
-							</div>
-
-							<div className=" flex flex-wrap w-full justify-center py-32 px-16 flex-row">
-								<AllBills
-									columns={columns}
-									// data={[filteredData[0].customer]}
-									data={filteredData}
-									onRowClick={(ev, row) => {
-										if (row) {
-											dispatch(openEditContactDialog(row.original));
-										}
-									}}
-								/>
-							</div>
-							{/* </motion.div> */}
-						</Paper>
+								<div className=" flex flex-wrap w-full justify-center py-32 px-16 flex-row">
+									<AllBills
+										columns={columns}
+										// data={[filteredData[0].customer]}
+										data={filteredData}
+										onRowClick={(ev, row) => {
+											if (row) {
+												dispatch(openEditContactDialog(row.original));
+											}
+										}}
+									/>
+								</div>
+						
+							</Paper>
+						</motion.div>
 					</motion.div>
-				</motion.div>
+				</div>
 			</div>
-		</div>
+		</form>
 	);
 }
 

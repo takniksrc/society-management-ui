@@ -32,7 +32,7 @@ import ResidentialTab from '../ConsumptionTabs/ResidentialTab';
 import ConstructionTab from '../ConsumptionTabs/ConstructionTab';
 import FPATab from '../ConsumptionTabs/FPATab';
 import CommercialTab from '../ConsumptionTabs/CommercialTab';
-import { updateConsumbtionBoard } from '../store/consumptionBoardSlice';
+import { getConsumbtionBoard, updateConsumbtionBoard } from '../store/consumptionBoardSlice';
 
 const schema = yup.object().shape({
 	name: yup
@@ -44,8 +44,10 @@ const schema = yup.object().shape({
 function EKServiceTemplate(props) {
 	const dispatch = useDispatch();
 	const theme = useTheme();
+	const params = useParams();
 	const pageLayout = useRef(null);
 	const board = useSelector(({ scrumboardApp }) => scrumboardApp.consumptionBoard);
+
 	const methods = useForm({
 		mode: 'onChange',
 		defaultValues: board,
@@ -66,15 +68,13 @@ function EKServiceTemplate(props) {
 	}
 
 	useEffect(() => {
-		if (!board) {
-			return;
-		}
-
-		/**
-		 * Reset the form on product state changes
-		 */
-		reset(board);
-	}, [board, reset]);
+		console.log('params', params.boardId);
+		3;
+		dispatch(getConsumbtionBoard(params.boardId)).then(data => {
+			console.log('data :', data);
+			reset(data.payload);
+		});
+	}, [reset]);
 	return (
 		<FormProvider {...methods}>
 			<FusePageCarded

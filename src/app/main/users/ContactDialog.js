@@ -42,7 +42,7 @@ const schema = yup.object().shape({
 });
 
 function ContactDialog(props) {
-	const [role, setRole] = useState('');
+	const [role, setRole] = useState();
 
 	const handleRole = event => {
 		setRole(event.target.value);
@@ -52,7 +52,7 @@ function ContactDialog(props) {
 	const contactDialog = useSelector(({ newUsersSlice }) => newUsersSlice.newUsersSlice);
 	console.log('I am clicked', contactDialog);
 
-	const { control, watch, reset, handleSubmit, formState, getValues, register } = useForm({
+	const { control, watch, reset, handleSubmit, formState, getValues, register, setValue } = useForm({
 		mode: 'onChange',
 		defaultValues,
 		resolver: yupResolver(schema)
@@ -66,7 +66,7 @@ function ContactDialog(props) {
 
 	// /**
 	//  * Initialize Dialog with Data
-	//  */
+	//  *
 	const initDialog = useCallback(() => {
 		/**
 		 * Dialog type: 'edit'
@@ -74,6 +74,8 @@ function ContactDialog(props) {
 		console.log('inCallback');
 		if (contactDialog.type === 'edit' && contactDialog.data) {
 			reset({ ...contactDialog.data });
+			setRole(contactDialog.data.role[0]);
+			setValue('role', contactDialog.data.role[0]);
 		}
 
 		/**
@@ -204,16 +206,13 @@ function ContactDialog(props) {
 							<InputLabel htmlFor="category-label-placeholder"> Role </InputLabel>
 							<Select
 								value={role}
+								name="role"
 								onChange={handleRole}
 								inputProps={register('role', {
 									required: 'Please enter role'
 								})}
 								input={
-									<OutlinedInput
-										labelWidth={'category'.length * 9}
-										name="role"
-										id="category-label-placeholder"
-									/>
+									<OutlinedInput labelWidth={'category'.length * 9} id="category-label-placeholder" />
 								}
 							>
 								{roles.map(category => (

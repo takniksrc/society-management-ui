@@ -14,7 +14,7 @@ import ContactsMultiSelectMenu from './ContactsMultiSelectMenu';
 import AllBills from './AllBills';
 import { openEditContactDialog, removeUser, selectUsers } from '../store/newUsersSlice';
 import BillsBellowSection from './BillsBellowSection';
-import BillsMiddleSection from './BillsMiddleSection';
+
 
 const useStyles = makeStyles(theme => ({
 	root: {},

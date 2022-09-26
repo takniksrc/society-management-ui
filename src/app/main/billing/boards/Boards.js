@@ -12,8 +12,7 @@ import reducer from '../store';
 import { selectBoards, newBoard, getBoards, resetBoards } from '../store/boardsSlice';
 import { getConfigurations } from '../../../fuse-configs/store/configSlice';
 import { getBlocksStatus } from '../store/billingBlocksSlice';
-import { getBills } from '../store/AllBillsSlice';
-import { resetBills } from '../store/AllBillsSlice';
+import { getBills, resetBills } from '../store/AllBillsSlice';
 
 const useStyles = makeStyles(theme => ({
 	root: {},
@@ -47,12 +46,14 @@ function Boards(props) {
 		hidden: { opacity: 0, y: 20 },
 		show: { opacity: 1, y: 0 }
 	};
-
+	useEffect(() => {
+		console.log('cofig,billing');
+	}, [configurationsData, billingBlocksStatuses]);
 
 	useEffect(() => {
 		dispatch(resetBills([]));
 		dispatch(getConfigurations()).then(data => {
-			console.log('I am promise returend', data)
+			console.log('I am promise returend', data);
 			dispatch(getBlocksStatus(data.payload.sectors[0].id));
 		});
 	}, [dispatch]);
@@ -131,27 +132,6 @@ function Boards(props) {
 							</motion.div>
 						);
 					})}
-
-					{/* <motion.div variants={item} className="w-224 h-224 p-16">
-						<Paper
-							className={clsx(
-								classes.board,
-								classes.newBoard,
-								'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg outline-none'
-							)}
-							onClick={() => dispatch(newBoard())}
-							onKeyDown={() => dispatch(newBoard())}
-							role="button"
-							tabIndex={0}
-						>
-							<Icon className="text-56" color="secondary">
-								add_circle
-							</Icon>
-							<Typography className="text-16 font-medium text-center pt-16 px-32" color="inherit">
-								Add new board
-							</Typography>
-						</Paper>
-					</motion.div> */}
 				</motion.div>
 			</div>
 		</div>

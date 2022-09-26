@@ -53,7 +53,7 @@ function AllUsersHead(props) {
 			{
 				Header: 'Role',
 				accessor: 'role',
-				sortable: true
+				sortable: false
 			},
 			{
 				Header: 'Email',

@@ -25,6 +25,7 @@ import reducer from '../store';
 import societyChargesIcon from '../../../../assets/ServicesIcon/society-charges-icon.png';
 import consumptionChragesIcon from '../../../../assets/ServicesIcon/consumption-based-icon.png';
 import instance from 'axiosinstance';
+import { getBills, resetBills } from '../store/AllBillsSlice';
 
 const defaultValues = {
 	id: '',
@@ -60,10 +61,7 @@ function GBData(props) {
 		hidden: { opacity: 0, y: 20 },
 		show: { opacity: 1, y: 0 }
 	};
-	const methods = useFormContext();
-	const schema = yup.object().shape({
-		title: yup.string().required('You must enter a title')
-	});
+
 
 	const { watch, handleSubmit, formState, reset, register, control, setValue } = useForm({
 		mode: 'onChange',
@@ -94,7 +92,9 @@ function GBData(props) {
 			.post('/api/bills/generate', data)
 			.then(function (response) {
 				if (response.status === 201) {
-					history.push('/billing/boards/1/electrcity-bills/billing');
+					dispatch(getBills(props.blockId)).then(() => {
+						history.push('/billing/boards/1/electrcity-bills/billing');
+					});
 				}
 				console.log(JSON.stringify(response));
 			})
