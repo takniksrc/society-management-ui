@@ -44,7 +44,7 @@ function Boards(props) {
 	const boards = [
 	{id: '7c652537-6b9f-455d-9942-5a0eabda8014', name: 'Disconnected Order', url: 'temporarily_disconnected_order',icon: DisconnectIcon},
 	{id: '32gfhaf3', name: 'Permanent Disconnection Order', url: 'permanent_disconnection_order',icon: PermanentDisconnectIcon},
-	{id: '32gfhaf4', name: 'Re-Connection', url: 'acme-frontend-application',icon: ReConnectionIcon},
+	// {id: '32gfhaf4', name: 'Re-Connection', url: 'acme-frontend-application',icon: ReConnectionIcon},
 	{id: '32gfhaf5', name: 'Rise and Fall of Units', url: 'rise_and_fall_of_unit',icon: RaiseAndFallIcon},
 	{id: '32gfhaf6', name: 'Daily Amount Recieved', url: 'daily_amount_receive',icon: DailyAmountIcon},
 	{id: '32gfhaf7', name: 'Arrear List with Proper Age', url: 'arrear_list_with_proper_age',icon: ArrearListIcon},
