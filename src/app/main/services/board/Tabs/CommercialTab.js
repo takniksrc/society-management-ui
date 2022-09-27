@@ -29,8 +29,8 @@ function CommercialTab(props) {
 		control,
 		name: 'servicePricing'
 	});
-
-	const board = useSelector(({ scrumboardApp }) => scrumboardApp.consumptionBoard);
+	const board = useSelector(state => state.consumptionBoard);
+	// const board = useSelector(({ scrumboardApp }) => scrumboardApp.consumptionBoard);
 	console.log('Fields in Commercial board tab', fields);
 
 	useEffect(() => {
