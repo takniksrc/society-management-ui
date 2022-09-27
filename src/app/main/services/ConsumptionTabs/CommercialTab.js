@@ -7,8 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import { motion } from 'framer-motion';
 
-
-
 function CommercialTab(props) {
 	const methods = useFormContext();
 	const { control } = methods;
@@ -20,10 +18,12 @@ function CommercialTab(props) {
 
 	const board = useSelector(({ scrumboardApp }) => scrumboardApp.consumptionBoard);
 
-
 	return (
 		<div>
-		
+			<Typography variant="subtitle2" className="py-16 font-light mr-8 mx-4 text-green-400">
+				*( The units of end slabs must be one less the next start slab)
+			</Typography>
+
 			{fields.map((sp, spIndex) => {
 				console.log('I am sp', sp);
 				return (
@@ -58,7 +58,10 @@ function CommercialTab(props) {
 													/>
 												)}
 											/>
-											<Typography variant="subtitle1" className="py-16 mx-4">
+											<Typography variant="subtitle1" className="py-16 mx-4 text-green-400">
+												*
+											</Typography>
+											<Typography variant="subtitle1" className="py-16 mx-4 ">
 												End
 											</Typography>
 											<Controller
@@ -114,8 +117,6 @@ function CommercialTab(props) {
 					</>
 				);
 			})}
-
-			
 		</div>
 	);
 }

@@ -7,13 +7,14 @@ import { update } from 'lodash';
 
 import { getUserData } from './userSlice';
 
-export const getUsers = createAsyncThunk('users/getUsers', async (routeParams, { getState }) => {
+export const getUsers = createAsyncThunk('users/getUsers', async (routeParams, { getState, dispatch }) => {
 	routeParams = routeParams || getState().newUsersSlice.routeParams;
 	const response = await instance.get('/api/users', {
 		params: routeParams
 	});
 	const data = await response.data.users;
 	console.log('I am data', data);
+
 	return { data, routeParams };
 });
 
@@ -24,6 +25,31 @@ export const addUser = createAsyncThunk('users/addUser', async (contact, { dispa
 	const response = await instance.post('/api/users', { email: contact.email, role: contact.role });
 	const data = await response.data;
 	console.log('I am new updated data', data);
+	if (response.status === 201 || response.status === 200) {
+		dispatch(
+			showMessage({
+				message: response.data.message, //text or html
+				autoHideDuration: 6000, //ms
+				anchorOrigin: {
+					vertical: 'top', //top bottom
+					horizontal: 'right' //left center right
+				},
+				variant: 'success' //success error info warning null
+			})
+		);
+	} else {
+		dispatch(
+			showMessage({
+				message: response.data.message, //text or html
+				autoHideDuration: 6000, //ms
+				anchorOrigin: {
+					vertical: 'top', //top bottom
+					horizontal: 'right' //left center right
+				},
+				variant: 'error' //success error info warning null
+			})
+		);
+	}
 	dispatch(getUsers());
 	return data;
 });
@@ -36,6 +62,32 @@ export const updateUser = createAsyncThunk('users/updateUser', async (user, { di
 		{ email: user.email, role: user.role }
 	);
 	// const response = await instance.post(`/api/users/${user}`);
+
+	if (response.status === 201 || response.status === 200) {
+		dispatch(
+			showMessage({
+				message: response.data.message, //text or html
+				autoHideDuration: 6000, //ms
+				anchorOrigin: {
+					vertical: 'top', //top bottom
+					horizontal: 'right' //left center right
+				},
+				variant: 'success' //success error info warning null
+			})
+		);
+	} else {
+		dispatch(
+			showMessage({
+				message: response.data.message, //text or html
+				autoHideDuration: 6000, //ms
+				anchorOrigin: {
+					vertical: 'top', //top bottom
+					horizontal: 'right' //left center right
+				},
+				variant: 'error' //success error info warning null
+			})
+		);
+	}
 	const data = await response.data;
 
 	dispatch(getUsers());
@@ -44,7 +96,33 @@ export const updateUser = createAsyncThunk('users/updateUser', async (user, { di
 });
 
 export const removeUser = createAsyncThunk('users/removeUser', async (userId, { dispatch, getState }) => {
-	await instance.delete(`/api/users/${userId}`);
+	const response = await instance.delete(`/api/users/${userId}`);
+	
+	if (response.status === 201 || response.status === 200) {
+		dispatch(
+			showMessage({
+				message: response.data.message, //text or html
+				autoHideDuration: 6000, //ms
+				anchorOrigin: {
+					vertical: 'top', //top bottom
+					horizontal: 'right' //left center right
+				},
+				variant: 'success' //success error info warning null
+			})
+		);
+	} else {
+		dispatch(
+			showMessage({
+				message: response.data.message, //text or html
+				autoHideDuration: 6000, //ms
+				anchorOrigin: {
+					vertical: 'top', //top bottom
+					horizontal: 'right' //left center right
+				},
+				variant: 'error' //success error info warning null
+			})
+		);
+	}
 
 	return userId;
 });

@@ -85,23 +85,26 @@ class JwtService extends FuseUtils.EventEmitter {
 					console.log('response.data.accessToken', response.data.access_token);
 					this.setSession(response.data.access_token);
 					// resolve(response.data.user);
+
 					resolve({
-						redirectUrl: '/dashboards/analytics',
-						role: response.data.user.role,
-						data: {
-							name: response.data.user.name,
-							email: response.data.user.email,
-							photoURL: response.data.user.avatar
+						message: 'Logged in successfully',
+
+						user: {
+							redirectUrl: '/dashboards/analytics',
+							role: response.data.user.role,
+							data: {
+								name: response.data.user.name,
+								email: response.data.user.email,
+								photoURL: response.data.user.avatar
+							}
 						}
-						// data: { displayName: 'Fake User', email, photoURL: 'assets/images/avatars/Velazquez.jpg' }
 					});
 				} else {
-					reject(response.data.error);
+					reject({ message: 'Error while loggin in' });
 				}
 			});
 		});
 	};
-
 
 	updateUserData = user => {
 		return axios.post('/api/auth/user/update', {

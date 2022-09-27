@@ -2,6 +2,7 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
 import instance from 'axiosinstance';
 import { getCustomerData } from './customerSlice';
+import { showMessage } from 'app/store/fuse/messageSlice';
 
 export const getCustomers = createAsyncThunk('customers/getCustomers', async (routeParams, { getState }) => {
 	routeParams = routeParams || getState().newCustomersSlice.routeParams;
@@ -35,6 +36,32 @@ export const addCustomer = createAsyncThunk('customers/addCustomer', async (cont
 	const data = await response.data;
 	console.log('I am new updated data', data);
 
+	if (response.status === 201 || response.status === 200) {
+		dispatch(
+			showMessage({
+				message: response.data.message, //text or html
+				autoHideDuration: 6000, //ms
+				anchorOrigin: {
+					vertical: 'top', //top bottom
+					horizontal: 'right' //left center right
+				},
+				variant: 'success' //success error info warning null
+			})
+		);
+	} else {
+		dispatch(
+			showMessage({
+				message: response.data.message, //text or html
+				autoHideDuration: 6000, //ms
+				anchorOrigin: {
+					vertical: 'top', //top bottom
+					horizontal: 'right' //left center right
+				},
+				variant: 'error' //success error info warning null
+			})
+		);
+	}
+
 	dispatch(getCustomers());
 
 	return data;
@@ -64,6 +91,32 @@ export const updateCustomer = createAsyncThunk('customers/updateCustomer', async
 	);
 	const data = await response.data;
 	console.log(data);
+	if (response.status === 201 || response.status === 200) {
+		dispatch(
+			showMessage({
+				message: response.data.message, //text or html
+				autoHideDuration: 6000, //ms
+				anchorOrigin: {
+					vertical: 'top', //top bottom
+					horizontal: 'right' //left center right
+				},
+				variant: 'success' //success error info warning null
+			})
+		);
+	} else {
+		dispatch(
+			showMessage({
+				message: response.data.message, //text or html
+				autoHideDuration: 6000, //ms
+				anchorOrigin: {
+					vertical: 'top', //top bottom
+					horizontal: 'right' //left center right
+				},
+				variant: 'error' //success error info warning null
+			})
+		);
+	}
+
 	dispatch(getCustomers());
 	return data;
 });
@@ -72,7 +125,33 @@ export const removeCustomer = createAsyncThunk(
 	'customers/removeCustomer',
 	async (customerId, { dispatch, getState }) => {
 		console.log('i am clicked', customerId);
-		await instance.delete(`/api/customers/${customerId}`);
+		const response =  await instance.delete(`/api/customers/${customerId}`);
+		if (response.status === 201 || response.status === 200) {
+			dispatch(
+				showMessage({
+					message: response.data.message, //text or html
+					autoHideDuration: 6000, //ms
+					anchorOrigin: {
+						vertical: 'top', //top bottom
+						horizontal: 'right' //left center right
+					},
+					variant: 'success' //success error info warning null
+				})
+			);
+		} else {
+			dispatch(
+				showMessage({
+					message: response.data.message, //text or html
+					autoHideDuration: 6000, //ms
+					anchorOrigin: {
+						vertical: 'top', //top bottom
+						horizontal: 'right' //left center right
+					},
+					variant: 'error' //success error info warning null
+				})
+			);
+		}
+	
 
 		return customerId;
 	}

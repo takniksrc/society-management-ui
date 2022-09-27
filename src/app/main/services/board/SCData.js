@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import reducer from '../store';
 import { selectBoards, newBoard, getBoards, resetBoards } from '../store/boardsSlice';
-import { getBoard } from '../store/boardSlice';
 import societyChargesIcon from '../../../../assets/ServicesIcon/society-charges-icon.png';
 import Aquifer from '../../../../assets/ServicesIcon/aquifer.png';
 import Garbage from '../../../../assets/ServicesIcon/garbage.png';

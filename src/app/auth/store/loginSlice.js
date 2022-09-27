@@ -3,19 +3,28 @@ import { showMessage } from 'app/store/fuse/messageSlice';
 import firebaseService from 'app/services/firebaseService';
 import jwtService from 'app/services/jwtService';
 import { setUserData } from './userSlice';
-import { get } from 'lodash';
-import { getConfigurations } from '../../fuse-configs/store/configSlice';
+
 
 export const submitLogin =
 	({ email, password }) =>
 	async dispatch => {
 		return jwtService
 			.signInWithEmailAndPassword(email, password)
-			.then(user => {
-				console.log('user', user);
-				dispatch(setUserData(user));
-				localStorage.setItem('user', JSON.stringify(user));
-				// dispatch(getConfigurations());
+			.then(res => {
+				console.log('user', res);
+				dispatch(setUserData(res.user));
+				localStorage.setItem('user', JSON.stringify(res.user));
+				dispatch(
+					showMessage({
+						message: res.message, //text or html
+						autoHideDuration: 6000, //ms
+						anchorOrigin: {
+							vertical: 'top', //top bottom
+							horizontal: 'right' //left center right
+						},
+						variant: 'success' //success error info warning null
+					})
+				);
 
 				return dispatch(loginSuccess());
 			})

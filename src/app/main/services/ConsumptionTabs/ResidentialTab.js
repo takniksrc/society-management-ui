@@ -20,6 +20,9 @@ function ResidentialTab(props) {
 
 	return (
 		<div>
+			<Typography variant="subtitle2" className="py-16 font-light mr-8 mx-4 text-green-400">
+				*( The units of end slabs must be one less the next start slab)
+			</Typography>
 			{/* <div className="flex mx-4 -mx-4"> */}
 			{fields.map((sp, spIndex) => {
 				console.log('I am sp', sp);

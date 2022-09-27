@@ -11,7 +11,6 @@ import ListModel from '../model/ListModel';
 import reorder, { reorderQuoteMap } from './reorder';
 import { newBoard } from './boardsSlice';
 
-
 export const getConsumbtionBoard = createAsyncThunk(
 	'scrumboardApp/board/getConsumptionBoard',
 	async (params, { dispatch }) => {
@@ -46,8 +45,37 @@ export const updateConsumbtionBoard = createAsyncThunk(
 		console.log('consumbtionBoardData', consumbtionBoardData);
 
 		const response = await instance.post(`/api/services/${consumbtionBoardData.id}/consumptionBased`, { ...body });
+		console.log("response",response)
 		const data = await response.data;
+		if(response.status === 201){
+			dispatch(
+				showMessage({
+					message: response.data.message, //text or html
+					autoHideDuration: 6000, //ms
+					anchorOrigin: {
+						vertical: 'top', //top bottom
+						horizontal: 'right' //left center right
+					},
+					variant: 'success' //success error info warning null
+				})
+			);
+		}
+		else{
+			dispatch(
+				showMessage({
+					message: response.data.message, //text or html
+					autoHideDuration: 6000, //ms
+					anchorOrigin: {
+						vertical: 'top', //top bottom
+						horizontal: 'right' //left center right
+					},
+					variant: 'error' //success error info warning null
+				})
+			);
+
+		}
 		dispatch(getConsumbtionBoard(consumbtionBoardData.id));
+		
 		return data;
 	}
 );

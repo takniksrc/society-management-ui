@@ -11,9 +11,10 @@ import propertySizesSlice from '../main/customer/store/propertySizesSlice';
 import configSlice from '../fuse-configs/store/configSlice';
 import customerSlice from '../main/customer/store/customerSlice';
 import userSlice from '../main/users/store/userSlice';
-import disconnectedmeterSlice from '../main/scrumboard/store/disconnectedmeterSlice'
+import disconnectedmeterSlice from '../main/scrumboard/store/disconnectedmeterSlice';
 
 import billingBlocksSlice from 'app/main/billing/store/billingBlocksSlice';
+import servicesSlice from 'app/main/services/store/servicesSlice';
 // import AllBillsSlice from 'app/main/billing/store/AllBillsSlice';
 // import billWithIdSlice from 'app/main/billing/store/billWithIdSlice';
 
@@ -33,7 +34,7 @@ const createReducer = asyncReducers => (state, action) => {
 		userSlice,
 		disconnectedmeterSlice,
 		billingBlocksSlice,
-
+		servicesSlice,
 
 		...asyncReducers
 	});
