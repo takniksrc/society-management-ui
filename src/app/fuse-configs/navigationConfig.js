@@ -65,8 +65,7 @@ const navigationConfig = [
 				translate: 'USER',
 				type: 'item',
 				icon: 'person',
-				url: '/users',
-				auth: authRoles.admin
+				url: '/users'
 			}
 		]
 	}

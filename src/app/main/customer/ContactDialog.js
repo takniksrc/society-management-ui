@@ -50,10 +50,7 @@ function ContactDialog(props) {
 	console.log('propertyTypes inside contact : ', propertyTypes);
 	console.log('customerTypes inside contact: ', customerTypes);
 
-	const [customerType, setCustomerType] = useState({
-		id: '96d16a4d-d7fa-4863-a2e2-f9d7018d1645',
-		name: 'Commercial'
-	});
+	const [customerType, setCustomerType] = useState('');
 	const [sector, setSector] = useState('');
 	const [block, setBlock] = useState('A');
 
@@ -191,8 +188,17 @@ function ContactDialog(props) {
 		console.log('inCallback', contactDialog.data);
 		if (contactDialog.type === 'edit' && contactDialog.data) {
 			reset({ ...contactDialog.data });
-			//setCustomerType(contactDialog.data.customer_type.name);
+			console.log('drop down cust id', contactDialog.data.customer_type.id);
+			setCustomerType(contactDialog.data.customer_type.id);
+			setPropertyType(contactDialog.data.property_type);
+			setBlock();
+			setSector();
+			setMeterPhase();
+			setMeterStatus();
+			setMeterType();
+
 			setValue('customer_type', contactDialog.data.customer_type.id);
+			setValue('property_type', contactDialog.data.property_type);
 		}
 
 		/**
@@ -213,7 +219,6 @@ function ContactDialog(props) {
 	useEffect(() => {
 		if (contactDialog.props.open) {
 			initDialog();
-	
 		}
 	}, [contactDialog.props.open, initDialog]);
 
