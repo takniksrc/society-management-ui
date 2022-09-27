@@ -153,14 +153,15 @@ function CompactInvoicePage(props) {
 												</div>
 												{/* Header 2nd Table */}
 												<div className="grid grid-cols-9 grid-rows-1">
-													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2">
+													{/* <div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2">
 														Name
-													</div>
-													<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
+													</div> */}
+													<div className="border-black col-span-2 border-1 outline-2 place-items-center text-base pl-3 pt-2">
 														{bill.customer_name}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center  text-base pl-3 pt-2">
-														Plot Size-{bill.property_size}
+														{/* Plot Size- */}
+														{bill.property_size}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center  font-semibold text-base pl-3 pt-2">
 														Con Date
@@ -720,14 +721,15 @@ function CompactInvoicePage(props) {
 													</div>
 												</div>
 												<div className="grid grid-cols-9 grid-rows-1">
-													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2">
+													{/* <div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2">
 														Name
-													</div>
-													<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
+													</div> */}
+													<div className="border-black col-span-2 border-1 outline-2 place-items-center text-base pl-3 pt-2">
 														{bill.customer_name}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center  text-base pl-3 pt-2">
-														Plot Size-{bill.property_size}
+														{/* Plot Size- */}
+														{bill.property_size}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center  font-semibold text-base pl-3 pt-2">
 														Con Date
@@ -749,13 +751,13 @@ function CompactInvoicePage(props) {
 													</div>
 												</div>
 												{/* Meter No Phases No */}
-												<div className="grid grid-cols-5 grid-rows-1 text-center">
-													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
+												<div className="grid grid-cols-3 grid-rows-1 text-center">
+													{/* <div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
 														Meter number
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
 														Phase
-													</div>
+													</div> */}
 													<div className="border-black border-1 outline-2 place-items-center  font-semibold text-base">
 														Bill Month
 													</div>
@@ -766,12 +768,12 @@ function CompactInvoicePage(props) {
 														Due Date
 													</div>
 
-													<div className="border-black border-1 outline-2 place-items-center text-base">
+													{/* <div className="border-black border-1 outline-2 place-items-center text-base">
 														{bill?.meter_number}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center  text-base">
 														{bill.phase}
-													</div>
+													</div> */}
 													<div className="border-black border-1 outline-2 place-items-center text-base">
 														{bill.billing_month}
 													</div>
@@ -899,7 +901,7 @@ function CompactInvoicePage(props) {
 														/>
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center">
-														<img
+														{/* <img
 															className="w-fit"
 															style={{
 																height: '-webkit-fill-available',
@@ -907,7 +909,7 @@ function CompactInvoicePage(props) {
 															}}
 															src={BillsImage}
 															alt="logo"
-														/>
+														/> */}
 													</div>
 												</div>
 												{/*Cut Area  */}
