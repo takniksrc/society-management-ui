@@ -4,7 +4,6 @@ import firebaseService from 'app/services/firebaseService';
 import jwtService from 'app/services/jwtService';
 import { setUserData } from './userSlice';
 
-
 export const submitLogin =
 	({ email, password }) =>
 	async dispatch => {
