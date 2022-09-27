@@ -6,9 +6,6 @@ import societyChargesServiceSlice from './societyChargesServiceSlice';
 
 const scrumboardAppReducers = combineReducers({
 	boards,
-
-
-	consumptionBoard,
 	societyChargesServiceSlice
 });
 

@@ -35,6 +35,7 @@ import instance from 'axiosinstance';
 import { removeUser, closeNewContactDialog, closeEditContactDialog } from '../store/newUsersSlice';
 import { Card } from '@material-ui/core';
 import { forEach } from 'lodash';
+import { showMessage } from 'app/store/fuse/messageSlice';
 
 const defaultValuesDiscount = {
 	current_reading: '',
@@ -125,6 +126,17 @@ function ContactDialog(props) {
 			})
 			.then(function (response) {
 				console.log('response', JSON.stringify(response.data));
+				dispatch(
+					showMessage({
+						message: response.data.message, //text or html
+						autoHideDuration: 6000, //ms
+						anchorOrigin: {
+							vertical: 'top', //top bottom
+							horizontal: 'right' //left center right
+						},
+						variant: 'success' //success error info warning null
+					})
+				);
 			})
 			.catch(function (error) {
 				console.log(error);
@@ -138,6 +150,17 @@ function ContactDialog(props) {
 			})
 			.then(function (response) {
 				console.log('response', JSON.stringify(response.data));
+				dispatch(
+					showMessage({
+						message: response.message, //text or html
+						autoHideDuration: 6000, //ms
+						anchorOrigin: {
+							vertical: 'top', //top bottom
+							horizontal: 'right' //left center right
+						},
+						variant: 'success' //success error info warning null
+					})
+				);
 			})
 			.catch(function (error) {
 				console.log(error);

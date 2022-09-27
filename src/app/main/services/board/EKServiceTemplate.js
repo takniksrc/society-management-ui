@@ -46,7 +46,7 @@ function EKServiceTemplate(props) {
 	const theme = useTheme();
 	const params = useParams();
 	const pageLayout = useRef(null);
-	const board = useSelector(({ scrumboardApp }) => scrumboardApp.consumptionBoard);
+	const board = useSelector(state => state.consumptionBoard);
 	console.log('board', board);
 
 	const methods = useForm({
