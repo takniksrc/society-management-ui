@@ -18,8 +18,11 @@ import PrintIcon from '@material-ui/icons/Print';
 import { Button } from '@material-ui/core';
 import { navbarClose } from 'app/store/fuse/navbarSlice';
 import Logo from './KesamLogo.jpg';
+import Barcode from '../../../../../assets/BillsIcon/barcode.svg';
 import BillsImage from '../../../../../assets/BillsIcon/image.jpg';
-import BillsCutImage from '../../../../../assets/BillsIcon/cut_here.png';
+import BillsCutImage from '../../../../../assets/BillsIcon/Sissor.png';
+import DetailsImage from '../../../../../assets/BillsIcon/bill.png';
+
 import { useDispatch } from 'react-redux';
 import billingBlocksSlice from '../../store/billingBlocksSlice';
 
@@ -70,7 +73,6 @@ function CompactInvoicePage(props) {
 
 	console.log('type', bills);
 
-
 	const formatter = new Intl.NumberFormat('en-US', {
 		style: 'currency',
 		currency: 'PKR',
@@ -109,36 +111,37 @@ function CompactInvoicePage(props) {
 											<div className="border-black border-1 outline-2">
 												<div className="grid grid-col-3 grid-flow-col ">
 													<div className="border-black border-1 outline-2 place-items-center">
-														<Typography className="text-center text-lg font-bold">
-															{' '}
+														<Typography
+															className="text-center font-bold"
+															style={{ fontSize: '1.8rem' }}
+														>
 															Service Invoice
 														</Typography>
 													</div>
 													<div className="border-black border-1 outline-2">
-														<Typography className="text-center text-lg font-bold">
-															{' '}
+														<Typography
+															className="text-center font-bold"
+															style={{ fontSize: '1.8rem' }}
+														>
 															Service Invoice
 														</Typography>
-														<Typography className="text-center text-sm" color="inherit">
+														<Typography className="text-center text-xs" color="inherit">
 															For Complaints 042-35459960
 														</Typography>
-														<Typography className="text-center text-sm" color="inherit">
+														<Typography className="text-center text-xs" color="inherit">
 															Payable at C Block Billing Office
 														</Typography>
-														<Typography className="text-center text-sm" color="inherit">
+														<Typography className="text-center text-xs" color="inherit">
 															Timing : 10:15 AM - 5:00 PM
 														</Typography>
-														<Typography className="text-center text-sm" color="inherit">
+														<Typography className="text-center text-xs" color="inherit">
 															Break : 1:00 PM - 2:00 PM
 														</Typography>
-														<Typography className="text-center text-sm" color="inherit">
+														<Typography className="text-center text-xs" color="inherit">
 															Friday Break : 1:00 PM - 3:00 PM
 														</Typography>
 
-														<Typography
-															className="text-center text-sm mt-8"
-															color="inherit"
-														>
+														<Typography className="text-center text-xs " color="inherit">
 															Consumer Copy
 														</Typography>
 													</div>
@@ -150,35 +153,35 @@ function CompactInvoicePage(props) {
 												</div>
 												{/* Header 2nd Table */}
 												<div className="grid grid-cols-9 grid-rows-1">
-													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
+													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2">
 														Name
 													</div>
-													<div className="border-black border-1 outline-2 place-items-center text-base">
+													<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
 														{bill.customer_name}
 													</div>
-													<div className="border-black border-1 outline-2 place-items-center  text-base">
+													<div className="border-black border-1 outline-2 place-items-center  text-base pl-3 pt-2">
 														Plot Size-{bill.property_size}
 													</div>
-													<div className="border-black border-1 outline-2 place-items-center  font-semibold text-base">
+													<div className="border-black border-1 outline-2 place-items-center  font-semibold text-base pl-3 pt-2">
 														Con Date
 													</div>
-													<div className="border-black border-1 outline-2 place-items-center text-base">
+													<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
 														{bill.issue_date}
 													</div>
-													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
+													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2">
 														Status
 													</div>
-													<div className="border-black border-1 outline-2 place-items-center text-base">
+													<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
 														{bill.payment_status}
 													</div>
-													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
+													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2">
 														Reference Number
 													</div>
-													<div className="border-black border-1 outline-2 place-items-center text-base">
+													<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
 														{bill.meter.refference_number}
 													</div>
 												</div>
-												<div className="grid grid-cols-5 grid-rows-1">
+												<div className="grid grid-cols-5 grid-rows-1 text-center">
 													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
 														Meter number
 													</div>
@@ -356,61 +359,142 @@ function CompactInvoicePage(props) {
 																				</TableCell>
 																			</TableRow>
 																		))}
+																	{[...Array(parseInt(12 - 3)).keys()]
+																		?.map(item => {
+																			return createData(
+																				item,
+																				item,
+																				item,
+																				item,
+																				item
+																			);
+																		})
+																		.map(row => (
+																			<TableRow key={row.id}>
+																				<TableCell
+																					className="border-2 border-black border-slate-300"
+																					component="th"
+																					scope="row"
+																				>
+																					-{/* {row.month} */}
+																				</TableCell>
+																				<TableCell
+																					className="border-2 border-black border-slate-300"
+																					align="center"
+																				>
+																					-{/* {row.unit} */}
+																				</TableCell>
+																				<TableCell
+																					className="border-2 border-black border-slate-300"
+																					align="center"
+																				>
+																					-{/* {row.amount} */}
+																				</TableCell>
+																				<TableCell
+																					className="border-2 border-black border-slate-300"
+																					align="center"
+																				>
+																					-{/* {row.date} */}
+																				</TableCell>
+																				<TableCell
+																					className="border-2 border-black border-slate-300"
+																					align="center"
+																				>
+																					-{/* {row.Tamount} */}
+																				</TableCell>
+																			</TableRow>
+																		))}
 																</TableBody>
 															</Table>
 														</TableContainer>
 													</div>
-
-													<div className="grid grid-cols-4">
-														<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
-															Current Bill
+													<div
+														style={{
+															display: 'grid',
+															gridDirection: 'column',
+															gridAutoRows: '50% 50%',
+															height: '-webkit-fill-available'
+														}}
+													>
+														<div className="grid grid-cols-4">
+															<div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2">
+																Current Bill
+															</div>
+															<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
+																{bill.total_bill}
+															</div>
+															<div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2">
+																Total arrears
+															</div>
+															<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
+																{bill.arrears}
+															</div>
+															<div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2">
+																Advance
+															</div>
+															<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
+																{}
+															</div>
+															<div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2">
+																Adjustment
+															</div>
+															<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
+																{bill.fpa_charges}
+															</div>
+															<div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2">
+																Subsidy
+															</div>
+															<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
+																{}
+															</div>
+															<div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2">
+																L.P Surcharge
+															</div>
+															<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
+																{bill.late_surcharge}
+															</div>
+															<div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2">
+																PayAble within Due Date
+															</div>
+															<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
+																{bill.total_bill}
+															</div>
+															<div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2">
+																PayAble after Due Date
+															</div>
+															<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
+																{bill.bill_after_due_date}
+															</div>
 														</div>
-														<div className="border-black border-1 outline-2 place-items-center text-base">
-															{bill.total_bill}
-														</div>
-														<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
-															Total arrears
-														</div>
-														<div className="border-black border-1 outline-2 place-items-center text-base">
-															{bill.arrears}
-														</div>
-														<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
-															Advance
-														</div>
-														<div className="border-black border-1 outline-2 place-items-center text-base">
-															{}
-														</div>
-														<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
-															Adjustment
-														</div>
-														<div className="border-black border-1 outline-2 place-items-center text-base">
-															{bill.fpa_charges}
-														</div>
-														<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
-															Subsidy
-														</div>
-														<div className="border-black border-1 outline-2 place-items-center text-base">
-															{}
-														</div>
-														<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
-															L.P Surcharge
-														</div>
-														<div className="border-black border-1 outline-2 place-items-center text-base">
-															{bill.late_surcharge}
-														</div>
-														<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
-															PayAble within Due Date
-														</div>
-														<div className="border-black border-1 outline-2 place-items-center text-base">
-															{bill.total_bill}
-														</div>
-														<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
-															PayAble after Due Date
-														</div>
-														<div className="border-black border-1 outline-2 place-items-center text-base">
-															{bill.bill_after_due_date}
+														<div
+															className="grid grid-cols-1 grid-rows-1 "
+															style={{ height: '30rem' }}
+														>
+															<div className="border-black border-1 outline-2 place-items-center">
+																<img
+																	className="w-fit"
+																	style={{
+																		height: '-webkit-fill-available',
+																		width: '-webkit-fill-available'
+																	}}
+																	src={BillsImage}
+																	alt="logo"
+																/>
+															</div>
+															<div className="grid grid-cols-1">
+																<div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2 text-center">
+																	{bill.reading_date}
+																</div>
+																<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
+																	Remarks:
+																</div>
+																<div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2">
+																	M.C.O Date:
+																</div>
+															</div>
 														</div>
 													</div>
+
 													{/* </div> */}
 													<div
 														className="grid grid-cols-1 grid-rows-1 "
@@ -423,8 +507,8 @@ function CompactInvoicePage(props) {
 																	height: '-webkit-fill-available',
 																	width: '-webkit-fill-available'
 																}}
-																src={BillsImage}
-																alt="logo"
+																src={DetailsImage}
+																alt="details"
 															/>
 														</div>
 													</div>
@@ -436,7 +520,7 @@ function CompactInvoicePage(props) {
 															className="border-black border-1 outline-2 place-items-center"
 															// style={{ height: '20rem' }}
 														>
-															<img
+															{/* <img
 																className="w-fit"
 																style={{
 																	height: '-webkit-fill-available',
@@ -444,7 +528,7 @@ function CompactInvoicePage(props) {
 																}}
 																src={BillsImage}
 																alt="logo"
-															/>
+															/> */}
 														</div>
 													</div>
 												</div>
@@ -458,7 +542,8 @@ function CompactInvoicePage(props) {
 															className="w-fit"
 															style={{
 																height: '-webkit-fill-available',
-																width: '-webkit-fill-available'
+																width: '-webkit-fill-available',
+																padding: '0.5rem'
 															}}
 															src={BillsCutImage}
 															alt="cut-page"
@@ -468,40 +553,43 @@ function CompactInvoicePage(props) {
 
 												<div className="grid grid-col-3 grid-flow-col ">
 													<div className="border-black border-1 outline-2 place-items-center">
-														<Typography className="text-center text-lg font-bold">
-															{' '}
+														<Typography
+															className="text-center font-bold"
+															style={{ fontSize: '1.8rem' }}
+														>
 															Service Invoice
 														</Typography>
 													</div>
 													<div className="border-black border-1 outline-2">
-														<Typography className="text-center text-lg font-bold">
-															{' '}
+														<Typography
+															className="text-center font-bold"
+															style={{ fontSize: '1.8rem' }}
+														>
 															Service Invoice
 														</Typography>
-														<Typography className="text-center text-base" color="inherit">
-															{bill.customer_name}
+														<Typography className="text-center text-xs" color="inherit">
+															For Complaints 042-35459960
+														</Typography>
+														<Typography className="text-center text-xs" color="inherit">
+															Payable at C Block Billing Office
+														</Typography>
+														<Typography className="text-center text-xs" color="inherit">
+															Timing : 10:15 AM - 5:00 PM
+														</Typography>
+														<Typography className="text-center text-xs" color="inherit">
+															Break : 1:00 PM - 2:00 PM
+														</Typography>
+														<Typography className="text-center text-xs" color="inherit">
+															Friday Break : 1:00 PM - 3:00 PM
 														</Typography>
 
-														{bill.street_address && (
-															<Typography
-																className="text-center text-base"
-																color="inherit"
-															>
-																{bill.street_address}
-															</Typography>
-														)}
-														{bill.property_size && (
-															<Typography
-																className="text-center text-base"
-																color="inherit"
-															>
-																{bill.property_size}
-															</Typography>
-														)}
+														<Typography className="text-center text-xs " color="inherit">
+															Consumer Copy
+														</Typography>
 													</div>
-													<div className="border-black border-1 outline-2">
-														<div>
-															<img className="w-80 m-auto" src={Logo} alt="logo" />
+													<div className="border-black border-1 outline-2 flex justify-center">
+														<div style={{ alignSelf: 'center', marginTop: '1.2rem' }}>
+															<img className="w-80 m-auto" src={Barcode} alt="logo" />
 														</div>
 													</div>
 												</div>
@@ -591,36 +679,37 @@ function CompactInvoicePage(props) {
 												{/* Header */}
 												<div className="grid grid-col-3 grid-flow-col ">
 													<div className="border-black border-1 outline-2 place-items-center">
-														<Typography className="text-center text-lg font-bold">
-															{' '}
+														<Typography
+															className="text-center font-bold"
+															style={{ fontSize: '1.8rem' }}
+														>
 															Service Invoice
 														</Typography>
 													</div>
 													<div className="border-black border-1 outline-2">
-														<Typography className="text-center text-lg font-bold">
-															{' '}
+														<Typography
+															className="text-center font-bold"
+															style={{ fontSize: '1.8rem' }}
+														>
 															Service Invoice
 														</Typography>
-														<Typography className="text-center text-sm" color="inherit">
+														<Typography className="text-center text-xs" color="inherit">
 															For Complaints 042-35459960
 														</Typography>
-														<Typography className="text-center text-sm" color="inherit">
+														<Typography className="text-center text-xs" color="inherit">
 															Payable at C Block Billing Office
 														</Typography>
-														<Typography className="text-center text-sm" color="inherit">
+														<Typography className="text-center text-xs" color="inherit">
 															Timing : 10:15 AM - 5:00 PM
 														</Typography>
-														<Typography className="text-center text-sm" color="inherit">
+														<Typography className="text-center text-xs" color="inherit">
 															Break : 1:00 PM - 2:00 PM
 														</Typography>
-														<Typography className="text-center text-sm" color="inherit">
+														<Typography className="text-center text-xs" color="inherit">
 															Friday Break : 1:00 PM - 3:00 PM
 														</Typography>
 
-														<Typography
-															className="text-center text-sm mt-8"
-															color="inherit"
-														>
+														<Typography className="text-center text-xs" color="inherit">
 															Consumer Copy
 														</Typography>
 													</div>
@@ -631,36 +720,36 @@ function CompactInvoicePage(props) {
 													</div>
 												</div>
 												<div className="grid grid-cols-9 grid-rows-1">
-													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
+													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2">
 														Name
 													</div>
-													<div className="border-black border-1 outline-2 place-items-center text-base">
+													<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
 														{bill.customer_name}
 													</div>
-													<div className="border-black border-1 outline-2 place-items-center  text-base">
+													<div className="border-black border-1 outline-2 place-items-center  text-base pl-3 pt-2">
 														Plot Size-{bill.property_size}
 													</div>
-													<div className="border-black border-1 outline-2 place-items-center  font-semibold text-base">
+													<div className="border-black border-1 outline-2 place-items-center  font-semibold text-base pl-3 pt-2">
 														Con Date
 													</div>
-													<div className="border-black border-1 outline-2 place-items-center text-base">
+													<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
 														{bill.issue_date}
 													</div>
-													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
+													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2">
 														Status
 													</div>
-													<div className="border-black border-1 outline-2 place-items-center text-base">
+													<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
 														{bill.payment_status}
 													</div>
-													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
+													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2">
 														Reference Number
 													</div>
-													<div className="border-black border-1 outline-2 place-items-center text-base">
+													<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
 														{bill.refference_number}
 													</div>
 												</div>
 												{/* Meter No Phases No */}
-												<div className="grid grid-cols-5 grid-rows-1">
+												<div className="grid grid-cols-5 grid-rows-1 text-center">
 													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
 														Meter number
 													</div>
@@ -805,8 +894,8 @@ function CompactInvoicePage(props) {
 																height: '-webkit-fill-available',
 																width: '-webkit-fill-available'
 															}}
-															src={BillsImage}
-															alt="logo"
+															src={DetailsImage}
+															alt="details"
 														/>
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center">
@@ -831,7 +920,8 @@ function CompactInvoicePage(props) {
 															className="w-fit"
 															style={{
 																height: '-webkit-fill-available',
-																width: '-webkit-fill-available'
+																width: '-webkit-fill-available',
+																padding: '0.5rem'
 															}}
 															src={BillsCutImage}
 															alt="cut-page"
@@ -841,12 +931,14 @@ function CompactInvoicePage(props) {
 												{/* Footer */}
 												<div className="grid grid-col-3 grid-flow-col ">
 													<div className="border-black border-1 outline-2 place-items-center">
-														<Typography className="text-center text-lg font-bold">
-															{' '}
+														<Typography
+															className="text-center font-bold"
+															style={{ fontSize: '1.8rem' }}
+														>
 															Service Invoice
 														</Typography>
 													</div>
-													<div className="border-black border-1 outline-2">
+													{/* <div className="border-black border-1 outline-2">
 														<Typography className="text-center text-lg font-bold">
 															{' '}
 															Service Invoice
@@ -871,10 +963,37 @@ function CompactInvoicePage(props) {
 																{bill.property_size}
 															</Typography>
 														)}
-													</div>
+													</div> */}
 													<div className="border-black border-1 outline-2">
-														<div>
-															<img className="w-80 m-auto" src={Logo} alt="logo" />
+														<Typography
+															className="text-center font-bold"
+															style={{ fontSize: '1.8rem' }}
+														>
+															Service Invoice
+														</Typography>
+														<Typography className="text-center text-xs" color="inherit">
+															For Complaints 042-35459960
+														</Typography>
+														<Typography className="text-center text-xs" color="inherit">
+															Payable at C Block Billing Office
+														</Typography>
+														<Typography className="text-center text-xs" color="inherit">
+															Timing : 10:15 AM - 5:00 PM
+														</Typography>
+														<Typography className="text-center text-xs" color="inherit">
+															Break : 1:00 PM - 2:00 PM
+														</Typography>
+														<Typography className="text-center text-xs" color="inherit">
+															Friday Break : 1:00 PM - 3:00 PM
+														</Typography>
+
+														<Typography className="text-center text-xs" color="inherit">
+															Consumer Copy
+														</Typography>
+													</div>
+													<div className="border-black border-1 outline-2 flex justify-center">
+														<div style={{ alignSelf: 'center', marginTop: '1rem' }}>
+															<img className="w-80 m-auto" src={Barcode} alt="logo" />
 														</div>
 													</div>
 												</div>

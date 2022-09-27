@@ -345,7 +345,9 @@ function BillsBellowSection(props) {
 										>
 											Download PDF
 										</Button>
-										<Button type="submit" variant="contained" color="secondary">
+										<Button type="submit" variant="contained" 
+											className="w-full"
+											color="secondary">
 											Upload Payment
 										</Button>
 									</motion.div>
