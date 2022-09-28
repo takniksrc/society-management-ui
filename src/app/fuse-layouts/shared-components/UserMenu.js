@@ -79,7 +79,7 @@ function UserMenu(props) {
 					</>
 				) : (
 					<>
-						<MenuItem component={Link} to="/pages/profile" onClick={userMenuClose} role="button">
+						{/* <MenuItem component={Link} to="/pages/profile" onClick={userMenuClose} role="button">
 							<ListItemIcon className="min-w-40">
 								<Icon>account_circle</Icon>
 							</ListItemIcon>
@@ -90,7 +90,7 @@ function UserMenu(props) {
 								<Icon>mail</Icon>
 							</ListItemIcon>
 							<ListItemText primary="Inbox" />
-						</MenuItem>
+						</MenuItem> */}
 						<MenuItem
 							onClick={() => {
 								dispatch(logoutUser());

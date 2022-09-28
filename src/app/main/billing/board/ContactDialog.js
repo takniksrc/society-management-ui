@@ -105,7 +105,7 @@ function ContactDialog(props) {
 		//call the api for data
 		console.log('bill', contactDialog);
 		instance.get(`/api/bills/${contactDialog?.data?.id}`).then(res => setBillData(res.data));
-	}, [contactDialog.data, contactDialog.type, reset, dispatch]);
+	}, [contactDialog.data, contactDialog.type, reset, dispatch,getBillData]);
 	const onSubmitPaidValuesForm = data => {
 		console.log('data in paid', data);
 		instance
@@ -142,7 +142,7 @@ function ContactDialog(props) {
 			initDialog();
 		}
 		// dispatch(getBillData(contactDialog?.data?.id));
-	}, [contactDialog.props.open, initDialog, contactDialog.data, dispatch]);
+	}, [contactDialog.props.open, initDialog, contactDialog.data, dispatch,getBillData]);
 
 	function closeComposeDialog() {
 		return contactDialog.type === 'edit' ? dispatch(closeEditContactDialog()) : dispatch(closeNewContactDialog());

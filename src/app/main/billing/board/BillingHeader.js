@@ -27,7 +27,7 @@ function BillingHeader(props) {
 	return (
 		<div className="flex flex-1 w-full items-center justify-between">
 			<div className="flex items-center">
-				<IconButton to="/billing/boards/1/electricity-bills" component={Link}>
+				<IconButton to="/billing/boards" component={Link}>
 					<Icon>{theme.direction === 'ltr' ? 'arrow_back' : 'arrow_forward'}</Icon>
 				</IconButton>
 				<Icon
