@@ -190,15 +190,33 @@ function ContactDialog(props) {
 			reset({ ...contactDialog.data });
 			console.log('drop down cust id', contactDialog.data.customer_type.id);
 			setCustomerType(contactDialog.data.customer_type.id);
-			setPropertyType(contactDialog.data.property_type);
-			setBlock();
-			setSector();
-			setMeterPhase();
-			setMeterStatus();
-			setMeterType();
+			setPropertyType(contactDialog.data.property_type_id);
+			setPropertySize(contactDialog.data.property_size_id);
+			setMeterPhase(contactDialog.data.meter_phase);
+			setMeterStatus(contactDialog.data.meter_status);
+			setBlock(contactDialog.data.block);
+			setSector(contactDialog.data.sector);
+
+			setMeterType(
+				contactDialog.data.meter_type.charAt(0).toUpperCase() + contactDialog.data.meter_type.slice(1)
+			);
 
 			setValue('customer_type', contactDialog.data.customer_type.id);
-			setValue('property_type', contactDialog.data.property_type);
+			setValue('property_type', contactDialog.data.property_type_id);
+			setValue('property_size', contactDialog.data.property_size_id);
+			setValue('meter_phase', contactDialog.data.meter_phase);
+			setValue('meter_status', contactDialog.data.meter_status);
+			setValue('sector', contactDialog.data.sector);
+			setValue('block', contactDialog.data.block);
+
+			setValue(
+				'meter_type',
+				contactDialog.data.meter_type.charAt(0).toUpperCase() + contactDialog.data.meter_type.slice(1)
+			);
+			console.log(
+				'ab',
+				contactDialog.data.meter_type.charAt(0).toUpperCase() + contactDialog.data.meter_type.slice(1)
+			);
 		}
 
 		/**
@@ -575,9 +593,6 @@ function ContactDialog(props) {
 									/>
 								}
 							>
-								{/* <MenuItem value="all">
-									<em> All </em>
-								</MenuItem> */}
 								{configurationsData?.meter_types?.map(category => (
 									<MenuItem value={category.name} key={category.name}>
 										{category.name}

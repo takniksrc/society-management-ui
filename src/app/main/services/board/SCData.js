@@ -84,10 +84,10 @@ function SCData(props) {
 								)}
 								role="button"
 								component={Link}
-								// onClick={event => handleOpen(board.id)}
-							>
+								// onClick={event => handleOpen(board.id)} 
+								>
 								<Icon className="text-56" color="action">
-									<img src={board.icon} alt="" />
+									<img src={board.name} alt="" />
 								</Icon>
 								<Typography className="text-16 font-medium text-center pt-16 px-32" color="inherit">
 									{board.name}

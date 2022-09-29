@@ -41,8 +41,7 @@ const AllCustomers = ({ columns, data, onRowClick }) => {
 			columns,
 			data,
 			initialState: {
-				hiddenColumns: ['reference_number'] //The reows which want to remove add here and get values from backend
-			},
+				hiddenColumns: ['reference_number','property_size_id', 'property_type_id'] 		},
 			autoResetPage: true
 		},
 		useGlobalFilter,
