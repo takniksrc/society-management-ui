@@ -105,7 +105,7 @@ function ContactDialog(props) {
 		//call the api for data
 		console.log('bill', contactDialog);
 		instance.get(`/api/bills/${contactDialog?.data?.id}`).then(res => setBillData(res.data));
-	}, [contactDialog.data, contactDialog.type, reset, dispatch,getBillData]);
+	}, [contactDialog.data, contactDialog.type, reset, dispatch, GetBillsData]);
 	const onSubmitPaidValuesForm = data => {
 		console.log('data in paid', data);
 		instance
@@ -130,9 +130,9 @@ function ContactDialog(props) {
 				console.log(error);
 			});
 	};
-	const UpdateList =()=>{
-		dispatch(getBillData(contactDialog.data.id))
-	}
+	const UpdateList = () => {
+		dispatch(getBillData(contactDialog.data.id));
+	};
 	/**
 	 * On Dialog Open
 	 */
@@ -142,7 +142,8 @@ function ContactDialog(props) {
 			initDialog();
 		}
 		// dispatch(getBillData(contactDialog?.data?.id));
-	}, [contactDialog.props.open, initDialog, contactDialog.data, dispatch,getBillData]);
+		// dispatch(getBillData(contactDialog.data.id));
+	}, [contactDialog.props.open, initDialog, contactDialog.data, dispatch, GetBillsData]);
 
 	function closeComposeDialog() {
 		return contactDialog.type === 'edit' ? dispatch(closeEditContactDialog()) : dispatch(closeNewContactDialog());
@@ -173,7 +174,6 @@ function ContactDialog(props) {
 				console.log(error);
 			});
 	};
-	
 
 	return (
 		<Dialog
@@ -339,7 +339,7 @@ function ContactDialog(props) {
 									variant="contained"
 									color="secondary"
 									type="submit"
-									onClick ={UpdateList}
+									onClick={UpdateList}
 									// onClick={() => dispatch(getBillData(contactDialog.data.id))}
 									// disabled={_.isEmpty(dirtyFields) || !isValid}
 								>
@@ -349,11 +349,11 @@ function ContactDialog(props) {
 							<div>
 								{GetBillsData?.payment_history?.map((item, index) => {
 									return (
-										<Card className="p-10 m-10">
-										<Typography>
-											<b>Paid PKR</b> {item?.amount} , Date {item?.payment_date}
+										// <Card className="p-10 m-10">
+										<Typography className="p-10 m-10">
+											<b>Paid </b>PKR {item?.amount} <b>, Date </b> {item?.payment_date}
 										</Typography>
-										</Card>
+										// </Card>
 									);
 								})}
 							</div>
