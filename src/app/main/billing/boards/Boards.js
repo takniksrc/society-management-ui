@@ -54,7 +54,7 @@ function Boards(props) {
 		dispatch(resetBills([]));
 		dispatch(getConfigurations()).then(data => {
 			console.log('I am promise returend', data);
-			dispatch(getBlocksStatus(data.payload.sectors[0].id));
+			dispatch(getBlocksStatus(data.payload?.sectors[0]?.id));
 		});
 	}, [dispatch]);
 

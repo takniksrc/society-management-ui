@@ -26,6 +26,8 @@ import societyChargesIcon from '../../../../assets/ServicesIcon/society-charges-
 import consumptionChragesIcon from '../../../../assets/ServicesIcon/consumption-based-icon.png';
 import instance from 'axiosinstance';
 import { getBills, resetBills } from '../store/AllBillsSlice';
+import { hideMessage, showMessage } from 'app/store/fuse/messageSlice';
+
 
 const defaultValues = {
 	id: '',
@@ -92,6 +94,17 @@ function GBData(props) {
 			.post('/api/bills/generate', data)
 			.then(function (response) {
 				if (response.status === 201) {
+					dispatch(
+						showMessage({
+							message: response.data.message, //text or html
+							autoHideDuration: 6000, //ms
+							anchorOrigin: {
+								vertical: 'top', //top bottom
+								horizontal: 'right' //left center right
+							},
+							variant: 'success' //success error info warning null
+						})
+					);
 					dispatch(getBills(props.blockId)).then(() => {
 						history.push('/billing/boards/1/electrcity-bills/billing');
 					});
@@ -99,6 +112,17 @@ function GBData(props) {
 				console.log(JSON.stringify(response));
 			})
 			.catch(function (error) {
+				// dispatch(
+				// 	showMessage({
+				// 		message: response.data.message, //text or html
+				// 		autoHideDuration: 6000, //ms
+				// 		anchorOrigin: {
+				// 			vertical: 'top', //top bottom
+				// 			horizontal: 'right' //left center right
+				// 		},
+				// 		variant: 'error' //success error info warning null
+				// 	})
+				// );
 				alert('Error while generating');
 			});
 
