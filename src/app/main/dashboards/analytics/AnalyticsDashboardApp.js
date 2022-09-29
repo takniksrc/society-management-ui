@@ -13,7 +13,7 @@ import { selectWidgetsEntities, getCharts } from './store/widgetsSlice';
 function AnalyticsDashboardApp() {
 	const dispatch = useDispatch();
 	const Charts = useSelector(({ analyticsDashboardApp }) => analyticsDashboardApp.widgets);
-	console.log('i am new charts', Charts?.total_payments?.total_receiveble);
+	console.log('i am new charts', Charts?.total_payments);
 	const [meter, setMeter] = useState();
 	const [payment, setPayemnt] = useState();
 
@@ -334,6 +334,12 @@ function AnalyticsDashboardApp() {
 				{!!payment && (
 					<ReactApexChart options={payment.options} series={payment.series} type="radialBar" height={350} />
 				)}
+				<Typography style={{ textAlign: 'center', marginTop: '-1.7rem', paddingBottom: '0.5rem' }}>
+					<b>Total Recieved :</b> {Charts?.total_payments?.total_received.toFixed(2)}
+				</Typography>
+				<Typography style={{ textAlign: 'center', paddingBottom: '1rem' }}>
+					<b>Total Recievable :</b> {Charts?.total_payments?.total_receiveble.toFixed(2)}
+				</Typography>
 			</Card>
 			<Card className="w-3/12 rounded-20 shadow m-28">
 				{!!state && <ReactApexChart options={state.options} series={state.series} type="bar" height={350} />}
