@@ -13,6 +13,7 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Input from '@material-ui/core/Input';
 import TextField from '@material-ui/core/TextField';
 import { Controller, useFormContext, useForm } from 'react-hook-form';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { selectMainTheme } from 'app/store/fuse/settingsSlice';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -49,6 +50,9 @@ const useStyles = makeStyles(theme => ({
 		transitionProperty: 'box-shadow border-color',
 		transitionDuration: theme.transitions.duration.short,
 		transitionTimingFunction: theme.transitions.easing.easeInOut
+	},
+	input: {
+		display: 'none'
 	},
 	newBoard: {}
 }));
@@ -100,6 +104,9 @@ function BillsBellowSection(props) {
 	console.log('I am filtered in bellow', filteredData);
 	const routeParams = useParams();
 	console.log('i am routeParams', routeParams);
+	const onSubmitButton = data => {
+		console.log('I am clicked');
+	};
 
 	const columns = useMemo(
 		() => [
@@ -283,95 +290,112 @@ function BillsBellowSection(props) {
 	}
 
 	return (
-		<form noValidate onSubmit={handleSubmit(handleForm)}>
-			<div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>
-				<div className="flex flex-grow flex-shrink-0 flex-col items-center container px-16 md:px-24">
-					<motion.div
-						variants={container}
-						initial="hidden"
-						animate="show"
-						className="grid grid-cols-1 flex-wrap w-full justify-center py-16 "
-					>
-						<motion.div variants={item} className="h-auto p-16" key={1}>
-							<Paper
-								// to={`/services/boards/consumption-based-charges/${board.id}/${board.uri}`}
-								className={clsx(
-									classes.board,
-									'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
-								)}
-								role="button"
-								component={Link}
-							>
-								<div className=" flex flex-wrap w-full justify-center px-16 flex-row">
-									<div className="flex flex-1 items-center justify-center basis-1/4">
-										<ThemeProvider theme={mainTheme}>
-											<Paper
-												component={motion.div}
-												initial={{ y: -20, opacity: 0 }}
-												animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
-												className="flex items-center w-full max-w-512 px-8 py-4 rounded-16 shadow"
-											>
-												<Icon color="action">search</Icon>
+		<>
+			<form noValidate onSubmit={handleSubmit(handleForm)}>
+				<div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>
+					<div className="flex flex-grow flex-shrink-0 flex-col items-center container px-16 md:px-24">
+						<motion.div
+							variants={container}
+							initial="hidden"
+							animate="show"
+							className="grid grid-cols-1 flex-wrap w-full justify-center py-16 "
+						>
+							<motion.div variants={item} className="h-auto p-16" key={1}>
+								<Paper
+									// to={`/services/boards/consumption-based-charges/${board.id}/${board.uri}`}
+									className={clsx(
+										classes.board,
+										'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
+									)}
+									role="button"
+									// component={Link}
+								>
+									<div className=" flex flex-wrap w-full justify-center px-16 flex-row">
+										<div className="flex flex-1 items-center justify-center basis-1/4">
+											<ThemeProvider theme={mainTheme}>
+												<Paper
+													component={motion.div}
+													initial={{ y: -20, opacity: 0 }}
+													animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
+													className="flex items-center w-full max-w-512 px-8 py-4 rounded-16 shadow"
+												>
+													<Icon color="action">search</Icon>
 
-												<Input
-													placeholder="Search for anything"
-													className="flex flex-1 px-16"
-													disableUnderline
-													fullWidth
-													value={searchText}
-													inputProps={{
-														'aria-label': 'Search'
-													}}
-													onChange={ev => dispatch(setContactsSearchText(ev))}
-												/>
-											</Paper>
-										</ThemeProvider>
-									</div>
+													<Input
+														placeholder="Search for anything"
+														className="flex flex-1 px-16"
+														disableUnderline
+														fullWidth
+														value={searchText}
+														inputProps={{
+															'aria-label': 'Search'
+														}}
+														onChange={ev => dispatch(setContactsSearchText(ev))}
+													/>
+												</Paper>
+											</ThemeProvider>
+										</div>
 
-									<motion.div
-										initial={{ opacity: 0, x: 20 }}
-										animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
-										className="flex flex-1 items-center justify-center px-12 space-x-20 basis-1/2"
-									>
-										{/* <div>
+										<motion.div
+											initial={{ opacity: 0, x: 20 }}
+											animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
+											className="flex flex-1 items-center justify-center px-12 space-x-20 basis-1/2"
+										>
+											{/* <div>
 											<input type="file" {...register('file')} />
 										</div> */}
-										<Button
-											variant="contained"
-											color="secondary"
-											className="w-full"
-											component={Link}
-											to={`/billing/pdf-bills/${routeParams.boardId}`}
-										>
-											Download PDF
-										</Button>
-										<Button type="submit" variant="contained" 
-											className="w-full"
-											color="secondary">
-											Upload Payment
-										</Button>
-									</motion.div>
-								</div>
+											<Button
+												variant="contained"
+												color="secondary"
+												className="w-full"
+												component={Link}
+												to={`/billing/pdf-bills/${routeParams.boardId}`}
+											>
+												Download PDF
+											</Button>
+											<form className="w-full" noValidate onSubmit={handleSubmit(onSubmitButton)}>
+												<input
+													accept="image/*"
+													className={classes.input}
+													id="contained-button-file"
+													multiple
+													type="file"
+												/>
+												<label htmlFor="contained-button-file">
+													<Button
+														color="secondary"
+														className="w-full"
+														variant="contained"
+														component="span"
+														// className={classes.button}
+														startIcon={<CloudUploadIcon />}
+													>
+														Upload Payment
+													</Button>
+												</label>
+											</form>
+										</motion.div>
+									</div>
 
-								<div className=" flex flex-wrap w-full justify-center py-32 px-16 flex-row">
-									<AllBills
-										columns={columns}
-										// data={[filteredData[0].customer]}
-										data={filteredData}
-										onRowClick={(ev, row) => {
-											if (row) {
-												dispatch(openEditContactDialog(row.original));
-											}
-										}}
-									/>
-								</div>
-						
-							</Paper>
+									<div className=" flex flex-wrap w-full justify-center py-32 px-16 flex-row">
+										<AllBills
+											columns={columns}
+											// data={[filteredData[0].customer]}
+											data={filteredData}
+											onRowClick={(ev, row) => {
+												if (row) {
+													dispatch(openEditContactDialog(row.original));
+												}
+											}}
+										/>
+									</div>
+								</Paper>
+							</motion.div>
 						</motion.div>
-					</motion.div>
+					</div>
 				</div>
-			</div>
-		</form>
+			</form>
+		</>
 	);
 }
 
