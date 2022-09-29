@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import ContactsMultiSelectMenu from './ContactsMultiSelectMenu';
 import AllUsers from './AllUsers';
 import { selectUsers } from '../../store/disconnectedmeterSlice';
+import MeterImage from '../../../../../assets/BillsIcon/image.jpg';
 
 function AllUsersHead(props) {
 	const dispatch = useDispatch();
@@ -68,7 +69,26 @@ function AllUsersHead(props) {
 			},
 			{
 				Header: 'Meter Pic.',
-				accessor: 'meter_snaphot',
+				accessor: 'meter_snapshot',
+				Cell: ({ row }) => {
+					const image = `http://localhost:8000/${row?.original?.meter_snapshot}`;
+					console.log('I am row', `http://localhost:8000/${row?.original?.meter_snapshot}`);
+					if (row.original.meter_snapshot === null) {
+						return <Typography className='text-red-800'>No Image Found</Typography>;
+					}
+					return (
+						<>
+							<img
+								// className="mx-8"
+								style={{ height: '8rem' }}
+								alt="meter_image"
+								src={image}
+								width="200"
+								height="8rem"
+							/>
+						</>
+					);
+				},
 				sortable: true
 			},
 			{
@@ -89,7 +109,6 @@ function AllUsersHead(props) {
 								<Icon>star_border</Icon>
 							)}
 						</IconButton> */}
-
 					</div>
 				)
 			}

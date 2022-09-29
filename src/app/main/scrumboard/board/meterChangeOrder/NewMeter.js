@@ -70,6 +70,25 @@ function NewMeter(props) {
 			{
 				Header: 'Meter Picture',
 				accessor: 'meter_snapshot',
+				Cell: ({ row }) => {
+					const image = `http://localhost:8000/${row?.original?.meter_snapshot}`;
+					console.log('I am row', `http://localhost:8000/${row?.original?.meter_snapshot}`);
+					if (row.original.meter_snapshot === null) {
+						return <Typography className='text-red-800'>No Image Found</Typography>;
+					}
+					return (
+						<>
+							<img
+								// className="mx-8"
+								style={{ height: '8rem' }}
+								alt="meter_image"
+								src={image}
+								width="200"
+								height="8rem"
+							/>
+						</>
+					);
+				},
 				sortable: true
 			},
 			{
