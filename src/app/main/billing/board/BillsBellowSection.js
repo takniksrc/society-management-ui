@@ -34,6 +34,7 @@ import {
 	toggleStarredContact,
 	selectUsers
 } from '../store/newUsersSlice';
+import { getBlockBillsData } from '../store/billsWithBlockIdSlice';
 import { selectBoards, newBoard, getBoards, resetBoards } from '../store/boardsSlice';
 
 import societyChargesIcon from '../../../../assets/ServicesIcon/society-charges-icon.png';
@@ -61,15 +62,16 @@ function BillsBellowSection(props) {
 	const mainTheme = useSelector(selectMainTheme);
 
 	const dispatch = useDispatch();
+	const routeParams = useParams();
+	console.log('i am routeParams', routeParams);
 
 	const classes = useStyles(props);
 
 	useEffect(() => {
-		// dispatch();
 		return () => {
 			// dispatch(resetBoards());
 		};
-	}, [dispatch]);
+	}, []);
 
 	const container = {
 		show: {
@@ -102,8 +104,7 @@ function BillsBellowSection(props) {
 
 	const [filteredData, setFilteredData] = useState(null);
 	console.log('I am filtered in bellow', filteredData);
-	const routeParams = useParams();
-	console.log('i am routeParams', routeParams);
+
 	const onSubmitButton = data => {
 		console.log('I am clicked');
 	};
@@ -164,7 +165,7 @@ function BillsBellowSection(props) {
 				sortable: true
 			},
 			{
-				Header: 'Totl Bill',
+				Header: 'Total Bill',
 				accessor: 'total_bill',
 				sortable: true
 			},

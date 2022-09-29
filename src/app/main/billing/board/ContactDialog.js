@@ -37,6 +37,7 @@ import { Card } from '@material-ui/core';
 import { forEach } from 'lodash';
 import { showMessage } from 'app/store/fuse/messageSlice';
 import { getBillData } from '../store/billWithIdSlice';
+import { getBills, resetBills } from '../store/AllBillsSlice';
 
 const defaultValuesDiscount = {
 	current_reading: '',
@@ -55,6 +56,8 @@ function ContactDialog(props) {
 	const [billData, setBillData] = useState({});
 	console.log('I am cliked data ', contactDialog);
 	console.log('billData', billData);
+	const routeParams = useParams();
+	console.log('i am routeParams', routeParams);
 	const StyledTableRow = withStyles(theme => ({
 		root: {
 			'&:nth-of-type(odd)': {
@@ -105,7 +108,8 @@ function ContactDialog(props) {
 		//call the api for data
 		console.log('bill', contactDialog);
 		instance.get(`/api/bills/${contactDialog?.data?.id}`).then(res => setBillData(res.data));
-	}, [contactDialog.data, contactDialog.type, reset, dispatch, GetBillsData]);
+	}, [contactDialog.data, contactDialog.type, reset]);
+
 	const onSubmitPaidValuesForm = data => {
 		console.log('data in paid', data);
 		instance
@@ -113,10 +117,10 @@ function ContactDialog(props) {
 				amount: data.paid_amount
 			})
 			.then(function (response) {
-				console.log('response', JSON.stringify(response.data));
+				console.log('response', response.data);
 				dispatch(
 					showMessage({
-						message: response.message, //text or html
+						message: response.data.message, //text or html
 						autoHideDuration: 6000, //ms
 						anchorOrigin: {
 							vertical: 'top', //top bottom
@@ -129,7 +133,9 @@ function ContactDialog(props) {
 			.catch(function (error) {
 				console.log(error);
 			});
+		dispatch(getBillData(contactDialog?.data?.id));
 	};
+
 	const UpdateList = () => {
 		dispatch(getBillData(contactDialog.data.id));
 	};
@@ -137,13 +143,13 @@ function ContactDialog(props) {
 	 * On Dialog Open
 	 */
 	useEffect(() => {
-		console.log('I am Ge');
 		if (contactDialog.props.open) {
 			initDialog();
 		}
-		// dispatch(getBillData(contactDialog?.data?.id));
-		// dispatch(getBillData(contactDialog.data.id));
-	}, [contactDialog.props.open, initDialog, contactDialog.data, dispatch, GetBillsData]);
+		console.log('I am Called');
+		contactDialog?.data?.id && dispatch(getBillData(contactDialog?.data?.id));
+		dispatch(getBills(routeParams.boardId));
+	}, [contactDialog.props.open, initDialog, contactDialog.data]);
 
 	function closeComposeDialog() {
 		return contactDialog.type === 'edit' ? dispatch(closeEditContactDialog()) : dispatch(closeNewContactDialog());
@@ -173,6 +179,7 @@ function ContactDialog(props) {
 			.catch(function (error) {
 				console.log(error);
 			});
+		dispatch(getBillData(contactDialog?.data?.id));
 	};
 
 	return (
@@ -236,7 +243,7 @@ function ContactDialog(props) {
 									Add Payment
 								</Button>
 							</div>
-							<div>
+							<div style={{ height: '40rem', overflow: 'scroll' }} className="mt-10">
 								{GetBillsData?.payment_history?.map((item, index) => {
 									return (
 										// <Card className="p-10 m-10">
@@ -300,16 +307,38 @@ function ContactDialog(props) {
 							</Card>
 						</form>
 						<Card className="w-full" style={{ padding: '2rem' }}>
-							<Typography color="error">Due Date: {contactDialog?.data?.due_date}</Typography>
-							<Typography>
-								Units: {contactDialog?.data?.current_reading - contactDialog?.data?.previous_reading}{' '}
+							<Typography color="error">
+								<b>Due Date: </b>
+								{contactDialog?.data?.due_date}
 							</Typography>
-							<Typography>Previous Reading: {contactDialog.data?.previous_reading} </Typography>
-							<Typography>Arrears: {contactDialog.data?.arrears}</Typography>
-							<Typography>Total FPA: {contactDialog.data?.fpa_charges}</Typography>
-							<Typography>Current Bill: {contactDialog.data?.electricity_charges}</Typography>
-							<Typography>Society Charges: {contactDialog.data?.society_charges}</Typography>
-							<Typography>Total Payables: {contactDialog.data?.total_bill} </Typography>
+							<Typography>
+								<b>Units:</b>{' '}
+								{contactDialog?.data?.current_reading - contactDialog?.data?.previous_reading}{' '}
+							</Typography>
+							<Typography>
+								<b>Previous Reading:</b> {GetBillsData.previous_reading}{' '}
+							</Typography>
+							<Typography>
+								{' '}
+								<b>Arrears: </b>
+								{GetBillsData.arrears}
+							</Typography>
+							<Typography>
+								{' '}
+								<b>Total FPA:</b> {GetBillsData.fpa_charges}
+							</Typography>
+							<Typography>
+								<b>Current Bill:</b> {GetBillsData.electricity_charges}
+							</Typography>
+							<Typography>
+								<b>Society Charges:</b> {GetBillsData.society_charges}
+							</Typography>
+							<Typography>
+								<b>Total Payables:</b> {GetBillsData.total_bill}{' '}
+							</Typography>
+							<Typography>
+								<b>Total Paid:</b> {GetBillsData.amount_paid}{' '}
+							</Typography>
 						</Card>
 					</div>
 				</div>
