@@ -36,6 +36,7 @@ import {
 	closeEditContactDialog
 } from './store/newCustomersSlice';
 
+
 function ContactDialog(props) {
 	const dispatch = useDispatch();
 	const contactDialog = useSelector(({ newCustomersSlice }) => newCustomersSlice.newCustomersSlice);
@@ -198,7 +199,7 @@ function ContactDialog(props) {
 			setSector(contactDialog.data.sector);
 
 			setMeterType(
-				contactDialog.data.meter_type.charAt(0).toUpperCase() + contactDialog.data.meter_type.slice(1)
+				contactDialog?.data?.meter_type?.charAt(0).toUpperCase() + contactDialog.data.meter_type.slice(1)
 			);
 
 			setValue('customer_type', contactDialog.data.customer_type.id);
@@ -349,7 +350,7 @@ function ContactDialog(props) {
 							render={({ field }) => (
 								<TextField
 									{...field}
-									type="number"
+									// type="number"
 									className="mb-24"
 									label="CNIC"
 									id="cnic"
@@ -375,7 +376,7 @@ function ContactDialog(props) {
 									label="Phone"
 									id="phone_number"
 									variant="outlined"
-									type="number"
+									type="tel"
 									fullWidth
 									error={!!errors.phone_number}
 									helperText={errors?.phone_number?.message}
@@ -630,6 +631,7 @@ function ContactDialog(props) {
 							</Select>
 						</FormControl>
 					</div>
+					
 					<div className="flex">
 						<div className="min-w-48 pt-20">
 							<Icon color="action">people_alt</Icon>
@@ -657,6 +659,50 @@ function ContactDialog(props) {
 								))}
 							</Select>
 						</FormControl>
+					</div>
+					<div className="flex">
+						<div className="min-w-48 pt-20" style={{marginRight:'-0.5rem'}}>
+							<Icon color="action">home_work</Icon>
+						</div>
+						<Controller
+							control={control}
+							name="meter_company"
+							render={({ field }) => (
+								<TextField
+									{...field}
+									className="mb-24"
+									label="Meter Company"
+									id="meter_company"
+									error={!!errors.name}
+									helperText={errors?.name?.message}
+									variant="outlined"
+									required
+									fullWidth
+								/>
+							)}
+						/>
+					</div>
+					<div className="flex">
+						<div className="min-w-48 pt-20" style={{marginRight:'-0.5rem'}}>
+							<Icon color="action">dvr</Icon>
+						</div>
+						<Controller
+							control={control}
+							name="current_reading"
+							render={({ field }) => (
+								<TextField
+									{...field}
+									className="mb-24"
+									label="Current Reading"
+									id="current_reading"
+									error={!!errors.name}
+									helperText={errors?.name?.message}
+									variant="outlined"
+									required
+									fullWidth
+								/>
+							)}
+						/>
 					</div>
 				</DialogContent>
 

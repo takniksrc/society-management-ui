@@ -39,8 +39,7 @@ const navigationConfig = [
 				translate: 'CUSTOMER',
 				type: 'item',
 				icon: 'person',
-				url: '/customers',
-				auth: authRoles.admin
+				url: '/customers'
 			},
 			{
 				id: 'Services',
@@ -65,7 +64,9 @@ const navigationConfig = [
 				translate: 'USER',
 				type: 'item',
 				icon: 'person',
-				url: '/users'
+				url: '/users',
+				auth: authRoles.admin
+
 			}
 		]
 	}

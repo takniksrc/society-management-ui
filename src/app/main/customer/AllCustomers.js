@@ -41,7 +41,7 @@ const AllCustomers = ({ columns, data, onRowClick }) => {
 			columns,
 			data,
 			initialState: {
-				hiddenColumns: ['reference_number','property_size_id', 'property_type_id'] 		},
+				hiddenColumns: ['reference_number','property_size_id', 'property_type_id','meter_company'] 		},
 			autoResetPage: true
 		},
 		useGlobalFilter,

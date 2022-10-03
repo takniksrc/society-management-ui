@@ -268,7 +268,7 @@ function BillsBellowSection(props) {
 											component={Link}
 											to={`billing/pdf-bills/${routeParams.boardId}`}
 										>
-											Download PDF
+											Download Bills
 										</Button>
 										<Button variant="contained" color="secondary" className="w-full">
 											Upload Payemnts
@@ -352,7 +352,7 @@ function BillsBellowSection(props) {
 												component={Link}
 												to={`/billing/pdf-bills/${routeParams.boardId}`}
 											>
-												Download PDF
+												Download Bills
 											</Button>
 											<form className="w-full" noValidate onSubmit={handleSubmit(onSubmitButton)}>
 												<input

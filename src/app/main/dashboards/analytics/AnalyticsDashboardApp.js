@@ -111,8 +111,8 @@ function AnalyticsDashboardApp() {
 					{
 						name: 'Connections',
 						data: [
-							data.payload.wapda_electricity_connection?.total_connection,
-							data.payload.wapda_electricity_connection?.new_connection
+							data.payload?.wapda_electricity_connection?.total_connection,
+							data.payload?.wapda_electricity_connection?.new_connection
 						]
 					}
 				],
@@ -165,8 +165,8 @@ function AnalyticsDashboardApp() {
 					{
 						name: 'Connections',
 						data: [
-							data.payload.ka_electricity_connection?.total_connection,
-							data.payload.ka_electricity_connection?.new_connection
+							data.payload?.ka_electricity_connection?.total_connection,
+							data.payload?.ka_electricity_connection?.new_connection
 						]
 					}
 				],
@@ -217,10 +217,10 @@ function AnalyticsDashboardApp() {
 			setPayemnt({
 				series: [
 					(
-						((data.payload.total_payments?.total_received === null
+						((data.payload?.total_payments?.total_received === null
 							? 2000
-							: data.payload.total_payments?.total_received) /
-							data.payload.total_payments?.total_receiveble) *
+							: data.payload?.total_payments?.total_received) /
+							data.payload?.total_payments?.total_receiveble) *
 						100
 					).toFixed(2)
 				],
@@ -242,9 +242,9 @@ function AnalyticsDashboardApp() {
 
 			setMeter({
 				series: [
-					data.payload.meter_types?.meter_type_normal,
-					data.payload.meter_types?.meter_type_2_Phase,
-					data.payload.meter_types?.meter_type_3_Phase
+					data.payload?.meter_types?.meter_type_normal,
+					data.payload?.meter_types?.meter_type_2_Phase,
+					data.payload?.meter_types?.meter_type_3_Phase
 				],
 				options: {
 					chart: {
