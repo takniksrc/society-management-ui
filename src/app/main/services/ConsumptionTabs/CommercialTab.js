@@ -22,7 +22,7 @@ function CommercialTab(props) {
 	return (
 		<div>
 			<Typography variant="subtitle2" className="py-16 font-light mr-8 mx-4 text-green-400">
-				*( The units of end slabs must be one less the next start slab)
+				* (The units of end slabs must be one less then the next start slab)
 			</Typography>
 
 			{fields.map((sp, spIndex) => {
