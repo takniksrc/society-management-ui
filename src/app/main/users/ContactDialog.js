@@ -140,7 +140,7 @@ function ContactDialog(props) {
 			<AppBar position="static" elevation={0}>
 				<Toolbar className="flex w-full">
 					<Typography variant="subtitle1" color="inherit">
-						{contactDialog?.type === 'new' ? 'New Contact' : 'Edit Contact'}
+						{contactDialog?.type === 'new' ? 'New User' : 'Edit User'}
 					</Typography>
 				</Toolbar>
 				<div className="flex flex-col items-center justify-center pb-24">
