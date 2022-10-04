@@ -199,7 +199,7 @@ function ContactDialog(props) {
 			setSector(contactDialog.data.sector);
 
 			setMeterType(
-				contactDialog?.data?.meter_type?.charAt(0).toUpperCase() + contactDialog.data.meter_type.slice(1)
+				contactDialog?.data?.meter_type?.charAt(0).toUpperCase() + contactDialog?.data?.meter_type?.slice(1)
 			);
 
 			setValue('customer_type', contactDialog.data.customer_type.id);
@@ -212,11 +212,11 @@ function ContactDialog(props) {
 
 			setValue(
 				'meter_type',
-				contactDialog.data.meter_type.charAt(0).toUpperCase() + contactDialog.data.meter_type.slice(1)
+				contactDialog.data.meter_type?.charAt(0).toUpperCase() + contactDialog?.data?.meter_type?.slice(1)
 			);
 			console.log(
 				'ab',
-				contactDialog.data.meter_type.charAt(0).toUpperCase() + contactDialog.data.meter_type.slice(1)
+				contactDialog.data.meter_type?.charAt(0).toUpperCase() + contactDialog.data.meter_type?.slice(1)
 			);
 		}
 
