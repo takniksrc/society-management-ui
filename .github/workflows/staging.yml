@@ -1,0 +1,44 @@
+name: SMS_S3-CICD_STAGING
+
+# The script will run manually.
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "Write confirm..."
+        required: true
+        default: "confirm"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.13.1]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Installing Node Modules.
+        run: |
+          yarn install
+      - name: Creating Optizmized Build for staging.
+        run: |
+          DISABLE_ESLINT_PLUGIN=true yarn run build
+      - name: Running Unit Tests
+        run: |
+          # npm run test
+      - name: Deploy to STAGING BUCKET
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --delete
+        env:
+          AWS_S3_BUCKET: ${{'smsstaging.taknik.com'}}
+          AWS_ACCESS_KEY_ID: ${{ secrets.S3_PROD_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.S3_PROD_ACCESS_KEY}}
+          AWS_REGION: "ap-south-1"
+          SOURCE_DIR: "build"
