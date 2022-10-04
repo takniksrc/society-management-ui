@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
 import axios from 'axios';
-import instance from 'axiosinstance';
+import { instance } from 'app/services/jwtService/jwtService';
 import history from '@history';
 import BoardModel from '../model/BoardModel';
 

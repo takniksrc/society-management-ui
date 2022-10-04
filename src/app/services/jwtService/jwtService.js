@@ -1,8 +1,14 @@
 import FuseUtils from '@fuse/utils/FuseUtils';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
-// import instance from 'axiosinstance';
+// import { instance } from 'app/services/jwtService/jwtService';
 /* eslint-disable camelcase */
+
+export const instance = axios.create({
+	baseURL: 'http://localhost:8000'
+});
+
+// export default instance;
 
 class JwtService extends FuseUtils.EventEmitter {
 	init() {
@@ -11,7 +17,7 @@ class JwtService extends FuseUtils.EventEmitter {
 	}
 
 	setInterceptors = () => {
-		axios.interceptors.response.use(
+		instance.interceptors.response.use(
 			response => {
 				return response;
 			},
@@ -48,7 +54,7 @@ class JwtService extends FuseUtils.EventEmitter {
 
 	createUser = data => {
 		return new Promise((resolve, reject) => {
-			axios.post('/api/register', data).then(response => {
+			instance.post('/api/register', data).then(response => {
 				if (response.data.user) {
 					this.setSession(response.data.access_token);
 					resolve(response.data.user);
@@ -79,12 +85,13 @@ class JwtService extends FuseUtils.EventEmitter {
 				data
 			};
 
-			axios(config).then(response => {
+			instance(config).then(response => {
 				console.log('response', response);
 				if (response.data.access_token) {
 					console.log('response.data.accessToken', response.data.access_token);
 					this.setSession(response.data.access_token);
-					// resolve(response.data.user);
+					instance.defaults.headers.common.Authorization = `Bearer ${response.data.access_token}`;
+					instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 					resolve({
 						message: 'Logged in successfully',
@@ -107,7 +114,7 @@ class JwtService extends FuseUtils.EventEmitter {
 	};
 
 	updateUserData = user => {
-		return axios.post('/api/auth/user/update', {
+		return instance.post('/api/auth/user/update', {
 			user
 		});
 	};
@@ -115,9 +122,9 @@ class JwtService extends FuseUtils.EventEmitter {
 	setSession = access_token => {
 		if (access_token) {
 			localStorage.setItem('jwt_access_token', access_token);
-			axios.defaults.headers.common.Authorization = `Bearer ${access_token}`;
+			instance.defaults.headers.common.Authorization = `Bearer ${access_token}`;
 		} else {
-			delete axios.defaults.headers.common.Authorization;
+			delete instance.defaults.headers.common.Authorization;
 			localStorage.removeItem('user');
 			localStorage.removeItem('jwt_access_token');
 		}
@@ -146,6 +153,6 @@ class JwtService extends FuseUtils.EventEmitter {
 	};
 }
 
-const instance = new JwtService();
+const oldInstance = new JwtService();
 
-export default instance;
+export default oldInstance;

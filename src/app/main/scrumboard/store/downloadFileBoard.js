@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
 // import instance from 'instance';
-import instance from 'axiosinstance';
+import { instance } from 'app/services/jwtService/jwtService';
 import { update } from 'lodash';
 
 export const getDownloadFile = createAsyncThunk(

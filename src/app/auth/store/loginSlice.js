@@ -11,17 +11,18 @@ export const submitLogin =
 			.signInWithEmailAndPassword(email, password)
 			.then(res => {
 				console.log('user', res);
-				dispatch(setUserData(res.user));
 				localStorage.setItem('user', JSON.stringify(res.user));
+				dispatch(setUserData(res.user));
+
 				dispatch(
 					showMessage({
-						message: res.message, //text or html
-						autoHideDuration: 6000, //ms
+						message: res.message,
+						autoHideDuration: 6000,
 						anchorOrigin: {
-							vertical: 'top', //top bottom
-							horizontal: 'right' //left center right
+							vertical: 'top',
+							horizontal: 'right'
 						},
-						variant: 'success' //success error info warning null
+						variant: 'success'
 					})
 				);
 

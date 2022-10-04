@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
-import instance from 'axiosinstance';
+import { instance } from 'app/services/jwtService/jwtService';
 import { getBillingData } from './billingSlice';
 
 // export const getUsers = createAsyncThunk('users/getUsers', async (routeParams, { getState }) => {

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
-import instance from 'axiosinstance';
+import { instance } from 'app/services/jwtService/jwtService';
 
 export const getCharts = createAsyncThunk('analyticsDashboardApp/widgets/getCharts', async () => {
 	const response = await instance.get('/api/dashboard');

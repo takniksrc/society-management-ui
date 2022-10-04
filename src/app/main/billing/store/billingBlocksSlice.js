@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import instance from 'axiosinstance';
+import { instance } from 'app/services/jwtService/jwtService';
 
 export const getBlocksStatus = createAsyncThunk('contactsApp/user/BillingBlocksSlice', async sectorId => {
 	console.log('sectorId', sectorId);

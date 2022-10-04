@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
-import instance from 'axiosinstance';
+import { instance } from 'app/services/jwtService/jwtService';
 import { getCustomerData } from './customerSlice';
 import { showMessage } from 'app/store/fuse/messageSlice';
 

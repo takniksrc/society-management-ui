@@ -30,7 +30,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import { motion } from 'framer-motion';
 import _ from '@lodash';
 import * as yup from 'yup';
-import instance from 'axiosinstance';
+import { instance } from 'app/services/jwtService/jwtService';
 
 import { removeUser, closeNewContactDialog, closeEditContactDialog } from '../store/newUsersSlice';
 import { Card } from '@material-ui/core';

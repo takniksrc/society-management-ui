@@ -24,7 +24,7 @@ import reducer from '../store';
 // import { selectBoards, newBoard, getBoards, resetBoards } from '../store/boardsSlice';
 import societyChargesIcon from '../../../../assets/ServicesIcon/society-charges-icon.png';
 import consumptionChragesIcon from '../../../../assets/ServicesIcon/consumption-based-icon.png';
-import instance from 'axiosinstance';
+import { instance } from 'app/services/jwtService/jwtService';
 import { getBills, resetBills } from '../store/AllBillsSlice';
 import { hideMessage, showMessage } from 'app/store/fuse/messageSlice';
 

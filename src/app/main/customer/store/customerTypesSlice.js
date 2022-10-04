@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import instance from 'axiosinstance';
+import { instance } from 'app/services/jwtService/jwtService';
 
 export const getCustomerTypes = createAsyncThunk('contactsApp/customer/getCustomerTypes', async () => {
 	const response = await instance.get('/api/customer-types');
