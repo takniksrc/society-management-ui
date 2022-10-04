@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { instance } from 'app/services/jwtService/jwtService';
+
 import { showMessage } from 'app/store/fuse/messageSlice';
 
 export const updateCard = createAsyncThunk('scrumboardApp/card/updateCard', async ({ boardId, card }, { dispatch }) => {
-	const response = await axios.post('/api/scrumboard-app/card/update', {
+	const response = await instance.post('/api/scrumboard-app/card/update', {
 		boardId,
 		card
 	});
@@ -27,7 +28,7 @@ export const updateCard = createAsyncThunk('scrumboardApp/card/updateCard', asyn
 export const removeCard = createAsyncThunk(
 	'scrumboardApp/card/removeCard',
 	async ({ boardId, cardId }, { dispatch }) => {
-		const response = await axios.post('/api/scrumboard-app/card/remove', {
+		const response = await instance.post('/api/scrumboard-app/card/remove', {
 			boardId,
 			cardId
 		});

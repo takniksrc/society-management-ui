@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { instance } from 'app/services/jwtService/jwtService';
+
 import FuseUtils from '@fuse/utils';
 import history from '@history';
 import _ from '@lodash';
@@ -12,7 +13,7 @@ import { removeCard, updateCard } from './cardSlice';
 
 export const getBoard = createAsyncThunk('scrumboardApp/board/getBoard', async (params, { dispatch }) => {
 	try {
-		const response = await axios.get('/api/scrumboard-app/board', { params });
+		const response = await instance.get('/api/scrumboard-app/board', { params });
 		const data = await response.data;
 		return data;
 	} catch (error) {
@@ -41,7 +42,7 @@ export const reorderList = createAsyncThunk(
 
 		const ordered = reorder(_.merge([], lists), result.source.index, result.destination.index);
 
-		const response = await axios.post('/api/scrumboard-app/list/order', {
+		const response = await instance.post('/api/scrumboard-app/list/order', {
 			boardId: board.id,
 			lists: ordered
 		});
@@ -71,7 +72,7 @@ export const reorderCard = createAsyncThunk(
 
 		const ordered = reorderQuoteMap(_.merge([], lists), source, destination);
 
-		const response = await axios.post('/api/scrumboard-app/card/order', {
+		const response = await instance.post('/api/scrumboard-app/card/order', {
 			boardId: board.id,
 			lists: ordered
 		});
@@ -96,7 +97,7 @@ export const reorderCard = createAsyncThunk(
 export const newCard = createAsyncThunk(
 	'scrumboardApp/board/newCard',
 	async ({ boardId, listId, cardTitle }, { dispatch, getState }) => {
-		const response = await axios.post('/api/scrumboard-app/card/new', {
+		const response = await instance.post('/api/scrumboard-app/card/new', {
 			boardId,
 			listId,
 			data: CardModel({ name: cardTitle })
@@ -111,7 +112,7 @@ export const newCard = createAsyncThunk(
 export const newList = createAsyncThunk(
 	'scrumboardApp/board/newList',
 	async ({ boardId, listTitle }, { dispatch, getState }) => {
-		const response = await axios.post('/api/scrumboard-app/list/new', {
+		const response = await instance.post('/api/scrumboard-app/list/new', {
 			boardId,
 			data: ListModel({ name: listTitle })
 		});
@@ -125,7 +126,7 @@ export const newList = createAsyncThunk(
 export const renameList = createAsyncThunk(
 	'scrumboardApp/board/renameList',
 	async ({ boardId, listId, listTitle }, { dispatch, getState }) => {
-		const response = await axios.post('/api/scrumboard-app/list/rename', {
+		const response = await instance.post('/api/scrumboard-app/list/rename', {
 			boardId,
 			listId,
 			listTitle
@@ -140,7 +141,7 @@ export const renameList = createAsyncThunk(
 export const removeList = createAsyncThunk(
 	'scrumboardApp/board/removeList',
 	async ({ boardId, listId }, { dispatch, getState }) => {
-		const response = await axios.post('/api/scrumboard-app/list/remove', {
+		const response = await instance.post('/api/scrumboard-app/list/remove', {
 			boardId,
 			listId
 		});
@@ -157,7 +158,7 @@ export const changeBoardSettings = createAsyncThunk(
 		const { board } = getState().scrumboardApp;
 		const settings = _.merge({}, board.settings, newSettings);
 
-		const response = await axios.post('/api/scrumboard-app/board/settings/update', {
+		const response = await instance.post('/api/scrumboard-app/board/settings/update', {
 			boardId: board.id,
 			settings
 		});
@@ -171,7 +172,7 @@ export const changeBoardSettings = createAsyncThunk(
 export const deleteBoard = createAsyncThunk(
 	'scrumboardApp/board/deleteBoard',
 	async (boardId, { dispatch, getState }) => {
-		const response = await axios.post('/api/scrumboard-app/board/delete', {
+		const response = await instance.post('/api/scrumboard-app/board/delete', {
 			boardId
 		});
 
@@ -200,7 +201,7 @@ export const copyBoard = createAsyncThunk('scrumboardApp/board/copyBoard', async
 export const renameBoard = createAsyncThunk(
 	'scrumboardApp/board/renameBoard',
 	async ({ boardId, boardTitle }, { dispatch, getState }) => {
-		const response = await axios.post('/api/scrumboard-app/board/rename', {
+		const response = await instance.post('/api/scrumboard-app/board/rename', {
 			boardId,
 			boardTitle
 		});

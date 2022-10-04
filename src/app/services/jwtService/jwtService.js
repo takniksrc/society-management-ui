@@ -124,7 +124,7 @@ class JwtService extends FuseUtils.EventEmitter {
 			localStorage.setItem('jwt_access_token', access_token);
 			instance.defaults.headers.common.Authorization = `Bearer ${access_token}`;
 		} else {
-			delete instance.defaults.headers.common.Authorization;
+			// delete instance.defaults.headers.common.Authorization;
 			localStorage.removeItem('user');
 			localStorage.removeItem('jwt_access_token');
 		}

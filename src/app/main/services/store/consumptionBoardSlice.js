@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+
 import { instance } from 'app/services/jwtService/jwtService';
 import FuseUtils from '@fuse/utils';
 import history from '@history';

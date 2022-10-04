@@ -8,7 +8,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
-import axios from 'axios';
+import { instance } from 'app/services/jwtService/jwtService';
+
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
@@ -32,7 +33,7 @@ function ModernInvoicePage() {
 	});
 
 	useEffect(() => {
-		axios
+		instance
 			.get('/api/invoices/get-invoice', {
 				params: { id: '5725a6802d' }
 			})

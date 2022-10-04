@@ -157,29 +157,29 @@ function CompactInvoicePage(props) {
 														Name
 													</div> */}
 													<div className="border-black col-span-2 border-1 outline-2 place-items-center text-base pl-3 pt-2">
-														{bill.customer_name}
+														{bill?.customer_name}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center  text-base pl-3 pt-2">
 														{/* Plot Size- */}
-														{bill.property_size}
+														{bill?.property_size}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center  font-semibold text-base pl-3 pt-2">
 														Con Date
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
-														{bill.issue_date}
+														{bill?.issue_date}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2">
 														Status
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
-														{bill.payment_status}
+														{bill?.payment_status}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2">
 														Reference Number
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
-														{bill.meter.refference_number}
+														{bill?.meter?.refference_number}
 													</div>
 												</div>
 												<div className="grid grid-cols-5 grid-rows-1 text-center">
@@ -200,19 +200,19 @@ function CompactInvoicePage(props) {
 													</div>
 
 													<div className="border-black border-1 outline-2 place-items-center text-base">
-														{bill.meter.meter_number}
+														{bill?.meter?.meter_number}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center  text-base">
-														{bill.meter.phase}
+														{bill?.meter.phase}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
-														{bill.billing_month}
+														{bill?.billing_month}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
-														{bill.issue_date}
+														{bill?.issue_date}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base text-red-800">
-														{bill.due_date}
+														{bill?.due_date}
 													</div>
 												</div>
 												{/* Header Previous */}
@@ -245,28 +245,28 @@ function CompactInvoicePage(props) {
 														Charge
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
-														{bill.previous_reading}
+														{bill?.previous_reading}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
-														{bill.current_reading}
+														{bill?.current_reading}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center  text-base">
 														{/* {bill.meter.phase} */}0
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
-														{bill.current_reading - bill.previous_reading}
+														{bill?.current_reading - bill?.previous_reading}
 													</div>
 													<div className="border-black border-1 col-span-2 outline-2 place-items-center text-base">
 														{}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
-														{bill.total_bill}
+														{bill?.total_bill}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
-														{bill.fpa_charges}
+														{bill?.fpa_charges}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
-														{bill.total_bill}
+														{bill?.total_bill}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
 														-

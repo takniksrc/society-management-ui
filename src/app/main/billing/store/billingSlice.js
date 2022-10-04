@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { instance } from 'app/services/jwtService/jwtService';
+
 
 export const getBillingData = createAsyncThunk('contactsApp/user/getBillingData', async () => {
-	const response = await axios.get('/api/bills');
+	const response = await instance.get('/api/bills');
 	const data = await response.data;
 	console.log('Bills', data);
 

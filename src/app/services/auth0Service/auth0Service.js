@@ -1,5 +1,6 @@
 import Auth0Lock from 'auth0-lock';
-import axios from 'axios';
+import { instance } from 'app/services/jwtService/jwtService';
+
 import jwtDecode from 'jwt-decode';
 import AUTH_CONFIG from './auth0ServiceConfig';
 
@@ -118,7 +119,7 @@ class Auth0Service {
 
 			const auth0UserUrl = `https://${AUTH_CONFIG.domain}/api/v2/users/${userId}`;
 
-			axios
+			instance
 				.get(auth0UserUrl, {
 					headers: {
 						'Content-Type': 'application/json',
@@ -143,7 +144,7 @@ class Auth0Service {
 		const auth0UserUrl = `https://${AUTH_CONFIG.domain}/api/v2/users/${userId}`;
 		const dataObj = JSON.stringify({ user_metadata: userMetadata });
 
-		return axios.patch(auth0UserUrl, dataObj, {
+		return instance.patch(auth0UserUrl, dataObj, {
 			headers: {
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${this.getAccessToken()}`
@@ -169,6 +170,6 @@ class Auth0Service {
 	};
 }
 
-const instance = new Auth0Service();
+const instance_Old = new Auth0Service();
 
-export default instance;
+export default instance_Old;

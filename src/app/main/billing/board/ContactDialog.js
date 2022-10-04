@@ -316,7 +316,7 @@ function ContactDialog(props) {
 								{contactDialog?.data?.current_reading - contactDialog?.data?.previous_reading}{' '}
 							</Typography>
 							<Typography>
-								<b>Previous Reading:</b> {GetBillsData.previous_reading}{' '}
+								<b>Previous Reading:</b> {GetBillsData?.previous_reading}{' '}
 							</Typography>
 							<Typography>
 								{' '}

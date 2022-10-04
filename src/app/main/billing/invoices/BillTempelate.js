@@ -4,7 +4,8 @@ import { getBillData } from '../store/billWithIdSlice';
 import { Link, useParams } from 'react-router-dom';
 import { useDeepCompareEffect } from '@fuse/hooks';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
+import { instance } from 'app/services/jwtService/jwtService';
+
 import CompactInvoicePage from './compact/CompactInvoicePage';
 
 function BillTempelate() {

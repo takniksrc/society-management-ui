@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import axios from 'axios';
+import { instance } from 'app/services/jwtService/jwtService';
 
 export const getData = createAsyncThunk('quickPanel/data/getData', async () => {
-	const response = await axios.get('/api/quick-panel/data');
+	const response = await instance.get('/api/quick-panel/data');
 	const data = await response.data;
 
 	return data;

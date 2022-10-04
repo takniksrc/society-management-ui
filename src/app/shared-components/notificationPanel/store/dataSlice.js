@@ -1,8 +1,8 @@
 import { createEntityAdapter, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { instance } from 'app/services/jwtService/jwtService';
 
 export const getNotifications = createAsyncThunk('notificationPanel/data/getData', async () => {
-	const response = await axios.get('/api/notification-panel/data');
+	const response = await instance.get('/api/notification-panel/data');
 	const data = await response.data;
 
 	return data;
