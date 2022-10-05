@@ -701,28 +701,32 @@ function ContactDialog(props) {
 							)}
 						/>
 					</div>
-					<div className="flex">
-						<div className="min-w-48 pt-20" style={{ marginRight: '-0.5rem' }}>
-							<Icon color="action">dvr</Icon>
+					{contactDialog?.type === 'new' ? (
+						<div className="flex">
+							<div className="min-w-48 pt-20" style={{ marginRight: '-0.5rem' }}>
+								<Icon color="action">dvr</Icon>
+							</div>
+							<Controller
+								control={control}
+								name="current_reading"
+								render={({ field }) => (
+									<TextField
+										{...field}
+										className="mb-24"
+										label="Current Reading"
+										id="current_reading"
+										error={!!errors.current_reading}
+										helperText={errors?.current_reading?.message}
+										variant="outlined"
+										required
+										fullWidth
+									/>
+								)}
+							/>
 						</div>
-						<Controller
-							control={control}
-							name="current_reading"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									label="Current Reading"
-									id="current_reading"
-									error={!!errors.current_reading}
-									helperText={errors?.current_reading?.message}
-									variant="outlined"
-									required
-									fullWidth
-								/>
-							)}
-						/>
-					</div>
+					) : (
+						''
+					)}
 				</DialogContent>
 
 				{contactDialog?.type === 'new' ? (
