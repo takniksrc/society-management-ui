@@ -34,6 +34,8 @@ import {
 	toggleStarredContact,
 	selectUsers
 } from '../store/newUsersSlice';
+import instance from 'axiosinstance';
+import { hideMessage, showMessage } from 'app/store/fuse/messageSlice';
 import { getBlockBillsData } from '../store/billsWithBlockIdSlice';
 import { selectBoards, newBoard, getBoards, resetBoards } from '../store/boardsSlice';
 
@@ -105,8 +107,47 @@ function BillsBellowSection(props) {
 	const [filteredData, setFilteredData] = useState(null);
 	console.log('I am filtered in bellow', filteredData);
 
-	const onSubmitButton = data => {
-		console.log('I am clicked');
+	const onSubmitButton = model => {
+		// eslint-disable-next-line import/no-extraneous-dependencies
+		const FormData = require('form-data');
+		const data = new FormData();
+		// console.log('I am clicked');
+
+		data.append('block_id', routeParams.boardId);
+		model.file.length !== 0 ? data.append('fpa_file', model.file[0]) : null;
+		console.log('I am data', data);
+		instance
+			.post('/api/bills/add-payment', data)
+			.then(function (response) {
+				if (response.status === 201) {
+					dispatch(
+						showMessage({
+							message: response.data.message, //text or html
+							autoHideDuration: 6000, //ms
+							anchorOrigin: {
+								vertical: 'top', //top bottom
+								horizontal: 'right' //left center right
+							},
+							variant: 'success' //success error info warning null
+						})
+					);
+				}
+				console.log(JSON.stringify(response));
+			})
+			.catch(function (error) {
+				// dispatch(
+				// 	showMessage({
+				// 		message: response.data.message, //text or html
+				// 		autoHideDuration: 6000, //ms
+				// 		anchorOrigin: {
+				// 			vertical: 'top', //top bottom
+				// 			horizontal: 'right' //left center right
+				// 		},
+				// 		variant: 'error' //success error info warning null
+				// 	})
+				// );
+				alert('Error while generating');
+			});
 	};
 
 	const columns = useMemo(
@@ -228,7 +269,7 @@ function BillsBellowSection(props) {
 									'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
 								)}
 								role="button"
-								component={Link}
+								// component={Link}
 							>
 								<div className=" flex flex-wrap w-full justify-center px-16 flex-row">
 									<div className="flex flex-1 items-center justify-center basis-1/4">
@@ -292,110 +333,111 @@ function BillsBellowSection(props) {
 
 	return (
 		<>
-			<form noValidate onSubmit={handleSubmit(handleForm)}>
-				<div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>
-					<div className="flex flex-grow flex-shrink-0 flex-col items-center container px-16 md:px-24">
-						<motion.div
-							variants={container}
-							initial="hidden"
-							animate="show"
-							className="grid grid-cols-1 flex-wrap w-full justify-center py-16 "
-						>
-							<motion.div variants={item} className="h-auto p-16" key={1}>
-								<Paper
-									// to={`/services/boards/consumption-based-charges/${board.id}/${board.uri}`}
-									className={clsx(
-										classes.board,
-										'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
-									)}
-									role="button"
-									// component={Link}
-								>
-									<div className=" flex flex-wrap w-full justify-center px-16 flex-row">
-										<div className="flex flex-1 items-center justify-center basis-1/4">
-											<ThemeProvider theme={mainTheme}>
-												<Paper
-													component={motion.div}
-													initial={{ y: -20, opacity: 0 }}
-													animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
-													className="flex items-center w-full max-w-512 px-8 py-4 rounded-16 shadow"
-												>
-													<Icon color="action">search</Icon>
+			{/* <form noValidate onSubmit={handleSubmit(handleForm)}> */}
+			<div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>
+				<div className="flex flex-grow flex-shrink-0 flex-col items-center container px-16 md:px-24">
+					<motion.div
+						variants={container}
+						initial="hidden"
+						animate="show"
+						className="grid grid-cols-1 flex-wrap w-full justify-center py-16 "
+					>
+						<motion.div variants={item} className="h-auto p-16" key={1}>
+							<Paper
+								// to={`/services/boards/consumption-based-charges/${board.id}/${board.uri}`}
+								className={clsx(
+									classes.board,
+									'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
+								)}
+								role="button"
+								// component={Link}
+							>
+								<div className=" flex flex-wrap w-full justify-center px-16 flex-row">
+									<div className="flex flex-1 items-center justify-center basis-1/4">
+										<ThemeProvider theme={mainTheme}>
+											<Paper
+												component={motion.div}
+												initial={{ y: -20, opacity: 0 }}
+												animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
+												className="flex items-center w-full max-w-512 px-8 py-4 rounded-16 shadow"
+											>
+												<Icon color="action">search</Icon>
 
-													<Input
-														placeholder="Search for anything"
-														className="flex flex-1 px-16"
-														disableUnderline
-														fullWidth
-														value={searchText}
-														inputProps={{
-															'aria-label': 'Search'
-														}}
-														onChange={ev => dispatch(setContactsSearchText(ev))}
-													/>
-												</Paper>
-											</ThemeProvider>
-										</div>
+												<Input
+													placeholder="Search for anything"
+													className="flex flex-1 px-16"
+													disableUnderline
+													fullWidth
+													value={searchText}
+													inputProps={{
+														'aria-label': 'Search'
+													}}
+													onChange={ev => dispatch(setContactsSearchText(ev))}
+												/>
+											</Paper>
+										</ThemeProvider>
+									</div>
 
-										<motion.div
-											initial={{ opacity: 0, x: 20 }}
-											animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
-											className="flex flex-1 items-center justify-center px-12 space-x-20 basis-1/2"
-										>
-											{/* <div>
+									<motion.div
+										initial={{ opacity: 0, x: 20 }}
+										animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
+										className="flex flex-1 items-center justify-center px-12 space-x-20 basis-1/2"
+									>
+										{/* <div>
 											<input type="file" {...register('file')} />
 										</div> */}
-											<Button
-												variant="contained"
-												color="secondary"
-												className="w-full"
-												component={Link}
-												to={`/billing/pdf-bills/${routeParams.boardId}`}
-											>
-												Download Bills
-											</Button>
-											<form className="w-full" noValidate onSubmit={handleSubmit(onSubmitButton)}>
-												<input
-													accept="image/*"
-													className={classes.input}
-													id="contained-button-file"
-													multiple
-													type="file"
-												/>
-												<label htmlFor="contained-button-file">
-													<Button
-														color="secondary"
-														className="w-full"
-														variant="contained"
-														component="span"
-														// className={classes.button}
-														startIcon={<CloudUploadIcon />}
-													>
-														Upload Payment
-													</Button>
-												</label>
-											</form>
-										</motion.div>
-									</div>
+										<Button
+											variant="contained"
+											color="secondary"
+											className="w-full"
+											component={Link}
+											to={`/billing/pdf-bills/${routeParams.boardId}`}
+										>
+											Download Bills
+										</Button>
+										<form className="w-full" noValidate onChange={handleSubmit(onSubmitButton)}>
+											<input
+												className={classes.input}
+												id="contained-button-file"
+												// multiple
+												type="file"
+												{...register('file')}
+											/>
+											<label htmlFor="contained-button-file">
+												<Button
+													color="secondary"
+													className="w-full"
+													variant="contained"
+													component="span"
+													type="submit"
+													// className={classes.button}
+													startIcon={<CloudUploadIcon />}
+												>
+													Upload Payment
+												</Button>
+											</label>
+										</form>
+									</motion.div>
+								</div>
 
-									<div className=" flex flex-wrap w-full justify-center py-32 px-16 flex-row">
-										<AllBills
-											columns={columns}
-											// data={[filteredData[0].customer]}
-											data={filteredData}
-											onRowClick={(ev, row) => {
-												if (row) {
-													dispatch(openEditContactDialog(row.original));
-												}
-											}}
-										/>
-									</div>
-								</Paper>
-							</motion.div>
+								<div className=" flex flex-wrap w-full justify-center py-32 px-16 flex-row">
+									<AllBills
+										columns={columns}
+										// data={[filteredData[0].customer]}
+										data={filteredData}
+										onRowClick={(ev, row) => {
+											if (row) {
+												dispatch(openEditContactDialog(row.original));
+											}
+										}}
+									/>
+								</div>
+							</Paper>
 						</motion.div>
-					</div>
+					</motion.div>
 				</div>
-			</form>
+			</div>
+			{/* </form> */}
 		</>
 	);
 }

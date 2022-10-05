@@ -36,7 +36,6 @@ import {
 	closeEditContactDialog
 } from './store/newCustomersSlice';
 
-
 function ContactDialog(props) {
 	const dispatch = useDispatch();
 	const contactDialog = useSelector(({ newCustomersSlice }) => newCustomersSlice.newCustomersSlice);
@@ -119,42 +118,49 @@ function ContactDialog(props) {
 		company: 'sms', // TODO
 		sector: '',
 		block: 'A',
-		street_address: ''
+		street_address: '',
+		current_reading: '',
+		meter_company: ''
 	};
 
 	/**
 	 * Form Validation Schema
 	 */
 	const schema = yup.object().shape({
-		name: yup.string().required('You must enter a name'),
-
+		name: yup.string().required('You must enter a name').max(60, 'Maximum 60 digits'),
+		current_reading: yup
+			.string()
+			.required('You must enter a Reading')
+			.matches(/^[0-9]+$/, 'Must be only digits'),
+		meter_company: yup.string().required('You must enter a Company Name'),
+		street_address: yup.string().required('You must enter address').max(30, 'Maximum 30 digits'),
 		reference_number: yup
 			.string()
 			.required('Required')
 			.matches(/^[0-9]+$/, 'Must be only digits')
-			.min(7, 'Must be exactly 7 digits')
-			.max(7, 'Must be exactly 7 digits'),
+			.min(1, 'Minimum 1 digits')
+			.max(15, 'Maximum 15 digits'),
 
 		cnic: yup
 			.string()
 			.required('Required')
 			.matches(/^[0-9]+$/, 'Must be only digits')
-			.min(13, 'Must be exactly 13 digits')
-			.max(13, 'Must be exactly 13 digits'),
+			.min(13, 'Minimum 13 digits')
+			.max(13, 'Maximum 13 digits'),
 
 		meter_number: yup
 			.string()
 			.required('Required')
 			.matches(/^[0-9]+$/, 'Must be only digits')
-			.min(7, 'Must be exactly 7 digits')
-			.max(7, 'Must be exactly 7 digits'),
+			.min(1, 'Minimum 1 digits')
+			.max(15, 'Maximum 15 digits'),
 
 		phone_number: yup
 			.string()
 			.required('Required')
 			.matches(/^[0-9]+$/, 'Must be only digits')
-			.min(11, 'Must be exactly 11 digits')
-			.max(11, 'Must be exactly 11 digits')
+			.min(11, 'Minimum 11 digits')
+			.max(11, 'Maximum 11 digits')
 
 		// meter_phase: yup.string().required('Required').max(10, 'Phase must not be greater than 10 characters')
 	});
@@ -229,6 +235,17 @@ function ContactDialog(props) {
 				...contactDialog.data,
 				id: FuseUtils.generateGUID()
 			});
+			setCustomerType('');
+			setPropertyType('');
+			setPropertySize('');
+			setMeterPhase('');
+			setMeterStatus('');
+			setBlock('');
+			setSector('');
+
+			setMeterType(
+				contactDialog?.data?.meter_type?.charAt(0).toUpperCase() + contactDialog?.data?.meter_type?.slice(1)
+			);
 		}
 	}, [contactDialog.data, contactDialog.type, reset]);
 
@@ -277,7 +294,7 @@ function ContactDialog(props) {
 			{...contactDialog.props}
 			onClose={closeComposeDialog}
 			fullWidth
-			maxWidth="xs"
+			maxWidth="sm"
 		>
 			<AppBar position="static" elevation={0}>
 				<Toolbar className="flex w-full">
@@ -417,6 +434,8 @@ function ContactDialog(props) {
 									label="Address"
 									id="street_address"
 									variant="outlined"
+									error={!!errors.street_address}
+									helperText={errors?.street_address?.message}
 									fullWidth
 								/>
 							)}
@@ -631,7 +650,7 @@ function ContactDialog(props) {
 							</Select>
 						</FormControl>
 					</div>
-					
+
 					<div className="flex">
 						<div className="min-w-48 pt-20">
 							<Icon color="action">people_alt</Icon>
@@ -661,7 +680,7 @@ function ContactDialog(props) {
 						</FormControl>
 					</div>
 					<div className="flex">
-						<div className="min-w-48 pt-20" style={{marginRight:'-0.5rem'}}>
+						<div className="min-w-48 pt-20" style={{ marginRight: '-0.5rem' }}>
 							<Icon color="action">home_work</Icon>
 						</div>
 						<Controller
@@ -673,8 +692,8 @@ function ContactDialog(props) {
 									className="mb-24"
 									label="Meter Company"
 									id="meter_company"
-									error={!!errors.name}
-									helperText={errors?.name?.message}
+									error={!!errors.meter_company}
+									helperText={errors?.meter_company?.message}
 									variant="outlined"
 									required
 									fullWidth
@@ -683,7 +702,7 @@ function ContactDialog(props) {
 						/>
 					</div>
 					<div className="flex">
-						<div className="min-w-48 pt-20" style={{marginRight:'-0.5rem'}}>
+						<div className="min-w-48 pt-20" style={{ marginRight: '-0.5rem' }}>
 							<Icon color="action">dvr</Icon>
 						</div>
 						<Controller
@@ -695,8 +714,8 @@ function ContactDialog(props) {
 									className="mb-24"
 									label="Current Reading"
 									id="current_reading"
-									error={!!errors.name}
-									helperText={errors?.name?.message}
+									error={!!errors.current_reading}
+									helperText={errors?.current_reading?.message}
 									variant="outlined"
 									required
 									fullWidth
