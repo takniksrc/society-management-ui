@@ -87,6 +87,7 @@ class JwtService extends FuseUtils.EventEmitter {
 
 			instance(config).then(response => {
 				console.log('response', response);
+				alert(response.status);
 				if (response.data.access_token) {
 					console.log('response.data.accessToken', response.data.access_token);
 					this.setSession(response.data.access_token);
@@ -106,8 +107,13 @@ class JwtService extends FuseUtils.EventEmitter {
 							}
 						}
 					});
-				} else {
-					reject({ message: 'Error while loggin in' });
+				}
+				if (response.status === 422) {
+					alert('422');
+					// reject({
+					// 	success: false,
+					// 	message: 'Error while loggin in'
+					// });
 				}
 			});
 		});
