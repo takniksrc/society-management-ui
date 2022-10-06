@@ -12,6 +12,8 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import { useGlobalFilter, usePagination, useRowSelect, useSortBy, useTable } from 'react-table';
 import clsx from 'clsx';
 import ContactsTablePaginationActions from './ContactsTablePaginationActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCustomerData } from './store/customerSlice';
 
 const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
 	const defaultRef = useRef();
@@ -28,6 +30,10 @@ const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
 	);
 });
 const AllCustomers = ({ columns, data, onRowClick }) => {
+	const dispatch = useDispatch();
+	const customersRepsonse = useSelector(state => state.customerSlice);
+	const meta = customersRepsonse?.meta;
+
 	const {
 		getTableProps,
 		headerGroups,
@@ -41,7 +47,8 @@ const AllCustomers = ({ columns, data, onRowClick }) => {
 			columns,
 			data,
 			initialState: {
-				hiddenColumns: ['reference_number','property_size_id', 'property_type_id','meter_company'] 		},
+				hiddenColumns: ['reference_number', 'property_size_id', 'property_type_id', 'meter_company']
+			},
 			autoResetPage: true
 		},
 		useGlobalFilter,
@@ -81,7 +88,10 @@ const AllCustomers = ({ columns, data, onRowClick }) => {
 		}
 	);
 	const handleChangePage = (event, newPage) => {
-		gotoPage(newPage);
+		console.log('newPage', newPage);
+		dispatch(getCustomerData(newPage));
+
+		// gotoPage(newPage);
 	};
 
 	const handleChangeRowsPerPage = event => {
@@ -146,11 +156,11 @@ const AllCustomers = ({ columns, data, onRowClick }) => {
 				classes={{
 					root: 'flex-shrink-0 border-t-1'
 				}}
-				rowsPerPageOptions={[5, 10, 25, { label: 'All', value: data.length + 1 }]}
-				colSpan={5}
-				count={data.length}
-				rowsPerPage={pageSize}
-				page={pageIndex}
+				rowsPerPageOptions={0}
+				colSpan={0}
+				count={meta?.last_page}
+				rowsPerPage={meta?.current_page}
+				page={meta?.current_page}
 				SelectProps={{
 					inputProps: { 'aria-label': 'rows per page' },
 					native: false

@@ -149,7 +149,7 @@ export const removeCustomer = createAsyncThunk(
 				})
 			);
 		}
-
+		dispatch(getCustomerData());
 		return customerId;
 	}
 );

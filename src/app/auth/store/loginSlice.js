@@ -12,7 +12,7 @@ export const submitLogin =
 			.then(res => {
 				console.log('user', res);
 				localStorage.setItem('user', JSON.stringify(res.user));
-				dispatch(setUserData(res.user));
+				dispatch(setUserData(res.user)).then(response => console.log('nww', response));
 
 				dispatch(
 					showMessage({
@@ -25,6 +25,10 @@ export const submitLogin =
 						variant: 'success'
 					})
 				);
+
+				// if(res.status== 422){
+
+				// }
 
 				return dispatch(loginSuccess());
 			})
