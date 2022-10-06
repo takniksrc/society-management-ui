@@ -324,12 +324,12 @@ function AnalyticsDashboardApp() {
 
 	return (
 		<motion.div
-			className="flex flex-wrap p-28 items-center justify-center"
+			className="grid grid-cols-6 gap-28 p-28 justify-center "
 			variants={container}
 			initial="hidden"
 			animate="show"
 		>
-			<Card className="w-3/12 rounded-20 shadow m-28 min-h-[30%]">
+			<Card className="rounded-20 shadow basis-1/3 col-span-2 lg:col-span-2 sm:col-span-6 col-span-6">
 				{/* <ReactApexChart options={payment.options} series={payment.series} type="pie" height={350} /> */}
 				{!!payment && (
 					<ReactApexChart options={payment.options} series={payment.series} type="radialBar" height={350} />
@@ -341,18 +341,18 @@ function AnalyticsDashboardApp() {
 					<b>Total Recievable :</b> {Charts?.total_payments?.total_receiveble.toFixed(2)}
 				</Typography>
 			</Card>
-			<Card className="w-3/12 rounded-20 shadow m-28">
+			<Card className="rounded-20 shadow basis-1/3 col-span-2 lg:col-span-2 sm:col-span-6 col-span-6">
 				{!!state && <ReactApexChart options={state.options} series={state.series} type="bar" height={350} />}
 			</Card>
-			<Card className="w-3/12 rounded-20 shadow m-28">
+			<Card className="rounded-20 shadow basis-1/3 col-span-2 lg:col-span-2 sm:col-span-6 col-span-6">
 				{!!wapda && <ReactApexChart options={wapda.options} series={wapda.series} type="bar" height={350} />}
 			</Card>
-			<Card className="w-2/5 rounded-20 shadow m-28">
+			<Card className="rounded-20 shadow col-span-3 lg:col-span-3 sm:col-span-6 col-span-6">
 				{!!meter && (
 					<ReactApexChart options={meter.options} series={meter.series} type="radialBar" height={350} />
 				)}
 			</Card>
-			<Card className="w-2/5 rounded-20 shadow m-28">
+			<Card className="rounded-20 shadow basis-1/4 col-span-3 lg:col-span-3 sm:col-span-6 col-span-6">
 				{!!faulty && (
 					<ReactApexChart options={faulty.options} series={faulty.series} type="radialBar" height={350} />
 				)}
