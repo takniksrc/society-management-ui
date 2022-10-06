@@ -37,7 +37,7 @@ jobs:
         with:
           args: --acl public-read --delete
         env:
-          AWS_S3_BUCKET: ${{'smsstaging.taknik.com'}}
+          AWS_S3_BUCKET: ${{'smsstaging.norditsol.com'}}
           AWS_ACCESS_KEY_ID: ${{ secrets.SMS_UI_S3_ACCESS_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SMS_UI_S3_ACCESS_KEY }}
           AWS_REGION: "ap-south-1"
