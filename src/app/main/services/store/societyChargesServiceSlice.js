@@ -35,7 +35,19 @@ export const updateSocietyChargesServiceBoard = createAsyncThunk(
 			service_prices: boardData.servicePricing
 		};
 
-		const response = await instance.post(`/api/services/${boardData.id}/propertySizeBased`, { ...newData });
+		 instance.post(`/api/services/${boardData.id}/propertySizeBased`, { ...newData }).then(response=>{
+			dispatch(
+				showMessage({
+					message: response.data.message, //text or html
+					autoHideDuration: 6000, //ms
+					anchorOrigin: {
+						vertical: 'top', //top bottom
+						horizontal: 'right' //left center right
+					},
+					variant: 'success' //success error info warning null
+				})
+			);
+		 })
         dispatch(getSocietyChargesServiceBoard(boardData.id))
 	}
 );

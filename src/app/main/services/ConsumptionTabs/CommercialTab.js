@@ -15,8 +15,6 @@ function CommercialTab(props) {
 		name: 'servicePricing'
 	});
 	const dispatch = useDispatch();
-
-	//const board = useSelector(({ scrumboardApp }) => scrumboardApp.consumptionBoard);
 	const board = useSelector(state => state.consumptionBoard);
 
 	return (

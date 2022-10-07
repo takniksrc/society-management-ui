@@ -157,6 +157,9 @@ function EKServiceTemplate(props) {
 						<div className={tabValue !== 'Commercial' ? 'hidden' : ''}>
 							<CommercialTab TabType="Commercial" />
 						</div>
+						<div className={tabValue !== 'Construction' ? 'hidden' : ''}>
+							<ConstructionTab TabType="Construction" />
+						</div>
 					</div>
 				}
 				innerScroll
