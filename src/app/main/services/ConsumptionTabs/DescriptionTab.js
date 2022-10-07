@@ -22,17 +22,13 @@ function DescriptionTab(props) {
 			<Controller
 				name="description"
 				control={control}
-				// {...register('description', { required: true, maxLength: 5 })}
 				render={({ field }) => (
 					<TextField
 						{...field}
 						className="mt-8 mb-16"
 						id="description"
 						// label="Description"
-						// maxlength={5}
 						inputProps={{ maxLength: 200 }}
-						// error={!!errors.description}
-						// helperText={errors?.description?.message}
 						type="text"
 						multiline
 						rows={5}
@@ -41,8 +37,7 @@ function DescriptionTab(props) {
 					/>
 				)}
 			/>
-			{/* {errors.description && errors.description.type === 'required' && <span>This is required</span>}
-			{errors.description && errors.description.type === 'maxLength' && <span>Max length exceeded</span>} */}
+			
 		</div>
 	);
 }
