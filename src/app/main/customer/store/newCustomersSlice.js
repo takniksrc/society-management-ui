@@ -1,10 +1,11 @@
 /* eslint-disable prettier/prettier */
 import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
 import instance from 'axiosinstance';
+import { showMessage } from 'app/store/fuse/messageSlice';
 import { getCustomerData } from './customerSlice';
 
 export const getCustomers = createAsyncThunk('customers/getCustomers', async (routeParams, { getState }) => {
-	routeParams = routeParams || getState().contactsApp.contacts.routeParams;
+	routeParams = routeParams || getState().newCustomersSlice.routeParams;
 	const response = await instance.get('/api/customers', {
 		params: routeParams
 	});
@@ -18,7 +19,9 @@ export const addCustomer = createAsyncThunk('customers/addCustomer', async (cont
 		refference_number: contact.reference_number,
 		name: contact.name,
 		cnic: contact.cnic,
-		phone_number: contact.phone,
+		phone_number: contact.phone_number,
+		current_reading: contact.current_reading,
+		meter_company: contact.meter_company,
 		email: contact.email,
 		customer_type_id: contact.customer_type,
 		property_type_id: contact.property_type,
@@ -30,10 +33,36 @@ export const addCustomer = createAsyncThunk('customers/addCustomer', async (cont
 		company: contact.company,
 		sector_id: contact.sector,
 		block_id: contact.block,
-		street_address: contact.address
+		street_address: contact.street_address
 	});
 	const data = await response.data;
 	console.log('I am new updated data', data);
+
+	if (response.status === 201 || response.status === 200) {
+		dispatch(
+			showMessage({
+				message: response.data.message, //text or html
+				autoHideDuration: 6000, //ms
+				anchorOrigin: {
+					vertical: 'top', //top bottom
+					horizontal: 'right' //left center right
+				},
+				variant: 'success' //success error info warning null
+			})
+		);
+	} else {
+		dispatch(
+			showMessage({
+				message: response.data.message, //text or html
+				autoHideDuration: 6000, //ms
+				anchorOrigin: {
+					vertical: 'top', //top bottom
+					horizontal: 'right' //left center right
+				},
+				variant: 'error' //success error info warning null
+			})
+		);
+	}
 
 	dispatch(getCustomers());
 
@@ -43,27 +72,53 @@ export const addCustomer = createAsyncThunk('customers/addCustomer', async (cont
 export const updateCustomer = createAsyncThunk('customers/updateCustomer', async (contact, { dispatch, getState }) => {
 	console.log('i am clicked', contact.id);
 	const response = await instance.post(`/api/customers/${contact.id}`, {
-		
-		"refference_number": contact.reference_number,
-		"name": contact.name,
-		"cnic": contact.cnic,
-		"phone_number": contact.phone,
-		"email": contact.email,
-		"customer_type_id": contact.customer_type,
-		"property_type_id": contact.property_type,
-		"property_size_id": contact.property_size,
-		"meter_number": contact.meter_number,
-		"meter_type": contact.meter_type,
-		"meter_status": contact.meter_status,
-		"phase": contact.meter_phase,
-		"company": "sms",
-		"sector_id": contact.sector,
-		"block_id": contact.block,
-		"street_address": contact.address
-	}
-	);
+		refference_number: contact.reference_number,
+		name: contact.name,
+		cnic: contact.cnic,
+		phone_number: contact.phone_number,
+		current_reading: contact.current_reading,
+		meter_company: contact.meter_company,
+		email: contact.email,
+		customer_type_id: contact.customer_type,
+		property_type_id: contact.property_type,
+		property_size_id: contact.property_size,
+		meter_number: contact.meter_number,
+		meter_type: contact.meter_type,
+		meter_status: contact.meter_status,
+		phase: contact.meter_phase,
+		company: contact.company,
+		sector_id: contact.sector,
+		block_id: contact.block,
+		street_address: contact.street_address
+	});
 	const data = await response.data;
 	console.log(data);
+	if (response.status === 201 || response.status === 200) {
+		dispatch(
+			showMessage({
+				message: response.data.message, //text or html
+				autoHideDuration: 6000, //ms
+				anchorOrigin: {
+					vertical: 'top', //top bottom
+					horizontal: 'right' //left center right
+				},
+				variant: 'success' //success error info warning null
+			})
+		);
+	} else {
+		dispatch(
+			showMessage({
+				message: response.data.message, //text or html
+				autoHideDuration: 6000, //ms
+				anchorOrigin: {
+					vertical: 'top', //top bottom
+					horizontal: 'right' //left center right
+				},
+				variant: 'error' //success error info warning null
+			})
+		);
+	}
+
 	dispatch(getCustomers());
 	return data;
 });
@@ -72,7 +127,32 @@ export const removeCustomer = createAsyncThunk(
 	'customers/removeCustomer',
 	async (customerId, { dispatch, getState }) => {
 		console.log('i am clicked', customerId);
-		await instance.delete(`/api/customers/${customerId}`);
+		const response = await instance.delete(`/api/customers/${customerId}`);
+		if (response.status === 201 || response.status === 200) {
+			dispatch(
+				showMessage({
+					message: response.data.message, //text or html
+					autoHideDuration: 6000, //ms
+					anchorOrigin: {
+						vertical: 'top', //top bottom
+						horizontal: 'right' //left center right
+					},
+					variant: 'success' //success error info warning null
+				})
+			);
+		} else {
+			dispatch(
+				showMessage({
+					message: response.data.message, //text or html
+					autoHideDuration: 6000, //ms
+					anchorOrigin: {
+						vertical: 'top', //top bottom
+						horizontal: 'right' //left center right
+					},
+					variant: 'error' //success error info warning null
+				})
+			);
+		}
 
 		return customerId;
 	}

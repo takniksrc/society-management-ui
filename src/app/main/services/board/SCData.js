@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import reducer from '../store';
 import { selectBoards, newBoard, getBoards, resetBoards } from '../store/boardsSlice';
-import { getBoard } from '../store/boardSlice';
 import societyChargesIcon from '../../../../assets/ServicesIcon/society-charges-icon.png';
 import Aquifer from '../../../../assets/ServicesIcon/aquifer.png';
 import Garbage from '../../../../assets/ServicesIcon/garbage.png';
@@ -18,6 +17,7 @@ import Cleanliness from '../../../../assets/ServicesIcon/cleanliness.png';
 import Cabel from '../../../../assets/ServicesIcon/cabel.png';
 import Security from '../../../../assets/ServicesIcon/security.png';
 import Water from '../../../../assets/ServicesIcon/water.png';
+import { getSocietyChargesServiceBoard } from '../store/societyChargesServiceSlice';
 
 const useStyles = makeStyles(theme => ({
 	root: {},
@@ -33,14 +33,6 @@ const useStyles = makeStyles(theme => ({
 function SCData(props) {
 	const dispatch = useDispatch();
 	const boardsnew = useSelector(selectBoards);
-	const boards = [
-		{ id: boardsnew?.id, name: boardsnew?.name, uri: 'aquifer', icon: boardsnew[0]?.name },
-		{ id: '2', name: 'Garbage', uri: 'garbage', icon: Garbage },
-		{ id: '3', name: 'Cleanliness', uri: 'cleanliness', icon: Cleanliness },
-		{ id: '4', name: 'Cable', uri: 'cable', icon: Cabel },
-		{ id: '5', name: 'Security', uri: 'security', icon: Security },
-		{ id: '6', name: 'Water', uri: 'water', icon: Water }
-	];
 
 	console.log('I am boards', boardsnew);
 
@@ -49,7 +41,7 @@ function SCData(props) {
 	useEffect(() => {
 		dispatch(getBoards());
 		return () => {
-			dispatch(resetBoards());
+			//dispatch(resetBoards());
 		};
 	}, [dispatch]);
 
@@ -65,11 +57,9 @@ function SCData(props) {
 		hidden: { opacity: 0, y: 20 },
 		show: { opacity: 1, y: 0 }
 	};
-	function handleOpen(id) {
-		console.log('i am new id', id);
-		// alert(id);
-		dispatch(getBoard(id));
-	}
+	// function handleOpen(id) {
+	// 	dispatch(getSocietyChargesServiceBoard(id));
+	// }
 	return (
 		<div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>
 			<div className="flex flex-grow flex-shrink-0 flex-col items-center container px-16 md:px-24">
@@ -82,7 +72,7 @@ function SCData(props) {
 					variants={container}
 					initial="hidden"
 					animate="show"
-					className="grid grid-cols-3 flex-wrap w-full justify-center py-32 px-16"
+					className="grid  flex-wrap w-full justify-center py-32 px-16  grid-cols-1 sm:grid-cols-2 md:grid-cols-3 "
 				>
 					{boardsnew?.map(board => (
 						<motion.div variants={item} className="h-224 p-16" key={board.id}>
@@ -94,10 +84,10 @@ function SCData(props) {
 								)}
 								role="button"
 								component={Link}
-								onClick={event => handleOpen(board.id)}
-							>
+								// onClick={event => handleOpen(board.id)} 
+								>
 								<Icon className="text-56" color="action">
-									<img src={board.icon} alt="" />
+									<img src={board.name} alt="" />
 								</Icon>
 								<Typography className="text-16 font-medium text-center pt-16 px-32" color="inherit">
 									{board.name}

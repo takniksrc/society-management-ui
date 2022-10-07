@@ -26,16 +26,20 @@ function AllUsersHead(props) {
 		() => [
 			{
 				Header: ({ selectedFlatRows }) => {
-					const selectedRowIds = selectedFlatRows.map(row => row.original.id);
+					const selectedRowIds = selectedFlatRows.map(
+						row =>
+							// console.log('i am row',row.original))
+							row.original.id
+					);
 
 					return (
 						selectedFlatRows.length > 0 && <ContactsMultiSelectMenu selectedContactIds={selectedRowIds} />
 					);
 				},
 				accessor: 'avatar',
-				// Cell: ({ row }) => {
-				// 	return <Avatar className="mx-8" alt={row.original.name} src={row.original.avatar} />;
-				// },
+				Cell: ({ row }) => {
+					return <Avatar className="mx-8" alt={row.original.name} src={row.original.avatar} />;
+				},
 				className: 'justify-center',
 				width: 64,
 				sortable: false
@@ -49,7 +53,7 @@ function AllUsersHead(props) {
 			{
 				Header: 'Role',
 				accessor: 'role',
-				sortable: true
+				sortable: false
 			},
 			{
 				Header: 'Email',
@@ -77,7 +81,7 @@ function AllUsersHead(props) {
 						<IconButton
 							onClick={ev => {
 								ev.stopPropagation();
-								console.log('i am ev in',row.original.id)
+								console.log('i am ev in', row.original.id);
 
 								dispatch(removeUser(row.original.id));
 							}}

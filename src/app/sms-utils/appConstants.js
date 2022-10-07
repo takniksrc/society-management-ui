@@ -1,3 +1,0 @@
-const CustomerType = [];
-
-const defaults = [];

@@ -39,18 +39,20 @@ import {
 function ContactDialog(props) {
 	const dispatch = useDispatch();
 	const contactDialog = useSelector(({ newCustomersSlice }) => newCustomersSlice.newCustomersSlice);
+
 	const propertyTypes = useSelector(({ propertyTypesSlice }) => propertyTypesSlice);
 	const propertySizes = useSelector(({ propertySizesSlice }) => propertySizesSlice);
 	const customerTypes = useSelector(({ customerTypesSlice }) => customerTypesSlice);
 	const configurationsData = useSelector(({ configSlice }) => configSlice);
 	console.log('configSlice inside contact : ', configurationsData);
+	console.log('contactDialog inside contact : ', contactDialog);
 
 	console.log('propertyTypes inside contact : ', propertyTypes);
 	console.log('customerTypes inside contact: ', customerTypes);
 
 	const [customerType, setCustomerType] = useState('');
 	const [sector, setSector] = useState('');
-	const [block, setBlock] = useState('');
+	const [block, setBlock] = useState('A');
 
 	const [propertyType, setPropertyType] = useState('');
 	const [propertySize, setPropertySize] = useState('');
@@ -63,13 +65,8 @@ function ContactDialog(props) {
 		dispatch(getConfigurations());
 	}, [dispatch]);
 
-	// const customerstype = [
-	// 	{ id: 0, value: customerType.id, label: 'Residential', color: '#2196f3' },
-	// 	{ id: 1, value: customerType.id,, label: 'Commercial', color: '#2196f3' },
-	// 	{ id: 2, value: customerType.id,, label: 'Construction', color: '#2196f3' }
-	// ];
-
 	const handleCustomerType = event => {
+		console.log('event target value', event.target.value);
 		setCustomerType(event.target.value);
 		// console.log('clicked', customerType);
 	};
@@ -109,7 +106,7 @@ function ContactDialog(props) {
 		reference_number: '',
 		name: '',
 		cnic: '',
-		phone: '',
+		phone_number: '',
 		email: '',
 		customer_type: '',
 		property_type: '',
@@ -120,48 +117,55 @@ function ContactDialog(props) {
 		meter_type: '',
 		company: 'sms', // TODO
 		sector: '',
-		block: '',
-		address: ''
+		block: 'A',
+		street_address: '',
+		current_reading: '',
+		meter_company: ''
 	};
 
 	/**
 	 * Form Validation Schema
 	 */
 	const schema = yup.object().shape({
-		name: yup.string().required('You must enter a name'),
-
+		name: yup.string().required('You must enter a name').max(60, 'Maximum 60 digits'),
+		current_reading: yup
+			.string()
+			.required('You must enter a Reading')
+			.matches(/^[0-9]+$/, 'Must be only digits'),
+		meter_company: yup.string().required('You must enter a Company Name'),
+		street_address: yup.string().required('You must enter address').max(30, 'Maximum 30 digits'),
 		reference_number: yup
 			.string()
 			.required('Required')
 			.matches(/^[0-9]+$/, 'Must be only digits')
-			.min(7, 'Must be exactly 7 digits')
-			.max(7, 'Must be exactly 7 digits'),
+			.min(1, 'Minimum 1 digits')
+			.max(15, 'Maximum 15 digits'),
 
 		cnic: yup
 			.string()
 			.required('Required')
 			.matches(/^[0-9]+$/, 'Must be only digits')
-			.min(13, 'Must be exactly 13 digits')
-			.max(13, 'Must be exactly 13 digits'),
+			.min(13, 'Minimum 13 digits')
+			.max(13, 'Maximum 13 digits'),
 
 		meter_number: yup
 			.string()
 			.required('Required')
 			.matches(/^[0-9]+$/, 'Must be only digits')
-			.min(7, 'Must be exactly 7 digits')
-			.max(7, 'Must be exactly 7 digits'),
+			.min(1, 'Minimum 1 digits')
+			.max(15, 'Maximum 15 digits'),
 
-		phone: yup
+		phone_number: yup
 			.string()
 			.required('Required')
 			.matches(/^[0-9]+$/, 'Must be only digits')
-			.min(11, 'Must be exactly 11 digits')
-			.max(11, 'Must be exactly 11 digits')
+			.min(11, 'Minimum 11 digits')
+			.max(11, 'Maximum 11 digits')
 
 		// meter_phase: yup.string().required('Required').max(10, 'Phase must not be greater than 10 characters')
 	});
 
-	const { control, watch, reset, handleSubmit, formState, getValues, register } = useForm({
+	const { control, watch, reset, handleSubmit, formState, getValues, register, setValue } = useForm({
 		mode: 'onChange',
 		defaultValues,
 		resolver: yupResolver(schema)
@@ -188,9 +192,38 @@ function ContactDialog(props) {
 		/**
 		 * Dialog type: 'edit'
 		 */
-		console.log('inCallback');
+		console.log('inCallback', contactDialog.data);
 		if (contactDialog.type === 'edit' && contactDialog.data) {
 			reset({ ...contactDialog.data });
+			console.log('drop down cust id', contactDialog.data.customer_type.id);
+			setCustomerType(contactDialog.data.customer_type.id);
+			setPropertyType(contactDialog.data.property_type_id);
+			setPropertySize(contactDialog.data.property_size_id);
+			setMeterPhase(contactDialog.data.meter_phase);
+			setMeterStatus(contactDialog.data.meter_status);
+			setBlock(contactDialog.data.block);
+			setSector(contactDialog.data.sector);
+
+			setMeterType(
+				contactDialog?.data?.meter_type?.charAt(0).toUpperCase() + contactDialog?.data?.meter_type?.slice(1)
+			);
+
+			setValue('customer_type', contactDialog.data.customer_type.id);
+			setValue('property_type', contactDialog.data.property_type_id);
+			setValue('property_size', contactDialog.data.property_size_id);
+			setValue('meter_phase', contactDialog.data.meter_phase);
+			setValue('meter_status', contactDialog.data.meter_status);
+			setValue('sector', contactDialog.data.sector);
+			setValue('block', contactDialog.data.block);
+
+			setValue(
+				'meter_type',
+				contactDialog.data.meter_type?.charAt(0).toUpperCase() + contactDialog?.data?.meter_type?.slice(1)
+			);
+			console.log(
+				'ab',
+				contactDialog.data.meter_type?.charAt(0).toUpperCase() + contactDialog.data.meter_type?.slice(1)
+			);
 		}
 
 		/**
@@ -202,6 +235,17 @@ function ContactDialog(props) {
 				...contactDialog.data,
 				id: FuseUtils.generateGUID()
 			});
+			setCustomerType('');
+			setPropertyType('');
+			setPropertySize('');
+			setMeterPhase('');
+			setMeterStatus('');
+			setBlock('');
+			setSector('');
+
+			setMeterType(
+				contactDialog?.data?.meter_type?.charAt(0).toUpperCase() + contactDialog?.data?.meter_type?.slice(1)
+			);
 		}
 	}, [contactDialog.data, contactDialog.type, reset]);
 
@@ -250,12 +294,12 @@ function ContactDialog(props) {
 			{...contactDialog.props}
 			onClose={closeComposeDialog}
 			fullWidth
-			maxWidth="xs"
+			maxWidth="sm"
 		>
 			<AppBar position="static" elevation={0}>
 				<Toolbar className="flex w-full">
 					<Typography variant="subtitle1" color="inherit">
-						{contactDialog?.type === 'new' ? 'New Contact' : 'Edit Contact'}
+						{contactDialog?.type === 'new' ? 'New Customer' : 'Edit Customer'}
 					</Typography>
 				</Toolbar>
 				<div className="flex flex-col items-center justify-center pb-24">
@@ -323,7 +367,7 @@ function ContactDialog(props) {
 							render={({ field }) => (
 								<TextField
 									{...field}
-									type="number"
+									// type="number"
 									className="mb-24"
 									label="CNIC"
 									id="cnic"
@@ -341,18 +385,18 @@ function ContactDialog(props) {
 						</div>
 						<Controller
 							control={control}
-							name="phone"
+							name="phone_number"
 							render={({ field }) => (
 								<TextField
 									{...field}
 									className="mb-24"
 									label="Phone"
-									id="phone"
+									id="phone_number"
 									variant="outlined"
-									type="number"
+									type="tel"
 									fullWidth
-									error={!!errors.phone}
-									helperText={errors?.phone?.message}
+									error={!!errors.phone_number}
+									helperText={errors?.phone_number?.message}
 								/>
 							)}
 						/>
@@ -382,14 +426,16 @@ function ContactDialog(props) {
 						</div>
 						<Controller
 							control={control}
-							name="address"
+							name="street_address"
 							render={({ field }) => (
 								<TextField
 									{...field}
 									className="mb-24"
 									label="Address"
-									id="address"
+									id="street_address"
 									variant="outlined"
+									error={!!errors.street_address}
+									helperText={errors?.street_address?.message}
 									fullWidth
 								/>
 							)}
@@ -402,15 +448,12 @@ function ContactDialog(props) {
 							<Select
 								value={block}
 								onChange={handleBlock}
+								name="block"
 								inputProps={register('block', {
 									required: 'Please enter block'
 								})}
 								input={
-									<OutlinedInput
-										labelWidth={'category'.length * 9}
-										name="block"
-										id="category-label-placeholder"
-									/>
+									<OutlinedInput labelWidth={'category'.length * 9} id="category-label-placeholder" />
 								}
 							>
 								{configurationsData?.blocks?.map(category => (
@@ -430,15 +473,12 @@ function ContactDialog(props) {
 							<Select
 								value={customerType}
 								onChange={handleCustomerType}
+								name="customer_type"
 								inputProps={register('customer_type', {
 									required: 'Please enter customer type'
 								})}
 								input={
-									<OutlinedInput
-										labelWidth={'category'.length * 9}
-										name="customer_type"
-										id="category-label-placeholder"
-									/>
+									<OutlinedInput labelWidth={'category'.length * 9} id="category-label-placeholder" />
 								}
 							>
 								{customerTypes?.map(category => (
@@ -573,9 +613,6 @@ function ContactDialog(props) {
 									/>
 								}
 							>
-								{/* <MenuItem value="all">
-									<em> All </em>
-								</MenuItem> */}
 								{configurationsData?.meter_types?.map(category => (
 									<MenuItem value={category.name} key={category.name}>
 										{category.name}
@@ -613,6 +650,7 @@ function ContactDialog(props) {
 							</Select>
 						</FormControl>
 					</div>
+
 					<div className="flex">
 						<div className="min-w-48 pt-20">
 							<Icon color="action">people_alt</Icon>
@@ -641,6 +679,54 @@ function ContactDialog(props) {
 							</Select>
 						</FormControl>
 					</div>
+					<div className="flex">
+						<div className="min-w-48 pt-20" style={{ marginRight: '-0.5rem' }}>
+							<Icon color="action">home_work</Icon>
+						</div>
+						<Controller
+							control={control}
+							name="meter_company"
+							render={({ field }) => (
+								<TextField
+									{...field}
+									className="mb-24"
+									label="Meter Company"
+									id="meter_company"
+									error={!!errors.meter_company}
+									helperText={errors?.meter_company?.message}
+									variant="outlined"
+									required
+									fullWidth
+								/>
+							)}
+						/>
+					</div>
+					{contactDialog?.type === 'new' ? (
+						<div className="flex">
+							<div className="min-w-48 pt-20" style={{ marginRight: '-0.5rem' }}>
+								<Icon color="action">dvr</Icon>
+							</div>
+							<Controller
+								control={control}
+								name="current_reading"
+								render={({ field }) => (
+									<TextField
+										{...field}
+										className="mb-24"
+										label="Current Reading"
+										id="current_reading"
+										error={!!errors.current_reading}
+										helperText={errors?.current_reading?.message}
+										variant="outlined"
+										required
+										fullWidth
+									/>
+								)}
+							/>
+						</div>
+					) : (
+						''
+					)}
 				</DialogContent>
 
 				{contactDialog?.type === 'new' ? (

@@ -29,21 +29,27 @@ function AllCustomersHead(props) {
 				return {
 					id: newCustomer?.id,
 					name: newCustomer?.name,
-					property_size: newCustomer?.property_size.name,
-					property_type: newCustomer?.property_type.name,
-					meter_number: newCustomer?.meter.meter_number,
-					meter_type: newCustomer?.meter.meter_type,
-					reference_number: newCustomer.refference_number,
-					cnic: newCustomer.cnic,
-					phone: newCustomer.phone,
-					email: newCustomer.email,
-					customer_type: newCustomer.customer_type,
-					meter_status: newCustomer.meter.status,
-					meter_phase: newCustomer.meter.phase,
+					property_size: newCustomer?.property_size?.name,
+					property_size_id: newCustomer?.property_size?.id,
+                    
+					property_type: newCustomer?.property_type?.name,
+					property_type_id: newCustomer?.property_type?.id,
+
+					meter_number: newCustomer?.meter?.meter_number,
+					meter_type: newCustomer?.meter?.meter_type,
+					reference_number: newCustomer?.meter?.refference_number,
+					cnic: newCustomer?.cnic,
+					phone_number: newCustomer?.phone_number,
+					email: newCustomer?.email,
+					customer_type: newCustomer?.customer_type,
+					meter_status: newCustomer?.meter?.meter_status,
+					meter_phase: newCustomer?.meter?.phase,
+					meter_company : newCustomer?.meter?.company,
 					company: 'sms',
-					sector: newCustomer.meter.sector,
-					block: newCustomer.meter.block,
-					address: newCustomer.meter.address
+					sector: newCustomer?.address?.sector_id,
+					block: newCustomer?.address?.block_id,
+					street_address: newCustomer?.address?.street_address
+					
 				};
 			}),
 		[customersFromServer]
@@ -89,8 +95,18 @@ function AllCustomersHead(props) {
 				sortable: true
 			},
 			{
+				Header: 'Property Size ID',
+				accessor: 'property_size_id',
+				sortable: true
+			},
+			{
 				Header: 'property Type',
 				accessor: 'property_type',
+				sortable: true
+			},
+			{
+				Header: 'property Type ID',
+				accessor: 'property_type_id',
 				sortable: true
 			},
 			{
@@ -103,11 +119,12 @@ function AllCustomersHead(props) {
 				accessor: 'meter_type',
 				sortable: true
 			},
-			// {
-			// 	Header: 'Billing Status',
-			// 	accessor: 'billing_status',
-			// 	sortable: true
-			// },
+			{
+				Header: 'Meter Company',
+				accessor: 'meter_company',
+				sortable: true
+			},
+
 			{
 				id: 'action',
 				width: 128,

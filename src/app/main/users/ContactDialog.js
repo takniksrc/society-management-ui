@@ -22,6 +22,7 @@ import Select from '@material-ui/core/Select';
 import _ from '@lodash';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import * as yup from 'yup';
+import { roles } from '../../fuse-configs/constants';
 
 import { removeUser, updateUser, addUser, closeNewContactDialog, closeEditContactDialog } from './store/newUsersSlice';
 
@@ -36,16 +37,13 @@ const defaultValues = {
  * Form Validation Schema
  */
 const schema = yup.object().shape({
-	name: yup.string().required('You must enter a name')
+	name: yup.string().required('You must enter a name'),
+	email: yup.string().email().required('Email must be valid email')
 });
 
 function ContactDialog(props) {
-	const [role, setRole] = useState('');
-	const roles = [
-		{ id: 0, value: 'admin', label: 'Admin', color: '#2196f3' },
-		{ id: 1, value: 'worker', label: 'Worker', color: '#2196f3' },
-		{ id: 2, value: 'accountant', label: 'Accountant', color: '#2196f3' }
-	];
+	const [role, setRole] = useState();
+
 	const handleRole = event => {
 		setRole(event.target.value);
 	};
@@ -54,7 +52,7 @@ function ContactDialog(props) {
 	const contactDialog = useSelector(({ newUsersSlice }) => newUsersSlice.newUsersSlice);
 	console.log('I am clicked', contactDialog);
 
-	const { control, watch, reset, handleSubmit, formState, getValues, register } = useForm({
+	const { control, watch, reset, handleSubmit, formState, getValues, register, setValue } = useForm({
 		mode: 'onChange',
 		defaultValues,
 		resolver: yupResolver(schema)
@@ -66,10 +64,9 @@ function ContactDialog(props) {
 	const name = watch('name');
 	const avatar = watch('avatar');
 
-
 	// /**
 	//  * Initialize Dialog with Data
-	//  */
+	//  *
 	const initDialog = useCallback(() => {
 		/**
 		 * Dialog type: 'edit'
@@ -77,6 +74,8 @@ function ContactDialog(props) {
 		console.log('inCallback');
 		if (contactDialog.type === 'edit' && contactDialog.data) {
 			reset({ ...contactDialog.data });
+			setRole(contactDialog.data.role[0]);
+			setValue('role', contactDialog.data.role[0]);
 		}
 
 		/**
@@ -88,6 +87,8 @@ function ContactDialog(props) {
 				...contactDialog.data,
 				id: FuseUtils.generateGUID()
 			});
+			setRole('');
+
 		}
 	}, [contactDialog.data, contactDialog.type, reset]);
 
@@ -141,7 +142,7 @@ function ContactDialog(props) {
 			<AppBar position="static" elevation={0}>
 				<Toolbar className="flex w-full">
 					<Typography variant="subtitle1" color="inherit">
-						{contactDialog?.type === 'new' ? 'New Contact' : 'Edit Contact'}
+						{contactDialog?.type === 'new' ? 'New User' : 'Edit User'}
 					</Typography>
 				</Toolbar>
 				<div className="flex flex-col items-center justify-center pb-24">
@@ -186,11 +187,14 @@ function ContactDialog(props) {
 							render={({ field }) => (
 								<TextField
 									{...field}
+									type="email"
 									className="mb-24"
 									label="Email"
 									id="email"
 									variant="outlined"
 									fullWidth
+									error={!!errors.email}
+									helperText={errors?.email?.message}
 								/>
 							)}
 						/>
@@ -204,16 +208,13 @@ function ContactDialog(props) {
 							<InputLabel htmlFor="category-label-placeholder"> Role </InputLabel>
 							<Select
 								value={role}
+								name="role"
 								onChange={handleRole}
 								inputProps={register('role', {
 									required: 'Please enter role'
 								})}
 								input={
-									<OutlinedInput
-										labelWidth={'category'.length * 9}
-										name="role"
-										id="category-label-placeholder"
-									/>
+									<OutlinedInput labelWidth={'category'.length * 9} id="category-label-placeholder" />
 								}
 							>
 								{roles.map(category => (

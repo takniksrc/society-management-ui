@@ -25,6 +25,9 @@ import reducer from '../store';
 import societyChargesIcon from '../../../../assets/ServicesIcon/society-charges-icon.png';
 import consumptionChragesIcon from '../../../../assets/ServicesIcon/consumption-based-icon.png';
 import instance from 'axiosinstance';
+import { getBills, resetBills } from '../store/AllBillsSlice';
+import { hideMessage, showMessage } from 'app/store/fuse/messageSlice';
+
 
 import NotificationModel from '../../../shared-components/notificationPanel/model/NotificationModel';
 import NotificationCard from '../../../shared-components/notificationPanel/NotificationCard';
@@ -73,10 +76,7 @@ function GBData(props) {
 		hidden: { opacity: 0, y: 20 },
 		show: { opacity: 1, y: 0 }
 	};
-	const methods = useFormContext();
-	const schema = yup.object().shape({
-		title: yup.string().required('You must enter a title')
-	});
+
 
 	const { watch, handleSubmit, formState, reset, register, control, setValue } = useForm({
 		mode: 'onChange',
@@ -111,16 +111,40 @@ function GBData(props) {
 
 		data.append('due_date', formatDate(model.dueDate));
 		data.append('block_id', props.blockId);
-		model.file ? data.append('fpa_file', model.file[0]) : null;
+		model.file.length !== 0 ? data.append('fpa_file', model.file[0]) : null;
 		instance
 			.post('/api/bills/generate', data)
 			.then(function (response) {
 				if (response.status === 201) {
-					history.push('/billing/boards/1/electrcity-bills/billing');
+					dispatch(
+						showMessage({
+							message: response.data.message, //text or html
+							autoHideDuration: 6000, //ms
+							anchorOrigin: {
+								vertical: 'top', //top bottom
+								horizontal: 'right' //left center right
+							},
+							variant: 'success' //success error info warning null
+						})
+					);
+					dispatch(getBills(props.blockId)).then(() => {
+						history.push('/billing/boards/1/electrcity-bills/billing');
+					});
 				}
 				console.log(JSON.stringify(response));
 			})
 			.catch(function (error) {
+				// dispatch(
+				// 	showMessage({
+				// 		message: response.data.message, //text or html
+				// 		autoHideDuration: 6000, //ms
+				// 		anchorOrigin: {
+				// 			vertical: 'top', //top bottom
+				// 			horizontal: 'right' //left center right
+				// 		},
+				// 		variant: 'error' //success error info warning null
+				// 	})
+				// );
 				alert('Error while generating');
 			});
 

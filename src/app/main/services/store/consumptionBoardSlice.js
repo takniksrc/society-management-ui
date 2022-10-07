@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import instance from 'axiosinstance';
@@ -9,7 +10,6 @@ import CardModel from '../model/CardModel';
 import ListModel from '../model/ListModel';
 import reorder, { reorderQuoteMap } from './reorder';
 import { newBoard } from './boardsSlice';
-import { removeCard, updateCard } from './cardSlice';
 
 export const getConsumbtionBoard = createAsyncThunk(
 	'scrumboardApp/board/getConsumptionBoard',
@@ -17,35 +17,65 @@ export const getConsumbtionBoard = createAsyncThunk(
 		const response = await instance.get(`/api/services/${params}`, { params });
 		const data = await response.data.service;
 		console.log('I am consuption', data);
-
-		// data.servicePricing.map((sp, i) => {
-		// 	//looping over customer type
-
-		// 	if (sp.customer_type.name === 'Residential') {
-		// 		console.log('sp.customer_type.name', sp.customer_type.name);
-		// 		console.log('sp.servicePricing', data.servicePricing[i]?.slabs[i]?.slab_start);
-
-		// 		if (data.servicePricing[i]?.slabs[i]?.slab_start === 1) {
-		// 			formValues.ResidentialStartUpper = data.servicePricing[i]?.slabs[i]?.slab_start;
-		// 		}
-		// 		return true;
-		// 	}
-		// 	return true;
-		// });
-
 		return data;
 	}
 );
 
-export const saveBoard = createAsyncThunk(
-	'scrumboardApp/board/saveBoard',
-	async (boardData, { dispatch, getState }) => {
-		const { product } = getState();
-		console.log('I am product in save Product', product);
+export const updateConsumbtionBoard = createAsyncThunk(
+	'scrumboardApp/board/updateConsumbtionBoard',
+	async (consumbtionBoardData, { dispatch, getState }) => {
+		console.log('consumbtionBoardData', consumbtionBoardData);
+		let slabsToEdit = [];
+		consumbtionBoardData.servicePricing.forEach((servicePrice, servicePriceIndex) => {
+			console.log('servicePrice', servicePrice);
+			console.log('customerType', servicePrice.customer_type);
 
-		const response = await axios.post('/api/e-commerce-app/product/save', { ...product, ...boardData });
+			if (servicePrice.customer_type.name === consumbtionBoardData.tabValue) {
+				slabsToEdit = consumbtionBoardData.servicePricing[servicePriceIndex].slabs;
+			}
+		});
+
+		const body = {
+			service_id: consumbtionBoardData.id,
+			name: consumbtionBoardData.name,
+			description: consumbtionBoardData.description,
+			price_slabs: slabsToEdit
+		};
+		console.log('tabValue', consumbtionBoardData.tabValue);
+		console.log('consumbtionBoardData', consumbtionBoardData);
+
+		const response = await instance.post(`/api/services/${consumbtionBoardData.id}/consumptionBased`, { ...body });
+		console.log("response",response)
 		const data = await response.data;
+		if(response.status === 201){
+			dispatch(
+				showMessage({
+					message: response.data.message, //text or html
+					autoHideDuration: 6000, //ms
+					anchorOrigin: {
+						vertical: 'top', //top bottom
+						horizontal: 'right' //left center right
+					},
+					variant: 'success' //success error info warning null
+				})
+			);
+		}
+		else{
+			dispatch(
+				showMessage({
+					message: response.data.message, //text or html
+					autoHideDuration: 6000, //ms
+					anchorOrigin: {
+						vertical: 'top', //top bottom
+						horizontal: 'right' //left center right
+					},
+					variant: 'error' //success error info warning null
+				})
+			);
 
+		}
+		dispatch(getConsumbtionBoard(consumbtionBoardData.id));
+		
 		return data;
 	}
 );
@@ -58,40 +88,10 @@ const consumptionBoardSlice = createSlice({
 		addLabel: (state, action) => {
 			state.labels = [...state.labels, action.payload];
 		}
-		// newBoardAllValue: {
-		// 	reducer: (state, action) => action.payload,
-		// 	prepare: event => ({
-		// 		payload: {
-		// 			id: '',
-		// 			description: '',
-		// 			name:''
-		// 		}
-		// 	})
-		// }
 	},
 	extraReducers: {
-		[getConsumbtionBoard.fulfilled]: (state, action) => {
-			const formValues = {
-				id: action.payload.id,
-				description: action.payload.description,
-				name: action.payload.name
-			};
-
-			action.payload.servicePricing.map((sp, i) => {
-				sp.slabs.sort((a, b) => {
-					return a.slab_start - b.slab_start;
-				});
-				console.log('sp.slabs', sp.slabs);
-				sp.slabs.map(slab => {
-					formValues[`${sp.customer_type.name + slab.slab_start}`] = slab.slab_start;
-					formValues[`${sp.customer_type.name + slab.slab_end}`] = slab.slab_end;
-					formValues[`${sp.customer_type.name + slab.price_per_unit}`] = slab.price_per_unit;
-				});
-			});
-			return { ...action.payload, ...formValues };
-		},
-
-		[saveBoard.fulfilled]: (state, action) => action.payload
+		[getConsumbtionBoard.fulfilled]: (state, action) => action.payload,
+		[updateConsumbtionBoard.fulfilled]: (state, action) => action.payload
 	}
 });
 

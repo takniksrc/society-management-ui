@@ -15,10 +15,10 @@ const scrumboardAppReducers = combineReducers({
 	card,
 	newUsersSlice,
 	billingSlice,
-	billingBlocksSlice,
+	// billingBlocksSlice,
 	AllBillsSlice,
 	billWithIdSlice,
-	billsWithBlockIdSlice
+	// billsWithBlockIdSlice
 });
 
 export default scrumboardAppReducers;

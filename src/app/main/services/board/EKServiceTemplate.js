@@ -32,15 +32,8 @@ import ResidentialTab from '../ConsumptionTabs/ResidentialTab';
 import ConstructionTab from '../ConsumptionTabs/ConstructionTab';
 import FPATab from '../ConsumptionTabs/FPATab';
 import CommercialTab from '../ConsumptionTabs/CommercialTab';
-// import ProductHeader from './ProductHeader';
-// import InventoryTab from './tabs/InventoryTab';
-// import PricingTab from './tabs/PricingTab';
-// import ProductImagesTab from './tabs/ProductImagesTab';
-// import ShippingTab from './tabs/ShippingTab';
+import { getConsumbtionBoard, updateConsumbtionBoard } from '../store/consumptionBoardSlice';
 
-/**
- * Form Validation Schema
- */
 const schema = yup.object().shape({
 	name: yup
 		.string()
@@ -51,32 +44,38 @@ const schema = yup.object().shape({
 function EKServiceTemplate(props) {
 	const dispatch = useDispatch();
 	const theme = useTheme();
+	const params = useParams();
 	const pageLayout = useRef(null);
-	const board = useSelector(({ scrumboardApp }) => scrumboardApp.consumptionBoard);
-	console.log('I am con board', board);
+	const board = useSelector(state => state.consumptionBoard);
+	console.log('board', board);
+
+	const methods = useForm({
+		mode: 'onChange',
+		defaultValues: board,
+		resolver: yupResolver(schema)
+	});
+	const { reset, watch, control, onChange, formState, getValues } = methods;
 
 	const [tabValue, setTabValue] = useState(0);
+
+	function handleUpdateConsumptionBoard() {
+		const data = getValues();
+		dispatch(updateConsumbtionBoard({ ...data, tabValue }));
+	}
 
 	function handleTabChange(event, value) {
 		console.log('I am value', value);
 		setTabValue(value);
 	}
-	const methods = useForm({
-		mode: 'onChange',
-		defaultValues: {},
-		resolver: yupResolver(schema)
-	});
-	const { reset, watch, control, onChange, formState } = methods;
-	useEffect(() => {
-		if (!board) {
-			return;
-		}
 
-		/**
-		 * Reset the form on product state changes
-		 */
-		reset(board);
-	}, [board, reset]);
+	useEffect(() => {
+		console.log('params', params.boardId);
+		3;
+		dispatch(getConsumbtionBoard(params.boardId)).then(data => {
+			console.log('data :', data);
+			reset(data.payload);
+		});
+	}, [reset]);
 	return (
 		<FormProvider {...methods}>
 			<FusePageCarded
@@ -104,50 +103,24 @@ function EKServiceTemplate(props) {
 								initial={{ opacity: 0, x: 20 }}
 								animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
 							>
-								<Button
-									className="whitespace-nowrap mx-4"
-									variant="contained"
-									color="secondary"
-									// disabled={_.isEmpty(dirtyFields) || !isValid}
-									// onClick={handleSaveProduct}
-								>
-									Save
-								</Button>
+								{!!tabValue && (
+									<Button
+										className="whitespace-nowrap mx-4"
+										variant="contained"
+										color="secondary"
+										type="submit"
+										// disabled={_.isEmpty(dirtyFields) || !isValid}
+										onClick={handleUpdateConsumptionBoard}
+									>
+										Save
+									</Button>
+								)}
 							</motion.div>
 						</div>
 					</div>
 				}
 				contentToolbar={
 					<>
-						{/* <TabContext value={tabValue}>
-							<TabList
-								onChange={handleTabChange}
-								indicatorColor="primary"
-								textColor="primary"
-								variant="scrollable"
-								scrollButtons="auto"
-								classes={{ root: 'w-full h-64' }}
-							>
-								<Tab className="h-64" label="Description" />
-								{board?.servicePricing
-									? board?.servicePricing?.map(sp => {
-											console.log('i am sp', sp.customer_type.name);
-											setTabValue(sp.customer_type.id);
-
-											return (
-												<Tab
-													className="h-64"
-													label={sp.customer_type.name}
-													// value={sp.customer_type.id}
-												/>
-											);
-									  })
-									: ''}
-							</TabList>
-							<TabPanel value={tabValue}>Item One</TabPanel>
-						<TabPanel value={tabValue}>Item Two</TabPanel>
-						<TabPanel value={tabValue}>Item Three</TabPanel>
-						</TabContext> */}
 						<Tabs
 							value={tabValue}
 							onChange={handleTabChange}
@@ -171,10 +144,6 @@ function EKServiceTemplate(props) {
 								  })
 								: ''}
 						</Tabs>
-						{/* <Tab className="h-64" label="Residential" />
-							<Tab className="h-64" label="Commercial" />
-							<Tab className="h-64" label="Construction" />
-							<Tab className="h-64" label="FPA" /> */}
 					</>
 				}
 				content={
@@ -188,13 +157,6 @@ function EKServiceTemplate(props) {
 						<div className={tabValue !== 'Commercial' ? 'hidden' : ''}>
 							<CommercialTab TabType="Commercial" />
 						</div>
-{/* 
-						<div className={tabValue !== 3 ? 'hidden' : ''}>
-							<ConstructionTab />
-						</div>
-						<div className={tabValue !== 4 ? 'hidden' : ''}>
-							<FPATab />
-						</div> */}
 					</div>
 				}
 				innerScroll

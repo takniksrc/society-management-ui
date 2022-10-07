@@ -1,6 +1,7 @@
 import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext, useFieldArray } from 'react-hook-form';
+
 import FormControl from '@material-ui/core/FormControl';
 import Icon from '@material-ui/core/Icon';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -24,14 +25,14 @@ function CommercialTab(props) {
 	const configurationsData = useSelector(({ configSlice }) => configSlice);
 
 	const { control } = methods;
-	const [selectedCategory, setSelectedCategory] = useState('flat');
-	const categories = [
-		{ id: 1, value: 'flat', label: 'Flat', color: '#2196f3' },
-		{ id: 2, value: 'plaza', label: 'Plaza', color: '#2196f3' }
-	];
-	function handleSelectedCategory(event) {
-		setSelectedCategory(event.target.value);
-	}
+	const { fields, append, remove } = useFieldArray({
+		control,
+		name: 'servicePricing'
+	});
+	const board = useSelector(state => state.consumptionBoard);
+	// const board = useSelector(({ scrumboardApp }) => scrumboardApp.consumptionBoard);
+	console.log('Fields in Commercial board tab', fields);
+
 	useEffect(() => {
 		dispatch(getConfigurations());
 	}, []);
@@ -43,7 +44,7 @@ function CommercialTab(props) {
 				initial="hidden"
 				animate="show"
 			>
-				{configurationsData?.customer_types
+				{/* {configurationsData?.customer_types
 					? configurationsData?.customer_types.map(ct => {
 							console.log('ct', ct);
 
@@ -54,60 +55,100 @@ function CommercialTab(props) {
 											console.log('pt', pt);
 
 											return (
-												<>
-													<motion.div className="w-full pb-24  sm:p-16">
-														<Card className="flex flex-col h-auto shadow h-fit">
-															<div
-																className="flex flex-shrink-0 items-center justify-between px-24 h-64"
-																style={
-																	{
-																		// background: category.color,
-																		// color: theme.palette.getContrastText(category.color)
-																	}
-																}
-															>
-																<Typography
-																	className="font-medium truncate"
-																	color="inherit"
-																>
-																	{pt.name}
-																</Typography>
-															</div>
-															<CardContent className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10 flex-auto items-center justify-center h-fit flex h-auto">
-																{pt.property_sizes.map(ps => {
-																	console.log('ps 23', ps.name);
-																	return (
-																		<>
-																			{/* <h3>{ps.name.replace(/ /g, '_')}</h3> */}
+												<> */}
+				<motion.div className="w-full pb-24  sm:p-16">
+					<Card className="flex flex-col h-auto shadow h-fit">
+						<div
+							className="flex flex-shrink-0 items-center justify-between px-24 h-64"
+							style={
+								{
+									// background: category.color,
+									// color: theme.palette.getContrastText(category.color)
+								}
+							}
+						>
+							<Typography className="font-medium truncate" color="inherit">
+								Shop
+							</Typography>
+						</div>
+						<CardContent className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10 flex-auto items-center justify-center h-fit flex h-auto">
+							{fields?.map((propertySize, propertySizeIndex) => {
+								console.log('sp in board', propertySize);
 
-																			<Controller
-																				name={ps.name.replace(/ /g, '_')}
-																				control={control}
-																				render={({ field }) => (
-																					<TextField
-																						// {...field}
-																						className="mt-8 mb-16 mx-4"
-																						label={ps.name}
-																						autoFocus
-																						// id={ps.name}
-																						variant="outlined"
-																						fullWidth
-																					/>
-																				)}
-																			/>
-																		</>
-																	);
-																})}
-															</CardContent>
-														</Card>
-													</motion.div>
-												</>
+								return (
+									propertySize?.customer_type === 'Commercial' &&
+						        	propertySize?.property_size?.name.includes('Shop') && (
+										<Controller
+											name={`servicePricing[${propertySizeIndex}].price_per_unit`}
+											control={control}
+											render={({ field }) => (
+												<TextField
+													{...field}
+													className="mt-8 mb-16 mx-4"
+													label={propertySize.property_size.name}
+													autoFocus
+													// id={}
+													variant="outlined"
+													fullWidth
+												/>
+											)}
+										/>
+									)
+								);
+							})}
+						</CardContent>
+					</Card>
+				</motion.div>
+				<motion.div className="w-full pb-24  sm:p-16">
+					<Card className="flex flex-col h-auto shadow h-fit">
+						<div
+							className="flex flex-shrink-0 items-center justify-between px-24 h-64"
+							style={
+								{
+									// background: category.color,
+									// color: theme.palette.getContrastText(category.color)
+								}
+							}
+						>
+							<Typography className="font-medium truncate" color="inherit">
+								Plaza
+							</Typography>
+						</div>
+						<CardContent className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10 flex-auto items-center justify-center h-fit flex h-auto">
+							{fields?.map((propertySize, propertySizeIndex) => {
+								console.log('sp in board', propertySize);
+
+								return (
+									propertySize?.customer_type === 'Commercial' &&
+						        	propertySize?.property_size?.name.includes('Plaza') && (
+										<Controller
+											name={`servicePricing[${propertySizeIndex}].price_per_unit`}
+											control={control}
+											render={({ field }) => (
+												<TextField
+													{...field}
+													className="mt-8 mb-16 mx-4"
+													label={propertySize.property_size.name}
+													autoFocus
+													// id={}
+													variant="outlined"
+													fullWidth
+												/>
+											)}
+										/>
+									)
+								);
+							})}
+						</CardContent>
+					</Card>
+				</motion.div>
+				{/* </>
 											);
 										})}
 								</>
 							);
 					  })
-					: null}
+					: null} */}
 			</motion.div>
 			{/* <FormControl className="flex w-full sm:w-320 -mx-4 mt-8 mb-16 ml-px" variant="outlined">
 				<InputLabel htmlFor="category-label-placeholder"> Property Type </InputLabel>

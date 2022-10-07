@@ -19,7 +19,7 @@ function ConstructionTab(props) {
 
 	return (
 		<div>
-			<div className="flex mx-4 -mx-4">
+			<div className="flex mx-4 -mx-4 flex-col lg:flex-row md:flex-row sm:flex-col">
 				<Typography variant="subtitle1" className="py-16 font-semibold mr-8 mx-4">
 					Start
 				</Typography>
@@ -64,7 +64,7 @@ function ConstructionTab(props) {
 						/>
 					)}
 				/>
-				<Typography variant="subtitle1" className="py-16 font-semibold mx-4 ml-40 mr-8 mx-4">
+				<Typography variant="subtitle1" className="py-16 font-semibold mx-4 mr-8 mx-4 ml-1.5 lg:ml-40 sm:ml-4">
 					Price
 				</Typography>
 				<Controller

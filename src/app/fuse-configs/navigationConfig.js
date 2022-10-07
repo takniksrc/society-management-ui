@@ -2,6 +2,7 @@ import i18next from 'i18next';
 import ar from './navigation-i18n/ar';
 import en from './navigation-i18n/en';
 import tr from './navigation-i18n/tr';
+import authRoles from '../auth/authRoles';
 
 i18next.addResourceBundle('en', 'navigation', en);
 i18next.addResourceBundle('tr', 'navigation', tr);
@@ -14,22 +15,15 @@ const navigationConfig = [
 		translate: 'APPLICATIONS',
 		type: 'group',
 		icon: 'apps',
+		// auth: authRoles.accountant,
 		children: [
 			{
 				id: 'profile',
-				title: 'User',
-				translate: 'USER',
+				title: 'Dashboard',
+				translate: 'DASHBOARD',
 				type: 'item',
 				icon: 'person',
-				url: '/users'
-			},
-			{
-				id: 'profile',
-				title: 'cUSTOMER',
-				translate: 'CUSTOMER',
-				type: 'item',
-				icon: 'person',
-				url: '/customers'
+				url: '/dashboards/analytics'
 			},
 			{
 				id: 'analysis-report',
@@ -40,12 +34,12 @@ const navigationConfig = [
 				url: '/analysisreport'
 			},
 			{
-				id: 'Billing',
-				title: 'Billing',
-				translate: 'BILLING',
+				id: 'profile',
+				title: 'cUSTOMER',
+				translate: 'CUSTOMER',
 				type: 'item',
-				icon: 'assessment',
-				url: '/billing'
+				icon: 'person',
+				url: '/customers'
 			},
 			{
 				id: 'Services',
@@ -54,6 +48,25 @@ const navigationConfig = [
 				type: 'item',
 				icon: 'assessment',
 				url: '/services'
+			},
+			{
+				id: 'Billing',
+				title: 'Billing',
+				translate: 'BILLING',
+				type: 'item',
+				icon: 'assessment',
+				url: '/billing',
+				auth: authRoles.accountant
+			},
+			{
+				id: 'profile',
+				title: 'User',
+				translate: 'USER',
+				type: 'item',
+				icon: 'person',
+				url: '/users',
+				auth: authRoles.admin
+
 			}
 		]
 	}

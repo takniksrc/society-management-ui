@@ -35,26 +35,6 @@ const useStyles = makeStyles({
 
 const GBDataTemplate = () => {
 	const classes = useStyles();
-	const [tabValue, setTabValue] = useState(0);
-	//const GetBills = useSelector(state => state.scrumboardApp.getBillsSlice);
-   //console.log('i am GetBills',GetBills)
-
-	const methods = useForm({
-		mode: 'onChange',
-		defaultValues: {},
-		resolver: yupResolver(schema)
-	});
-	const { reset, watch, control, onChange, formState } = methods;
-	const form = watch();
-	const dispatch = useDispatch();
-
-	const pageLayout = useRef(null);
-	const routeParams = useParams();
-
-	// useDeepCompareEffect(() => {
-	// 	dispatch(getUsers(routeParams));
-	// 	dispatch(getBillingData());
-	// }, [dispatch, routeParams]);
 
 	return (
 		<>

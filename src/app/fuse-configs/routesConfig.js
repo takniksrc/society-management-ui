@@ -7,11 +7,13 @@ import BillingConfig from 'app/main/billing/BillingConfig';
 import ServicesConfig from 'app/main/services/ServicesConfig';
 import Login from 'app/login/Login';
 import LoginConfig from 'app/login/LoginConfig';
+import AnalyticsDashboardAppConfig from 'app/main/dashboards/analytics/AnalyticsDashboardAppConfig';
 import RegisterConfig from 'app/register/RegisterConfig';
 
 const routeConfigs = [
 	LoginConfig,
 	RegisterConfig,
+	AnalyticsDashboardAppConfig,
 	CustomersConfig,
 	UsersConfig,
 	AnalysisReportConfig,

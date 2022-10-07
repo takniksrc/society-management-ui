@@ -5,15 +5,14 @@ import Typography from '@material-ui/core/Typography';
 import withReducer from 'app/store/withReducer';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import reducer from '../store';
 import { selectBoards, newBoard, getBoards, resetBoards } from '../store/boardsSlice';
 import { getConfigurations } from '../../../fuse-configs/store/configSlice';
 import { getBlocksStatus } from '../store/billingBlocksSlice';
-import { getBills } from '../store/AllBillsSlice';
-import { resetBills } from '../store/AllBillsSlice';
+import { getBills, resetBills } from '../store/AllBillsSlice';
 
 const useStyles = makeStyles(theme => ({
 	root: {},
@@ -29,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 function Boards(props) {
 	const dispatch = useDispatch();
 	const configurationsData = useSelector(({ configSlice }) => configSlice);
-	const billingBlocksStatuses = useSelector(state => state.scrumboardApp.billingBlocksSlice);
+	const billingBlocksStatuses = useSelector(state => state.billingBlocksSlice);
 	console.log('configSlice inside billing Boards : ', configurationsData);
 	console.log('billingBlockSlice inside billing Boards : ', billingBlocksStatuses);
 
@@ -41,18 +40,21 @@ function Boards(props) {
 				staggerChildren: 0.1
 			}
 		}
-	};
+	};''
 
 	const item = {
 		hidden: { opacity: 0, y: 20 },
 		show: { opacity: 1, y: 0 }
 	};
+	useEffect(() => {
+		console.log('cofig,billing');
+	}, [configurationsData, billingBlocksStatuses]);
 
 	useEffect(() => {
 		dispatch(resetBills([]));
-		dispatch(getConfigurations());
-		configurationsData?.sectors?.map((sector, index) => {
-			dispatch(getBlocksStatus(sector.id));
+		dispatch(getConfigurations()).then(data => {
+			console.log('I am promise returend', data);
+			dispatch(getBlocksStatus(data.payload?.sectors[0]?.id));
 		});
 	}, [dispatch]);
 
@@ -69,14 +71,15 @@ function Boards(props) {
 					variants={container}
 					initial="hidden"
 					animate="show"
-					className="flex flex-wrap w-full justify-center py-32 px-16"
+					className="grid  flex-wrap w-full justify-center py-32 px-16  grid-cols-1 sm:grid-cols-2 md:grid-cols-3 "
 				>
-					{billingBlocksStatuses?.map((board, index) => {
+					{
+					billingBlocksStatuses?.map((board, index) => {
 						console.log('blocks', board);
 						return board.billing_status === 'closed' || board.billing_status === 'init-in-progress' ? (
-							<motion.div variants={item} className="p-16" key={board.id}>
+							<motion.div variants={item} className="p-16 w-auto"  key={board.block_id}>
 								<Paper
-									to={`/billing/boards/${board.id}`}
+									to={`/billing/boards/${board.block_id}`}
 									className={clsx(
 										classes.board,
 										'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
@@ -85,7 +88,7 @@ function Boards(props) {
 									component={Link}
 								>
 									<Typography
-										className="text-16 font-medium text-center pt-16 px-32 font-bold "
+										className="text-2xl font-large text-center pt-16 px-32 font-bold "
 										color="inherit"
 									>
 										{board.name}
@@ -95,25 +98,29 @@ function Boards(props) {
 											Status :{' '}
 										</Typography>
 										<Typography className="text-16 font-medium text-center pt-16" color="inherit">
-											{board.billing_status}
+											{board.billing_status === 'closed'
+												? 'Closed'
+												: board.billing_status === 'init-in-progress'
+												? 'Initialization in progress'
+												: board.billing_status}
 										</Typography>
 									</div>
 								</Paper>
 							</motion.div>
 						) : (
-							<motion.div variants={item} className="p-16" key={board.id}>
+							<motion.div variants={item} className="p-16  w-auto" key={board.block_id}>
 								<Paper
-									to={`/billing/boards/${board.id}/billing`}
+									to={`/billing/boards/${board.block_id}/billing`}
 									className={clsx(
 										classes.board,
 										'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
 									)}
 									role="button"
 									component={Link}
-									onClick={() => dispatch(getBills(board.id))}
+									onClick={() => dispatch(getBills(board.block_id))}
 								>
 									<Typography
-										className="text-16 font-medium text-center pt-16 px-32 font-bold "
+										className="text-2xl font-medium text-center pt-16 px-32 font-bold "
 										color="inherit"
 									>
 										{board.name}
@@ -123,34 +130,13 @@ function Boards(props) {
 											Status :
 										</Typography>
 										<Typography className="text-16 font-medium text-center pt-16" color="inherit">
-											{board.billing_status}
+											{board.billing_status === 'ongoing' ? 'On going' : board.billing_status}
 										</Typography>
 									</div>
 								</Paper>
 							</motion.div>
 						);
 					})}
-
-					{/* <motion.div variants={item} className="w-224 h-224 p-16">
-						<Paper
-							className={clsx(
-								classes.board,
-								classes.newBoard,
-								'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg outline-none'
-							)}
-							onClick={() => dispatch(newBoard())}
-							onKeyDown={() => dispatch(newBoard())}
-							role="button"
-							tabIndex={0}
-						>
-							<Icon className="text-56" color="secondary">
-								add_circle
-							</Icon>
-							<Typography className="text-16 font-medium text-center pt-16 px-32" color="inherit">
-								Add new board
-							</Typography>
-						</Paper>
-					</motion.div> */}
 				</motion.div>
 			</div>
 		</div>

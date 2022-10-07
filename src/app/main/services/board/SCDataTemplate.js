@@ -23,110 +23,57 @@ import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import { Autocomplete } from '@material-ui/lab';
 // eslint-disable-next-line import/named
-import { saveBoard, getBoard } from '../store/boardSlice';
-// import { resetProduct, newProduct, getProduct } from '../store/productSlice';
+
+import { updateSocietyChargesServiceBoard, getSocietyChargesServiceBoard } from '../store/societyChargesServiceSlice';
 
 import reducer from '../store';
 import DescriptionTab from './Tabs/DescriptionTab';
 import ResidentialTab from './Tabs/ResidentialTab';
 import CommercialTab from './Tabs/CommercialTab';
 import ConstructionTab from './Tabs/ConstructionTab';
-// import ProductHeader from './ProductHeader';
-// import InventoryTab from './tabs/InventoryTab';
-// import PricingTab from './tabs/PricingTab';
-// import ProductImagesTab from './tabs/ProductImagesTab';
-// import ShippingTab from './tabs/ShippingTab';
 
-/**
- * Form Validation Schema
- */
 const schema = yup.object().shape({
-	name: yup
-		.string()
-		.required('You must enter a product name')
-		.min(5, 'The product name must be at least 5 characters')
+	name: yup.string()
 });
 
 function SCDataTemplate(props) {
 	const dispatch = useDispatch();
 	const theme = useTheme();
-	const [tabValue, setTabValue] = useState(0);
-	// const methods = useFormContext();
+	const board = useSelector(({ scrumboardApp }) => scrumboardApp.societyChargesServiceSlice);
+
 	const methods = useForm({
 		mode: 'onChange',
-		defaultValues: {},
+		defaultValues: board,
 		resolver: yupResolver(schema)
 	});
-	const { formState, watch, getValues, reset } = methods;
+	const { reset, watch, control, onChange, formState, getValues } = methods;
+
+	const [tabValue, setTabValue] = useState('Description');
+
 	const { isValid, dirtyFields } = formState;
-	const [noProduct, setNoProduct] = useState(false);
 
 	const pageLayout = useRef(null);
-	const board = useSelector(({ scrumboardApp }) => scrumboardApp.board);
-	console.log('I am product', board);
 
 	const routeParams = useParams();
 	const form = watch();
 
-	// const boardData = useSelector(getBoard);
 	console.log('I am boardData in SCDataTemplate', board);
 
 	function handleTabChange(event, value) {
 		setTabValue(value);
+		console.log('tabValue', tabValue);
 	}
 	const name = watch('name');
 
-	// useEffect(() => {
-	// 	dispatch(getBoard());
-	// }, [dispatch]);
-	function handleSaveProduct() {
-		dispatch(saveBoard(getValues()));
+	function handleSaveSocietyCharges() {
+		dispatch(updateSocietyChargesServiceBoard(getValues()));
 	}
-	// useDeepCompareEffect(() => {
-	// 	function updateProductState() {
-	// 		const { productId } = routeParams;
-
-	// 		if (productId === 'new') {
-	// 			/**
-	// 			 * Create New Product data
-	// 			 */
-	// 		} else {
-	// 			/**
-	// 			 * Get Product data
-	// 			 */
-	// 			dispatch(getBoard(routeParams)).then(action => {
-	// 				/**
-	// 				 * If the requested product is not exist show message
-	// 				 */
-	// 				if (!action.payload) {
-	// 					setNoProduct(true);
-	// 				}
-	// 			});
-	// 		}
-	// 	}
-
-	// 	updateProductState();
-	// }, [dispatch, routeParams]);
 
 	useEffect(() => {
-		if (!board) {
-			return;
-		}
-		/**
-		 * Reset the form on product state changes
-		 */
-		reset(board);
-	}, [board, reset]);
-
-	// useEffect(() => {
-	// 	return () => {
-	// 		/**
-	// 		 * Reset Product on component unload
-	// 		 */
-	// 		dispatch(resetProduct());
-	// 		setNoProduct(false);
-	// 	};
-	// }, [dispatch]);
+		dispatch(getSocietyChargesServiceBoard(routeParams.boardId)).then(data => {
+			reset(data.payload);
+		});
+	}, [reset]);
 
 	return (
 		<FormProvider {...methods}>
@@ -161,7 +108,7 @@ function SCDataTemplate(props) {
 								variant="contained"
 								color="secondary"
 								disabled={_.isEmpty(dirtyFields) || !isValid}
-								onClick={handleSaveProduct}
+								onClick={handleSaveSocietyCharges}
 							>
 								Save
 							</Button>
@@ -170,24 +117,6 @@ function SCDataTemplate(props) {
 				}
 				contentToolbar={
 					<>
-						{/* <Controller
-				     name="description"
-				     // control={control}
-				      render={({ field }) => (
-					   <TextField
-						{...field}
-						className="mt-8 mb-16"
-						id="description"
-						label="Description"
-						type="text"
-						multiline
-						rows={5}
-						variant="outlined"
-						fullWidth
-					/>
-				)}
-			/> */}
-
 						<Tabs
 							value={tabValue}
 							onChange={handleTabChange}
@@ -197,29 +126,24 @@ function SCDataTemplate(props) {
 							scrollButtons="auto"
 							classes={{ root: 'w-full h-64' }}
 						>
-							<Tab className="h-64" label="Description" />
-							<Tab className="h-64" label="Residential" />
-							<Tab className="h-64" label="Commercial" />
-							{/* <Tab className="h-64" label="Construction" /> */}
+							<Tab id="Description" className="h-64" label="Description" value="Description" />
+							<Tab id="Residential4" className="h-64" label="Residential" value="Residential" />
+							<Tab id="Commercial" className="h-64" label="Commercial" value="Commercial" />
 						</Tabs>
 					</>
 				}
 				content={
 					<div className="p-16 sm:p-24 max-w-2xl">
-						<div className={tabValue !== 0 ? 'hidden' : ''}>
-							<DescriptionTab board={board} />
+						<div className={tabValue !== 'Description' ? 'hidden' : ''}>
+							<DescriptionTab />
 						</div>
-						<div className={tabValue !== 1 ? 'hidden' : ''}>
-							<ResidentialTab board={board} />
-						</div>
-
-						<div className={tabValue !== 2 ? 'hidden' : ''}>
-							<CommercialTab board={board} />
+						<div className={tabValue !== 'Residential' ? 'hidden' : ''}>
+							<ResidentialTab TabType="Residential" />
 						</div>
 
-						{/* <div className={tabValue !== 3 ? 'hidden' : ''}>
-							<ConstructionTab />
-						</div> */}
+						<div className={tabValue !== 'Commercial' ? 'hidden' : ''}>
+							<CommercialTab TabType="Commercial" />
+						</div>
 					</div>
 				}
 				innerScroll

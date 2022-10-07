@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import { useEffect ,useState} from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { submitRegister } from 'app/auth/store/registerSlice';
@@ -12,6 +12,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
+import { roles } from '../../fuse-configs/constants';
 
 import * as yup from 'yup';
 import _ from '@lodash';
@@ -41,11 +42,6 @@ function JWTRegisterTab(props) {
 	const dispatch = useDispatch();
 	const authRegister = useSelector(({ auth }) => auth.register);
 	const [role, setRole] = useState('');
-	const roles = [
-		{ id: 0, value: 'admin', label: 'Admin', color: '#2196f3' },
-		{ id: 1, value: 'worker', label: 'Worker', color: '#2196f3' },
-		{ id: 2, value: 'accountant', label: 'Accountant', color: '#2196f3' }
-	];
 	const handleRole = event => {
 		setRole(event.target.value);
 	};

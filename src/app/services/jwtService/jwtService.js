@@ -85,44 +85,24 @@ class JwtService extends FuseUtils.EventEmitter {
 					console.log('response.data.accessToken', response.data.access_token);
 					this.setSession(response.data.access_token);
 					// resolve(response.data.user);
+
 					resolve({
-						redirectUrl: 'users',
-						role: response.data.user.role,
-						data: {
-							displayName: response.data.user.name,
-							email: response.data.user.email,
-							photoURL: response.data.user.avatar
+						message: 'Logged in successfully',
+
+						user: {
+							redirectUrl: '/dashboards/analytics',
+							role: response.data.user.role,
+							data: {
+								name: response.data.user.name,
+								email: response.data.user.email,
+								photoURL: response.data.user.avatar
+							}
 						}
-						// data: { displayName: 'Fake User', email, photoURL: 'assets/images/avatars/Velazquez.jpg' }
 					});
 				} else {
-					reject(response.data.error);
+					reject({ message: 'Error while loggin in' });
 				}
 			});
-		});
-	};
-
-	signInWithToken = () => {
-		return new Promise((resolve, reject) => {
-			axios
-				.get('/api/auth/access-token', {
-					data: {
-						access_token: this.getAccessToken()
-					}
-				})
-				.then(response => {
-					if (response.data.user) {
-						this.setSession(response.data.access_token);
-						resolve(response.data.user);
-					} else {
-						this.logout();
-						reject(new Error('Failed to login with token.'));
-					}
-				})
-				.catch(error => {
-					this.logout();
-					reject(new Error('Failed to login with token.'));
-				});
 		});
 	};
 

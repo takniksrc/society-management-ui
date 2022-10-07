@@ -5,25 +5,36 @@ import { motion } from 'framer-motion';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import { useFormContext, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 function DescriptionTab(props) {
+	// const methods = useFormContext();
+	const schema = yup.object().shape({
+		description: yup.string().required('You must enter a description').max(200, 'Maximum 200 digits'),
+
+	});
 	const methods = useFormContext();
-	const { control, formState } = methods;
+	const { control, formState, register } = methods;
 	const { errors } = formState;
-	const boardDescription = props.board?.description;
-	console.log('i am boardDescription new', boardDescription);
 
 	return (
 		<div>
 			<Controller
 				name="description"
 				control={control}
+				// {...register('description', { required: true, maxLength: 5 })}
 				render={({ field }) => (
 					<TextField
 						{...field}
 						className="mt-8 mb-16"
 						id="description"
 						label="Description"
+						// maxlength={5}
+						inputProps={{ maxLength: 200 }}
+						// error={!!errors.description}
+						// helperText={errors?.description?.message}
+
 						type="text"
 						multiline
 						rows={5}
@@ -32,30 +43,8 @@ function DescriptionTab(props) {
 					/>
 				)}
 			/>
-			{/* <motion.div
-				className="flex"
-				initial={{ opacity: 0, x: 20 }}
-				animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
-			>
-				<Button
-					className="whitespace-nowrap mx-4"
-					variant="contained"
-					color="secondary"
-					// disabled={_.isEmpty(dirtyFields) || !isValid}
-					// onClick={handleSaveProduct}
-				>
-					Save
-				</Button>
-				<Button
-					className="whitespace-nowrap mx-4"
-					variant="contained"
-					color="secondary"
-					// onClick={handleRemoveProduct}
-					startIcon={<Icon className="hidden sm:flex">delete</Icon>}
-				>
-					Remove
-				</Button>
-			</motion.div> */}
+			{/* {errors.description && errors.description.type === 'required' && <span>This is required</span>}
+			{errors.description && errors.description.type === 'maxLength' && <span>Max length exceeded</span>} */}
 		</div>
 	);
 }

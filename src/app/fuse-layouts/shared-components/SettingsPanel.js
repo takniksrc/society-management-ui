@@ -109,7 +109,7 @@ function SettingsPanel() {
 
 	return (
 		<>
-			<div className={classes.buttonWrapper} id="fuse-settings-schemes">
+			{/* <div className={classes.buttonWrapper} id="fuse-settings-schemes">
 				<Button
 					className={clsx(classes.button, classes.settingsButton)}
 					onClick={() => handleOpen('settings')}
@@ -127,7 +127,7 @@ function SettingsPanel() {
 				>
 					<Icon className={classes.buttonIcon}>palette</Icon>
 				</Button>
-			</div>
+			</div> */}
 
 			<Dialog
 				TransitionComponent={Transition}
