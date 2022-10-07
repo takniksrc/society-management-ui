@@ -72,7 +72,7 @@ function SCData(props) {
 					variants={container}
 					initial="hidden"
 					animate="show"
-					className="grid grid-cols-3 flex-wrap w-full justify-center py-32 px-16"
+					className="grid  flex-wrap w-full justify-center py-32 px-16  grid-cols-1 sm:grid-cols-2 md:grid-cols-3 "
 				>
 					{boardsnew?.map(board => (
 						<motion.div variants={item} className="h-224 p-16" key={board.id}>

@@ -140,7 +140,7 @@ function AnalyticsDashboardApp() {
 						colors: ['transparent']
 					},
 					xaxis: {
-						categories: ['Wapda Total Connections', 'New Connections this month']
+						categories: ['Total Connections', 'New Connections']
 					},
 					yaxis: {
 						title: {
@@ -149,6 +149,9 @@ function AnalyticsDashboardApp() {
 					},
 					fill: {
 						opacity: 1
+					},
+					title: {
+						text: 'Lesco Electricity'
 					},
 					tooltip: {
 						y: {
@@ -194,7 +197,7 @@ function AnalyticsDashboardApp() {
 						colors: ['transparent']
 					},
 					xaxis: {
-						categories: ['KA Total Connections', 'New Connections this month']
+						categories: ['Total Connections', 'New Connections']
 					},
 					yaxis: {
 						title: {
@@ -203,6 +206,9 @@ function AnalyticsDashboardApp() {
 					},
 					fill: {
 						opacity: 1
+					},
+					title: {
+						text: 'Khyaban-e-Amin Electricity'
 					},
 					tooltip: {
 						y: {
@@ -220,10 +226,13 @@ function AnalyticsDashboardApp() {
 						((data.payload?.total_payments?.total_received === null
 							? 2000
 							: data.payload?.total_payments?.total_received) /
-							data.payload?.total_payments?.total_receiveble) *
+							(data.payload?.total_payments?.total_receiveble
+								? data.payload?.total_payments?.total_receiveble
+								: 1)) *
 						100
 					).toFixed(2)
 				],
+
 				options: {
 					chart: {
 						height: 350,
@@ -279,7 +288,7 @@ function AnalyticsDashboardApp() {
 						floating: true,
 						fontSize: '16px',
 						position: 'left',
-						offsetX: 160,
+						offsetX: 80,
 						offsetY: 15,
 						labels: {
 							useSeriesColors: true
@@ -324,12 +333,12 @@ function AnalyticsDashboardApp() {
 
 	return (
 		<motion.div
-			className="flex flex-wrap p-28 items-center justify-center"
+			className="grid grid-cols-6 gap-28 p-28 justify-center "
 			variants={container}
 			initial="hidden"
 			animate="show"
 		>
-			<Card className="w-3/12 rounded-20 shadow m-28 min-h-[30%]">
+			<Card className="rounded-20 shadow basis-1/3 col-span-2 lg:col-span-2 sm:col-span-6 col-span-6">
 				{/* <ReactApexChart options={payment.options} series={payment.series} type="pie" height={350} /> */}
 				{!!payment && (
 					<ReactApexChart options={payment.options} series={payment.series} type="radialBar" height={350} />
@@ -341,18 +350,18 @@ function AnalyticsDashboardApp() {
 					<b>Total Recievable :</b> {Charts?.total_payments?.total_receiveble.toFixed(2)}
 				</Typography>
 			</Card>
-			<Card className="w-3/12 rounded-20 shadow m-28">
+			<Card className="rounded-20 shadow basis-1/3 col-span-2 lg:col-span-2 sm:col-span-6 col-span-6 p-12">
 				{!!state && <ReactApexChart options={state.options} series={state.series} type="bar" height={350} />}
 			</Card>
-			<Card className="w-3/12 rounded-20 shadow m-28">
+			<Card className="rounded-20 shadow basis-1/3 col-span-2 lg:col-span-2 sm:col-span-6 col-span-6 p-12">
 				{!!wapda && <ReactApexChart options={wapda.options} series={wapda.series} type="bar" height={350} />}
 			</Card>
-			<Card className="w-2/5 rounded-20 shadow m-28">
+			<Card className="rounded-20 shadow col-span-3 lg:col-span-3 sm:col-span-6 col-span-6">
 				{!!meter && (
-					<ReactApexChart options={meter.options} series={meter.series} type="radialBar" height={350} />
+					<ReactApexChart options={meter.options} series={meter.series} type="radialBar" height={380} />
 				)}
 			</Card>
-			<Card className="w-2/5 rounded-20 shadow m-28">
+			<Card className="rounded-20 shadow basis-1/4 col-span-3 lg:col-span-3 sm:col-span-6 col-span-6">
 				{!!faulty && (
 					<ReactApexChart options={faulty.options} series={faulty.series} type="radialBar" height={350} />
 				)}

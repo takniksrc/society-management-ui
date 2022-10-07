@@ -15,12 +15,12 @@ class Auth0Service {
 			success(false);
 			return;
 		}
-
+      console.log('Authconfig',AUTH_CONFIG)
 		this.lock = new Auth0Lock(AUTH_CONFIG.clientId, AUTH_CONFIG.domain, {
 			autoclose: true,
 			socialButtonStyle: 'big',
 			auth: {
-				// redirect: false,
+				redirect: false,
 				redirectUrl: AUTH_CONFIG.callbackUrl,
 				responseType: 'token id_token',
 				audience: `https://${AUTH_CONFIG.domain}/api/v2/`,
@@ -170,6 +170,10 @@ class Auth0Service {
 	};
 }
 
+<<<<<<< HEAD
 const instance_Old = new Auth0Service();
+=======
+const instance = new Auth0Service(true);
+>>>>>>> Usman-Users
 
 export default instance_Old;

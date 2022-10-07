@@ -203,7 +203,7 @@ function ContactDialog(props) {
 						animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
 						className="flex flex-2 ml-auto flex-row items-center justify-center ml-14 space-x-10 mt-10 "
 					>
-						<Button variant="contained" to={`/billing/${contactDialog.data?.id}/pdf-bill`} component={Link}>
+						<Button variant="contained" to={`/billing/${contactDialog?.data?.id}/pdf-bill`} component={Link}>
 							<PrintIcon />
 						</Button>
 					</motion.div>
@@ -317,27 +317,36 @@ function ContactDialog(props) {
 							</Typography>
 							<Typography>
 								<b>Previous Reading:</b> {GetBillsData?.previous_reading}{' '}
+<<<<<<< HEAD
+=======
+							</Typography>
+							<Typography>
+								<b>Current Reading:</b> {GetBillsData?.current_reading}{' '}
+>>>>>>> Usman-Users
 							</Typography>
 							<Typography>
 								{' '}
 								<b>Arrears: </b>
-								{GetBillsData.arrears}
+								{GetBillsData?.arrears}
 							</Typography>
 							<Typography>
 								{' '}
-								<b>Total FPA:</b> {GetBillsData.fpa_charges}
+								<b>Total FPA:</b> {GetBillsData?.fpa_charges}
 							</Typography>
 							<Typography>
-								<b>Current Bill:</b> {GetBillsData.electricity_charges}
+								<b>Current Bill:</b> {GetBillsData?.electricity_charges}
 							</Typography>
 							<Typography>
-								<b>Society Charges:</b> {GetBillsData.society_charges}
+								<b>Society Charges:</b> {GetBillsData?.society_charges}
 							</Typography>
 							<Typography>
-								<b>Total Payables:</b> {GetBillsData.total_bill}{' '}
+								<b>Total Payables:</b> {GetBillsData?.total_bill}{' '}
 							</Typography>
 							<Typography>
-								<b>Total Paid:</b> {GetBillsData.amount_paid}{' '}
+								<b>Total Paid:</b> {GetBillsData?.amount_paid}{' '}
+							</Typography>
+							<Typography className='text-green-600'>
+								<b>Total Discount:</b> {GetBillsData?.discount}{' '}
 							</Typography>
 						</Card>
 					</div>
