@@ -42,8 +42,8 @@ function JWTLoginTab(props) {
 	const [showPassword, setShowPassword] = useState(false);
 
 	useEffect(() => {
-		setValue('email', 'systemadmin@sms.com', { shouldDirty: true, shouldValidate: true });
-		setValue('password', 'systemadmin12345', { shouldDirty: true, shouldValidate: true });
+		setValue('email', 'systemaccountant@sms.com', { shouldDirty: true, shouldValidate: false });
+		setValue('password', 'systemaccountant12345', { shouldDirty: true, shouldValidate: false });
 	}, [reset, setValue, trigger]);
 
 	useEffect(() => {

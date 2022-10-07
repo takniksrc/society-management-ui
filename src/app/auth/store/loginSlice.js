@@ -26,15 +26,21 @@ export const submitLogin =
 					})
 				);
 
-				// if(res.status== 422){
-
-				// }
-
 				return dispatch(loginSuccess());
 			})
-			.catch(errors => {
-				console.log('I am error');
-				return dispatch(loginError(errors));
+			.catch(error => {
+				console.log('I am error', error);
+				return dispatch(
+					showMessage({
+						message: error.message,
+						autoHideDuration: 6000,
+						anchorOrigin: {
+							vertical: 'top',
+							horizontal: 'right'
+						},
+						variant: 'error'
+					})
+				);
 			});
 	};
 
