@@ -226,12 +226,13 @@ function AnalyticsDashboardApp() {
 						((data.payload?.total_payments?.total_received === null
 							? 2000
 							: data.payload?.total_payments?.total_received) /
-							(data.payload?.total_payments?.total_receiveble === 0
-								? 1
-								: data.payload?.total_payments?.total_receiveble)) *
+							(data.payload?.total_payments?.total_receiveble
+								? data.payload?.total_payments?.total_receiveble
+								: 1)) *
 						100
 					).toFixed(2)
 				],
+
 				options: {
 					chart: {
 						height: 350,
