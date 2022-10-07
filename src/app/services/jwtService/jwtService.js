@@ -6,6 +6,7 @@ import jwtDecode from 'jwt-decode';
 
 export const instance = axios.create({
 	baseURL: 'https://smsstagingapi.norditsol.com'
+	// baseURL: 'http://localhost:8000/api'
 });
 
 // export default instance;
