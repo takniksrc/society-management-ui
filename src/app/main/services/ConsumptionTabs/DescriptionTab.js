@@ -10,8 +10,7 @@ import * as yup from 'yup';
 
 function DescriptionTab(props) {
 	const schema = yup.object().shape({
-		description: yup.string().required('You must enter a description').max(200, 'Maximum 200 digits'),
-
+		description: yup.string().required('You must enter a description').max(200, 'Maximum 200 digits')
 	});
 	const methods = useFormContext();
 	const { control, formState, register } = methods;
@@ -37,7 +36,6 @@ function DescriptionTab(props) {
 					/>
 				)}
 			/>
-			
 		</div>
 	);
 }

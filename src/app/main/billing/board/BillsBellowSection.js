@@ -34,7 +34,7 @@ import {
 	toggleStarredContact,
 	selectUsers
 } from '../store/newUsersSlice';
-import instance from 'axiosinstance';
+import { instance } from 'app/services/jwtService/jwtService';
 import { hideMessage, showMessage } from 'app/store/fuse/messageSlice';
 import { getBlockBillsData } from '../store/billsWithBlockIdSlice';
 import { selectBoards, newBoard, getBoards, resetBoards } from '../store/boardsSlice';
@@ -137,7 +137,7 @@ function BillsBellowSection(props) {
 			.catch(function (error) {
 				dispatch(
 					showMessage({
-						message: 'Error while uploading file', //text or html
+						message: error.response.data.error, //text or html
 						autoHideDuration: 6000, //ms
 						anchorOrigin: {
 							vertical: 'top', //top bottom

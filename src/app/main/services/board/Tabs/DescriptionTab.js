@@ -28,10 +28,6 @@ function DescriptionTab(props) {
 						className="mt-8 mb-16"
 						id="description"
 						// label="Description"
-<<<<<<< HEAD
-						// maxlength={5}
-=======
->>>>>>> Usman-Users
 						inputProps={{ maxLength: 200 }}
 						type="text"
 						multiline

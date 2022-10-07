@@ -53,9 +53,9 @@ function ContactDialog(props) {
 	const contactDialog = useSelector(({ newUsersSlice }) => newUsersSlice.newUsersSlice);
 	const GetBillsData = useSelector(state => state.scrumboardApp?.billWithIdSlice);
 	console.log('i am GetBills in Dialog', GetBillsData);
-	const [billData, setBillData] = useState({});
+	// const [billData, setBillData] = useState({});
 	console.log('I am cliked data ', contactDialog);
-	console.log('billData', billData);
+	// console.log('billData', billData);
 	const routeParams = useParams();
 	console.log('i am routeParams', routeParams);
 	const StyledTableRow = withStyles(theme => ({
@@ -107,7 +107,7 @@ function ContactDialog(props) {
 
 		//call the api for data
 		console.log('bill', contactDialog);
-		instance.get(`/api/bills/${contactDialog?.data?.id}`).then(res => setBillData(res.data));
+		// instance.get(`/api/bills/${contactDialog?.data?.id}`).then(res => setBillData(res.data));
 	}, [contactDialog.data, contactDialog.type, reset]);
 
 	const onSubmitPaidValuesForm = data => {
@@ -203,7 +203,11 @@ function ContactDialog(props) {
 						animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
 						className="flex flex-2 ml-auto flex-row items-center justify-center ml-14 space-x-10 mt-10 "
 					>
-						<Button variant="contained" to={`/billing/${contactDialog?.data?.id}/pdf-bill`} component={Link}>
+						<Button
+							variant="contained"
+							to={`/billing/${contactDialog?.data?.id}/pdf-bill`}
+							component={Link}
+						>
 							<PrintIcon />
 						</Button>
 					</motion.div>
@@ -342,7 +346,7 @@ function ContactDialog(props) {
 							<Typography>
 								<b>Total Paid:</b> {GetBillsData?.amount_paid}{' '}
 							</Typography>
-							<Typography className='text-green-600'>
+							<Typography className="text-green-600">
 								<b>Total Discount:</b> {GetBillsData?.discount}{' '}
 							</Typography>
 						</Card>
