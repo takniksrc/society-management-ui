@@ -28,7 +28,6 @@ import { instance } from 'app/services/jwtService/jwtService';
 import { getBills, resetBills } from '../store/AllBillsSlice';
 import { hideMessage, showMessage } from 'app/store/fuse/messageSlice';
 
-
 import NotificationModel from '../../../shared-components/notificationPanel/model/NotificationModel';
 import NotificationCard from '../../../shared-components/notificationPanel/NotificationCard';
 import NotificationTemplate from './../../../shared-components/notificationPanel/NotificationTemplate';
@@ -58,8 +57,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function GBData(props) {
-	const state = useSelector(({ notificationPanel }) => notificationPanel.state);
-	const notifications = useSelector(selectNotifications);
+
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const classes = useStyles(props);
@@ -76,7 +74,6 @@ function GBData(props) {
 		hidden: { opacity: 0, y: 20 },
 		show: { opacity: 1, y: 0 }
 	};
-
 
 	const { watch, handleSubmit, formState, reset, register, control, setValue } = useForm({
 		mode: 'onChange',

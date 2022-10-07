@@ -247,7 +247,7 @@ function ContactDialog(props) {
 								{GetBillsData?.payment_history?.map((item, index) => {
 									return (
 										// <Card className="p-10 m-10">
-										<Typography className="p-10 m-10">
+										<Typography key={index} className="p-10 m-10">
 											<b>Paid </b>PKR {item?.amount} <b>, Date </b> {item?.payment_date}
 										</Typography>
 										// </Card>
@@ -317,12 +317,9 @@ function ContactDialog(props) {
 							</Typography>
 							<Typography>
 								<b>Previous Reading:</b> {GetBillsData?.previous_reading}{' '}
-<<<<<<< HEAD
-=======
 							</Typography>
 							<Typography>
 								<b>Current Reading:</b> {GetBillsData?.current_reading}{' '}
->>>>>>> Usman-Users
 							</Typography>
 							<Typography>
 								{' '}

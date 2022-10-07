@@ -199,11 +199,7 @@ function CompactInvoicePage(props) {
 														Due Date
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
-<<<<<<< HEAD
-														{bill?.meter?.meter_number}
-=======
 														{bill?.meter.meter_number}
->>>>>>> Usman-Users
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center  text-base">
 														{bill?.meter.phase}

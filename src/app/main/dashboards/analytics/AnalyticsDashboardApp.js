@@ -25,7 +25,9 @@ function AnalyticsDashboardApp() {
 		dispatch(getCharts()).then(data => {
 			console.log('i am called in then block', data.payload);
 			setFaulty({
-				series: [data.payload?.total_faulty_meter?.faulty_meter],
+				series: [
+					data.payload?.total_faulty_meter?.faulty_meter ? data.payload?.total_faulty_meter?.faulty_meter : 0
+				],
 				options: {
 					chart: {
 						height: 350,
@@ -105,14 +107,25 @@ function AnalyticsDashboardApp() {
 					labels: ['Total faulty Meters']
 				}
 			});
+			console.log(
+				(data.payload?.total_payments?.total_received ? data.payload?.total_payments?.total_received : 1) /
+					(data.payload?.total_payments?.total_receiveble
+						? data.payload?.total_payments?.total_receiveble
+						: 1),
+				'new'
+			);
 
 			setWapda({
 				series: [
 					{
 						name: 'Connections',
 						data: [
-							data.payload?.wapda_electricity_connection?.total_connection,
+							data.payload?.wapda_electricity_connection?.total_connection
+								? data.payload?.wapda_electricity_connection?.total_connection
+								: 0,
 							data.payload?.wapda_electricity_connection?.new_connection
+								? data.payload?.wapda_electricity_connection?.new_connection
+								: 0
 						]
 					}
 				],
@@ -168,8 +181,12 @@ function AnalyticsDashboardApp() {
 					{
 						name: 'Connections',
 						data: [
-							data.payload?.ka_electricity_connection?.total_connection,
+							data.payload?.ka_electricity_connection?.total_connection
+								? data.payload?.ka_electricity_connection?.total_connection
+								: 0,
 							data.payload?.ka_electricity_connection?.new_connection
+								? data.payload?.ka_electricity_connection?.new_connection
+								: 0
 						]
 					}
 				],
@@ -223,9 +240,9 @@ function AnalyticsDashboardApp() {
 			setPayemnt({
 				series: [
 					(
-						((data.payload?.total_payments?.total_received === null
-							? 2000
-							: data.payload?.total_payments?.total_received) /
+						((data.payload?.total_payments?.total_received
+							? data.payload?.total_payments?.total_received
+							: 0) /
 							(data.payload?.total_payments?.total_receiveble
 								? data.payload?.total_payments?.total_receiveble
 								: 1)) *
@@ -251,9 +268,9 @@ function AnalyticsDashboardApp() {
 
 			setMeter({
 				series: [
-					data.payload?.meter_types?.meter_type_normal,
-					data.payload?.meter_types?.meter_type_2_Phase,
-					data.payload?.meter_types?.meter_type_3_Phase
+					data.payload?.meter_types?.meter_type_normal ? data.payload?.meter_types?.meter_type_normal : 0,
+					data.payload?.meter_types?.meter_type_2_Phase ? data.payload?.meter_types?.meter_type_2_Phase : 0,
+					data.payload?.meter_types?.meter_type_3_Phase ? data.payload?.meter_types?.meter_type_3_Phase : 0
 				],
 				options: {
 					chart: {

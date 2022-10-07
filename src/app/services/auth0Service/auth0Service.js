@@ -15,7 +15,7 @@ class Auth0Service {
 			success(false);
 			return;
 		}
-      console.log('Authconfig',AUTH_CONFIG)
+		console.log('Authconfig', AUTH_CONFIG);
 		this.lock = new Auth0Lock(AUTH_CONFIG.clientId, AUTH_CONFIG.domain, {
 			autoclose: true,
 			socialButtonStyle: 'big',
@@ -25,8 +25,7 @@ class Auth0Service {
 				responseType: 'token id_token',
 				audience: `https://${AUTH_CONFIG.domain}/api/v2/`,
 				params: {
-					scope:
-						'openid profile email user_metadata app_metadata picture update:current_user_metadata create:current_user_metadata read:current_user'
+					scope: 'openid profile email user_metadata app_metadata picture update:current_user_metadata create:current_user_metadata read:current_user'
 				}
 			}
 		});
@@ -170,10 +169,6 @@ class Auth0Service {
 	};
 }
 
-<<<<<<< HEAD
-const instance_Old = new Auth0Service();
-=======
-const instance = new Auth0Service(true);
->>>>>>> Usman-Users
+const instanceOld = new Auth0Service();
 
-export default instance_Old;
+export default instanceOld;

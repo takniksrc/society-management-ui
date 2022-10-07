@@ -77,11 +77,7 @@ function Boards(props) {
 					{billingBlocksStatuses?.map((board, index) => {
 						console.log('blocks', board);
 						return board.billing_status === 'closed' || board.billing_status === 'init-in-progress' ? (
-<<<<<<< HEAD
-							<motion.div variants={item} className="p-16 w-4/12" key={board.id}>
-=======
-							<motion.div variants={item} className="p-16 w-auto"  key={board.block_id}>
->>>>>>> Usman-Users
+							<motion.div variants={item} className="p-16 w-auto" key={board.block_id}>
 								<Paper
 									to={`/billing/boards/${board.block_id}`}
 									className={clsx(

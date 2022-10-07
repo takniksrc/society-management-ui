@@ -1,13 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
-<<<<<<< HEAD
 import { instance } from 'app/services/jwtService/jwtService';
 import { getCustomerData } from './customerSlice';
-=======
-import instance from 'axiosinstance';
->>>>>>> Usman-Users
 import { showMessage } from 'app/store/fuse/messageSlice';
-import { getCustomerData } from './customerSlice';
 
 export const getCustomers = createAsyncThunk('customers/getCustomers', async (routeParams, { getState }) => {
 	routeParams = routeParams || getState().newCustomersSlice.routeParams;
