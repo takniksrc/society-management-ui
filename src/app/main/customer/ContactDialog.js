@@ -130,7 +130,7 @@ function ContactDialog(props) {
 		name: yup.string().required('You must enter a name').max(60, 'Maximum 60 digits'),
 		current_reading: yup
 			.string()
-			.required('You must enter a Reading')
+			// .required('You must enter a Reading')
 			.matches(/^[0-9]+$/, 'Must be only digits'),
 		// meter_company: yup.string().required('You must enter a Company Name'),
 		street_address: yup.string().required('You must enter address').max(30, 'Maximum 30 digits'),
@@ -203,7 +203,6 @@ function ContactDialog(props) {
 			setMeterStatus(contactDialog.data.meter_status);
 			setBlock(contactDialog.data.block);
 			setSector(contactDialog.data.sector);
-
 			setMeterType(
 				contactDialog?.data?.meter_type?.charAt(0).toUpperCase() + contactDialog?.data?.meter_type?.slice(1)
 			);
@@ -571,9 +570,9 @@ function ContactDialog(props) {
 							<Select
 								value={meterPhase}
 								onChange={handleMeterPhase}
-								// inputProps={register('meter_phase', {
+								inputProps={register('meter_phase', {
 								// 	required: 'Please enter meter phase'
-								// })}
+								})}
 								input={
 									<OutlinedInput
 										labelWidth={'category'.length * 9}
@@ -602,9 +601,9 @@ function ContactDialog(props) {
 							<Select
 								value={meterType}
 								onChange={handleMeterType}
-								// inputProps={register('meter_type', {
+								inputProps={register('meter_type', {
 								// 	required: 'Please enter meter type'
-								// })}
+								})}
 								input={
 									<OutlinedInput
 										labelWidth={'category'.length * 9}
@@ -628,9 +627,10 @@ function ContactDialog(props) {
 							<Select
 								value={meterStatus}
 								onChange={handleMeterStatus}
-								// inputProps={register('meter_status', {
+								inputProps={register('meter_status', 
+								{
 								// 	required: 'Please enter meter status'
-								// })}
+								})}
 								input={
 									<OutlinedInput
 										labelWidth={'category'.length * 9}
@@ -718,7 +718,7 @@ function ContactDialog(props) {
 										error={!!errors.current_reading}
 										helperText={errors?.current_reading?.message}
 										variant="outlined"
-										required
+										// required
 										fullWidth
 									/>
 								)}

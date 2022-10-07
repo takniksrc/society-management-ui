@@ -11,8 +11,7 @@ import * as yup from 'yup';
 function DescriptionTab(props) {
 	// const methods = useFormContext();
 	const schema = yup.object().shape({
-		description: yup.string().required('You must enter a description').max(200, 'Maximum 200 digits'),
-
+		description: yup.string().required('You must enter a description').max(200, 'Maximum 200 digits')
 	});
 	const methods = useFormContext();
 	const { control, formState, register } = methods;
@@ -21,30 +20,24 @@ function DescriptionTab(props) {
 	return (
 		<div>
 			<Controller
-				name="description"
 				control={control}
-				// {...register('description', { required: true, maxLength: 5 })}
+				name="description"
 				render={({ field }) => (
 					<TextField
 						{...field}
 						className="mt-8 mb-16"
 						id="description"
-						label="Description"
-						// maxlength={5}
+						// label="Description"
 						inputProps={{ maxLength: 200 }}
-						// error={!!errors.description}
-						// helperText={errors?.description?.message}
-
 						type="text"
 						multiline
 						rows={5}
+						placeholder="hy"
 						variant="outlined"
 						fullWidth
 					/>
 				)}
 			/>
-			{/* {errors.description && errors.description.type === 'required' && <span>This is required</span>}
-			{errors.description && errors.description.type === 'maxLength' && <span>Max length exceeded</span>} */}
 		</div>
 	);
 }
