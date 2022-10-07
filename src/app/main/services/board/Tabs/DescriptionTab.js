@@ -29,7 +29,7 @@ function DescriptionTab(props) {
 						{...field}
 						className="mt-8 mb-16"
 						id="description"
-						label="Description"
+						// label="Description"
 						// maxlength={5}
 						inputProps={{ maxLength: 200 }}
 						// error={!!errors.description}
