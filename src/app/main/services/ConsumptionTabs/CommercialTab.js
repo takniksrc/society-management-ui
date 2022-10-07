@@ -59,11 +59,9 @@ function CommercialTab(props) {
 													/>
 												)}
 											/>
-											<Typography variant="subtitle1" className="py-16 mx-4 text-green-400">
-												*
-											</Typography>
+
 											<Typography variant="subtitle1" className="py-16 mx-4 ">
-												End
+												<span className="text-green-800">*</span>End
 											</Typography>
 											<Controller
 												name={`servicePricing[${spIndex}].slabs[${index}].slab_end`}

@@ -44,7 +44,7 @@ function ConstructionTab(props) {
 					)}
 				/>
 				<Typography variant="subtitle1" className="py-16 mx-4">
-					End
+				<span className="text-green-800">*</span>End
 				</Typography>
 				<Controller
 					name="priceTaxIncl"
