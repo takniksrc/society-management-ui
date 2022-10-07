@@ -140,7 +140,7 @@ function AnalyticsDashboardApp() {
 						colors: ['transparent']
 					},
 					xaxis: {
-						categories: ['Wapda Total Connections', 'New Connections this month']
+						categories: ['Total Connections', 'New Connections']
 					},
 					yaxis: {
 						title: {
@@ -149,6 +149,9 @@ function AnalyticsDashboardApp() {
 					},
 					fill: {
 						opacity: 1
+					},
+					title: {
+						text: 'Lesco Electricity'
 					},
 					tooltip: {
 						y: {
@@ -194,7 +197,7 @@ function AnalyticsDashboardApp() {
 						colors: ['transparent']
 					},
 					xaxis: {
-						categories: ['KA Total Connections', 'New Connections this month']
+						categories: ['Total Connections', 'New Connections']
 					},
 					yaxis: {
 						title: {
@@ -203,6 +206,9 @@ function AnalyticsDashboardApp() {
 					},
 					fill: {
 						opacity: 1
+					},
+					title: {
+						text: 'Khyaban-e-Amin Electricity'
 					},
 					tooltip: {
 						y: {
@@ -279,7 +285,7 @@ function AnalyticsDashboardApp() {
 						floating: true,
 						fontSize: '16px',
 						position: 'left',
-						offsetX: 160,
+						offsetX: 80,
 						offsetY: 15,
 						labels: {
 							useSeriesColors: true

@@ -71,15 +71,15 @@ function Boards(props) {
 					variants={container}
 					initial="hidden"
 					animate="show"
-					className="flex flex-wrap w-full justify-center py-32 px-16"
+					className="grid  flex-wrap w-full justify-center py-32 px-16  grid-cols-1 sm:grid-cols-2 md:grid-cols-3 "
 				>
 					{
 					billingBlocksStatuses?.map((board, index) => {
 						console.log('blocks', board);
 						return board.billing_status === 'closed' || board.billing_status === 'init-in-progress' ? (
-							<motion.div variants={item} className="p-16 w-4/12"  key={board.id}>
+							<motion.div variants={item} className="p-16 w-auto"  key={board.block_id}>
 								<Paper
-									to={`/billing/boards/${board.id}`}
+									to={`/billing/boards/${board.block_id}`}
 									className={clsx(
 										classes.board,
 										'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
@@ -108,16 +108,16 @@ function Boards(props) {
 								</Paper>
 							</motion.div>
 						) : (
-							<motion.div variants={item} className="p-16  w-4/12" key={board.id}>
+							<motion.div variants={item} className="p-16  w-auto" key={board.block_id}>
 								<Paper
-									to={`/billing/boards/${board.id}/billing`}
+									to={`/billing/boards/${board.block_id}/billing`}
 									className={clsx(
 										classes.board,
 										'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
 									)}
 									role="button"
 									component={Link}
-									onClick={() => dispatch(getBills(board.id))}
+									onClick={() => dispatch(getBills(board.block_id))}
 								>
 									<Typography
 										className="text-2xl font-medium text-center pt-16 px-32 font-bold "
