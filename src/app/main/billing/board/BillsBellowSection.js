@@ -14,6 +14,8 @@ import Input from '@material-ui/core/Input';
 import TextField from '@material-ui/core/TextField';
 import { Controller, useFormContext, useForm } from 'react-hook-form';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import PrintIcon from '@material-ui/icons/Print';
+
 import { selectMainTheme } from 'app/store/fuse/settingsSlice';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -100,7 +102,7 @@ function BillsBellowSection(props) {
 	};
 
 	const { errors, isValid, dirtyFields } = formState;
-	const bills = useSelector(state => state.scrumboardApp.AllBillsSlice);
+	const bills = useSelector(state => state.AllBillsSlice);
 
 	const searchText = useSelector(({ newUsersSlice }) => newUsersSlice.searchText);
 
@@ -114,7 +116,7 @@ function BillsBellowSection(props) {
 		// console.log('I am clicked');
 
 		data.append('block_id', routeParams.boardId);
-		model.file.length !== 0 ? data.append('fpa_file', model.file[0]) : null;
+		model.file.length !== 0 ? data.append('file', model.file[0]) : null;
 		console.log('I am data', data);
 		instance
 			.post('/api/bills/add-payment', data)
@@ -307,12 +309,33 @@ function BillsBellowSection(props) {
 											className="w-full"
 											component={Link}
 											to={`billing/pdf-bills/${routeParams.boardId}`}
+											startIcon={<PrintIcon />}
+											disabled
 										>
-											Download Bills
+											Print Bills
 										</Button>
-										<Button variant="contained" color="secondary" className="w-full">
-											Upload Payemnts
-										</Button>
+										<form className="w-full" noValidate onChange={handleSubmit(onSubmitButton)}>
+											<input
+												className={classes.input}
+												id="contained-button-file"
+												// multiple
+												type="file"
+												{...register('file')}
+											/>
+											<label htmlFor="contained-button-file">
+												<Button
+													color="secondary"
+													className="w-full"
+													variant="contained"
+													component="span"
+													type="submit"
+													// className={classes.button}
+													startIcon={<CloudUploadIcon />}
+												>
+													Upload Payment
+												</Button>
+											</label>
+										</form>
 									</motion.div>
 								</div>
 
@@ -391,8 +414,10 @@ function BillsBellowSection(props) {
 											className="w-full"
 											component={Link}
 											to={`/billing/pdf-bills/${routeParams.boardId}`}
+											startIcon={<PrintIcon />}
+										
 										>
-											Download Bills
+											Print Bills
 										</Button>
 										<form className="w-full" noValidate onChange={handleSubmit(onSubmitButton)}>
 											<input

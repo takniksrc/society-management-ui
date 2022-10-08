@@ -10,7 +10,7 @@ function BillTempelate() {
 	const routeParams = useParams();
 	console.log('i am routeParams in invoice', routeParams);
 	const dispatch = useDispatch();
-	const GetBillsData = useSelector(state => state.scrumboardApp?.AllBillsSlice);
+	const GetBillsData = useSelector(state => state.AllBillsSlice);
 	console.log('i am GetBills Multiple Bills', GetBillsData);
 
 	useDeepCompareEffect(() => {

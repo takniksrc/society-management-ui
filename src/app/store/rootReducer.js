@@ -15,9 +15,11 @@ import disconnectedmeterSlice from '../main/scrumboard/store/disconnectedmeterSl
 
 import billingBlocksSlice from 'app/main/billing/store/billingBlocksSlice';
 import servicesSlice from 'app/main/services/store/servicesSlice';
-// import AllBillsSlice from 'app/main/billing/store/AllBillsSlice';
-// import billWithIdSlice from 'app/main/billing/store/billWithIdSlice';
 import consumptionBoard from 'app/main/services/store/consumptionBoardSlice';
+
+import AllBillsSlice from 'app/main/billing/store/AllBillsSlice';
+import billingSlice from 'app/main/billing/store/billingSlice';
+import billWithIdSlice from 'app/main/billing/store/billWithIdSlice';
 
 const createReducer = asyncReducers => (state, action) => {
 	const combinedReducer = combineReducers({
@@ -37,6 +39,9 @@ const createReducer = asyncReducers => (state, action) => {
 		billingBlocksSlice,
 		servicesSlice,
 		consumptionBoard,
+		billingSlice,
+		AllBillsSlice,
+		billWithIdSlice,
 
 		...asyncReducers
 	});

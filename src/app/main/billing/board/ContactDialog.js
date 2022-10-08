@@ -51,7 +51,7 @@ const defaultValuesPaidAmount = {
 function ContactDialog(props) {
 	const dispatch = useDispatch();
 	const contactDialog = useSelector(({ newUsersSlice }) => newUsersSlice.newUsersSlice);
-	const GetBillsData = useSelector(state => state.scrumboardApp?.billWithIdSlice);
+	const GetBillsData = useSelector(state => state.billWithIdSlice);
 	console.log('i am GetBills in Dialog', GetBillsData);
 	// const [billData, setBillData] = useState({});
 	console.log('I am cliked data ', contactDialog);

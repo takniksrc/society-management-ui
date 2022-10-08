@@ -32,7 +32,7 @@ function DescriptionTab(props) {
 						type="text"
 						multiline
 						rows={5}
-						placeholder="hy"
+					
 						variant="outlined"
 						fullWidth
 					/>

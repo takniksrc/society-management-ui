@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
@@ -70,6 +71,7 @@ function CompactInvoicePage(props) {
 	console.log('props', props);
 	const classes = useStyles();
 	const dispatch = useDispatch();
+	const [isPrintReady, setIsPrintReady] = useState(false);
 
 	console.log('type', bills);
 
@@ -80,18 +82,26 @@ function CompactInvoicePage(props) {
 	});
 
 	return (
-		<>
-			<Button
-				style={{ position: 'absolute', top: 10, right: 10 }}
-				variant="contained"
-				color="secondary"
-				onClick={() => {
-					dispatch(navbarClose());
-					window.print();
-				}}
-			>
-				<PrintIcon />
-			</Button>
+		<>	
+			{!isPrintReady && (
+				<Button
+					id="print-button"
+					style={{ position: 'absolute', top: 10, right: 10 }}
+					variant="contained"
+					color="secondary"
+					onClick={() => {
+						setIsPrintReady(true);
+						dispatch(navbarClose());
+
+						setTimeout(() => {
+							window.print();
+							setIsPrintReady(false);
+						}, 1000);
+					}}
+				>
+					<PrintIcon /> {isPrintReady ? ' Preparing to Print... ' : 'Print Bill'}
+				</Button>
+			)}
 			<div
 				id="section-to-print"
 				className={clsx(classes.root, 'flex-grow flex-shrink-0 p-0 sm:p-64 print:p-0 overflow-auto ')}

@@ -57,7 +57,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function GBData(props) {
-
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const classes = useStyles(props);
@@ -125,7 +124,7 @@ function GBData(props) {
 						})
 					);
 					dispatch(getBills(props.blockId)).then(() => {
-						history.push('/billing/boards/1/electrcity-bills/billing');
+						history.push(`/billing/boards/${props.blockId}/billing`);
 					});
 				}
 				console.log(JSON.stringify(response));
