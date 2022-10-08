@@ -1,16 +1,28 @@
 @media print {
   body * {
     visibility: hidden;
+
   }
   #print-button {
     visibility: hidden;
   }
   #section-to-print, #section-to-print * {
     visibility: visible;
+
+
   }
+  
+ #section-to-print:last-child {
+    page-break-after: auto;
+}
+
+
   #section-to-print {
+    height: auto;
     position: absolute;
     left: 0;
     top: 0;
   }
+
+
 }

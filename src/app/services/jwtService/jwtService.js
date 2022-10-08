@@ -6,7 +6,7 @@ import jwtDecode from 'jwt-decode';
 
 export const instance = axios.create({
 	baseURL: 'https://smsstagingapi.norditsol.com'
-	// baseURL: 'http://localhost:8000/api'
+	// baseURL: 'http://localhost:8000'
 });
 
 // export default instance;
@@ -131,14 +131,16 @@ class JwtService extends FuseUtils.EventEmitter {
 			localStorage.setItem('jwt_access_token', access_token);
 			instance.defaults.headers.common.Authorization = `Bearer ${access_token}`;
 		} else {
-			// delete instance.defaults.headers.common.Authorization;
+			delete instance.defaults.headers.common.Authorization;
 			localStorage.removeItem('user');
 			localStorage.removeItem('jwt_access_token');
 		}
 	};
 
 	logout = () => {
+		instance.post('/api/logout');
 		this.setSession(null);
+
 	};
 
 	isAuthTokenValid = access_token => {
