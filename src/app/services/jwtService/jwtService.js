@@ -6,6 +6,7 @@ import jwtDecode from 'jwt-decode';
 
 export const instance = axios.create({
 	baseURL: 'https://smsstagingapi.norditsol.com'
+	// baseURL: 'http://localhost:8000/api'
 });
 
 // export default instance;
@@ -85,31 +86,37 @@ class JwtService extends FuseUtils.EventEmitter {
 				data
 			};
 
-			instance(config).then(response => {
-				console.log('response', response);
-				if (response.data.access_token) {
-					console.log('response.data.accessToken', response.data.access_token);
-					this.setSession(response.data.access_token);
-					instance.defaults.headers.common.Authorization = `Bearer ${response.data.access_token}`;
-					instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+			instance(config)
+				.then(response => {
+					console.log('response', response);
+					if (response.data.access_token) {
+						console.log('response.data.accessToken', response.data.access_token);
+						this.setSession(response.data.access_token);
+						instance.defaults.headers.common.Authorization = `Bearer ${response.data.access_token}`;
+						instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
-					resolve({
-						message: 'Logged in successfully',
+						resolve({
+							message: 'Logged in successfully',
 
-						user: {
-							redirectUrl: '/dashboards/analytics',
-							role: response.data.user.role,
-							data: {
-								name: response.data.user.name,
-								email: response.data.user.email,
-								photoURL: response.data.user.avatar
+							user: {
+								redirectUrl: '/dashboards/analytics',
+								role: response.data.user.role,
+								data: {
+									name: response.data.user.name,
+									email: response.data.user.email,
+									photoURL: response.data.user.avatar
+								}
 							}
-						}
+						});
+					}
+				})
+				.catch(err => {
+					console.log('err', err.response);
+					reject({
+						success: false,
+						message: err.response.data.error
 					});
-				} else {
-					reject({ message: 'Error while loggin in' });
-				}
-			});
+				});
 		});
 	};
 

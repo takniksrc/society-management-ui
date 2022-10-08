@@ -2,6 +2,9 @@
   body * {
     visibility: hidden;
   }
+  #print-button {
+    visibility: hidden;
+  }
   #section-to-print, #section-to-print * {
     visibility: visible;
   }

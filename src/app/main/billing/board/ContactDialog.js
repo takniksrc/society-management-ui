@@ -51,11 +51,11 @@ const defaultValuesPaidAmount = {
 function ContactDialog(props) {
 	const dispatch = useDispatch();
 	const contactDialog = useSelector(({ newUsersSlice }) => newUsersSlice.newUsersSlice);
-	const GetBillsData = useSelector(state => state.scrumboardApp?.billWithIdSlice);
+	const GetBillsData = useSelector(state => state.billWithIdSlice);
 	console.log('i am GetBills in Dialog', GetBillsData);
-	const [billData, setBillData] = useState({});
+	// const [billData, setBillData] = useState({});
 	console.log('I am cliked data ', contactDialog);
-	console.log('billData', billData);
+	// console.log('billData', billData);
 	const routeParams = useParams();
 	console.log('i am routeParams', routeParams);
 	const StyledTableRow = withStyles(theme => ({
@@ -107,7 +107,7 @@ function ContactDialog(props) {
 
 		//call the api for data
 		console.log('bill', contactDialog);
-		instance.get(`/api/bills/${contactDialog?.data?.id}`).then(res => setBillData(res.data));
+		// instance.get(`/api/bills/${contactDialog?.data?.id}`).then(res => setBillData(res.data));
 	}, [contactDialog.data, contactDialog.type, reset]);
 
 	const onSubmitPaidValuesForm = data => {
@@ -203,7 +203,11 @@ function ContactDialog(props) {
 						animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
 						className="flex flex-2 ml-auto flex-row items-center justify-center ml-14 space-x-10 mt-10 "
 					>
-						<Button variant="contained" to={`/billing/${contactDialog.data?.id}/pdf-bill`} component={Link}>
+						<Button
+							variant="contained"
+							to={`/billing/${contactDialog?.data?.id}/pdf-bill`}
+							component={Link}
+						>
 							<PrintIcon />
 						</Button>
 					</motion.div>
@@ -247,7 +251,7 @@ function ContactDialog(props) {
 								{GetBillsData?.payment_history?.map((item, index) => {
 									return (
 										// <Card className="p-10 m-10">
-										<Typography className="p-10 m-10">
+										<Typography key={index} className="p-10 m-10">
 											<b>Paid </b>PKR {item?.amount} <b>, Date </b> {item?.payment_date}
 										</Typography>
 										// </Card>
@@ -319,25 +323,31 @@ function ContactDialog(props) {
 								<b>Previous Reading:</b> {GetBillsData?.previous_reading}{' '}
 							</Typography>
 							<Typography>
+								<b>Current Reading:</b> {GetBillsData?.current_reading}{' '}
+							</Typography>
+							<Typography>
 								{' '}
 								<b>Arrears: </b>
-								{GetBillsData.arrears}
+								{GetBillsData?.arrears}
 							</Typography>
 							<Typography>
 								{' '}
-								<b>Total FPA:</b> {GetBillsData.fpa_charges}
+								<b>Total FPA:</b> {GetBillsData?.fpa_charges}
 							</Typography>
 							<Typography>
-								<b>Current Bill:</b> {GetBillsData.electricity_charges}
+								<b>Current Bill:</b> {GetBillsData?.electricity_charges}
 							</Typography>
 							<Typography>
-								<b>Society Charges:</b> {GetBillsData.society_charges}
+								<b>Society Charges:</b> {GetBillsData?.society_charges}
 							</Typography>
 							<Typography>
-								<b>Total Payables:</b> {GetBillsData.total_bill}{' '}
+								<b>Total Payables:</b> {GetBillsData?.total_bill}{' '}
 							</Typography>
 							<Typography>
-								<b>Total Paid:</b> {GetBillsData.amount_paid}{' '}
+								<b>Total Paid:</b> {GetBillsData?.amount_paid}{' '}
+							</Typography>
+							<Typography className="text-green-600">
+								<b>Total Discount:</b> {GetBillsData?.discount}{' '}
 							</Typography>
 						</Card>
 					</div>

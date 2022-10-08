@@ -102,18 +102,6 @@ function Login() {
 						{selectedTab === 0 && <JWTLoginTab />}
 						{selectedTab === 1 && <Auth0LoginTab />}
 					</CardContent>
-
-					<div className="flex flex-col items-center justify-center pb-32">
-						{/* <div>
-							<span className="font-normal mr-8">Don't have an account?</span>
-							<Link className="font-normal" to="/register">
-								Register
-							</Link>
-						</div> */}
-						<Link className="font-normal mt-8" to="/users">
-							Back to Dashboard
-						</Link>
-					</div>
 				</Card>
 
 				<div className={clsx(classes.rightSection, 'hidden md:flex flex-1 items-center justify-center p-64')}>

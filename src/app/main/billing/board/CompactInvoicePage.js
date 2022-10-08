@@ -100,6 +100,7 @@ function CompactInvoicePage(props) {
 					? bills?.map((bill, index) => (
 							<>
 								<motion.div
+								key={index}
 									style={{ marginBottom: '2rem' }}
 									ref={ref}
 									initial={{ opacity: 0, y: 200 }}

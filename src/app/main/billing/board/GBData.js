@@ -28,6 +28,16 @@ import { instance } from 'app/services/jwtService/jwtService';
 import { getBills, resetBills } from '../store/AllBillsSlice';
 import { hideMessage, showMessage } from 'app/store/fuse/messageSlice';
 
+import NotificationModel from '../../../shared-components/notificationPanel/model/NotificationModel';
+import NotificationCard from '../../../shared-components/notificationPanel/NotificationCard';
+import NotificationTemplate from './../../../shared-components/notificationPanel/NotificationTemplate';
+import {
+	getNotifications,
+	addNotification,
+	dismissAll,
+	dismissItem,
+	selectNotifications
+} from '../../../shared-components/notificationPanel/store/dataSlice';
 
 const defaultValues = {
 	id: '',
@@ -64,12 +74,15 @@ function GBData(props) {
 		show: { opacity: 1, y: 0 }
 	};
 
-
 	const { watch, handleSubmit, formState, reset, register, control, setValue } = useForm({
 		mode: 'onChange',
 		defaultValues
 		// resolver: yupResolver(schema)
 	});
+
+	function createNotification(obj) {
+		dispatch(addNotification(NotificationModel(obj)));
+	}
 
 	function formatDate(date) {
 		var d = new Date(date),
@@ -86,6 +99,11 @@ function GBData(props) {
 	const handleForm = async model => {
 		const FormData = require('form-data');
 		const data = new FormData();
+
+		setTimeout(
+			() => createNotification({ message: 'Great Job! this is awesome.', options: { variant: 'success' } }),
+			4000
+		);
 
 		data.append('due_date', formatDate(model.dueDate));
 		data.append('block_id', props.blockId);
@@ -106,7 +124,7 @@ function GBData(props) {
 						})
 					);
 					dispatch(getBills(props.blockId)).then(() => {
-						history.push('/billing/boards/1/electrcity-bills/billing');
+						history.push(`/billing/boards/${props.blockId}/billing`);
 					});
 				}
 				console.log(JSON.stringify(response));

@@ -127,8 +127,9 @@ function SCDataTemplate(props) {
 							classes={{ root: 'w-full h-64' }}
 						>
 							<Tab id="Description" className="h-64" label="Description" value="Description" />
-							<Tab id="Residential4" className="h-64" label="Residential" value="Residential" />
+							<Tab id="Residential" className="h-64" label="Residential" value="Residential" />
 							<Tab id="Commercial" className="h-64" label="Commercial" value="Commercial" />
+							<Tab id="Construction" className="h-64" label="Construction" value="Construction" />
 						</Tabs>
 					</>
 				}
@@ -143,6 +144,10 @@ function SCDataTemplate(props) {
 
 						<div className={tabValue !== 'Commercial' ? 'hidden' : ''}>
 							<CommercialTab TabType="Commercial" />
+						</div>
+
+						<div className={tabValue !== 'Construction' ? 'hidden' : ''}>
+							<ConstructionTab TabType="Construction" />
 						</div>
 					</div>
 				}

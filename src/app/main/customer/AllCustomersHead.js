@@ -12,26 +12,26 @@ import AllCustomers from './AllCustomers';
 import {
 	// eslint-disable-next-line import/named
 	removeCustomer,
-	openEditContactDialog,
-	toggleStarredContact,
-	selectCustomers
+	openEditContactDialog
 } from './store/newCustomersSlice';
+import { getCustomerData } from './store/customerSlice';
 
 function AllCustomersHead(props) {
 	const dispatch = useDispatch();
-	// const customers = useSelector(selectCustomers);
-	const customersFromServer = useSelector(selectCustomers);
+
+	const customersResponse = useSelector(state => state.customerSlice);
+	const customersFromServer = customersResponse?.customers;
 
 	const customers = useMemo(
 		() =>
-			customersFromServer.map(newCustomer => {
+			customersFromServer?.map(newCustomer => {
 				console.log('newCustomer', newCustomer);
 				return {
 					id: newCustomer?.id,
 					name: newCustomer?.name,
 					property_size: newCustomer?.property_size?.name,
 					property_size_id: newCustomer?.property_size?.id,
-                    
+
 					property_type: newCustomer?.property_type?.name,
 					property_type_id: newCustomer?.property_type?.id,
 
@@ -44,12 +44,11 @@ function AllCustomersHead(props) {
 					customer_type: newCustomer?.customer_type,
 					meter_status: newCustomer?.meter?.meter_status,
 					meter_phase: newCustomer?.meter?.phase,
-					meter_company : newCustomer?.meter?.company,
+					meter_company: newCustomer?.meter?.company,
 					company: 'sms',
 					sector: newCustomer?.address?.sector_id,
 					block: newCustomer?.address?.block_id,
 					street_address: newCustomer?.address?.street_address
-					
 				};
 			}),
 		[customersFromServer]

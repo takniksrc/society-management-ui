@@ -15,18 +15,17 @@ class Auth0Service {
 			success(false);
 			return;
 		}
-
+		console.log('Authconfig', AUTH_CONFIG);
 		this.lock = new Auth0Lock(AUTH_CONFIG.clientId, AUTH_CONFIG.domain, {
 			autoclose: true,
 			socialButtonStyle: 'big',
 			auth: {
-				// redirect: false,
+				redirect: false,
 				redirectUrl: AUTH_CONFIG.callbackUrl,
 				responseType: 'token id_token',
 				audience: `https://${AUTH_CONFIG.domain}/api/v2/`,
 				params: {
-					scope:
-						'openid profile email user_metadata app_metadata picture update:current_user_metadata create:current_user_metadata read:current_user'
+					scope: 'openid profile email user_metadata app_metadata picture update:current_user_metadata create:current_user_metadata read:current_user'
 				}
 			}
 		});
@@ -170,6 +169,6 @@ class Auth0Service {
 	};
 }
 
-const instance_Old = new Auth0Service();
+const instanceOld = new Auth0Service();
 
-export default instance_Old;
+export default instanceOld;

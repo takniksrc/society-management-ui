@@ -18,7 +18,28 @@ export const getDownloadFile = createAsyncThunk(
 					const url = window.URL.createObjectURL(new Blob([response?.data]));
 					const link = document.createElement('a');
 					link.href = url;
-					link?.setAttribute('download', 'Fabric Excel Format.xlsx');
+					const d = new Date();
+					const date = d.getDate();
+					const monthNames = [
+						'January',
+						'February',
+						'March',
+						'April',
+						'May',
+						'June',
+						'July',
+						'August',
+						'September',
+						'October',
+						'November',
+						'December'
+					];
+					const month = monthNames[d.getMonth()-1]; // Since getMonth() returns month from 0-11 not 1-12
+					const year = d.getFullYear();
+					
+
+					const dateStr = `${month}/${year}.xlsx`;
+					link?.setAttribute('download', dateStr);
 					document.body?.appendChild(link);
 					link.click();
 				})

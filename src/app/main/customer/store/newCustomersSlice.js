@@ -20,6 +20,8 @@ export const addCustomer = createAsyncThunk('customers/addCustomer', async (cont
 		name: contact.name,
 		cnic: contact.cnic,
 		phone_number: contact.phone_number,
+		current_reading: contact.current_reading,
+		meter_company: contact.meter_company,
 		email: contact.email,
 		customer_type_id: contact.customer_type,
 		property_type_id: contact.property_type,
@@ -74,6 +76,8 @@ export const updateCustomer = createAsyncThunk('customers/updateCustomer', async
 		name: contact.name,
 		cnic: contact.cnic,
 		phone_number: contact.phone_number,
+		current_reading: contact.current_reading,
+		meter_company: contact.meter_company,
 		email: contact.email,
 		customer_type_id: contact.customer_type,
 		property_type_id: contact.property_type,
@@ -149,7 +153,7 @@ export const removeCustomer = createAsyncThunk(
 				})
 			);
 		}
-
+		dispatch(getCustomerData());
 		return customerId;
 	}
 );

@@ -2,10 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import DemoContent from '@fuse/core/DemoContent';
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Tab from '@material-ui/core/Tab';
-import Tabs from '@material-ui/core/Tabs';
-import Typography from '@material-ui/core/Typography';
+
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -17,7 +14,7 @@ import CustomersHeader from './CustomersHeader';
 import AllCustomersHead from './AllCustomersHead';
 import ContactDialog from './ContactDialog';
 import reducer from './store';
-import { getCustomers } from './store/newCustomersSlice';
+
 import { getCustomerData } from './store/customerSlice';
 
 /**
@@ -50,7 +47,6 @@ const Customers = () => {
 	const routeParams = useParams();
 
 	useDeepCompareEffect(() => {
-		dispatch(getCustomers(routeParams));
 		dispatch(getCustomerData());
 	}, [dispatch, routeParams]);
 

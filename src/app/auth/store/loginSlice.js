@@ -12,7 +12,7 @@ export const submitLogin =
 			.then(res => {
 				console.log('user', res);
 				localStorage.setItem('user', JSON.stringify(res.user));
-				dispatch(setUserData(res.user));
+				dispatch(setUserData(res.user)).then(response => console.log('nww', response));
 
 				dispatch(
 					showMessage({
@@ -28,9 +28,19 @@ export const submitLogin =
 
 				return dispatch(loginSuccess());
 			})
-			.catch(errors => {
-				console.log('I am error');
-				return dispatch(loginError(errors));
+			.catch(error => {
+				console.log('I am error', error);
+				return dispatch(
+					showMessage({
+						message: error.message,
+						autoHideDuration: 6000,
+						anchorOrigin: {
+							vertical: 'top',
+							horizontal: 'right'
+						},
+						variant: 'error'
+					})
+				);
 			});
 	};
 

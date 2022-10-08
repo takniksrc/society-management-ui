@@ -62,9 +62,10 @@ const AllBills = ({ columns, data, onRowClick }) => {
 				<Table {...getTableProps()} stickyHeader className="simple borderless">
 					<TableHead>
 						{headerGroups.map(headerGroup => (
-							<TableRow {...headerGroup.getHeaderGroupProps()}>
+							<TableRow key={() => new Date()} {...headerGroup.getHeaderGroupProps()}>
 								{headerGroup.headers.map(column => (
 									<TableCell
+										key={() => new Date()}
 										className="whitespace-nowrap p-4 md:p-12"
 										{...(!column.sortable
 											? column.getHeaderProps()
@@ -88,6 +89,7 @@ const AllBills = ({ columns, data, onRowClick }) => {
 							prepareRow(row);
 							return (
 								<TableRow
+									key={() => new Date()}
 									{...row.getRowProps()}
 									onClick={ev => onRowClick(ev, row)}
 									className="truncate cursor-pointer"
@@ -95,6 +97,7 @@ const AllBills = ({ columns, data, onRowClick }) => {
 									{row.cells.map(cell => {
 										return (
 											<TableCell
+											
 												{...cell.getCellProps()}
 												className={clsx('p-4 md:p-12', cell.column.className)}
 											>

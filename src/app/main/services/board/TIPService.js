@@ -98,7 +98,6 @@ function TIPService(props) {
 							<Tab className="h-64" label="Residential" />
 							<Tab className="h-64" label="Commercial" />
 							<Tab className="h-64" label="Construction" />
-							<Tab className="h-64" label="FPA" />
 						</Tabs>
 					</>
 				}
@@ -116,9 +115,6 @@ function TIPService(props) {
 
 						<div className={tabValue !== 3 ? 'hidden' : ''}>
 							<ConstructionTab />
-						</div>
-						<div className={tabValue !== 4 ? 'hidden' : ''}>
-							<FPATab />
 						</div>
 					</div>
 				}

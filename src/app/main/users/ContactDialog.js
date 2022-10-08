@@ -87,6 +87,8 @@ function ContactDialog(props) {
 				...contactDialog.data,
 				id: FuseUtils.generateGUID()
 			});
+			setRole('');
+
 		}
 	}, [contactDialog.data, contactDialog.type, reset]);
 

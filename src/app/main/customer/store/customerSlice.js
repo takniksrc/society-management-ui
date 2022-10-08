@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { instance } from 'app/services/jwtService/jwtService';
 
-export const getCustomerData = createAsyncThunk('contactsApp/customer/getCustomerData', async () => {
-	const response = await instance.get('/api/customers');
+export const getCustomerData = createAsyncThunk('contactsApp/customer/getCustomerData', async (pageNumber = 1) => {
+	const response = await instance.get(`/api/customers?page=${pageNumber}`);
 	const data = await response.data;
-	// console.log('I am data',data)
+	console.log('I am getCustomerData', data);
 	return data;
 });
 
