@@ -135,18 +135,18 @@ function BillsBellowSection(props) {
 				console.log(JSON.stringify(response));
 			})
 			.catch(function (error) {
-				// dispatch(
-				// 	showMessage({
-				// 		message: response.data.message, //text or html
-				// 		autoHideDuration: 6000, //ms
-				// 		anchorOrigin: {
-				// 			vertical: 'top', //top bottom
-				// 			horizontal: 'right' //left center right
-				// 		},
-				// 		variant: 'error' //success error info warning null
-				// 	})
-				// );
-				alert('Error while uploading');
+
+				dispatch(
+					showMessage({
+						message: 'Error while uploading file', //text or html
+						autoHideDuration: 6000, //ms
+						anchorOrigin: {
+							vertical: 'top', //top bottom
+							horizontal: 'right' //left center right
+						},
+						variant: 'error' //success error info warning null
+					})
+				);
 			});
 	};
 
