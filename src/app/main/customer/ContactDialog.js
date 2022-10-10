@@ -176,7 +176,7 @@ function ContactDialog(props) {
 
 			// meter_phase: yup.string().required('Required').max(10, 'Phase must not be greater than 10 characters')
 		},
-		[['phone_number', 'phone_number']]]
+		[['phone_number', 'phone_number']]
 	);
 
 	const { control, watch, reset, handleSubmit, formState, getValues, register, setValue } = useForm({
