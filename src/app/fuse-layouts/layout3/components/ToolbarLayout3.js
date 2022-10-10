@@ -57,7 +57,7 @@ function ToolbarLayout3(props) {
 							<FuseSearch />
 						</Hidden>
 
-						<LanguageSwitcher />
+						{/* <LanguageSwitcher /> */}
 
 						<AdjustFontSize />
 

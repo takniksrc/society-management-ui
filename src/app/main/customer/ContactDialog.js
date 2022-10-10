@@ -21,6 +21,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { useDeepCompareEffect } from '@fuse/hooks';
+import FuseDialog from '@fuse/core/FuseDialog';
 import _ from '@lodash';
 import * as yup from 'yup';
 import { getPropertyTypes } from './store/propertyTypesSlice';
@@ -35,6 +36,7 @@ import {
 	closeNewContactDialog,
 	closeEditContactDialog
 } from './store/newCustomersSlice';
+import { Alert } from '@material-ui/lab';
 
 function ContactDialog(props) {
 	const dispatch = useDispatch();
@@ -375,6 +377,7 @@ function ContactDialog(props) {
 	//  * Remove Event
 	//  */
 	function handleRemove() {
+	
 		dispatch(removeCustomer(id));
 		closeComposeDialog();
 	}
@@ -841,6 +844,7 @@ function ContactDialog(props) {
 			</form>
 		</Dialog>
 	);
+	
 }
 
 export default ContactDialog;
