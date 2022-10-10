@@ -43,6 +43,8 @@ const schema = yup.object().shape({
 
 function EKServiceTemplate(props) {
 	const dispatch = useDispatch();
+	const [loading, setLoading] = useState(true);
+
 	const theme = useTheme();
 	const params = useParams();
 	const pageLayout = useRef(null);
@@ -70,12 +72,16 @@ function EKServiceTemplate(props) {
 
 	useEffect(() => {
 		console.log('params', params.boardId);
-		3;
 		dispatch(getConsumbtionBoard(params.boardId)).then(data => {
 			console.log('data :', data);
 			reset(data.payload);
+			setLoading(false);
 		});
 	}, [reset]);
+
+	if (loading) {
+		return <FuseLoading />;
+	}
 	return (
 		<FormProvider {...methods}>
 			<FusePageCarded

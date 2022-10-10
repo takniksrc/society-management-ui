@@ -272,7 +272,7 @@ function BillsBellowSection(props) {
 								role="button"
 								// component={Link}
 							>
-								<div className=" flex flex-wrap w-full justify-center px-16 flex-row">
+								<div className=" flex flex-wrap w-full justify-center px-16 flex-col lg:flex-row sm:flex-col">
 									<div className="flex flex-1 items-center justify-center basis-1/4">
 										<ThemeProvider theme={mainTheme}>
 											<Paper
@@ -353,6 +353,8 @@ function BillsBellowSection(props) {
 		);
 	}
 
+	
+
 	return (
 		<>
 			{/* <form noValidate onSubmit={handleSubmit(handleForm)}> */}
@@ -374,7 +376,7 @@ function BillsBellowSection(props) {
 								role="button"
 								// component={Link}
 							>
-								<div className=" flex flex-wrap w-full justify-center px-16 flex-row">
+								<div className=" flex flex-wrap w-full justify-center px-16 flex-col lg:flex-row sm:flex-col">
 									<div className="flex flex-1 items-center justify-center basis-1/4">
 										<ThemeProvider theme={mainTheme}>
 											<Paper

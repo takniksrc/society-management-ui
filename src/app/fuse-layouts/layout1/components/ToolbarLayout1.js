@@ -61,7 +61,7 @@ function ToolbarLayout1(props) {
 					</div>
 
 					<div className="flex items-center px-8 h-full overflow-x-auto">
-						<LanguageSwitcher />
+						{/* <LanguageSwitcher /> */}
 
 						<AdjustFontSize />
 

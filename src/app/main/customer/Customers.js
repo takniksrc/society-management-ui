@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import DemoContent from '@fuse/core/DemoContent';
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import { makeStyles } from '@material-ui/core/styles';
+import FuseLoading from '@fuse/core/FuseLoading';
 
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -34,6 +35,7 @@ const useStyles = makeStyles({
 const Customers = () => {
 	const classes = useStyles();
 	const [tabValue, setTabValue] = useState(0);
+	const [loading, setLoading] = useState(true);
 	const methods = useForm({
 		mode: 'onChange',
 		defaultValues: {},
@@ -47,8 +49,12 @@ const Customers = () => {
 	const routeParams = useParams();
 
 	useDeepCompareEffect(() => {
-		dispatch(getCustomerData());
+		dispatch(getCustomerData()).then(() => setLoading(false));
 	}, [dispatch, routeParams]);
+
+	if (loading) {
+		return <FuseLoading />;
+	}
 
 	return (
 		<>

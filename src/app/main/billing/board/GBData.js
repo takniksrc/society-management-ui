@@ -156,6 +156,7 @@ function GBData(props) {
 
 		console.log('model', model);
 	};
+	
 	const dueDate = watch('deuDate');
 	const startDate = watch('startDate');
 

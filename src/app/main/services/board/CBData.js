@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import withReducer from 'app/store/withReducer';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import reducer from '../store';
@@ -13,6 +13,8 @@ import { selectBoards, newBoard, getConsumptionBoards, resetBoards } from '../st
 import { getConsumbtionBoard } from '../store/consumptionBoardSlice';
 import societyChargesIcon from '../../../../assets/ServicesIcon/society-charges-icon.png';
 import consumptionChragesIcon from '../../../../assets/ServicesIcon/consumption-based-icon.png';
+
+import FuseLoading from '@fuse/core/FuseLoading';
 
 const useStyles = makeStyles(theme => ({
 	root: {},
@@ -27,6 +29,8 @@ const useStyles = makeStyles(theme => ({
 
 function CBData(props) {
 	const dispatch = useDispatch();
+	const [loading, setLoading] = useState(true);
+
 	const boards = useSelector(selectBoards);
 
 	console.log('I am cunsumbtion board in CBDATA', boards);
@@ -34,7 +38,7 @@ function CBData(props) {
 	const classes = useStyles(props);
 
 	useEffect(() => {
-		dispatch(getConsumptionBoards());
+		dispatch(getConsumptionBoards()).then(() => setLoading(false));
 		return () => {
 			dispatch(resetBoards());
 		};
@@ -55,6 +59,9 @@ function CBData(props) {
 	function handleOpen(id) {
 		console.log('i am new id', id);
 		//dispatch(getConsumbtionBoard(id));
+	}
+	if (loading) {
+		return <FuseLoading />;
 	}
 
 	return (
