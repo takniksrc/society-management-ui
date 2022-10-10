@@ -52,7 +52,7 @@ function Register() {
 				className="flex w-full max-w-400 md:max-w-3xl rounded-20 shadow-2xl overflow-hidden"
 			>
 				<Card
-					className={clsx(
+					classNa me={clsx(
 						classes.leftSection,
 						'flex flex-col w-full max-w-sm items-center justify-center shadow-0'
 					)}

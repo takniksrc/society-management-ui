@@ -1,5 +1,6 @@
 import Paper from '@material-ui/core/Paper';
 import Icon from '@material-ui/core/Icon';
+import FuseLoading from '@fuse/core/FuseLoading';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import withReducer from 'app/store/withReducer';
@@ -26,6 +27,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Boards(props) {
+	const [loading, setLoading] = useState(true);
+
 	const dispatch = useDispatch();
 	const configurationsData = useSelector(({ configSlice }) => configSlice);
 	const billingBlocksStatuses = useSelector(state => state.billingBlocksSlice);
@@ -55,9 +58,13 @@ function Boards(props) {
 		dispatch(resetBills([]));
 		dispatch(getConfigurations()).then(data => {
 			console.log('I am promise returend', data);
-			dispatch(getBlocksStatus(data.payload?.sectors[0]?.id));
+			dispatch(getBlocksStatus(data.payload?.sectors[0]?.id)).then(() => setLoading(false));
 		});
 	}, [dispatch]);
+
+	if (loading) {
+		return <FuseLoading />;
+	}
 
 	return (
 		<div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>
