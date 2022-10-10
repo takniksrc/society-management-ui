@@ -82,7 +82,7 @@ function CompactInvoicePage(props) {
 	});
 
 	return (
-		<>	
+		<>
 			{!isPrintReady && (
 				<Button
 					id="print-button"
@@ -461,7 +461,7 @@ function CompactInvoicePage(props) {
 																L.P Surcharge
 															</div>
 															<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
-																{bill?.late_surcharge}
+																{bill?.late_surcharge?.toFixed(2)}
 															</div>
 															<div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2">
 																Payable within Due Date

@@ -256,8 +256,7 @@ function ContactDialog(props) {
 			['email', 'email'],
 			['company', 'company'],
 			['current_reading', 'current_reading'],
-			['meter_number', 'meter_number'],
-			['email', 'email']
+			['meter_number', 'meter_number']
 		]
 	);
 
