@@ -156,11 +156,11 @@ const AllCustomers = ({ columns, data, onRowClick }) => {
 				classes={{
 					root: 'flex-shrink-0 border-t-1'
 				}}
-				rowsPerPageOptions={0}
-				colSpan={0}
-				count={meta?.last_page}
-				rowsPerPage={meta?.current_page}
-				page={meta?.current_page}
+				rowsPerPageOptions={[5, 10, 25, { label: 'All', value: data.length + 1 }]}
+				colSpan={5}
+				count={data.length}
+				rowsPerPage={pageSize}
+				page={pageIndex}
 				SelectProps={{
 					inputProps: { 'aria-label': 'rows per page' },
 					native: false
