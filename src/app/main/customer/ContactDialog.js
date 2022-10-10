@@ -120,7 +120,7 @@ function ContactDialog(props) {
 		block: 'A',
 		street_address: '',
 		current_reading: '',
-		meter_company: ''
+		company: ''
 	};
 
 	/**
@@ -133,7 +133,7 @@ function ContactDialog(props) {
 				.string()
 				// .required('You must enter a Reading')
 				.matches(/^[0-9]+$/, 'Must be only digits'),
-			// meter_company: yup.string().required('You must enter a Company Name'),
+			// company: yup.string().required('You must enter a Company Name'),
 			street_address: yup.string().required('You must enter address').max(30, 'Maximum 30 digits'),
 			reference_number: yup
 				.string()
@@ -697,15 +697,15 @@ function ContactDialog(props) {
 						</div>
 						<Controller
 							control={control}
-							name="meter_company"
+							name="company"
 							render={({ field }) => (
 								<TextField
 									{...field}
 									className="mb-24"
 									label="Meter Company"
-									id="meter_company"
-									error={!!errors.meter_company}
-									helperText={errors?.meter_company?.message}
+									id="company"
+									error={!!errors.company}
+									helperText={errors?.company?.message}
 									variant="outlined"
 									// required
 									fullWidth
