@@ -87,11 +87,18 @@ const AllCustomers = ({ columns, data, onRowClick }) => {
 			]);
 		}
 	);
-	const handleChangePage = (event, newPage) => {
-		console.log('newPage', newPage);
-		dispatch(getCustomerData(newPage));
+	// const handleChangePage = (event, newPage) => {
+	// 	console.log('newPage', newPage);
+	// 	dispatch(getCustomerData(newPage));
 
-		// gotoPage(newPage);
+	// 	// gotoPage(newPage);
+	// };
+
+	// const handleChangeRowsPerPage = event => {
+	// 	setPageSize(Number(event.target.value));
+	// };
+	const handleChangePage = (event, newPage) => {
+		gotoPage(newPage);
 	};
 
 	const handleChangeRowsPerPage = event => {
