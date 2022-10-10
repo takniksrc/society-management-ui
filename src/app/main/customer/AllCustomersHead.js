@@ -44,8 +44,8 @@ function AllCustomersHead(props) {
 					customer_type: newCustomer?.customer_type,
 					meter_status: newCustomer?.meter?.meter_status,
 					meter_phase: newCustomer?.meter?.phase,
-					meter_company : newCustomer?.meter?.company,
-					company: 'sms',
+					company : newCustomer?.meter?.company,
+					// company: newCustomer?.meter?.company,
 					sector: newCustomer?.address?.sector_id,
 					block: newCustomer?.address?.block_id,
 					street_address: newCustomer?.address?.street_address
@@ -121,7 +121,7 @@ function AllCustomersHead(props) {
 			},
 			{
 				Header: 'Meter Company',
-				accessor: 'meter_company',
+				accessor: 'company',
 				sortable: true
 			},
 

@@ -115,12 +115,12 @@ function ContactDialog(props) {
 		meter_status: '',
 		meter_phase: '',
 		meter_type: '',
-		company: 'sms', // TODO
+		// company: '', // TODO
 		sector: '',
-		block: 'A',
+		block: '',
 		street_address: '',
 		current_reading: '',
-		meter_company: ''
+		company: ''
 	};
 
 	/**
@@ -132,18 +132,15 @@ function ContactDialog(props) {
 			.string()
 			// .required('You must enter a Reading')
 			.matches(/^[0-9]+$/, 'Must be only digits'),
-		// meter_company: yup.string().required('You must enter a Company Name'),
+		// company: yup.string().required('You must enter a Company Name'),
 		street_address: yup.string().required('You must enter address').max(30, 'Maximum 30 digits'),
-		reference_number: yup
-			.string()
-			// .required('Required')
-			.matches(/^[0-9]+$/, 'Must be only digits')
-			.min(1, 'Minimum 1 digits')
-			.max(15, 'Maximum 15 digits'),
-
+		reference_number: yup.string(),
+		// .required('Required')
+		// .matches(/^[0-9]+$/, 'Must be only digits')
+		// .min(1, 'Minimum 1 digits')
+		// .max(15, 'Maximum 15 digits')
 		cnic: yup
 			.string()
-			.required('Required')
 			.matches(/^[0-9]+$/, 'Must be only digits')
 			.min(13, 'Minimum 13 digits')
 			.max(13, 'Maximum 13 digits'),
@@ -157,7 +154,6 @@ function ContactDialog(props) {
 
 		phone_number: yup
 			.string()
-			.required('Required')
 			.matches(/^[0-9]+$/, 'Must be only digits')
 			.min(11, 'Minimum 11 digits')
 			.max(11, 'Maximum 11 digits')
@@ -326,6 +322,7 @@ function ContactDialog(props) {
 									id="reference_number"
 									variant="outlined"
 									type="number"
+									required
 									fullWidth
 									error={!!errors.reference_number}
 									helperText={errors?.reference_number?.message}
@@ -571,7 +568,7 @@ function ContactDialog(props) {
 								value={meterPhase}
 								onChange={handleMeterPhase}
 								inputProps={register('meter_phase', {
-								// 	required: 'Please enter meter phase'
+									// 	required: 'Please enter meter phase'
 								})}
 								input={
 									<OutlinedInput
@@ -602,7 +599,7 @@ function ContactDialog(props) {
 								value={meterType}
 								onChange={handleMeterType}
 								inputProps={register('meter_type', {
-								// 	required: 'Please enter meter type'
+									// 	required: 'Please enter meter type'
 								})}
 								input={
 									<OutlinedInput
@@ -627,9 +624,8 @@ function ContactDialog(props) {
 							<Select
 								value={meterStatus}
 								onChange={handleMeterStatus}
-								inputProps={register('meter_status', 
-								{
-								// 	required: 'Please enter meter status'
+								inputProps={register('meter_status', {
+									// 	required: 'Please enter meter status'
 								})}
 								input={
 									<OutlinedInput
@@ -685,15 +681,15 @@ function ContactDialog(props) {
 						</div>
 						<Controller
 							control={control}
-							name="meter_company"
+							name="company"
 							render={({ field }) => (
 								<TextField
 									{...field}
 									className="mb-24"
 									label="Meter Company"
-									id="meter_company"
-									error={!!errors.meter_company}
-									helperText={errors?.meter_company?.message}
+									id="company"
+									error={!!errors.company}
+									helperText={errors?.company?.message}
 									variant="outlined"
 									// required
 									fullWidth

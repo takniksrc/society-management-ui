@@ -21,7 +21,6 @@ export const addCustomer = createAsyncThunk('customers/addCustomer', async (cont
 		cnic: contact.cnic,
 		phone_number: contact.phone_number,
 		current_reading: contact.current_reading,
-		meter_company: contact.meter_company,
 		email: contact.email,
 		customer_type_id: contact.customer_type,
 		property_type_id: contact.property_type,
@@ -36,7 +35,7 @@ export const addCustomer = createAsyncThunk('customers/addCustomer', async (cont
 		street_address: contact.street_address
 	});
 	const data = await response.data;
-	console.log('I am new updated data', data);
+	console.log('I am new updated data in new', data);
 
 	if (response.status === 201 || response.status === 200) {
 		dispatch(
@@ -51,6 +50,7 @@ export const addCustomer = createAsyncThunk('customers/addCustomer', async (cont
 			})
 		);
 	} else {
+	console.log('I am error while add', response);
 		dispatch(
 			showMessage({
 				message: response.data.message, //text or html
@@ -77,7 +77,7 @@ export const updateCustomer = createAsyncThunk('customers/updateCustomer', async
 		cnic: contact.cnic,
 		phone_number: contact.phone_number,
 		current_reading: contact.current_reading,
-		meter_company: contact.meter_company,
+		// company: contact.company,
 		email: contact.email,
 		customer_type_id: contact.customer_type,
 		property_type_id: contact.property_type,
