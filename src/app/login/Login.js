@@ -77,7 +77,7 @@ function Login() {
 						<Tabs
 							value={selectedTab}
 							onChange={handleTabChange}
-							variant="fullWidth"
+							variant="standard"
 							className="w-full mb-32"
 						>
 							<Tab
@@ -88,19 +88,19 @@ function Login() {
 								// 		alt="firebase"
 								// 	/>
 								// }
-								className="min-w-0"
+								className="w-full"
 								label="Login with User"
 							/>
 
-							<Tab
+							{/* <Tab
 								// icon={<img className="h-40" src="assets/images/logos/auth0.svg" alt="auth0" />}
 								className="min-w-0"
 								label="Login with Google"
-							/>
+							/> */}
 						</Tabs>
 
 						{selectedTab === 0 && <JWTLoginTab />}
-						{selectedTab === 1 && <Auth0LoginTab />}
+						{/* {selectedTab === 1 && <Auth0LoginTab />} */}
 					</CardContent>
 				</Card>
 
