@@ -14,7 +14,7 @@ import { logoutUser } from 'app/auth/store/userSlice';
 function UserMenu(props) {
 	const dispatch = useDispatch();
 	const user = useSelector(({ auth }) => auth.user);
-	console.log('I am user after role ',user)
+	console.log('I am user after role ', user);
 
 	const [userMenu, setUserMenu] = useState(null);
 
@@ -69,12 +69,6 @@ function UserMenu(props) {
 								<Icon>lock</Icon>
 							</ListItemIcon>
 							<ListItemText primary="Login" />
-						</MenuItem>
-						<MenuItem component={Link} to="/register" role="button">
-							<ListItemIcon className="min-w-40">
-								<Icon>person_add</Icon>
-							</ListItemIcon>
-							<ListItemText primary="Register" />
 						</MenuItem>
 					</>
 				) : (

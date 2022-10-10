@@ -126,44 +126,58 @@ function ContactDialog(props) {
 	/**
 	 * Form Validation Schema
 	 */
-	const schema = yup.object().shape({
-		name: yup.string().required('You must enter a name').max(60, 'Maximum 60 digits'),
-		current_reading: yup
-			.string()
-			// .required('You must enter a Reading')
-			.matches(/^[0-9]+$/, 'Must be only digits'),
-		// meter_company: yup.string().required('You must enter a Company Name'),
-		street_address: yup.string().required('You must enter address').max(30, 'Maximum 30 digits'),
-		reference_number: yup
-			.string()
-			// .required('Required')
-			.matches(/^[0-9]+$/, 'Must be only digits')
-			.min(1, 'Minimum 1 digits')
-			.max(15, 'Maximum 15 digits'),
+	const schema = yup.object().shape(
+		{
+			name: yup.string().required('You must enter a name').max(60, 'Maximum 60 digits'),
+			current_reading: yup
+				.string()
+				// .required('You must enter a Reading')
+				.matches(/^[0-9]+$/, 'Must be only digits'),
+			// meter_company: yup.string().required('You must enter a Company Name'),
+			street_address: yup.string().required('You must enter address').max(30, 'Maximum 30 digits'),
+			reference_number: yup
+				.string()
+				// .required('Required')
+				.matches(/^[0-9]+$/, 'Must be only digits')
+				.min(1, 'Minimum 1 digits')
+				.max(15, 'Maximum 15 digits'),
 
-		cnic: yup
-			.string()
-			.required('Required')
-			.matches(/^[0-9]+$/, 'Must be only digits')
-			.min(13, 'Minimum 13 digits')
-			.max(13, 'Maximum 13 digits'),
+			cnic: yup
+				.string()
+				.required('Required')
+				.matches(/^[0-9]+$/, 'Must be only digits')
+				.min(13, 'Minimum 13 digits')
+				.max(13, 'Maximum 13 digits'),
 
-		meter_number: yup
-			.string()
-			// .required('Required')
-			.matches(/^[0-9]+$/, 'Must be only digits')
-			.min(1, 'Minimum 1 digits')
-			.max(15, 'Maximum 15 digits'),
+			meter_number: yup
+				.string()
+				.required('Required')
+				.matches(/^[0-9]+$/, 'Must be only digits')
+				.min(1, 'Minimum 1 digits')
+				.max(15, 'Maximum 15 digits'),
 
-		phone_number: yup
-			.string()
-			.required('Required')
-			.matches(/^[0-9]+$/, 'Must be only digits')
-			.min(11, 'Minimum 11 digits')
-			.max(11, 'Maximum 11 digits')
+			// phone_number: yup.string(),
 
-		// meter_phase: yup.string().required('Required').max(10, 'Phase must not be greater than 10 characters')
-	});
+			phone_number: yup.string().when('phone_number', value => {
+				if (value) {
+					return yup.string().min(5, 'fasdfasd').max(255, 'asdfas');
+				}
+				return yup
+					.string()
+					.transform((value, originalValue) => {
+						if (!value) {
+							return null;
+						}
+						return originalValue;
+					})
+					.nullable()
+					.optional();
+			})
+
+			// meter_phase: yup.string().required('Required').max(10, 'Phase must not be greater than 10 characters')
+		},
+		[['phone_number', 'phone_number']]]
+	);
 
 	const { control, watch, reset, handleSubmit, formState, getValues, register, setValue } = useForm({
 		mode: 'onChange',
@@ -241,7 +255,6 @@ function ContactDialog(props) {
 			setMeterStatus('');
 			setBlock('');
 			setSector('');
-
 			setMeterType(
 				contactDialog?.data?.meter_type?.charAt(0).toUpperCase() + contactDialog?.data?.meter_type?.slice(1)
 			);
@@ -394,7 +407,7 @@ function ContactDialog(props) {
 									variant="outlined"
 									type="tel"
 									fullWidth
-									error={!!errors.phone_number}
+									//error={!!errors.phone_number}
 									helperText={errors?.phone_number?.message}
 								/>
 							)}
@@ -571,7 +584,7 @@ function ContactDialog(props) {
 								value={meterPhase}
 								onChange={handleMeterPhase}
 								inputProps={register('meter_phase', {
-								// 	required: 'Please enter meter phase'
+									// 	required: 'Please enter meter phase'
 								})}
 								input={
 									<OutlinedInput
@@ -602,7 +615,7 @@ function ContactDialog(props) {
 								value={meterType}
 								onChange={handleMeterType}
 								inputProps={register('meter_type', {
-								// 	required: 'Please enter meter type'
+									// 	required: 'Please enter meter type'
 								})}
 								input={
 									<OutlinedInput
@@ -627,9 +640,8 @@ function ContactDialog(props) {
 							<Select
 								value={meterStatus}
 								onChange={handleMeterStatus}
-								inputProps={register('meter_status', 
-								{
-								// 	required: 'Please enter meter status'
+								inputProps={register('meter_status', {
+									// 	required: 'Please enter meter status'
 								})}
 								input={
 									<OutlinedInput
@@ -732,12 +744,7 @@ function ContactDialog(props) {
 				{contactDialog?.type === 'new' ? (
 					<DialogActions className="justify-between p-4 pb-16">
 						<div className="px-16">
-							<Button
-								variant="contained"
-								color="secondary"
-								type="submit"
-								disabled={_.isEmpty(dirtyFields) || !isValid}
-							>
+							<Button variant="contained" color="secondary" type="submit" disabled={!isValid}>
 								Add
 							</Button>
 						</div>
@@ -745,12 +752,7 @@ function ContactDialog(props) {
 				) : (
 					<DialogActions className="justify-between p-4 pb-16">
 						<div className="px-16">
-							<Button
-								variant="contained"
-								color="secondary"
-								type="submit"
-								disabled={_.isEmpty(dirtyFields) || !isValid}
-							>
+							<Button variant="contained" color="secondary" type="submit" disabled={!isValid}>
 								Save
 							</Button>
 						</div>
