@@ -253,6 +253,7 @@ function ContactDialog(props) {
 		[
 			['phone_number', 'phone_number'],
 			['cnic', 'cnic'],
+			['email', 'email'],
 			['company', 'company'],
 			['current_reading', 'current_reading'],
 			['meter_number', 'meter_number'],
@@ -506,8 +507,11 @@ function ContactDialog(props) {
 									{...field}
 									className="mb-24"
 									label="Email"
+									type="email"
 									id="email"
 									variant="outlined"
+									error={!!errors.email}
+									helperText={errors?.email?.message}
 									fullWidth
 									error={!!errors.email}
 									helperText={errors?.email?.message}

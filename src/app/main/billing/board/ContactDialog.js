@@ -215,7 +215,7 @@ function ContactDialog(props) {
 			</AppBar>
 
 			<DialogContent classes={{ root: 'p-24' }}>
-				<div className="flex gap-36">
+				<div className="flex gap-36 flex-col lg:flex-row xs:flex-col flex-col-reverse ">
 					<form className="w-full" noValidate onSubmit={handleSubmitPaidValues(onSubmitPaidValuesForm)}>
 						<Card className="p-24">
 							<div className="flex">
@@ -260,7 +260,7 @@ function ContactDialog(props) {
 							</div>
 						</Card>
 					</form>
-					<div className="flex w-2/5	 flex-col gap-24">
+					<div className="flex flex-col gap-24 w-full lg:w-2/5 sm:w-full">
 						<form className="w-full" noValidate onSubmit={handleSubmit(onSubmitDiscountValuesForm)}>
 							<Card className="p-24">
 								<div>
