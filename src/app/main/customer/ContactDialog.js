@@ -169,7 +169,7 @@ function ContactDialog(props) {
 						.string()
 						.matches(/^[0-9]+$/, 'Must be only digits')
 						.min(11, 'Minimum 11 digits')
-						.max(11, 'Maximum 11 digits')
+						.max(11, 'Maximum 11 digits');
 				}
 				return yup
 					.string()
@@ -188,7 +188,7 @@ function ContactDialog(props) {
 						.string()
 						.matches(/^[0-9]+$/, 'Must be only digits')
 						.min(13, 'Minimum 13 digits')
-						.max(13, 'Maximum 13 digits')
+						.max(13, 'Maximum 13 digits');
 				}
 				return yup
 					.string()
@@ -230,6 +230,22 @@ function ContactDialog(props) {
 					})
 					.nullable()
 					.optional();
+			}),
+
+			email: yup.string().when('email', value => {
+				if (value) {
+					return yup.string().email();
+				}
+				return yup
+					.string()
+					.transform((value, originalValue) => {
+						if (!value) {
+							return null;
+						}
+						return originalValue;
+					})
+					.nullable()
+					.optional();
 			})
 
 			// meter_phase: yup.string().required('Required').max(10, 'Phase must not be greater than 10 characters')
@@ -239,7 +255,8 @@ function ContactDialog(props) {
 			['cnic', 'cnic'],
 			['company', 'company'],
 			['current_reading', 'current_reading'],
-			['meter_number', 'meter_number']
+			['meter_number', 'meter_number'],
+			['email', 'email']
 		]
 	);
 
@@ -492,6 +509,8 @@ function ContactDialog(props) {
 									id="email"
 									variant="outlined"
 									fullWidth
+									error={!!errors.email}
+									helperText={errors?.email?.message}
 								/>
 							)}
 						/>

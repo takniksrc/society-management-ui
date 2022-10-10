@@ -31,7 +31,7 @@ function AllCustomersHead(props) {
 					name: newCustomer?.name,
 					property_size: newCustomer?.property_size?.name,
 					property_size_id: newCustomer?.property_size?.id,
-                    
+
 					property_type: newCustomer?.property_type?.name,
 					property_type_id: newCustomer?.property_type?.id,
 
@@ -48,7 +48,6 @@ function AllCustomersHead(props) {
 					sector: newCustomer?.address?.sector_id,
 					block: newCustomer?.address?.block_id,
 					street_address: newCustomer?.address?.street_address
-					
 				};
 			}),
 		[customersFromServer]
