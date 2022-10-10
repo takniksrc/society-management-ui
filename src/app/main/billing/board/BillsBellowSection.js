@@ -146,7 +146,7 @@ function BillsBellowSection(props) {
 				// 		variant: 'error' //success error info warning null
 				// 	})
 				// );
-				alert('Error while generating');
+				alert('Error while uploading');
 			});
 	};
 
