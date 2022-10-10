@@ -115,12 +115,11 @@ function ContactDialog(props) {
 		meter_status: '',
 		meter_phase: '',
 		meter_type: '',
-		company: 'sms', // TODO
+		company: '', // TODO
 		sector: '',
-		block: 'A',
+		block: '',
 		street_address: '',
-		current_reading: '',
-		company: ''
+		current_reading: ''
 	};
 
 	/**
@@ -129,38 +128,97 @@ function ContactDialog(props) {
 	const schema = yup.object().shape(
 		{
 			name: yup.string().required('You must enter a name').max(60, 'Maximum 60 digits'),
-			current_reading: yup
-				.string()
-				// .required('You must enter a Reading')
-				.matches(/^[0-9]+$/, 'Must be only digits'),
-			// company: yup.string().required('You must enter a Company Name'),
 			street_address: yup.string().required('You must enter address').max(30, 'Maximum 30 digits'),
 			reference_number: yup
 				.string()
-				// .required('Required')
-				.matches(/^[0-9]+$/, 'Must be only digits')
-				.min(1, 'Minimum 1 digits')
-				.max(15, 'Maximum 15 digits'),
-
-			cnic: yup
-				.string()
-				.required('Required')
-				.matches(/^[0-9]+$/, 'Must be only digits')
-				.min(13, 'Minimum 13 digits')
-				.max(13, 'Maximum 13 digits'),
-
-			meter_number: yup
-				.string()
 				.required('Required')
 				.matches(/^[0-9]+$/, 'Must be only digits')
 				.min(1, 'Minimum 1 digits')
 				.max(15, 'Maximum 15 digits'),
+
+			meter_number: yup.string().when('meter_number', value => {
+				if (value) {
+					return yup
+						.string()
+						.min(1, 'Minimum 1 digits')
+						.max(15, 'Maximum 15 digits')
+						.matches(/^[0-9]+$/, 'Must be only digits');
+				}
+				return yup
+					.string()
+					.transform((value, originalValue) => {
+						if (!value) {
+							return null;
+						}
+						return originalValue;
+					})
+					.nullable()
+					.optional();
+			}),
+			block: yup.string().required('Must enter block'),
+			customer_type: yup.string().required('Must enter customer type'),
+			property_type: yup.string().required('Must enter property type'),
+			property_size: yup.string().required('Must enter property size'),
+			sector: yup.string().required('Must enter sector'),
 
 			// phone_number: yup.string(),
 
 			phone_number: yup.string().when('phone_number', value => {
 				if (value) {
-					return yup.string().min(5, 'fasdfasd').max(255, 'asdfas');
+					return yup
+						.string()
+						.matches(/^[0-9]+$/, 'Must be only digits')
+						.min(11, 'Minimum 11 digits')
+						.max(11, 'Maximum 11 digits')
+				}
+				return yup
+					.string()
+					.transform((value, originalValue) => {
+						if (!value) {
+							return null;
+						}
+						return originalValue;
+					})
+					.nullable()
+					.optional();
+			}),
+			cnic: yup.string().when('cnic', value => {
+				if (value) {
+					return yup
+						.string()
+						.matches(/^[0-9]+$/, 'Must be only digits')
+						.min(13, 'Minimum 13 digits')
+						.max(13, 'Maximum 13 digits')
+				}
+				return yup
+					.string()
+					.transform((value, originalValue) => {
+						if (!value) {
+							return null;
+						}
+						return originalValue;
+					})
+					.nullable()
+					.optional();
+			}),
+			company: yup.string().when('company', value => {
+				if (value) {
+					return yup.string().max(50, 'Maximum 50 digits');
+				}
+				return yup
+					.string()
+					.transform((value, originalValue) => {
+						if (!value) {
+							return null;
+						}
+						return originalValue;
+					})
+					.nullable()
+					.optional();
+			}),
+			current_reading: yup.string().when('current_reading', value => {
+				if (value) {
+					return yup.string().matches(/^[0-9]+$/, 'Must be only digits');
 				}
 				return yup
 					.string()
@@ -176,7 +234,13 @@ function ContactDialog(props) {
 
 			// meter_phase: yup.string().required('Required').max(10, 'Phase must not be greater than 10 characters')
 		},
-		[['phone_number', 'phone_number']]]
+		[
+			['phone_number', 'phone_number'],
+			['cnic', 'cnic'],
+			['company', 'company'],
+			['current_reading', 'current_reading'],
+			['meter_number', 'meter_number']
+		]
 	);
 
 	const { control, watch, reset, handleSubmit, formState, getValues, register, setValue } = useForm({
@@ -338,8 +402,8 @@ function ContactDialog(props) {
 									label="Reference Number"
 									id="reference_number"
 									variant="outlined"
-									type="number"
 									fullWidth
+									required
 									error={!!errors.reference_number}
 									helperText={errors?.reference_number?.message}
 								/>
@@ -407,7 +471,7 @@ function ContactDialog(props) {
 									variant="outlined"
 									type="tel"
 									fullWidth
-									//error={!!errors.phone_number}
+									error={!!errors.phone_number}
 									helperText={errors?.phone_number?.message}
 								/>
 							)}
@@ -446,6 +510,7 @@ function ContactDialog(props) {
 									label="Address"
 									id="street_address"
 									variant="outlined"
+									required
 									error={!!errors.street_address}
 									helperText={errors?.street_address?.message}
 									fullWidth
@@ -456,7 +521,7 @@ function ContactDialog(props) {
 							<Icon color="action">location_city</Icon>
 						</div>
 						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
-							<InputLabel htmlFor="category-label-placeholder"> Blocks </InputLabel>
+							<InputLabel htmlFor="block"> Blocks * </InputLabel>
 							<Select
 								value={block}
 								onChange={handleBlock}
@@ -464,9 +529,7 @@ function ContactDialog(props) {
 								inputProps={register('block', {
 									required: 'Please enter block'
 								})}
-								input={
-									<OutlinedInput labelWidth={'category'.length * 9} id="category-label-placeholder" />
-								}
+								input={<OutlinedInput labelWidth={'category'.length * 9} id="block" />}
 							>
 								{configurationsData?.blocks?.map(category => (
 									<MenuItem value={category.id} key={category.id}>
@@ -481,7 +544,7 @@ function ContactDialog(props) {
 							<Icon color="action">people_alt</Icon>
 						</div>
 						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
-							<InputLabel htmlFor="category-label-placeholder"> Customer Type </InputLabel>
+							<InputLabel htmlFor="category-label-placeholder"> Customer Type *</InputLabel>
 							<Select
 								value={customerType}
 								onChange={handleCustomerType}
@@ -489,9 +552,7 @@ function ContactDialog(props) {
 								inputProps={register('customer_type', {
 									required: 'Please enter customer type'
 								})}
-								input={
-									<OutlinedInput labelWidth={'category'.length * 9} id="category-label-placeholder" />
-								}
+								input={<OutlinedInput labelWidth={'category'.length * 9} id="customer_type" />}
 							>
 								{customerTypes?.map(category => (
 									<MenuItem value={category.id} key={category.id}>
@@ -506,7 +567,7 @@ function ContactDialog(props) {
 							<Icon color="action">home_work</Icon>
 						</div>
 						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
-							<InputLabel htmlFor="category-label-placeholder"> Property Type </InputLabel>
+							<InputLabel htmlFor="category-label-placeholder"> Property Type *</InputLabel>
 							<Select
 								value={propertyType}
 								onChange={handlePropertyType}
@@ -517,7 +578,7 @@ function ContactDialog(props) {
 									<OutlinedInput
 										labelWidth={'category'.length * 9}
 										name="property_type"
-										id="category-label-placeholder"
+										id="property_type"
 									/>
 								}
 							>
@@ -532,7 +593,7 @@ function ContactDialog(props) {
 							<Icon color="action">home_work</Icon>
 						</div>
 						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
-							<InputLabel htmlFor="category-label-placeholder"> Property Size </InputLabel>
+							<InputLabel htmlFor="category-label-placeholder"> Property Size *</InputLabel>
 							<Select
 								value={propertySize}
 								onChange={handleProperty}
@@ -543,7 +604,7 @@ function ContactDialog(props) {
 									<OutlinedInput
 										labelWidth={'category'.length * 9}
 										name="property_size"
-										id="category-label-placeholder"
+										id="property_size"
 									/>
 								}
 							>
@@ -675,13 +736,7 @@ function ContactDialog(props) {
 								inputProps={register('sector', {
 									required: 'Please enter sector'
 								})}
-								input={
-									<OutlinedInput
-										labelWidth={'category'.length * 9}
-										name="sector"
-										id="category-label-placeholder"
-									/>
-								}
+								input={<OutlinedInput labelWidth={'category'.length * 9} name="sector" id="sector" />}
 							>
 								{configurationsData?.sectors?.map(category => (
 									<MenuItem value={category.id} key={category.id}>

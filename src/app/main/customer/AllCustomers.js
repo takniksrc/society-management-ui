@@ -47,7 +47,7 @@ const AllCustomers = ({ columns, data, onRowClick }) => {
 			columns,
 			data,
 			initialState: {
-				hiddenColumns: ['reference_number', 'property_size_id', 'property_type_id', 'meter_company']
+				hiddenColumns: ['reference_number', 'property_size_id', 'property_type_id', 'company']
 			},
 			autoResetPage: true
 		},
@@ -87,11 +87,18 @@ const AllCustomers = ({ columns, data, onRowClick }) => {
 			]);
 		}
 	);
-	const handleChangePage = (event, newPage) => {
-		console.log('newPage', newPage);
-		dispatch(getCustomerData(newPage));
+	// const handleChangePage = (event, newPage) => {
+	// 	console.log('newPage', newPage);
+	// 	dispatch(getCustomerData(newPage));
 
-		// gotoPage(newPage);
+	// 	// gotoPage(newPage);
+	// };
+
+	// const handleChangeRowsPerPage = event => {
+	// 	setPageSize(Number(event.target.value));
+	// };
+	const handleChangePage = (event, newPage) => {
+		gotoPage(newPage);
 	};
 
 	const handleChangeRowsPerPage = event => {
@@ -156,11 +163,11 @@ const AllCustomers = ({ columns, data, onRowClick }) => {
 				classes={{
 					root: 'flex-shrink-0 border-t-1'
 				}}
-				rowsPerPageOptions={0}
-				colSpan={0}
-				count={meta?.last_page}
-				rowsPerPage={meta?.current_page}
-				page={meta?.current_page}
+				rowsPerPageOptions={[5, 10, 25, { label: 'All', value: data.length + 1 }]}
+				colSpan={5}
+				count={data.length}
+				rowsPerPage={pageSize}
+				page={pageIndex}
 				SelectProps={{
 					inputProps: { 'aria-label': 'rows per page' },
 					native: false

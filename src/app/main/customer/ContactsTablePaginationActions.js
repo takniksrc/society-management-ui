@@ -5,14 +5,13 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import { useTheme } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
 
 const ContactsTablePaginationActions = props => {
 	const theme = useTheme();
 	const { count, page, rowsPerPage, onChangePage } = props;
 
 	const handleFirstPageButtonClick = event => {
-		onChangePage(event, 1);
+		onChangePage(event, 0);
 	};
 
 	const handleBackButtonClick = event => {
@@ -24,7 +23,7 @@ const ContactsTablePaginationActions = props => {
 	};
 
 	const handleLastPageButtonClick = event => {
-		onChangePage(event, Math.max(1, Math.ceil(count / rowsPerPage)));
+		onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
 	};
 
 	return (
