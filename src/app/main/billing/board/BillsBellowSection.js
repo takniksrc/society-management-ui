@@ -134,11 +134,10 @@ function BillsBellowSection(props) {
 				}
 				console.log(JSON.stringify(response));
 			})
-			.catch(function (error) {
-
+			.catch(function (response) {
 				dispatch(
 					showMessage({
-						message: 'Error while uploading file', //text or html
+						message: response.data.message, //text or html
 						autoHideDuration: 6000, //ms
 						anchorOrigin: {
 							vertical: 'top', //top bottom
