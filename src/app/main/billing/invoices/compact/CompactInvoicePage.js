@@ -487,8 +487,17 @@ function CompactInvoicePage(props) {
 																		height: '-webkit-fill-available',
 																		width: '-webkit-fill-available'
 																	}}
-																	src={BillsImage}
-																	alt="logo"
+																	// src={BillsImage}
+
+																	src={
+																		bill?.reading_snapshot !== null
+																			? `http://localhost:8000/${bill?.reading_snapshot}`
+																			: BillsImage
+																	}
+																	// if (row.original.meter_snapshot === null) {
+																	// 	return <Typography className='text-red-800'>No Image Found</Typography>;
+																	// }
+																	alt="billImage"
 																/>
 															</div>
 															<div className="grid grid-cols-1">
