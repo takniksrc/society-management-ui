@@ -51,9 +51,9 @@ function ContactDialog(props) {
 	console.log('propertyTypes inside contact : ', propertyTypes);
 	console.log('customerTypes inside contact: ', customerTypes);
 
-	const [customerType, setCustomerType] = useState('');
+	const [customerType, setCustomerType] = useState('Residential');
 	const [sector, setSector] = useState('');
-	const [block, setBlock] = useState('A');
+	const [block, setBlock] = useState('');
 
 	const [propertyType, setPropertyType] = useState('');
 	const [propertySize, setPropertySize] = useState('');
@@ -130,13 +130,11 @@ function ContactDialog(props) {
 		{
 			name: yup.string().required('You must enter a name').max(60, 'Maximum 60 digits'),
 			street_address: yup.string().required('You must enter address').max(30, 'Maximum 30 digits'),
-			reference_number: yup
-				.string()
-				.required('Required')
-				.matches(/^[0-9]+$/, 'Must be only digits')
-				.min(1, 'Minimum 1 digits')
-				.max(15, 'Maximum 15 digits'),
-
+			reference_number: yup.string(),
+			// .required('Required')
+			// .matches(/^[0-9]+$/, 'Must be only digits')
+			// .min(1, 'Minimum 1 digits')
+			// .max(15, 'Maximum 15 digits')
 			meter_number: yup.string().when('meter_number', value => {
 				if (value) {
 					return yup
@@ -330,16 +328,27 @@ function ContactDialog(props) {
 				...contactDialog.data,
 				id: FuseUtils.generateGUID()
 			});
-			setCustomerType('');
-			setPropertyType('');
-			setPropertySize('');
-			setMeterPhase('');
-			setMeterStatus('');
-			setBlock('');
-			setSector('');
-			setMeterType(
-				contactDialog?.data?.meter_type?.charAt(0).toUpperCase() + contactDialog?.data?.meter_type?.slice(1)
-			);
+			setCustomerType('fd034548-3ce3-4fdd-9c46-35e725efeed3');
+			setValue('customer_type', 'fd034548-3ce3-4fdd-9c46-35e725efeed3');
+
+			setPropertyType('c1e2f25a-b8eb-49a5-984c-eb4b18ece4e1');
+			setValue('property_type', 'c1e2f25a-b8eb-49a5-984c-eb4b18ece4e1');
+
+			setPropertySize('53232750-ae62-476d-aa54-ed7c43ae42dd');
+			setValue('property_size', '53232750-ae62-476d-aa54-ed7c43ae42dd');
+
+			setMeterPhase('Single Phase');
+			setMeterStatus('Active');
+			setValue('meter_phase', 'Single Phase');
+			setValue('meter_status', 'Active');
+			setBlock('e18efd66-d038-4bba-bf65-b43775dac0d0');
+			setValue('block', 'e18efd66-d038-4bba-bf65-b43775dac0d0');
+
+			setSector('2a2a0e8d-7572-4135-8ff0-d658e074ea59');
+			setValue('sector', '2a2a0e8d-7572-4135-8ff0-d658e074ea59');
+
+			setMeterType('Normal');
+			setValue('meter_type', 'Normal');
 		}
 	}, [contactDialog.data, contactDialog.type, reset]);
 
@@ -510,8 +519,6 @@ function ContactDialog(props) {
 									type="email"
 									id="email"
 									variant="outlined"
-									error={!!errors.email}
-									helperText={errors?.email?.message}
 									fullWidth
 									error={!!errors.email}
 									helperText={errors?.email?.message}
@@ -555,7 +562,11 @@ function ContactDialog(props) {
 								input={<OutlinedInput labelWidth={'category'.length * 9} id="block" />}
 							>
 								{configurationsData?.blocks?.map(category => (
-									<MenuItem value={category.id} key={category.id}>
+									<MenuItem
+										value={category.id}
+										key={category.id}
+										selected="af17dc18-213d-40d1-80ea-8e6db9c2b67b"
+									>
 										{category.name}
 									</MenuItem>
 								))}
@@ -752,7 +763,7 @@ function ContactDialog(props) {
 							<Icon color="action">people_alt</Icon>
 						</div>
 						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
-							<InputLabel htmlFor="category-label-placeholder"> Sector</InputLabel>
+							<InputLabel htmlFor="category-label-placeholder"> Sector *</InputLabel>
 							<Select
 								value={sector}
 								onChange={handleSector}
