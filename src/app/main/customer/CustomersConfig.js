@@ -19,15 +19,7 @@ const CustomersConfig = {
 		{
 			path: '/customers',
 			component: Customers
-			// component: () => <Redirect to="/userss/all" />
-
 		}
-        // ,{
-		// 	path: '/users',
-		// 	// component: Customers
-		// 	component: () => <Redirect to="/userss/all" />
-
-		// }
 	]
 };
 

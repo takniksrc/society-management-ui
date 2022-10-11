@@ -15,7 +15,6 @@ const navigationConfig = [
 		translate: 'APPLICATIONS',
 		type: 'group',
 		icon: 'apps',
-		// auth: authRoles.accountant,
 		children: [
 			{
 				id: 'profile',

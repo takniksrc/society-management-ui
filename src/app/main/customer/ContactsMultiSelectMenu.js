@@ -12,7 +12,7 @@ import { removeUsers } from './store/newCustomersSlice';
 function ContactsMultiSelectMenu(props) {
 	const dispatch = useDispatch();
 	const { selectedContactIds } = props;
-	console.log('I am selectedContactIds',selectedContactIds)
+	console.log('I am selectedContactIds', selectedContactIds);
 
 	const [anchorEl, setAnchorEl] = useState(null);
 

@@ -52,7 +52,7 @@ export const addCustomer = createAsyncThunk('customers/addCustomer', async (cont
 			);
 		}
 
-		dispatch(getCustomers());
+		dispatch(getCustomerData());
 		return data;
 	} catch (error) {
 		console.log('error:', error.response);
@@ -69,7 +69,7 @@ export const addCustomer = createAsyncThunk('customers/addCustomer', async (cont
 				})
 			);
 		}
-		dispatch(getCustomers());
+		dispatch(getCustomerData());
 		return error.response.data;
 	}
 });
@@ -112,11 +112,11 @@ export const updateCustomer = createAsyncThunk('customers/updateCustomer', async
 				})
 			);
 		}
-		dispatch(getCustomers());
+		dispatch(getCustomerData());
 		return data;
 	} catch (error) {
 		console.log('error:', error.response);
-		if (error.response.status) {
+		if (error.response.status !== 400) {
 			dispatch(
 				showMessage({
 					message: error.response.data.message, //text or html
@@ -128,8 +128,11 @@ export const updateCustomer = createAsyncThunk('customers/updateCustomer', async
 					variant: 'error' //success error info warning null
 				})
 			);
+		} else if (error.response.status !== '400') {
+			alert('Validation Error Occurred');
 		}
-		dispatch(getCustomers());
+
+		dispatch(getCustomerData());
 		return error.response.data;
 	}
 });
@@ -183,10 +186,6 @@ export const removeUsers = createAsyncThunk('customers/removeUsers', async (cont
 
 	return contactIds;
 });
-
-
-
-
 
 const contactsAdapter = createEntityAdapter({});
 

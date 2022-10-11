@@ -36,7 +36,6 @@ import {
 	closeNewContactDialog,
 	closeEditContactDialog
 } from './store/newCustomersSlice';
-import { Alert } from '@material-ui/lab';
 
 function ContactDialog(props) {
 	const dispatch = useDispatch();
@@ -370,14 +369,13 @@ function ContactDialog(props) {
 		} else {
 			dispatch(updateCustomer({ ...contactDialog.data, ...data }));
 		}
-		closeComposeDialog();
+		// closeComposeDialog();
 	}
 
 	// /**
 	//  * Remove Event
 	//  */
 	function handleRemove() {
-	
 		dispatch(removeCustomer(id));
 		closeComposeDialog();
 	}
@@ -844,7 +842,6 @@ function ContactDialog(props) {
 			</form>
 		</Dialog>
 	);
-	
 }
 
 export default ContactDialog;
