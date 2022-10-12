@@ -47,11 +47,13 @@ function ContactDialog(props) {
 	const configurationsData = useSelector(({ configSlice }) => configSlice);
 	console.log('configSlice inside contact : ', configurationsData);
 	console.log('contactDialog inside contact : ', contactDialog);
+	// console.log('block inside contact : ', configurationsData?.blocks[0]?.id);
 
 	console.log('propertyTypes inside contact : ', propertyTypes);
 	console.log('customerTypes inside contact: ', customerTypes);
+	console.log('propertySize inside contact: ', propertySizes);
 
-	const [customerType, setCustomerType] = useState('Residential');
+	const [customerType, setCustomerType] = useState('');
 	const [sector, setSector] = useState('');
 	const [block, setBlock] = useState('');
 
@@ -130,11 +132,12 @@ function ContactDialog(props) {
 		{
 			name: yup.string().required('You must enter a name').max(60, 'Maximum 60 digits'),
 			street_address: yup.string().required('You must enter address').max(30, 'Maximum 30 digits'),
-			reference_number: yup.string(),
-			// .required('Required')
-			// .matches(/^[0-9]+$/, 'Must be only digits')
-			// .min(1, 'Minimum 1 digits')
-			// .max(15, 'Maximum 15 digits')
+			reference_number: yup
+				.string()
+				.required('Required')
+				.matches(/^[0-9]+$/, 'Must be only digits')
+				.min(1, 'Minimum 1 digits')
+				.max(15, 'Maximum 15 digits'),
 			meter_number: yup.string().when('meter_number', value => {
 				if (value) {
 					return yup
@@ -328,24 +331,24 @@ function ContactDialog(props) {
 				...contactDialog.data,
 				id: FuseUtils.generateGUID()
 			});
-			setCustomerType('fd034548-3ce3-4fdd-9c46-35e725efeed3');
-			setValue('customer_type', 'fd034548-3ce3-4fdd-9c46-35e725efeed3');
+			setCustomerType('c4010c54-84cc-4cfb-855c-34baba3a23e7');
+			setValue('customer_type', 'c4010c54-84cc-4cfb-855c-34baba3a23e7');
 
-			setPropertyType('c1e2f25a-b8eb-49a5-984c-eb4b18ece4e1');
-			setValue('property_type', 'c1e2f25a-b8eb-49a5-984c-eb4b18ece4e1');
+			setPropertyType('9d047174-c72f-4042-9b6d-e995a6075b1f');
+			setValue('property_type', '9d047174-c72f-4042-9b6d-e995a6075b1f');
 
-			setPropertySize('53232750-ae62-476d-aa54-ed7c43ae42dd');
-			setValue('property_size', '53232750-ae62-476d-aa54-ed7c43ae42dd');
+			setPropertySize('2883cc33-a259-495d-993f-58a1d0a0d37a');
+			setValue('property_size', '2883cc33-a259-495d-993f-58a1d0a0d37a');
 
 			setMeterPhase('Single Phase');
 			setMeterStatus('Active');
 			setValue('meter_phase', 'Single Phase');
 			setValue('meter_status', 'Active');
-			setBlock('e18efd66-d038-4bba-bf65-b43775dac0d0');
-			setValue('block', 'e18efd66-d038-4bba-bf65-b43775dac0d0');
+			setBlock('9277b430-79aa-4649-82d7-532e56dc209d');
+			setValue('block', '9277b430-79aa-4649-82d7-532e56dc209d');
 
-			setSector('2a2a0e8d-7572-4135-8ff0-d658e074ea59');
-			setValue('sector', '2a2a0e8d-7572-4135-8ff0-d658e074ea59');
+			setSector('1ea23d71-c0f6-4a22-a525-af3576bc36b5');
+			setValue('sector', '1ea23d71-c0f6-4a22-a525-af3576bc36b5');
 
 			setMeterType('Normal');
 			setValue('meter_type', 'Normal');
