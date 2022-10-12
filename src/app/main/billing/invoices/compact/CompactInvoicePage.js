@@ -23,7 +23,7 @@ import Barcode from '../../../../../assets/BillsIcon/barcode.svg';
 import BillsImage from '../../../../../assets/BillsIcon/image.jpg';
 import BillsCutImage from '../../../../../assets/BillsIcon/Sissor.png';
 import DetailsImage from '../../../../../assets/BillsIcon/bill.png';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import billingBlocksSlice from '../../store/billingBlocksSlice';
 
@@ -83,7 +83,7 @@ function CompactInvoicePage(props) {
 		currency: 'PKR',
 		minimumFractionDigits: 2
 	});
-
+	const history = useHistory();
 	return (
 		<>
 			{!isPrintReady && (
@@ -105,18 +105,22 @@ function CompactInvoicePage(props) {
 					<PrintIcon /> {isPrintReady ? ' Preparing to Print... ' : 'Print Bill'}
 				</Button>
 			)}
-			{!isPrintReady && (
-				<Button
-					id="print-button"
-					style={{ position: 'absolute', top: 10, left: 10 }}
-					variant="contained"
-					color="secondary"
-					to={`billing/boards/${routeParams.boardId}/billing`}
-					component={Link}
+
+			<Button
+				id="print-button"
+				style={{ position: 'absolute', top: 10, left: 10 }}
+				variant="contained"
+				color="secondary"
+				onClick={() => history.goBack()}
+				component={Link}
+			>
+				<Icon
+				// onClick={() => history.goBack()}
 				>
-					<Icon>{theme.direction === 'ltr' ? 'arrow_back' : 'arrow_forward'}</Icon>
-				</Button>
-			)}
+					{theme.direction === 'ltr' ? 'arrow_back' : 'arrow_forward'}
+				</Icon>
+			</Button>
+
 			<div
 				id="section-to-print"
 				className={clsx(classes.root, 'flex-grow flex-shrink-0 p-0 sm:p-64 print:p-0 overflow-auto ')}
