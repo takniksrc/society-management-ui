@@ -1,6 +1,7 @@
 import FuseUtils from '@fuse/utils/FuseUtils';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
+import { browserHistory } from 'react-router';
 // import { instance } from 'app/services/jwtService/jwtService';
 /* eslint-disable camelcase */
 
@@ -9,11 +10,27 @@ export const instance = axios.create({
 	// baseURL: 'http://localhost:8000'
 });
 
-// export default instance;
+instance.interceptors.response.use(
+	config => {
+		console.info('Hey', config);
+
+		return config;
+	},
+	error => {
+		console.log('Hay ', error.response.status);
+		if (error.response.status === 401) {
+			console.log('401 dettected');
+			window.location.replace('/login');
+			//alert("Please Login again to access the data!")
+		}
+
+		return Promise.reject(error);
+	}
+);
 
 class JwtService extends FuseUtils.EventEmitter {
 	init() {
-		this.setInterceptors();
+		
 		this.handleAuthentication();
 	}
 
@@ -26,7 +43,8 @@ class JwtService extends FuseUtils.EventEmitter {
 				return new Promise((resolve, reject) => {
 					if (err.response.status === 401 && err.config && !err.config.__isRetryRequest) {
 						// if you ever get an unauthorized response, logout the user
-						this.emit('onAutoLogout', 'Invalid access_token');
+						// alert("HERE")
+						//	this.emit('onAutoLogout', 'Invalid access_token');
 						this.setSession(null);
 					}
 					throw err;
@@ -140,7 +158,6 @@ class JwtService extends FuseUtils.EventEmitter {
 	logout = () => {
 		instance.post('/api/logout');
 		this.setSession(null);
-
 	};
 
 	isAuthTokenValid = access_token => {
