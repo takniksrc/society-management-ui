@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles, ThemeProvider, useTheme } from '@material-ui/core/styles';
 import { darken } from '@material-ui/core/styles/colorManipulator';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -12,7 +12,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import Paper from '@material-ui/core/Paper';
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-
+import Icon from '@material-ui/core/Icon';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import PrintIcon from '@material-ui/icons/Print';
@@ -23,7 +23,7 @@ import Barcode from '../../../../../assets/BillsIcon/barcode.svg';
 import BillsImage from '../../../../../assets/BillsIcon/image.jpg';
 import BillsCutImage from '../../../../../assets/BillsIcon/Sissor.png';
 import DetailsImage from '../../../../../assets/BillsIcon/bill.png';
-
+import { Link, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import billingBlocksSlice from '../../store/billingBlocksSlice';
 
@@ -72,6 +72,9 @@ function CompactInvoicePage(props) {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const [isPrintReady, setIsPrintReady] = useState(false);
+	const theme = useTheme();
+	const routeParams = useParams();
+	console.log('i am routeParams in Compact', routeParams);
 
 	console.log('type', bills);
 
@@ -100,6 +103,18 @@ function CompactInvoicePage(props) {
 					}}
 				>
 					<PrintIcon /> {isPrintReady ? ' Preparing to Print... ' : 'Print Bill'}
+				</Button>
+			)}
+			{!isPrintReady && (
+				<Button
+					id="print-button"
+					style={{ position: 'absolute', top: 10, left: 10 }}
+					variant="contained"
+					color="secondary"
+					to={`billing/boards/${routeParams.boardId}/billing`}
+					component={Link}
+				>
+					<Icon>{theme.direction === 'ltr' ? 'arrow_back' : 'arrow_forward'}</Icon>
 				</Button>
 			)}
 			<div
