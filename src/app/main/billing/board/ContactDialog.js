@@ -163,7 +163,7 @@ function ContactDialog(props) {
 				discount: parseInt(data.discount)
 			})
 			.then(function (response) {
-				console.log('response', JSON.stringify(response.data));
+				console.log('response after discount', JSON.stringify(response.data));
 				dispatch(
 					showMessage({
 						message: response.data.message, //text or html
@@ -175,11 +175,12 @@ function ContactDialog(props) {
 						variant: 'success' //success error info warning null
 					})
 				);
+				dispatch(getBillData(contactDialog?.data?.id));
 			})
 			.catch(function (error) {
 				console.log(error);
 			});
-		dispatch(getBillData(contactDialog?.data?.id));
+		// setTimeout(function () {}, 1000);
 	};
 
 	return (
