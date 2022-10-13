@@ -47,6 +47,12 @@ function AllUsersHead(props) {
 				sortable: true
 			},
 			{
+				Header: 'Status',
+				accessor: 'rise_fall_status',
+				className: 'font-medium',
+				sortable: false
+			},
+			{
 				Header: 'Refference Number',
 				accessor: 'refference_number',
 				className: 'font-medium',
