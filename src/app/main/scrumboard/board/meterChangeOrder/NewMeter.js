@@ -137,7 +137,7 @@ function NewMeter(props) {
 		return (
 			<div className="flex flex-1 items-center justify-center h-full">
 				<Typography color="textSecondary" variant="h5">
-					There are no Reports!
+				There are no Reports!
 				</Typography>
 			</div>
 		);
