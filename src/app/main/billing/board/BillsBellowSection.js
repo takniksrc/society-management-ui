@@ -166,7 +166,7 @@ function BillsBellowSection(props) {
 			},
 			{
 				Header: 'Meter Number',
-				accessor: 'meter_number',
+				accessor: 'meter.meter_number',
 				sortable: true
 			},
 			{
@@ -181,7 +181,7 @@ function BillsBellowSection(props) {
 			},
 			{
 				Header: 'Meter Type',
-				accessor: 'meter_type',
+				accessor: 'meter.meter_type',
 				sortable: true
 			},
 			{

@@ -28,7 +28,7 @@ jobs:
           yarn install
       - name: Creating Optizmized Build for staging.
         run: |
-          DISABLE_ESLINT_PLUGIN=true yarn run build
+          DISABLE_ESLINT_PLUGIN=true CI=false yarn run build
       - name: Running Unit Tests
         run: |
           # npm run test

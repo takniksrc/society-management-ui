@@ -66,7 +66,7 @@ function ContactDialog(props) {
 		}
 	}))(TableRow);
 
-	const { control, watch, reset, handleSubmit, formState, getValues, register } = useForm({
+	const { control, watch, reset, handleSubmit, formState, getValues, register, setValue } = useForm({
 		mode: 'onChange',
 		defaultValuesDiscount
 	});
@@ -78,6 +78,7 @@ function ContactDialog(props) {
 		handleSubmit: handleSubmitPaidValues,
 		formState: formStatePaidValues,
 		getValues: getValuesPaidValues,
+		setValue: setPauidValues,
 		register: registerPaidValues
 	} = useForm({
 		mode: 'onChange',
@@ -99,6 +100,8 @@ function ContactDialog(props) {
 			...defaultValuesDiscount,
 			current_reading: contactDialog.data?.current_reading
 		});
+
+		setValue('discount', contactDialog.data?.discount);
 
 		resetPaidValues({
 			...defaultValuesPaidAmount,
@@ -311,7 +314,7 @@ function ContactDialog(props) {
 								</div>
 							</Card>
 						</form>
-						<Card className="w-full" style={{ padding: '2rem' }}>
+						<Card className="w-full" style={{ padding: '2rem', height: '100%' }}>
 							<Typography color="error">
 								<b>Due Date: </b>
 								{contactDialog?.data?.due_date}
