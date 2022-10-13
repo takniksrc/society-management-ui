@@ -65,7 +65,7 @@ function ContactDialog(props) {
 
 	useDeepCompareEffect(() => {
 		dispatch(getCustomerTypes());
-		// dispatch(getConfigurations());
+		dispatch(getConfigurations());
 	}, [dispatch]);
 
 	const handleCustomerType = event => {
@@ -76,6 +76,14 @@ function ContactDialog(props) {
 
 	const handleBlock = event => {
 		setBlock(event.target.value);
+
+		const selectedBlock = configurationsData?.blocks?.filter(item => {
+			console.log(item);
+			return item.id === event.target.value;
+		});
+		console.log('showMeter', selectedBlock ? selectedBlock[0].is_electricity : '');
+		setValue('is_electricity', selectedBlock ? selectedBlock[0].is_electricity : '');
+
 		// console.log('clicked', customerType);
 	};
 	const handleSector = event => {
@@ -122,7 +130,8 @@ function ContactDialog(props) {
 		sector: '',
 		block: '',
 		street_address: '',
-		current_reading: ''
+		current_reading: 0,
+		is_electricity: ''
 	};
 
 	/**
@@ -139,9 +148,10 @@ function ContactDialog(props) {
 				.min(1, 'Minimum 1 digits')
 				.max(15, 'Maximum 15 digits'),
 			meter_number: yup.string().when('meter_number', value => {
-				if (value) {
+				if (isElectricServiceAvaialable) {
 					return yup
 						.string()
+						.required()
 						.min(1, 'Minimum 1 digits')
 						.max(15, 'Maximum 15 digits')
 						.matches(/^[0-9]+$/, 'Must be only digits');
@@ -149,7 +159,7 @@ function ContactDialog(props) {
 				return yup
 					.string()
 					.transform((value, originalValue) => {
-						if (!value) {
+						if (!isElectricServiceAvaialable) {
 							return null;
 						}
 						return originalValue;
@@ -204,13 +214,13 @@ function ContactDialog(props) {
 					.optional();
 			}),
 			company: yup.string().when('company', value => {
-				if (value) {
-					return yup.string().max(50, 'Maximum 50 digits');
+				if (isElectricServiceAvaialable) {
+					return yup.string().required('Required').max(50, 'Maximum 50 digits');
 				}
 				return yup
 					.string()
 					.transform((value, originalValue) => {
-						if (!value) {
+						if (!isElectricServiceAvaialable) {
 							return null;
 						}
 						return originalValue;
@@ -219,13 +229,13 @@ function ContactDialog(props) {
 					.optional();
 			}),
 			current_reading: yup.string().when('current_reading', value => {
-				if (value) {
+				if (isElectricServiceAvaialable) {
 					return yup.string().matches(/^[0-9]+$/, 'Must be only digits');
 				}
 				return yup
 					.string()
 					.transform((value, originalValue) => {
-						if (!value) {
+						if (!isElectricServiceAvaialable) {
 							return null;
 						}
 						return originalValue;
@@ -268,6 +278,9 @@ function ContactDialog(props) {
 		resolver: yupResolver(schema)
 	});
 
+	const isElectricServiceAvaialable = watch('is_electricity');
+	console.log('isElectricServiceAvaialable', isElectricServiceAvaialable);
+
 	const { isValid, dirtyFields, errors } = formState;
 
 	const id = watch('id');
@@ -285,6 +298,7 @@ function ContactDialog(props) {
 	// /**
 	//  * Initialize Dialog with Data
 	//  */
+
 	const initDialog = useCallback(() => {
 		/**
 		 * Dialog type: 'edit'
@@ -292,6 +306,15 @@ function ContactDialog(props) {
 		console.log('inCallback', contactDialog.data);
 		if (contactDialog.type === 'edit' && contactDialog.data) {
 			reset({ ...contactDialog.data });
+
+			const selectedBlockUpdate = configurationsData?.blocks?.filter(item => {
+				console.log('item', item);
+				return item.id === contactDialog.data.block;
+			});
+
+			console.log('showMeter in update', selectedBlockUpdate ? selectedBlockUpdate[0].is_electricity : '');
+			setValue('is_electricity', selectedBlockUpdate ? selectedBlockUpdate[0].is_electricity : '');
+
 			console.log('drop down cust id', contactDialog.data.customer_type.id);
 			setCustomerType(contactDialog.data.customer_type.id);
 			setPropertyType(contactDialog.data.property_type_id);
@@ -336,6 +359,8 @@ function ContactDialog(props) {
 				setBlock(data?.payload?.blocks[0]?.id);
 				setValue('block', data?.payload?.blocks[0]?.id);
 
+				setValue('is_electricity', data?.payload?.blocks[0]?.is_electricity);
+
 				setMeterPhase('Single Phase');
 				setMeterStatus('Active');
 				setValue('meter_phase', 'Single Phase');
@@ -350,20 +375,32 @@ function ContactDialog(props) {
 
 			dispatch(getCustomerTypes()).then(data => {
 				console.log('data cutomer', data);
-				setCustomerType(data?.payload[0].id);
-				setValue('customer_type', data?.payload[0].id);
+				if (data.payload) {
+					setCustomerType(data?.payload[0].id);
+					setValue('customer_type', data?.payload[0].id);
 
-				dispatch(getPropertyTypes(data?.payload[0].id)).then(newData => {
-					console.log('data getProperty', newData);
-					setPropertyType(newData.payload[0].id);
-					setValue('property_type', newData.payload[0].id);
+					dispatch(getPropertyTypes(data?.payload[0].id)).then(newData => {
+						if (newData.payload) {
+							console.log('data getProperty', newData);
+							setPropertyType(newData.payload[0].id);
+							setValue('property_type', newData.payload[0].id);
 
-					dispatch(getPropertySizes(newData.payload[0].id)).then(res => {
-						console.log('propertySize', res);
-						setPropertySize(res.payload[0].id);
-						setValue('property_size', res.payload[0].id);
+							dispatch(getPropertySizes(newData.payload[0].id)).then(res => {
+								if (res.payload) {
+									console.log('propertySize', res);
+									setPropertySize(res.payload[0].id);
+									setValue('property_size', res.payload[0].id);
+								} else {
+									console.log('getProperty Size api');
+								}
+							});
+						} else {
+							console.log('get Property Type api issue');
+						}
 					});
-				});
+				} else {
+					console.log('getCustomerType api failed');
+				}
 			});
 
 			setMeterPhase('Single Phase');
@@ -383,27 +420,7 @@ function ContactDialog(props) {
 			initDialog();
 		}
 		return () => {
-			console.log('form has been reset');
-			// reset({
-			// 	id: '',
-			// 	reference_number: '',
-			// 	name: '',
-			// 	cnic: '',
-			// 	phone_number: '',
-			// 	email: '',
-			// 	customer_type: '',
-			// 	property_type: '',
-			// 	property_size: '',
-			// 	meter_number: '',
-			// 	meter_status: '',
-			// 	meter_phase: '',
-			// 	meter_type: '',
-			// 	company: '',
-			// 	sector: '',
-			// 	block: '',
-			// 	street_address: '',
-			// 	current_reading: ''
-			// });
+			console.log('form has been reset when closed');
 
 			setBlock('');
 			setValue('block', '');
@@ -627,13 +644,9 @@ function ContactDialog(props) {
 								})}
 								input={<OutlinedInput labelWidth={'category'.length * 9} id="block" />}
 							>
-								{configurationsData?.blocks?.map(category => (
-									<MenuItem
-										value={category.id}
-										key={category.id}
-										selected="af17dc18-213d-40d1-80ea-8e6db9c2b67b"
-									>
-										{category.name}
+								{configurationsData?.blocks?.map(item => (
+									<MenuItem value={item.id} key={item.id} selected={item.id}>
+										{item.name}
 									</MenuItem>
 								))}
 							</Select>
@@ -716,162 +729,166 @@ function ContactDialog(props) {
 							</Select>
 						</FormControl>
 					</div>
-					<div className="flex">
-						<div className="min-w-48 pt-20">
-							<Icon color="action">dvr</Icon>
-						</div>
-						<Controller
-							control={control}
-							name="meter_number"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									label="Meter Number"
-									id="meter_number"
-									variant="outlined"
-									fullWidth
-									error={!!errors.meter_number}
-									helperText={errors?.meter_number?.message}
-								/>
-							)}
-						/>
-						<div className="min-w-48 pt-20 pl-12">
-							<Icon color="action">hdr_weak</Icon>
-						</div>
-						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
-							<InputLabel htmlFor="category-label-placeholder"> Meter Phase </InputLabel>
-							<Select
-								value={meterPhase}
-								onChange={handleMeterPhase}
-								inputProps={register('meter_phase', {
-									// 	required: 'Please enter meter phase'
-								})}
-								input={
-									<OutlinedInput
-										labelWidth={'category'.length * 9}
-										name="meter_phase"
-										id="category-label-placeholder"
-									/>
-								}
-							>
-								{/* <MenuItem value="all">
-									<em> All </em>
-								</MenuItem> */}
-								{configurationsData?.meter_phases?.map(category => (
-									<MenuItem value={category.name} key={category.name}>
-										{category.name}
-									</MenuItem>
-								))}
-							</Select>
-						</FormControl>
-					</div>
-					<div className="flex">
-						<div className="min-w-48 pt-20">
-							<Icon color="action">dvr</Icon>
-						</div>
-						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
-							<InputLabel htmlFor="category-label-placeholder"> Meter Type </InputLabel>
-							<Select
-								value={meterType}
-								onChange={handleMeterType}
-								inputProps={register('meter_type', {
-									// 	required: 'Please enter meter type'
-								})}
-								input={
-									<OutlinedInput
-										labelWidth={'category'.length * 9}
-										name="meter_type"
-										id="category-label-placeholder"
-									/>
-								}
-							>
-								{configurationsData?.meter_types?.map(category => (
-									<MenuItem value={category.name} key={category.name}>
-										{category.name}
-									</MenuItem>
-								))}
-							</Select>
-						</FormControl>
-						<div className="min-w-48 pt-20 pl-12">
-							<Icon color="action">dvr</Icon>
-						</div>
-						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
-							<InputLabel htmlFor="category-label-placeholder"> Meter Status </InputLabel>
-							<Select
-								value={meterStatus}
-								onChange={handleMeterStatus}
-								inputProps={register('meter_status', {
-									// 	required: 'Please enter meter status'
-								})}
-								input={
-									<OutlinedInput
-										labelWidth={'category'.length * 9}
-										name="meter_status"
-										id="category-label-placeholder"
-									/>
-								}
-							>
-								{/* <MenuItem value="all">
-									<em> All </em>
-								</MenuItem> */}
-								{configurationsData?.meter_statuses?.map(category => (
-									<MenuItem value={category.name} key={category.name}>
-										{category.name}
-									</MenuItem>
-								))}
-							</Select>
-						</FormControl>
-					</div>
 
-					<div className="flex">
-						<div className="min-w-48 pt-20" style={{ marginRight: '-0.5rem' }}>
-							<Icon color="action">home_work</Icon>
-						</div>
-						<Controller
-							control={control}
-							name="company"
-							render={({ field }) => (
-								<TextField
-									{...field}
-									className="mb-24"
-									label="Meter Company"
-									id="company"
-									error={!!errors.company}
-									helperText={errors?.company?.message}
-									variant="outlined"
-									// required
-									fullWidth
+					{!!isElectricServiceAvaialable && (
+						<>
+							<div className="flex">
+								<div className="min-w-48 pt-20">
+									<Icon color="action">dvr</Icon>
+								</div>
+								<Controller
+									control={control}
+									name="meter_number"
+									render={({ field }) => (
+										<TextField
+											{...field}
+											className="mb-24"
+											label="Meter Number"
+											id="meter_number"
+											variant="outlined"
+											fullWidth
+											error={!!errors.meter_number}
+											helperText={errors?.meter_number?.message}
+										/>
+									)}
 								/>
-							)}
-						/>
-					</div>
-					{contactDialog?.type === 'new' ? (
-						<div className="flex">
-							<div className="min-w-48 pt-20" style={{ marginRight: '-0.5rem' }}>
-								<Icon color="action">dvr</Icon>
+								<div className="min-w-48 pt-20 pl-12">
+									<Icon color="action">hdr_weak</Icon>
+								</div>
+								<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
+									<InputLabel htmlFor="category-label-placeholder"> Meter Phase </InputLabel>
+									<Select
+										value={meterPhase}
+										onChange={handleMeterPhase}
+										inputProps={register('meter_phase', {
+											// 	required: 'Please enter meter phase'
+										})}
+										input={
+											<OutlinedInput
+												labelWidth={'category'.length * 9}
+												name="meter_phase"
+												id="category-label-placeholder"
+											/>
+										}
+									>
+										{/* <MenuItem value="all">
+									<em> All </em>
+								</MenuItem> */}
+										{configurationsData?.meter_phases?.map(category => (
+											<MenuItem value={category.name} key={category.name}>
+												{category.name}
+											</MenuItem>
+										))}
+									</Select>
+								</FormControl>
 							</div>
-							<Controller
-								control={control}
-								name="current_reading"
-								render={({ field }) => (
-									<TextField
-										{...field}
-										className="mb-24"
-										label="Current Reading"
-										id="current_reading"
-										error={!!errors.current_reading}
-										helperText={errors?.current_reading?.message}
-										variant="outlined"
-										// required
-										fullWidth
+							<div className="flex">
+								<div className="min-w-48 pt-20">
+									<Icon color="action">dvr</Icon>
+								</div>
+								<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
+									<InputLabel htmlFor="category-label-placeholder"> Meter Type </InputLabel>
+									<Select
+										value={meterType}
+										onChange={handleMeterType}
+										inputProps={register('meter_type', {
+											// 	required: 'Please enter meter type'
+										})}
+										input={
+											<OutlinedInput
+												labelWidth={'category'.length * 9}
+												name="meter_type"
+												id="category-label-placeholder"
+											/>
+										}
+									>
+										{configurationsData?.meter_types?.map(category => (
+											<MenuItem value={category.name} key={category.name}>
+												{category.name}
+											</MenuItem>
+										))}
+									</Select>
+								</FormControl>
+								<div className="min-w-48 pt-20 pl-12">
+									<Icon color="action">dvr</Icon>
+								</div>
+								<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
+									<InputLabel htmlFor="category-label-placeholder"> Meter Status </InputLabel>
+									<Select
+										value={meterStatus}
+										onChange={handleMeterStatus}
+										inputProps={register('meter_status', {
+											// 	required: 'Please enter meter status'
+										})}
+										input={
+											<OutlinedInput
+												labelWidth={'category'.length * 9}
+												name="meter_status"
+												id="category-label-placeholder"
+											/>
+										}
+									>
+										{/* <MenuItem value="all">
+									<em> All </em>
+								</MenuItem> */}
+										{configurationsData?.meter_statuses?.map(category => (
+											<MenuItem value={category.name} key={category.name}>
+												{category.name}
+											</MenuItem>
+										))}
+									</Select>
+								</FormControl>
+							</div>
+
+							<div className="flex">
+								<div className="min-w-48 pt-20" style={{ marginRight: '-0.5rem' }}>
+									<Icon color="action">home_work</Icon>
+								</div>
+								<Controller
+									control={control}
+									name="company"
+									render={({ field }) => (
+										<TextField
+											{...field}
+											className="mb-24"
+											label="Meter Company"
+											id="company"
+											error={!!errors.company}
+											helperText={errors?.company?.message}
+											variant="outlined"
+											// required
+											fullWidth
+										/>
+									)}
+								/>
+							</div>
+							{contactDialog?.type === 'new' ? (
+								<div className="flex">
+									<div className="min-w-48 pt-20" style={{ marginRight: '-0.5rem' }}>
+										<Icon color="action">dvr</Icon>
+									</div>
+									<Controller
+										control={control}
+										name="current_reading"
+										render={({ field }) => (
+											<TextField
+												{...field}
+												className="mb-24"
+												label="Current Reading"
+												id="current_reading"
+												error={!!errors.current_reading}
+												helperText={errors?.current_reading?.message}
+												variant="outlined"
+												// required
+												fullWidth
+											/>
+										)}
 									/>
-								)}
-							/>
-						</div>
-					) : (
-						''
+								</div>
+							) : null}
+						</>
 					)}
+
 					<div className="flex">
 						<div className="min-w-48 pt-20">
 							<Icon color="action">people_alt</Icon>

@@ -3,6 +3,9 @@ import { showMessage } from 'app/store/fuse/messageSlice';
 import firebaseService from 'app/services/firebaseService';
 import jwtService from 'app/services/jwtService';
 import { setUserData } from './userSlice';
+import dist from 'postcss-loader/dist';
+import { getConfigurations } from 'app/fuse-configs/store/configSlice';
+import { getCustomerTypes } from 'app/main/customer/store/customerTypesSlice';
 
 export const submitLogin =
 	({ email, password }) =>
@@ -25,6 +28,9 @@ export const submitLogin =
 						variant: 'success'
 					})
 				);
+
+				dispatch(getConfigurations());
+				dispatch(getCustomerTypes());
 
 				return dispatch(loginSuccess());
 			})

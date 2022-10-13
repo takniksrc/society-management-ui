@@ -12,16 +12,15 @@ export const instance = axios.create({
 
 instance.interceptors.response.use(
 	config => {
-		console.info('Hey', config);
+		console.info('Configuration', config);
 
 		return config;
 	},
 	error => {
-		console.log('Hay ', error.response.status);
+		console.log('Interceptor Error ', error.response.status);
 		if (error.response.status === 401) {
 			console.log('401 dettected');
 			window.location.replace('/login');
-			//alert("Please Login again to access the data!")
 		}
 
 		return Promise.reject(error);
