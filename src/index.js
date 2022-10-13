@@ -18,7 +18,7 @@ import JwtService from 'app/services/jwtService';
 if (JwtService.getAccessToken()) {
 	instance.defaults.headers.common.Authorization = `Bearer ${JwtService.getAccessToken()}`;
 } else {
-	console.log('Header setting Failed!');
+	console.log('Headers are set using default header. Fuction will keep track when page is refreshed');
 }
 // axios.defaults.baseURL = 'http://localhost:8000/';
 // axios.interceptors.request.use(request => {

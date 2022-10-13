@@ -7,4 +7,5 @@ const roles = [
 
 const RESIDENTIAL = 'Residential';
 const COMMERCIAL = 'Commercial';
-export { roles, RESIDENTIAL, COMMERCIAL };
+const APP_URL = 'https://smsstagingapi.norditsol.com';
+export { roles, RESIDENTIAL, COMMERCIAL, APP_URL };
