@@ -30,7 +30,6 @@ instance.interceptors.response.use(
 
 class JwtService extends FuseUtils.EventEmitter {
 	init() {
-		
 		this.handleAuthentication();
 	}
 

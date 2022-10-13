@@ -4,8 +4,6 @@ import { instance } from 'app/services/jwtService/jwtService';
 import { getCustomerData } from './customerSlice';
 import { showMessage } from 'app/store/fuse/messageSlice';
 
-
-
 export const getCustomers = createAsyncThunk('customers/getCustomers', async (routeParams, { getState }) => {
 	routeParams = routeParams || getState().newCustomersSlice.routeParams;
 	const response = await instance.get('/api/customers', {
@@ -52,7 +50,7 @@ export const addCustomer = createAsyncThunk('customers/addCustomer', async (cont
 					variant: 'success' //success error info warning null
 				})
 			);
-			dispatch(closeEditContactDialog())
+			dispatch(closeEditContactDialog());
 		}
 
 		dispatch(getCustomerData());
@@ -72,12 +70,12 @@ export const addCustomer = createAsyncThunk('customers/addCustomer', async (cont
 				})
 			);
 		} else {
-		if (error.response.status === 400) {
+			if (error.response.status === 400) {
 				// alert('Alert 400');
 				console.log(JSON.parse(error.response.data.error), 'errorParsed');
 				JSON.parse(error.response.data.error).map(err => {
-					console.log("err",err);
-				return dispatch(
+					console.log('err', err);
+					return dispatch(
 						showMessage({
 							message: err, //text or html
 							autoHideDuration: 6000, //ms
@@ -134,6 +132,8 @@ export const updateCustomer = createAsyncThunk('customers/updateCustomer', async
 					variant: 'success' //success error info warning null
 				})
 			);
+
+			dispatch(closeEditContactDialog());
 		}
 		dispatch(getCustomerData());
 		return data;
@@ -152,10 +152,27 @@ export const updateCustomer = createAsyncThunk('customers/updateCustomer', async
 				})
 			);
 		} else if (error.response.status !== '400') {
-			alert('Validation Error Occurred');
+			if (error.response.status === 400) {
+				// alert('Alert 400');
+				console.log(JSON.parse(error.response.data.error), 'errorParsed');
+				JSON.parse(error.response.data.error).map(err => {
+					console.log('err', err);
+					return dispatch(
+						showMessage({
+							message: err, //text or html
+							autoHideDuration: 6000, //ms
+							anchorOrigin: {
+								vertical: 'top', //top bottom
+								horizontal: 'right' //left center right
+							},
+							variant: 'error' //success error info warning null
+						})
+					);
+				});
+			}
 		}
 
-		dispatch(getCustomerData());
+		// dispatch(getCustomerData());
 		return error.response.data;
 	}
 });
@@ -183,8 +200,7 @@ export const removeCustomer = createAsyncThunk(
 			dispatch(getCustomerData());
 			return customerId;
 		} catch (error) {
-			console.log('error:', error.response);
-			if (error.response.status) {
+			if (error.response.status !== 400) {
 				dispatch(
 					showMessage({
 						message: error.response.data.message, //text or html
@@ -196,9 +212,26 @@ export const removeCustomer = createAsyncThunk(
 						variant: 'error' //success error info warning null
 					})
 				);
+			} else if (error.response.status !== '400') {
+				if (error.response.status === 400) {
+					// alert('Alert 400');
+					console.log(JSON.parse(error.response.data.error), 'errorParsed');
+					JSON.parse(error.response.data.error).map(err => {
+						console.log('err', err);
+						return dispatch(
+							showMessage({
+								message: err, //text or html
+								autoHideDuration: 6000, //ms
+								anchorOrigin: {
+									vertical: 'top', //top bottom
+									horizontal: 'right' //left center right
+								},
+								variant: 'error' //success error info warning null
+							})
+						);
+					});
+				}
 			}
-			// dispatch(getCustomerData());
-
 			return customerId;
 		}
 	}

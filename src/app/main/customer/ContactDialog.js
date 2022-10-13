@@ -47,7 +47,7 @@ function ContactDialog(props) {
 	const configurationsData = useSelector(({ configSlice }) => configSlice);
 	console.log('configSlice inside contact : ', configurationsData);
 	console.log('contactDialog inside contact : ', contactDialog);
-	// console.log('block inside contact : ', configurationsData?.blocks[0]?.id);
+	console.log('block inside contact : ', configurationsData['blocks']);
 
 	console.log('propertyTypes inside contact : ', propertyTypes);
 	console.log('customerTypes inside contact: ', customerTypes);
@@ -65,7 +65,7 @@ function ContactDialog(props) {
 
 	useDeepCompareEffect(() => {
 		dispatch(getCustomerTypes());
-		dispatch(getConfigurations());
+		// dispatch(getConfigurations());
 	}, [dispatch]);
 
 	const handleCustomerType = event => {
@@ -118,7 +118,7 @@ function ContactDialog(props) {
 		meter_status: '',
 		meter_phase: '',
 		meter_type: '',
-		company: '', // TODO
+		company: '',
 		sector: '',
 		block: '',
 		street_address: '',
@@ -331,25 +331,45 @@ function ContactDialog(props) {
 				...contactDialog.data,
 				id: FuseUtils.generateGUID()
 			});
-			setCustomerType('c4010c54-84cc-4cfb-855c-34baba3a23e7');
-			setValue('customer_type', 'c4010c54-84cc-4cfb-855c-34baba3a23e7');
+			dispatch(getConfigurations()).then(data => {
+				console.log('data', data);
+				setBlock(data?.payload?.blocks[0]?.id);
+				setValue('block', data?.payload?.blocks[0]?.id);
 
-			setPropertyType('9d047174-c72f-4042-9b6d-e995a6075b1f');
-			setValue('property_type', '9d047174-c72f-4042-9b6d-e995a6075b1f');
+				setMeterPhase('Single Phase');
+				setMeterStatus('Active');
+				setValue('meter_phase', 'Single Phase');
+				setValue('meter_status', 'Active');
 
-			setPropertySize('2883cc33-a259-495d-993f-58a1d0a0d37a');
-			setValue('property_size', '2883cc33-a259-495d-993f-58a1d0a0d37a');
+				setSector(data?.payload?.sectors[0].id);
+				setValue('sector', data?.payload?.sectors[0].id);
+
+				setMeterType('Normal');
+				setValue('meter_type', 'Normal');
+			});
+
+			dispatch(getCustomerTypes()).then(data => {
+				console.log('data cutomer', data);
+				setCustomerType(data?.payload[0].id);
+				setValue('customer_type', data?.payload[0].id);
+
+				dispatch(getPropertyTypes(data?.payload[0].id)).then(newData => {
+					console.log('data getProperty', newData);
+					setPropertyType(newData.payload[0].id);
+					setValue('property_type', newData.payload[0].id);
+
+					dispatch(getPropertySizes(newData.payload[0].id)).then(res => {
+						console.log('propertySize', res);
+						setPropertySize(res.payload[0].id);
+						setValue('property_size', res.payload[0].id);
+					});
+				});
+			});
 
 			setMeterPhase('Single Phase');
 			setMeterStatus('Active');
 			setValue('meter_phase', 'Single Phase');
 			setValue('meter_status', 'Active');
-			setBlock('9277b430-79aa-4649-82d7-532e56dc209d');
-			setValue('block', '9277b430-79aa-4649-82d7-532e56dc209d');
-
-			setSector('1ea23d71-c0f6-4a22-a525-af3576bc36b5');
-			setValue('sector', '1ea23d71-c0f6-4a22-a525-af3576bc36b5');
-
 			setMeterType('Normal');
 			setValue('meter_type', 'Normal');
 		}
@@ -362,6 +382,49 @@ function ContactDialog(props) {
 		if (contactDialog.props.open) {
 			initDialog();
 		}
+		return () => {
+			console.log('form has been reset');
+			// reset({
+			// 	id: '',
+			// 	reference_number: '',
+			// 	name: '',
+			// 	cnic: '',
+			// 	phone_number: '',
+			// 	email: '',
+			// 	customer_type: '',
+			// 	property_type: '',
+			// 	property_size: '',
+			// 	meter_number: '',
+			// 	meter_status: '',
+			// 	meter_phase: '',
+			// 	meter_type: '',
+			// 	company: '',
+			// 	sector: '',
+			// 	block: '',
+			// 	street_address: '',
+			// 	current_reading: ''
+			// });
+
+			setBlock('');
+			setValue('block', '');
+
+			setMeterPhase('Single Phase');
+			setMeterStatus('Active');
+			setValue('meter_phase', 'Single Phase');
+			setValue('meter_status', 'Active');
+
+			setSector('');
+			setValue('sector', '');
+
+			setMeterType('');
+			setValue('meter_type', '');
+			setCustomerType('');
+			setValue('customer_type', '');
+			setPropertyType('');
+			setValue('property_type', '');
+			setPropertySize('');
+			setValue('property_size', '');
+		};
 	}, [contactDialog.props.open, initDialog]);
 
 	// /**
@@ -762,28 +825,6 @@ function ContactDialog(props) {
 					</div>
 
 					<div className="flex">
-						<div className="min-w-48 pt-20">
-							<Icon color="action">people_alt</Icon>
-						</div>
-						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
-							<InputLabel htmlFor="category-label-placeholder"> Sector *</InputLabel>
-							<Select
-								value={sector}
-								onChange={handleSector}
-								inputProps={register('sector', {
-									required: 'Please enter sector'
-								})}
-								input={<OutlinedInput labelWidth={'category'.length * 9} name="sector" id="sector" />}
-							>
-								{configurationsData?.sectors?.map(category => (
-									<MenuItem value={category.id} key={category.id}>
-										{category.name}
-									</MenuItem>
-								))}
-							</Select>
-						</FormControl>
-					</div>
-					<div className="flex">
 						<div className="min-w-48 pt-20" style={{ marginRight: '-0.5rem' }}>
 							<Icon color="action">home_work</Icon>
 						</div>
@@ -831,6 +872,28 @@ function ContactDialog(props) {
 					) : (
 						''
 					)}
+					<div className="flex">
+						<div className="min-w-48 pt-20">
+							<Icon color="action">people_alt</Icon>
+						</div>
+						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
+							<InputLabel htmlFor="category-label-placeholder"> Sector *</InputLabel>
+							<Select
+								value={sector}
+								onChange={handleSector}
+								inputProps={register('sector', {
+									required: 'Please enter sector'
+								})}
+								input={<OutlinedInput labelWidth={'category'.length * 9} name="sector" id="sector" />}
+							>
+								{configurationsData?.sectors?.map(category => (
+									<MenuItem value={category.id} key={category.id}>
+										{category.name}
+									</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+					</div>
 				</DialogContent>
 
 				{contactDialog?.type === 'new' ? (

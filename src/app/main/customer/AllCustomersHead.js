@@ -37,7 +37,7 @@ function AllCustomersHead(props) {
 
 					meter_number: newCustomer?.meter?.meter_number,
 					meter_type: newCustomer?.meter?.meter_type,
-					reference_number: newCustomer?.meter?.refference_number,
+					reference_number: newCustomer?.refference_number,
 					cnic: newCustomer?.cnic,
 					phone_number: newCustomer?.phone_number,
 					email: newCustomer?.email,

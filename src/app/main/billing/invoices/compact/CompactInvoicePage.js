@@ -105,22 +105,22 @@ function CompactInvoicePage(props) {
 					<PrintIcon /> {isPrintReady ? ' Preparing to Print... ' : 'Print Bill'}
 				</Button>
 			)}
-
-			<Button
-				id="print-button"
-				style={{ position: 'absolute', top: 10, left: 10 }}
-				variant="contained"
-				color="secondary"
-				onClick={() => history.goBack()}
-				component={Link}
-			>
-				<Icon
-				// onClick={() => history.goBack()}
+			{!isPrintReady && (
+				<Button
+					id="print-button"
+					style={{ position: 'absolute', top: 10, left: 10 }}
+					variant="contained"
+					color="secondary"
+					onClick={() => history.goBack()}
+					component={Link}
 				>
-					{theme.direction === 'ltr' ? 'arrow_back' : 'arrow_forward'}
-				</Icon>
-			</Button>
-
+					<Icon
+					// onClick={() => history.goBack()}
+					>
+						{theme.direction === 'ltr' ? 'arrow_back' : 'arrow_forward'}
+					</Icon>
+				</Button>
+			)}
 			<div
 				id="section-to-print"
 				className={clsx(classes.root, 'flex-grow flex-shrink-0 p-0 sm:p-64 print:p-0 overflow-auto ')}
@@ -388,7 +388,11 @@ function CompactInvoicePage(props) {
 																				</TableCell>
 																			</TableRow>
 																		))}
-																	{[...Array(parseInt(12 - 3)).keys()]
+																	{[
+																		...Array(
+																			12 - bills[index]?.bill_history.length
+																		).keys()
+																	]
 																		?.map(item => {
 																			return createData(
 																				item,
@@ -510,7 +514,7 @@ function CompactInvoicePage(props) {
 
 																	src={
 																		bill?.reading_snapshot !== null
-																			? `http://localhost:8000/${bill?.reading_snapshot}`
+																			? `https://smsstaging.norditsol.com/${bill?.reading_snapshot}`
 																			: BillsImage
 																	}
 																	// if (row.original.meter_snapshot === null) {
