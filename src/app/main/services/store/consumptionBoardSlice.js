@@ -43,71 +43,39 @@ export const updateConsumbtionBoard = createAsyncThunk(
 		};
 		console.log('tabValue', consumbtionBoardData.tabValue);
 		console.log('consumbtionBoardData', consumbtionBoardData);
-		try {
-			const response = await instance.post(`/api/services/${consumbtionBoardData.id}/consumptionBased`, {
-				...body
-			});
-			console.log('response', response);
-			const data = await response.data;
-			
-			if (response.status === 201) {
-				
-				dispatch(
-					showMessage({
-						message: response.data.message, // text or html
-						autoHideDuration: 6000, // ms
-						anchorOrigin: {
-							vertical: 'top', // top bottom
-							horizontal: 'right' // left center right
-						},
-						variant: 'success' // success error info warning null
-					})
-				);
-		
-			}
-			return data;
 
-		} catch(error){
-			console.log('error:', error.response);
-			if (error.response.status !== 400) {
-				dispatch(
-					showMessage({
-						message: error.response.data.message, // text or html
-						autoHideDuration: 6000, // ms
-						anchorOrigin: {
-							vertical: 'top', // top bottom
-							horizontal: 'right' // left center right
-						},
-						variant: 'error' // success error info warning null
-					})
-				);
-			} else if (error.response.status !== '400') {
-				if (error.response.status === 400) {
-					// alert('Alert 400');
-					console.log(JSON.parse(error.response.data.error), 'errorParsed');
-					JSON.parse(error.response.data.error).map(err => {
-						console.log('err', err);
-						return dispatch(
-							showMessage({
-								message: err, // text or html
-								autoHideDuration: 6000, // ms
-								anchorOrigin: {
-									vertical: 'top', // top bottom
-									horizontal: 'right' // left center right
-								},
-								variant: 'error' // success error info warning null
-							})
-						);
-					});
-				}
-			}
-
-			// dispatch(getCustomerData());
-			return error.response.data;
+		const response = await instance.post(`/api/services/${consumbtionBoardData.id}/consumptionBased`, { ...body });
+		console.log("response",response)
+		const data = await response.data;
+		if(response.status === 201){
+			dispatch(
+				showMessage({
+					message: response.data.message, //text or html
+					autoHideDuration: 6000, //ms
+					anchorOrigin: {
+						vertical: 'top', //top bottom
+						horizontal: 'right' //left center right
+					},
+					variant: 'success' //success error info warning null
+				})
+			);
 		}
+		else{
+			dispatch(
+				showMessage({
+					message: response.data.message, //text or html
+					autoHideDuration: 6000, //ms
+					anchorOrigin: {
+						vertical: 'top', //top bottom
+						horizontal: 'right' //left center right
+					},
+					variant: 'error' //success error info warning null
+				})
+			);
 
+		}
 		dispatch(getConsumbtionBoard(consumbtionBoardData.id));
-
+		
 		return data;
 	}
 );

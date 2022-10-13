@@ -46,7 +46,7 @@ function AllUsersHead(props) {
 				className: 'font-medium',
 				sortable: true
 			},
-		
+
 			{
 				Header: 'Refference Number',
 				accessor: 'refference_number',
