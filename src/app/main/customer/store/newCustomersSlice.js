@@ -137,7 +137,8 @@ export const updateCustomer = createAsyncThunk('customers/updateCustomer', async
 		}
 		dispatch(getCustomerData());
 		return data;
-	} catch (error) {
+	} 
+	catch (error) {
 		console.log('error:', error.response);
 		if (error.response.status !== 400) {
 			dispatch(

@@ -46,12 +46,7 @@ function AllUsersHead(props) {
 				className: 'font-medium',
 				sortable: true
 			},
-			{
-				Header: 'Status',
-				accessor: 'rise_fall_status',
-				className: 'font-medium',
-				sortable: false
-			},
+		
 			{
 				Header: 'Refference Number',
 				accessor: 'refference_number',
@@ -87,6 +82,12 @@ function AllUsersHead(props) {
 				Header: 'Third month',
 				accessor: 'third_month',
 				sortable: true
+			},
+			{
+				Header: 'Status',
+				accessor: 'rise_fall_status',
+				className: 'font-medium',
+				sortable: false
 			},
 			{
 				id: 'action',
