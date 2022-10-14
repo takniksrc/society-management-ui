@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { useMemo, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import ContactsMultiSelectMenu from './ContactsMultiSelectMenu';
+import { APP_URL } from 'app/fuse-configs/constants';
 import AllUsers from './AllUsers';
 import { selectUsers } from '../../store/disconnectedmeterSlice';
 
@@ -68,7 +69,7 @@ function FaultyMeter(props) {
 				Header: 'Picture',
 				accessor: 'meter_snapshot',
 				Cell: ({ row }) => {
-					const image = `http://localhost:8000/${row?.original?.meter_snapshot}`;
+					const image = `${APP_URL}/${row?.original?.meter_snapshot}`;
 					console.log('I am row', `http://localhost:8000/${row?.original?.meter_snapshot}`);
 					if (row.original.meter_snapshot === null) {
 						return <Typography className='text-red-800'>No Image Found</Typography>;

@@ -23,6 +23,7 @@ import Barcode from '../../../../../assets/BillsIcon/barcode.svg';
 import BillsImage from '../../../../../assets/BillsIcon/image.jpg';
 import BillsCutImage from '../../../../../assets/BillsIcon/Sissor.png';
 import DetailsImage from '../../../../../assets/BillsIcon/bill.png';
+import { APP_URL } from 'app/fuse-configs/constants';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import billingBlocksSlice from '../../store/billingBlocksSlice';
@@ -514,7 +515,7 @@ function CompactInvoicePage(props) {
 
 																	src={
 																		bill?.reading_snapshot !== null
-																			? `https://smsstaging.norditsol.com/${bill?.reading_snapshot}`
+																			? `${APP_URL}/${bill?.reading_snapshot}`
 																			: BillsImage
 																	}
 																	// if (row.original.meter_snapshot === null) {
