@@ -19,10 +19,11 @@ import PrintIcon from '@material-ui/icons/Print';
 import { Button } from '@material-ui/core';
 import { navbarClose } from 'app/store/fuse/navbarSlice';
 import Logo from './KesamLogo.jpg';
-import Barcode from '../../../../../assets/BillsIcon/barcode.svg';
+// import Barcode from '../../../../../assets/BillsIcon/barcode.svg';
 import BillsImage from '../../../../../assets/BillsIcon/image.jpg';
 import BillsCutImage from '../../../../../assets/BillsIcon/Sissor.png';
 import DetailsImage from '../../../../../assets/BillsIcon/bill.png';
+import Barcode from 'react-barcode';
 import { APP_URL } from 'app/fuse-configs/constants';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -76,6 +77,7 @@ function CompactInvoicePage(props) {
 	const theme = useTheme();
 	const routeParams = useParams();
 	console.log('i am routeParams in Compact', routeParams);
+	const barcodeRef = React.useRef(null);
 
 	console.log('type', bills);
 
@@ -208,7 +210,7 @@ function CompactInvoicePage(props) {
 													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2">
 														Reference Number
 													</div>
-													<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
+													<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2 break-words">
 														{bill?.meter?.refference_number}
 													</div>
 												</div>
@@ -479,7 +481,7 @@ function CompactInvoicePage(props) {
 																Subsidy
 															</div>
 															<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
-																{}
+																{bill.discount}
 															</div>
 															<div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2">
 																L.P Surcharge
@@ -516,7 +518,7 @@ function CompactInvoicePage(props) {
 																	src={
 																		bill?.reading_snapshot !== null
 																			? `${APP_URL}/${bill?.reading_snapshot}`
-																			: BillsImage
+																			: `${APP_URL}/${bill?.reading_snapshot}`
 																	}
 																	// if (row.original.meter_snapshot === null) {
 																	// 	return <Typography className='text-red-800'>No Image Found</Typography>;
@@ -632,7 +634,22 @@ function CompactInvoicePage(props) {
 													</div>
 													<div className="border-black border-1 outline-2 flex justify-center">
 														<div style={{ alignSelf: 'center', marginTop: '1.2rem' }}>
-															<img className="w-80 m-auto" src={Barcode} alt="logo" />
+															<Barcode
+																ref={barcodeRef}
+																value={bill.refference_number}
+																// displayValue={false}
+																// height={50}
+																// displayValue={true}
+																width={1}
+																height={80}
+																format="CODE128"
+																// options={{width: 0, height:50, format: 'CODE128', displayValue: false}}
+																//  format={format}
+																font="Avenir Next"
+																fontOptions="500"
+																textMargin={3}
+																margin={0}
+															/>
 														</div>
 													</div>
 												</div>
@@ -651,7 +668,7 @@ function CompactInvoicePage(props) {
 													</div>
 												</div>
 												<div className="grid grid-cols-8 grid-rows-1">
-													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
+													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base break-words">
 														Reference Number
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center  font-semibold text-base">
@@ -785,7 +802,7 @@ function CompactInvoicePage(props) {
 													<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
 														{bill?.payment_status}
 													</div>
-													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2">
+													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base pl-3 pt-2 break-words">
 														Reference Number
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base pl-3 pt-2">
@@ -973,7 +990,7 @@ function CompactInvoicePage(props) {
 													</div>
 												</div>
 												{/* Footer */}
-												<div className="grid grid-col-3 grid-flow-col ">
+												<div className="grid grid-col-3 ">
 													<div className="border-black border-1 outline-2 place-items-center">
 														<Typography
 															className="text-center font-bold"
@@ -982,32 +999,7 @@ function CompactInvoicePage(props) {
 															Service Invoice
 														</Typography>
 													</div>
-													{/* <div className="border-black border-1 outline-2">
-														<Typography className="text-center text-lg font-bold">
-															{' '}
-															Service Invoice
-														</Typography>
-														<Typography className="text-center text-base" color="inherit">
-															{bill.customer_name}
-														</Typography>
 
-														{bill.street_address && (
-															<Typography
-																className="text-center text-base"
-																color="inherit"
-															>
-																{bill.street_address}
-															</Typography>
-														)}
-														{bill.property_size && (
-															<Typography
-																className="text-center text-base"
-																color="inherit"
-															>
-																{bill.property_size}
-															</Typography>
-														)}
-													</div> */}
 													<div className="border-black border-1 outline-2">
 														<Typography
 															className="text-center font-bold"
@@ -1036,9 +1028,23 @@ function CompactInvoicePage(props) {
 														</Typography>
 													</div>
 													<div className="border-black border-1 outline-2 flex justify-center">
-														<div style={{ alignSelf: 'center', marginTop: '1rem' }}>
-															<img className="w-80 m-auto" src={Barcode} alt="logo" />
-														</div>
+														{/* <div style={{ alignSelf: 'center', marginTop: '1rem' ,width:'12rem'}}> */}
+														<Barcode
+															ref={barcodeRef}
+															value={bill.refference_number}
+															// displayValue={false}
+															// height={50}
+															// displayValue={true}
+															width={1}
+															height={80}
+															format="CODE128"
+															// options={{width: 0, height:50, format: 'CODE128', displayValue: false}}
+															//  format={format}
+															font="Avenir Next"
+															fontOptions="500"
+															textMargin={3}
+															margin={0}
+														/>
 													</div>
 												</div>
 												<div className="grid grid-cols-4 grid-rows-1 text-center">
@@ -1056,7 +1062,7 @@ function CompactInvoicePage(props) {
 													</div>
 												</div>
 												<div className="grid grid-cols-8 grid-rows-1">
-													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base">
+													<div className="border-black border-1 outline-2 place-items-center font-semibold text-base break-words">
 														Reference Number
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center  font-semibold text-base">
