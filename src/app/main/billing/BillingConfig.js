@@ -13,11 +13,11 @@ const ScrumboardAppConfig = {
 			component: lazy(() => import('./board/GBDataTemplate'))
 		},
 		{
-			path: '/billing/boards/:boardId/billing',
+			path: '/billing/boards/:boardname/:boardId/billing',
 			component: lazy(() => import('./board/GBDataTemplate'))
 		},
 		{
-			path: '/billing/boards/:boardId',
+			path: '/billing/boards/:boardname/:boardId',
 			component: lazy(() => import('./board/GenerateBills'))
 		},
 		{

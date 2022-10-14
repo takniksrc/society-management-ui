@@ -86,7 +86,7 @@ function Boards(props) {
 						return board.billing_status === 'closed' || board.billing_status === 'init-in-progress' ? (
 							<motion.div variants={item} className="p-16 w-auto" key={board.block_id}>
 								<Paper
-									to={`/billing/boards/${board.block_id}`}
+									to={`/billing/boards/${board.name}/${board.block_id}`}
 									className={clsx(
 										classes.board,
 										'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'
@@ -117,7 +117,7 @@ function Boards(props) {
 						) : (
 							<motion.div variants={item} className="p-16  w-auto" key={board.block_id}>
 								<Paper
-									to={`/billing/boards/${board.block_id}/billing`}
+									to={`/billing/boards/${board.name}/${board.block_id}/billing`}
 									className={clsx(
 										classes.board,
 										'flex flex-col items-center justify-center w-full h-full rounded-16 py-24 shadow hover:shadow-lg'

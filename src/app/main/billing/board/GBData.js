@@ -124,7 +124,7 @@ function GBData(props) {
 						})
 					);
 					dispatch(getBills(props.blockId)).then(() => {
-						history.push(`/billing/boards/${props.blockId}/billing`);
+						history.push(`/billing/boards/${props.blockname}/${props.blockId}/billing`);
 					});
 				}
 				console.log(JSON.stringify(response));

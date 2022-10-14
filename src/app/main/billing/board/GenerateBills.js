@@ -57,10 +57,12 @@ function GenerateBills(props) {
 						<IconButton to="/billing/boards" component={Link}>
 							<Icon>{theme.direction === 'ltr' ? 'arrow_back' : 'arrow_forward'}</Icon>
 						</IconButton>
-						<Typography className="flex-1 text-20 mx-16">Generate Bills</Typography>
+						<Typography className="flex-1 text-20 mx-16">
+							{routeParams?.boardname} - Generate Bills
+						</Typography>
 					</div>
 				}
-				content={<GBData blockId={routeParams.boardId} />}
+				content={<GBData blockId={routeParams.boardId} blockname={routeParams.boardname} />}
 				innerScroll
 				ref={pageLayout}
 			/>

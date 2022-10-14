@@ -136,6 +136,9 @@ function ContactDialog(props) {
 			.catch(function (error) {
 				console.log(error);
 			});
+		resetPaidValues({
+			...defaultValuesPaidAmount
+		});
 		dispatch(getBillData(contactDialog?.data?.id));
 	};
 
@@ -231,7 +234,7 @@ function ContactDialog(props) {
 											{...field}
 											type="number"
 											className="mb-24"
-											label="Paid Amount"
+											label="Amount"
 											id="discont"
 											variant="outlined"
 											fullWidth
@@ -320,8 +323,11 @@ function ContactDialog(props) {
 								{contactDialog?.data?.due_date}
 							</Typography>
 							<Typography>
-								<b>Units:</b>{' '}
-								{contactDialog?.data?.current_reading - contactDialog?.data?.previous_reading}{' '}
+								<b>Units:</b>
+								{GetBillsData.current_reading <= GetBillsData.previous_reading
+									? 0
+									: GetBillsData.current_reading - GetBillsData.previous_reading}
+								{/* {GetBillsData.current_reading - GetBillsData.previous_reading} */}
 							</Typography>
 							<Typography>
 								<b>Previous Reading:</b> {GetBillsData?.previous_reading}{' '}

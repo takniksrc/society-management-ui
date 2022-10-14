@@ -6,7 +6,7 @@ import { ThemeProvider, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link ,useParams } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import { selectMainTheme } from 'app/store/fuse/settingsSlice';
 import { openNewContactDialog, setContactsSearchText } from '../store/newUsersSlice';
@@ -21,8 +21,10 @@ function BillingHeader(props) {
 	const theme = useTheme();
 	const mainTheme = useSelector(selectMainTheme);
 	const contactDialog = useSelector(({ newUsersSlice }) => newUsersSlice.newUsersSlice);
+	const routeParams = useParams();
+	console.log('i am routeParams in Billing Header', routeParams);
 
-	console.log('I am userin Users', contactDialog);
+	console.log('I am userin Users get', contactDialog);
 
 	return (
 		<div className="flex flex-1 w-full items-center justify-between">
@@ -45,7 +47,7 @@ function BillingHeader(props) {
 					delay={300}
 					className="hidden sm:flex text-16 md:text-24 mx-12 font-semibold"
 				>
-					Billing
+					{routeParams?.boardname} - Billing 
 				</Typography>
 			</div>
 

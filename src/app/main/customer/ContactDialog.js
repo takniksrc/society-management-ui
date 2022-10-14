@@ -47,7 +47,7 @@ function ContactDialog(props) {
 	const configurationsData = useSelector(({ configSlice }) => configSlice);
 	console.log('configSlice inside contact : ', configurationsData);
 	console.log('contactDialog inside contact : ', contactDialog);
-	console.log('block inside contact : ', configurationsData['blocks']);
+	console.log('block inside contact : ', configurationsData.blocks);
 
 	console.log('propertyTypes inside contact : ', propertyTypes);
 	console.log('customerTypes inside contact: ', customerTypes);
@@ -648,27 +648,55 @@ function ContactDialog(props) {
 								/>
 							)}
 						/>
-						<div className="min-w-48 pt-20 pl-16">
-							<Icon color="action">location_city</Icon>
-						</div>
-						<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
-							<InputLabel htmlFor="block"> Blocks * </InputLabel>
-							<Select
-								value={block}
-								onChange={handleBlock}
-								name="block"
-								inputProps={register('block', {
-									required: 'Please enter block'
-								})}
-								input={<OutlinedInput labelWidth={'category'.length * 9} id="block" />}
-							>
-								{configurationsData?.blocks?.map(item => (
-									<MenuItem value={item.id} key={item.id} selected={item.id}>
-										{item.name}
-									</MenuItem>
-								))}
-							</Select>
-						</FormControl>
+						{contactDialog?.type === 'edit' ? (
+							<>
+								<div className="min-w-48 pt-20 pl-16">
+									<Icon color="action">location_city</Icon>
+								</div>
+								<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
+									<InputLabel htmlFor="block"> Blocks * </InputLabel>
+									<Select
+										value={block}
+										onChange={handleBlock}
+										name="block"
+										inputProps={register('block', {
+											required: 'Please enter block'
+										})}
+										input={<OutlinedInput labelWidth={'category'.length * 9} id="block" />}
+									>
+										{configurationsData?.blocks?.map(item => (
+											<MenuItem value={item.id} key={item.id} selected={item.id} disabled>
+												{item.name}
+											</MenuItem>
+										))}
+									</Select>
+								</FormControl>
+							</>
+						) : (
+							<>
+								<div className="min-w-48 pt-20 pl-16">
+									<Icon color="action">location_city</Icon>
+								</div>
+								<FormControl className="flex w-full -mx-4 mb-16" variant="outlined">
+									<InputLabel htmlFor="block"> Blocks * </InputLabel>
+									<Select
+										value={block}
+										onChange={handleBlock}
+										name="block"
+										inputProps={register('block', {
+											required: 'Please enter block'
+										})}
+										input={<OutlinedInput labelWidth={'category'.length * 9} id="block" />}
+									>
+										{configurationsData?.blocks?.map(item => (
+											<MenuItem value={item.id} key={item.id} selected={item.id}>
+												{item.name}
+											</MenuItem>
+										))}
+									</Select>
+								</FormControl>
+							</>
+						)}
 					</div>
 					<div className="flex">
 						<div className="min-w-48 pt-20">
