@@ -456,10 +456,28 @@ function ContactDialog(props) {
 	//  */
 	function onSubmit(data) {
 		console.log('data in customer submit', data);
+		const dataBeforeSubmit = { ...data };
 		if (contactDialog.type === 'new') {
-			dispatch(addCustomer(data));
+			if (!isElectricServiceAvaialable) {
+				dataBeforeSubmit.meter_number = null;
+				dataBeforeSubmit.meter_status = null;
+				dataBeforeSubmit.meter_phase = null;
+				dataBeforeSubmit.meter_type = null;
+				dataBeforeSubmit.company = null;
+				dataBeforeSubmit.current_reading = null;
+			}
+
+			dispatch(addCustomer(dataBeforeSubmit));
 		} else {
-			dispatch(updateCustomer({ ...contactDialog.data, ...data }));
+			if (!isElectricServiceAvaialable) {
+				dataBeforeSubmit.meter_number = null;
+				dataBeforeSubmit.meter_status = null;
+				dataBeforeSubmit.meter_phase = null;
+				dataBeforeSubmit.meter_type = null;
+				dataBeforeSubmit.company = null;
+				dataBeforeSubmit.current_reading = null;
+			}
+			dispatch(updateCustomer({ ...contactDialog.data, ...dataBeforeSubmit }));
 		}
 		// closeComposeDialog();
 	}
