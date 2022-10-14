@@ -98,12 +98,12 @@ function AllCustomersHead(props) {
 				sortable: true
 			},
 			{
-				Header: 'property Type',
+				Header: 'Property Type',
 				accessor: 'property_type',
 				sortable: true
 			},
 			{
-				Header: 'property Type ID',
+				Header: 'Property Type ID',
 				accessor: 'property_type_id',
 				sortable: true
 			},
