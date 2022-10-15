@@ -31,6 +31,7 @@ import DescriptionTab from './Tabs/DescriptionTab';
 import ResidentialTab from './Tabs/ResidentialTab';
 import CommercialTab from './Tabs/CommercialTab';
 import ConstructionTab from './Tabs/ConstructionTab';
+import { CONSTRUCTION, RESIDENTIAL, COMMERCIAL } from 'app/fuse-configs/constants';
 
 const schema = yup.object().shape({
 	name: yup.string()
@@ -127,9 +128,9 @@ function SCDataTemplate(props) {
 							classes={{ root: 'w-full h-64' }}
 						>
 							<Tab id="Description" className="h-64" label="Description" value="Description" />
-							<Tab id="Residential" className="h-64" label="Residential" value="Residential" />
-							<Tab id="Commercial" className="h-64" label="Commercial" value="Commercial" />
-							<Tab id="Construction" className="h-64" label="Construction" value="Construction" />
+							<Tab id={RESIDENTIAL} className="h-64" label={RESIDENTIAL} value={RESIDENTIAL} />
+							<Tab id={COMMERCIAL} className="h-64" label={COMMERCIAL} value={COMMERCIAL} />
+							<Tab id={CONSTRUCTION} className="h-64" label={CONSTRUCTION} value={CONSTRUCTION} />
 						</Tabs>
 					</>
 				}
@@ -138,16 +139,16 @@ function SCDataTemplate(props) {
 						<div className={tabValue !== 'Description' ? 'hidden' : ''}>
 							<DescriptionTab />
 						</div>
-						<div className={tabValue !== 'Residential' ? 'hidden' : ''}>
-							<ResidentialTab TabType="Residential" />
+						<div className={tabValue !== RESIDENTIAL ? 'hidden' : ''}>
+							<ResidentialTab TabType={RESIDENTIAL} />
 						</div>
 
-						<div className={tabValue !== 'Commercial' ? 'hidden' : ''}>
-							<CommercialTab TabType="Commercial" />
+						<div className={tabValue !== COMMERCIAL ? 'hidden' : ''}>
+							<CommercialTab TabType={COMMERCIAL} />
 						</div>
 
-						<div className={tabValue !== 'Construction' ? 'hidden' : ''}>
-							<ConstructionTab TabType="Construction" />
+						<div className={tabValue !== CONSTRUCTION ? 'hidden' : ''}>
+							<ConstructionTab TabType={CONSTRUCTION} />
 						</div>
 					</div>
 				}

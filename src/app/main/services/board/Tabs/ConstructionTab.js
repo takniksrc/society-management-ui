@@ -18,6 +18,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { getConfigurations } from 'app/fuse-configs/store/configSlice';
+import { CONSTRUCTION } from 'app/fuse-configs/constants';
 
 function ConstructionTab(props) {
 	const methods = useFormContext();
@@ -39,7 +40,6 @@ function ConstructionTab(props) {
 
 	return (
 		<div>
-		
 			<motion.div
 				className="flex flex-wrap py-24"
 				// variants={container}
@@ -66,7 +66,7 @@ function ConstructionTab(props) {
 								console.log('sp in board', propertySize);
 
 								return (
-									propertySize?.customer_type === 'Construction' &&
+									propertySize?.customer_type === CONSTRUCTION &&
 									propertySize?.property_size?.name.includes('Business') && (
 										<Controller
 											name={`servicePricing[${propertySizeIndex}].price_per_unit`}
@@ -109,7 +109,7 @@ function ConstructionTab(props) {
 								console.log('sp in construction', propertySize);
 
 								return (
-									propertySize?.customer_type === 'Construction' &&
+									propertySize?.customer_type === CONSTRUCTION &&
 									propertySize?.property_size?.name.includes('House') && (
 										<Controller
 											name={`servicePricing[${propertySizeIndex}].price_per_unit`}

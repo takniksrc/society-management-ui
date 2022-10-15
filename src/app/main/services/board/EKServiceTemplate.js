@@ -33,6 +33,7 @@ import ConstructionTab from '../ConsumptionTabs/ConstructionTab';
 import FPATab from '../ConsumptionTabs/FPATab';
 import CommercialTab from '../ConsumptionTabs/CommercialTab';
 import { getConsumbtionBoard, updateConsumbtionBoard } from '../store/consumptionBoardSlice';
+import { RESIDENTIAL, COMMERCIAL, CONSTRUCTION } from 'app/fuse-configs/constants';
 
 const schema = yup.object().shape({
 	name: yup
@@ -157,14 +158,14 @@ function EKServiceTemplate(props) {
 						<div className={tabValue !== 0 ? 'hidden' : ''}>
 							<DescriptionTab />
 						</div>
-						<div className={tabValue !== 'Residential' ? 'hidden' : ''}>
-							<ResidentialTab TabType="Residential" />
+						<div className={tabValue !== RESIDENTIAL ? 'hidden' : ''}>
+							<ResidentialTab TabType={RESIDENTIAL} />
 						</div>
-						<div className={tabValue !== 'Commercial' ? 'hidden' : ''}>
-							<CommercialTab TabType="Commercial" />
+						<div className={tabValue !== COMMERCIAL ? 'hidden' : ''}>
+							<CommercialTab TabType={COMMERCIAL} />
 						</div>
-						<div className={tabValue !== 'Construction' ? 'hidden' : ''}>
-							<ConstructionTab TabType="Construction" />
+						<div className={tabValue !== CONSTRUCTION ? 'hidden' : ''}>
+							<ConstructionTab TabType={CONSTRUCTION} />
 						</div>
 					</div>
 				}
