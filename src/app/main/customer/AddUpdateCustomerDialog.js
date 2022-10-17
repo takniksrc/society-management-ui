@@ -38,6 +38,8 @@ import {
 } from './store/newCustomersSlice';
 
 function AddUpdateCustomerDialog(props) {
+	// console.log('date', Date.now());
+
 	const dispatch = useDispatch();
 	const contactDialog = useSelector(({ newCustomersSlice }) => newCustomersSlice.newCustomersSlice);
 
@@ -71,7 +73,10 @@ function AddUpdateCustomerDialog(props) {
 	const handleCustomerType = event => {
 		console.log('event target value', event.target.value);
 		setCustomerType(event.target.value);
-		// console.log('clicked', customerType);
+		setPropertyType('');
+		setValue('property_type', '');
+		setPropertySize('');
+		setValue('property_size', '');
 	};
 
 	const handleBlock = event => {
@@ -94,6 +99,8 @@ function AddUpdateCustomerDialog(props) {
 	const handlePropertyType = event => {
 		console.log('event.target', event.target);
 		setPropertyType(event.target.value);
+		setPropertySize('');
+		setValue('property_size', '');
 	};
 
 	const handleProperty = event => {
@@ -403,6 +410,7 @@ function AddUpdateCustomerDialog(props) {
 				}
 			});
 
+			setValue('reference_number', Date.now());
 			setMeterPhase('Single Phase');
 			setMeterStatus('Active');
 			setValue('meter_phase', 'Single Phase');
