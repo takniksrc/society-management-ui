@@ -29,7 +29,7 @@ export const getBoard = createAsyncThunk('scrumboardApp/ReportsTemplates/getBoar
 			})
 		);
 		history.push({
-			pathname: '/Reports/ReportsBoxesList'
+			pathname: '/reports/ReportsBoxesList'
 		});
 		return null;
 	}
@@ -178,7 +178,7 @@ export const deleteBoard = createAsyncThunk(
 		});
 
 		history.push({
-			pathname: '/Reports/ReportsBoxesList'
+			pathname: '/reports/ReportsBoxesList'
 		});
 
 		const data = await response.data;

@@ -322,17 +322,17 @@ function BillsPaymentDiscountDialog(props) {
 								{contactDialog?.data?.due_date}
 							</Typography>
 							<Typography>
-								<b>Units:</b>
+								<b>Units: </b>
 								{GetBillsData.current_reading <= GetBillsData.previous_reading
 									? 0
 									: GetBillsData.current_reading - GetBillsData.previous_reading}
 								{/* {GetBillsData.current_reading - GetBillsData.previous_reading} */}
 							</Typography>
 							<Typography>
-								<b>Previous Reading:</b> {GetBillsData?.previous_reading}{' '}
+								<b>Previous Reading: </b> {GetBillsData?.previous_reading}{' '}
 							</Typography>
 							<Typography>
-								<b>Current Reading:</b> {GetBillsData?.current_reading}{' '}
+								<b>Current Reading: </b> {GetBillsData?.current_reading}{' '}
 							</Typography>
 							<Typography>
 								{' '}
@@ -341,22 +341,22 @@ function BillsPaymentDiscountDialog(props) {
 							</Typography>
 							<Typography>
 								{' '}
-								<b>Total FPA:</b> {GetBillsData?.fpa_charges}
+								<b>Total FPA: </b> {GetBillsData?.fpa_charges}
 							</Typography>
 							<Typography>
-								<b>Current Bill:</b> {GetBillsData?.electricity_charges}
+								<b>Electricity Bill: </b> {GetBillsData?.electricity_charges}
 							</Typography>
 							<Typography>
-								<b>Society Charges:</b> {GetBillsData?.society_charges}
+								<b>Society Charges: </b> {GetBillsData?.society_charges}
 							</Typography>
 							<Typography>
-								<b>Total Payables:</b> {GetBillsData?.total_bill}{' '}
+								<b>Total Payables: </b> {GetBillsData?.total_bill}{' '}
 							</Typography>
 							<Typography>
-								<b>Total Paid:</b> {GetBillsData?.amount_paid}{' '}
+								<b>Total Paid: </b> {GetBillsData?.amount_paid}{' '}
 							</Typography>
 							<Typography className="text-green-600">
-								<b>Total Discount:</b> {GetBillsData?.discount}{' '}
+								<b>Total Discount: </b> {GetBillsData?.discount}{' '}
 							</Typography>
 						</Card>
 					</div>

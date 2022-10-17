@@ -6,8 +6,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { useMemo, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import ContactsMultiSelectMenu from './ContactsMultiSelectMenu';
-import AllUsers from './AllUsers';
+import AllUsersMultiSelectMenu from './AllUsersMultiSelectMenu';
+import AllUsersTable from './AllUsersTable';
 import { openEditContactDialog, removeUser, toggleStarredContact, selectUsers } from './store/newUsersSlice';
 
 function AllUsersHead(props) {
@@ -33,7 +33,7 @@ function AllUsersHead(props) {
 					);
 
 					return (
-						selectedFlatRows.length > 0 && <ContactsMultiSelectMenu selectedContactIds={selectedRowIds} />
+						selectedFlatRows.length > 0 && <AllUsersMultiSelectMenu selectedContactIds={selectedRowIds} />
 					);
 				},
 				accessor: 'avatar',
@@ -123,7 +123,7 @@ function AllUsersHead(props) {
 
 	return (
 		<motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}>
-			<AllUsers
+			<AllUsersTable
 				columns={columns}
 				data={filteredData}
 				onRowClick={(ev, row) => {

@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { useMemo, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomersMultiSelectMenu from './CustomersMultiSelectMenu';
-import AllCustomers from './AllCustomers';
+import AllCustomersTable from './AllCustomersTable';
 
 import {
 	// eslint-disable-next-line import/named
@@ -185,7 +185,7 @@ function AllCustomersHead(props) {
 
 	return (
 		<motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}>
-			<AllCustomers
+			<AllCustomersTable
 				columns={columns}
 				data={filteredData}
 				onRowClick={(ev, row) => {

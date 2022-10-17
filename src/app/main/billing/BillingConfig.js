@@ -9,20 +9,20 @@ const ScrumboardAppConfig = {
 	auth: authRoles.accountant,
 	routes: [
 		{
-			path: '/billing/ReportsBoxesList/1/electrcity-bills/billing',
+			path: '/billing/BillingBlocks/1/electrcity-bills/billing',
 			component: lazy(() => import('./BillingTable/BillingIndex'))
 		},
 		{
-			path: '/billing/ReportsBoxesList/:boardname/:boardId/billing',
+			path: '/billing/BillingBlocks/:boardname/:boardId/billing',
 			component: lazy(() => import('./BillingTable/BillingIndex'))
 		},
 		{
-			path: '/billing/ReportsBoxesList/:boardname/:boardId',
+			path: '/billing/BillingBlocks/:boardname/:boardId',
 			component: lazy(() => import('./BillingTable/GenerateBillsHeader'))
 		},
 		{
-			path: '/billing/ReportsBoxesList',
-			component: lazy(() => import('./BillingBlocks/BillingBlocks'))
+			path: '/billing/BillingBlocks',
+			component: lazy(() => import('./BillingBlocks/BillingBlocksIndex'))
 		},
 		{
 			path: '/billing/:billsId/pdf-bill',
@@ -34,7 +34,7 @@ const ScrumboardAppConfig = {
 		},
 		{
 			path: '/billing',
-			component: () => <Redirect to="/billing/boards" />
+			component: () => <Redirect to="/billing/BillingBlocks" />
 		}
 	]
 };

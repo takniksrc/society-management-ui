@@ -23,7 +23,7 @@ function BillingHeader(props) {
 	const routeParams = useParams();
 	console.log('i am routeParams in Billing Header', routeParams);
 
-	console.log('I am userin Users get', contactDialog);
+	console.log('I am userin UsersIndex get', contactDialog);
 
 	return (
 		<div className="flex flex-1 w-full items-center justify-between">

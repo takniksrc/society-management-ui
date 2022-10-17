@@ -1,6 +1,6 @@
 import { Redirect } from 'react-router-dom';
 import i18next from 'i18next';
-import Customers from './Customers';
+import Customers from './CustomersIndex';
 import en from './i18n/en';
 import tr from './i18n/tr';
 import ar from './i18n/ar';

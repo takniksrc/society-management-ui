@@ -124,7 +124,7 @@ function GenrateBillUploadFPA(props) {
 						})
 					);
 					dispatch(getBills(props.blockId)).then(() => {
-						history.push(`/billing/boards/${props.blockname}/${props.blockId}/billing`);
+						history.push(`/billing/BillingBlocks/${props.blockname}/${props.blockId}/billing`);
 					});
 				}
 				console.log(JSON.stringify(response));
@@ -152,7 +152,7 @@ function GenrateBillUploadFPA(props) {
 
 		// instance(config)
 
-		// data.append('fpa_file', fs.createReadStream('/C:/Users/Admin/Downloads/fpa august -22 (4).xlsx'))
+		// data.append('fpa_file', fs.createReadStream('/C:/UsersIndex/Admin/Downloads/fpa august -22 (4).xlsx'))
 
 		console.log('model', model);
 	};

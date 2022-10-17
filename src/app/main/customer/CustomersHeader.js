@@ -19,7 +19,7 @@ function CustomersHeader(props) {
 	const mainTheme = useSelector(selectMainTheme);
 	const contactDialog = useSelector(({ newCustomersSlice }) => newCustomersSlice.newCustomersSlice)
 
-	console.log('I am userin Users',contactDialog)
+	console.log('I am userin UsersIndex',contactDialog)
 
 	return (
 		<div className="flex flex-1 w-full items-center justify-between">

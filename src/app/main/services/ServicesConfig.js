@@ -7,29 +7,29 @@ const ScrumboardAppConfig = {
 	},
 	routes: [
 		{
-			path: '/services/ServicesBoxesList/consumption-based-charges/:boardId/:boardUri?',
-			component: lazy(() => import('./board/EKServiceTemplate'))
+			path: '/services/boards/consumption-based-charges/:boardId/:boardUri?',
+			component: lazy(() => import('./ConsumptionBasedAndSocietyCharges/ConsumptionBased/ConsumptionTabs/ConsumptionBasedTabsIndex'))
 		},
 		{
-			path: '/services/ServicesBoxesList/consumption-based-charges',
-			component: lazy(() => import('./board/ConsumptionBased'))
+			path: '/services/boards/consumption-based-charges',
+			component: lazy(() => import('./ConsumptionBasedAndSocietyCharges/ConsumptionBased/ConsumptionBasedIndex'))
 		},
 		{
-			path: '/services/ServicesBoxesList/society-charges/:boardId/:boardUri?',
-			component: lazy(() => import('./board/SCDataTemplate'))
+			path: '/services/boards/society-charges/:boardId/:boardUri?',
+			component: lazy(() => import('./ConsumptionBasedAndSocietyCharges/SocietyCharges/SocietyChargesTabs/SocietyChargesTabsIndex'))
 		},
 		{
-			path: '/services/ServicesBoxesList/society-charges',
-			component: lazy(() => import('./board/SocietyCharges'))
+			path: '/services/boards/society-charges',
+			component: lazy(() => import('./ConsumptionBasedAndSocietyCharges/SocietyCharges/SocietyChargesIndex'))
 		},
 
 		{
-			path: '/services/ServicesBoxesList',
+			path: '/services/ServicesList',
 			component: lazy(() => import('./ServicesBoxesList/ServicesIndex'))
 		},
 		{
 			path: '/services',
-			component: () => <Redirect to="/services/ServicesBoxesList" />
+			component: () => <Redirect to="/services/ServicesList" />
 		}
 	]
 };
