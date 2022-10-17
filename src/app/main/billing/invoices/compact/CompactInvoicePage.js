@@ -20,7 +20,7 @@ import { Button } from '@material-ui/core';
 import { navbarClose } from 'app/store/fuse/navbarSlice';
 import Logo from './KesamLogo.jpg';
 // import Barcode from '../../../../../assets/BillsIcon/barcode.svg';
-import BillsImage from '../../../../../assets/BillsIcon/image.jpg';
+import NoImageFound from '../../../../../assets/BillsIcon/NoImageFound.png';
 import BillsCutImage from '../../../../../assets/BillsIcon/Sissor.png';
 import DetailsImage from '../../../../../assets/BillsIcon/bill.png';
 import Barcode from 'react-barcode';
@@ -297,10 +297,10 @@ function CompactInvoicePage(props) {
 														{bill?.fpa_charges}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
-														{bill?.total_bill}
+														{bill?.electricity_charges}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
-														-
+														{bill.society_charges}
 													</div>
 												</div>
 
@@ -516,9 +516,9 @@ function CompactInvoicePage(props) {
 																	// src={BillsImage}
 
 																	src={
-																		bill?.reading_snapshot !== null
-																			? `${APP_URL}/${bill?.reading_snapshot}`
-																			: `${APP_URL}/${bill?.reading_snapshot}`
+																		bill?.reading_snapshot !== null ? (
+																			`${APP_URL}/${bill?.reading_snapshot}`
+																		) : NoImageFound
 																	}
 																	// if (row.original.meter_snapshot === null) {
 																	// 	return <Typography className='text-red-800'>No Image Found</Typography>;
@@ -562,9 +562,14 @@ function CompactInvoicePage(props) {
 														style={{ height: '20rem' }}
 													>
 														<div
-															className="border-black border-1 outline-2 place-items-center"
+															className="border-black border-1 outline-2 place-items-center flex justify-center"
 															// style={{ height: '20rem' }}
 														>
+															<Typography className="text-2xl">
+																{bill.arrears_age >= 3
+																	? 'Meter Disconection Notice'
+																	: ''}
+															</Typography>
 															{/* <img
 																className="w-fit"
 																style={{
@@ -705,7 +710,7 @@ function CompactInvoicePage(props) {
 														{bill?.due_date}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
-														{bill?.total_bill}
+														{bill?.electricity_charges}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
 														{bill?.society_charges}
@@ -959,7 +964,10 @@ function CompactInvoicePage(props) {
 															alt="details"
 														/>
 													</div>
-													<div className="border-black border-1 outline-2 place-items-center">
+													<div className="border-black border-1 outline-2 place-items-center flex justify-center ">
+														<Typography className="text-2xl">
+															{bill.arrears_age >= 3 ? 'Meter Disconection Notice' : ''}
+														</Typography>
 														{/* <img
 															className="w-fit"
 															style={{
@@ -1099,7 +1107,7 @@ function CompactInvoicePage(props) {
 														{bill?.due_date}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
-														{bill?.total_bill}
+														{bill?.electricity_charges}
 													</div>
 													<div className="border-black border-1 outline-2 place-items-center text-base">
 														{bill?.society_charges}
