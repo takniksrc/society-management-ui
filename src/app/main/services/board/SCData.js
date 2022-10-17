@@ -34,7 +34,7 @@ function SCData(props) {
 	const dispatch = useDispatch();
 	const boardsnew = useSelector(selectBoards);
 
-	console.log('I am boards', boardsnew);
+	console.log('I am ReportsBoxesList', boardsnew);
 
 	const classes = useStyles(props);
 
@@ -84,7 +84,7 @@ function SCData(props) {
 								)}
 								role="button"
 								component={Link}
-								// onClick={event => handleOpen(board.id)} 
+								// onClick={event => handleOpen(ReportsTemplates.id)}
 								>
 								<Icon className="text-56" color="action">
 									<img src={board.name} alt="" />

@@ -11,7 +11,7 @@ import { newBoard } from './boardsSlice';
 import { removeCard, updateCard } from './cardSlice';
 import { instance } from 'app/services/jwtService/jwtService';
 
-export const getBoard = createAsyncThunk('scrumboardApp/board/getBoard', async (params, { dispatch }) => {
+export const getBoard = createAsyncThunk('scrumboardApp/ReportsTemplates/getBoard', async (params, { dispatch }) => {
 	try {
 		const response = await instance.get('/api/scrumboard-app/board', { params });
 		const data = await response.data;
@@ -29,14 +29,14 @@ export const getBoard = createAsyncThunk('scrumboardApp/board/getBoard', async (
 			})
 		);
 		history.push({
-			pathname: '/scrumboard/boards'
+			pathname: '/Reports/ReportsBoxesList'
 		});
 		return null;
 	}
 });
 
 export const reorderList = createAsyncThunk(
-	'scrumboardApp/board/reorderList',
+	'scrumboardApp/ReportsTemplates/reorderList',
 	async (result, { dispatch, getState }) => {
 		const { board } = getState().scrumboardApp;
 		const { lists } = board;
@@ -66,7 +66,7 @@ export const reorderList = createAsyncThunk(
 );
 
 export const reorderCard = createAsyncThunk(
-	'scrumboardApp/board/reorderCard',
+	'scrumboardApp/ReportsTemplates/reorderCard',
 	async ({ source, destination }, { dispatch, getState }) => {
 		const { board } = getState().scrumboardApp;
 		const { lists } = board;
@@ -96,7 +96,7 @@ export const reorderCard = createAsyncThunk(
 );
 
 export const newCard = createAsyncThunk(
-	'scrumboardApp/board/newCard',
+	'scrumboardApp/ReportsTemplates/newCard',
 	async ({ boardId, listId, cardTitle }, { dispatch, getState }) => {
 		const response = await instance.post('/api/scrumboard-app/card/new', {
 			boardId,
@@ -111,7 +111,7 @@ export const newCard = createAsyncThunk(
 );
 
 export const newList = createAsyncThunk(
-	'scrumboardApp/board/newList',
+	'scrumboardApp/ReportsTemplates/newList',
 	async ({ boardId, listTitle }, { dispatch, getState }) => {
 		const response = await instance.post('/api/scrumboard-app/list/new', {
 			boardId,
@@ -125,7 +125,7 @@ export const newList = createAsyncThunk(
 );
 
 export const renameList = createAsyncThunk(
-	'scrumboardApp/board/renameList',
+	'scrumboardApp/ReportsTemplates/renameList',
 	async ({ boardId, listId, listTitle }, { dispatch, getState }) => {
 		const response = await instance.post('/api/scrumboard-app/list/rename', {
 			boardId,
@@ -140,7 +140,7 @@ export const renameList = createAsyncThunk(
 );
 
 export const removeList = createAsyncThunk(
-	'scrumboardApp/board/removeList',
+	'scrumboardApp/ReportsTemplates/removeList',
 	async ({ boardId, listId }, { dispatch, getState }) => {
 		const response = await instance.post('/api/scrumboard-app/list/remove', {
 			boardId,
@@ -154,7 +154,7 @@ export const removeList = createAsyncThunk(
 );
 
 export const changeBoardSettings = createAsyncThunk(
-	'scrumboardApp/board/changeBoardSettings',
+	'scrumboardApp/ReportsTemplates/changeBoardSettings',
 	async (newSettings, { dispatch, getState }) => {
 		const { board } = getState().scrumboardApp;
 		const settings = _.merge({}, board.settings, newSettings);
@@ -171,14 +171,14 @@ export const changeBoardSettings = createAsyncThunk(
 );
 
 export const deleteBoard = createAsyncThunk(
-	'scrumboardApp/board/deleteBoard',
+	'scrumboardApp/ReportsTemplates/deleteBoard',
 	async (boardId, { dispatch, getState }) => {
 		const response = await instance.post('/api/scrumboard-app/board/delete', {
 			boardId
 		});
 
 		history.push({
-			pathname: '/scrumboard/boards'
+			pathname: '/Reports/ReportsBoxesList'
 		});
 
 		const data = await response.data;
@@ -187,7 +187,7 @@ export const deleteBoard = createAsyncThunk(
 	}
 );
 
-export const copyBoard = createAsyncThunk('scrumboardApp/board/copyBoard', async (board, { dispatch, getState }) => {
+export const copyBoard = createAsyncThunk('scrumboardApp/ReportsTemplates/copyBoard', async (board, { dispatch, getState }) => {
 	const newBoardData = _.merge({}, board, {
 		id: FuseUtils.generateGUID(),
 		name: `${board.name} (Copied)`,
@@ -200,7 +200,7 @@ export const copyBoard = createAsyncThunk('scrumboardApp/board/copyBoard', async
 });
 
 export const renameBoard = createAsyncThunk(
-	'scrumboardApp/board/renameBoard',
+	'scrumboardApp/ReportsTemplates/renameBoard',
 	async ({ boardId, boardTitle }, { dispatch, getState }) => {
 		const response = await instance.post('/api/scrumboard-app/board/rename', {
 			boardId,

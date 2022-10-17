@@ -7,29 +7,29 @@ const ScrumboardAppConfig = {
 	},
 	routes: [
 		{
-			path: '/services/boards/consumption-based-charges/:boardId/:boardUri?',
+			path: '/services/ServicesBoxesList/consumption-based-charges/:boardId/:boardUri?',
 			component: lazy(() => import('./board/EKServiceTemplate'))
 		},
 		{
-			path: '/services/boards/consumption-based-charges',
+			path: '/services/ServicesBoxesList/consumption-based-charges',
 			component: lazy(() => import('./board/ConsumptionBased'))
 		},
 		{
-			path: '/services/boards/society-charges/:boardId/:boardUri?',
+			path: '/services/ServicesBoxesList/society-charges/:boardId/:boardUri?',
 			component: lazy(() => import('./board/SCDataTemplate'))
 		},
 		{
-			path: '/services/boards/society-charges',
+			path: '/services/ServicesBoxesList/society-charges',
 			component: lazy(() => import('./board/SocietyCharges'))
 		},
 
 		{
-			path: '/services/boards',
-			component: lazy(() => import('./boards/Boards'))
+			path: '/services/ServicesBoxesList',
+			component: lazy(() => import('./ServicesBoxesList/ServicesIndex'))
 		},
 		{
 			path: '/services',
-			component: () => <Redirect to="/services/boards" />
+			component: () => <Redirect to="/services/ServicesBoxesList" />
 		}
 	]
 };

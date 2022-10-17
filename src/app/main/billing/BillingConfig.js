@@ -9,28 +9,28 @@ const ScrumboardAppConfig = {
 	auth: authRoles.accountant,
 	routes: [
 		{
-			path: '/billing/boards/1/electrcity-bills/billing',
-			component: lazy(() => import('./board/GBDataTemplate'))
+			path: '/billing/ReportsBoxesList/1/electrcity-bills/billing',
+			component: lazy(() => import('./BillingTable/BillingIndex'))
 		},
 		{
-			path: '/billing/boards/:boardname/:boardId/billing',
-			component: lazy(() => import('./board/GBDataTemplate'))
+			path: '/billing/ReportsBoxesList/:boardname/:boardId/billing',
+			component: lazy(() => import('./BillingTable/BillingIndex'))
 		},
 		{
-			path: '/billing/boards/:boardname/:boardId',
-			component: lazy(() => import('./board/GenerateBills'))
+			path: '/billing/ReportsBoxesList/:boardname/:boardId',
+			component: lazy(() => import('./BillingTable/GenerateBillsHeader'))
 		},
 		{
-			path: '/billing/boards',
-			component: lazy(() => import('./boards/Boards'))
+			path: '/billing/ReportsBoxesList',
+			component: lazy(() => import('./BillingBlocks/BillingBlocks'))
 		},
 		{
 			path: '/billing/:billsId/pdf-bill',
-			component: lazy(() => import('./invoices/BillTempelate'))
+			component: lazy(() => import('./invoices/BillUITemplate'))
 		},
 		{
 			path: '/billing/pdf-bills/:blockId',
-			component: lazy(() => import('./invoices/BillTempelateMultiple'))
+			component: lazy(() => import('./invoices/BillUITemplateMultiple'))
 		},
 		{
 			path: '/billing',

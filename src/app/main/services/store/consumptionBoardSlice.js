@@ -12,7 +12,7 @@ import reorder, { reorderQuoteMap } from './reorder';
 import { newBoard } from './boardsSlice';
 
 export const getConsumbtionBoard = createAsyncThunk(
-	'scrumboardApp/board/getConsumptionBoard',
+	'scrumboardApp/ReportsTemplates/getConsumptionBoard',
 	async (params, { dispatch }) => {
 		const response = await instance.get(`/api/services/${params}`, { params });
 		const data = await response.data.service;
@@ -22,7 +22,7 @@ export const getConsumbtionBoard = createAsyncThunk(
 );
 
 export const updateConsumbtionBoard = createAsyncThunk(
-	'scrumboardApp/board/updateConsumbtionBoard',
+	'scrumboardApp/ReportsTemplates/updateConsumbtionBoard',
 	async (consumbtionBoardData, { dispatch, getState }) => {
 		console.log('consumbtionBoardData', consumbtionBoardData);
 		let slabsToEdit = [];

@@ -31,8 +31,8 @@ function CommercialTab(props) {
 		name: 'servicePricing'
 	});
 	const board = useSelector(state => state.consumptionBoard);
-	// const board = useSelector(({ scrumboardApp }) => scrumboardApp.consumptionBoard);
-	console.log('Fields in Commercial board tab', fields);
+	// const ReportsTemplates = useSelector(({ scrumboardApp }) => scrumboardApp.consumptionBoard);
+	console.log('Fields in Commercial ReportsTemplates tab', fields);
 
 	useEffect(() => {
 		dispatch(getConfigurations());
@@ -63,7 +63,7 @@ function CommercialTab(props) {
 						</div>
 						<CardContent className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10 flex-auto items-center justify-center h-fit flex h-auto">
 							{fields?.map((propertySize, propertySizeIndex) => {
-								console.log('sp in board', propertySize);
+								console.log('sp in ReportsTemplates', propertySize);
 
 								return (
 									propertySize?.customer_type === COMMERCIAL &&
@@ -106,7 +106,7 @@ function CommercialTab(props) {
 						</div>
 						<CardContent className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10 flex-auto items-center justify-center h-fit flex h-auto">
 							{fields?.map((propertySize, propertySizeIndex) => {
-								console.log('sp in board', propertySize);
+								console.log('sp in ReportsTemplates', propertySize);
 
 								return (
 									propertySize?.customer_type === COMMERCIAL &&

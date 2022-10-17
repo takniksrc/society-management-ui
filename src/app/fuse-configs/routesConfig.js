@@ -2,7 +2,7 @@ import { Redirect } from 'react-router-dom';
 import FuseUtils from '@fuse/utils';
 import UsersConfig from 'app/main/users/UsersConfig';
 import CustomersConfig from 'app/main/customer/CustomersConfig';
-import AnalysisReportConfig from 'app/main/scrumboard/ScrumboardAppConfig';
+import AnalysisReportConfig from 'app/main/Reports/ScrumboardAppConfig';
 import BillingConfig from 'app/main/billing/BillingConfig';
 import ServicesConfig from 'app/main/services/ServicesConfig';
 import Login from 'app/login/Login';

@@ -14,7 +14,7 @@ import { newBoard } from './boardsSlice';
 
 
 export const getSocietyChargesServiceBoard = createAsyncThunk(
-	'scrumboardApp/board/getSocietyChargesServiceBoard',
+	'scrumboardApp/ReportsTemplates/getSocietyChargesServiceBoard',
 	async (params, { dispatch }) => {
 		const response = await instance.get(`/api/services/${params}`, { params });
 		const data = await response.data.service;
@@ -24,7 +24,7 @@ export const getSocietyChargesServiceBoard = createAsyncThunk(
 );
 
 export const updateSocietyChargesServiceBoard = createAsyncThunk(
-	'scrumboardApp/board/updateSocietyChargesServiceBoard',
+	'scrumboardApp/ReportsTemplates/updateSocietyChargesServiceBoard',
 	async (boardData, { dispatch, getState }) => {
 		const { product } = getState();
 		console.log('I am product in save Product', boardData);

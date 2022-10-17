@@ -52,7 +52,7 @@ function BoardModel(data) {
 
 	return _.defaults(data, {
 		name: 'Untitled Board',
-		uri: 'untitled-board',
+		uri: 'untitled-ReportsTemplates',
 		id: FuseUtils.generateGUID(),
 		settings: {
 			color: '',

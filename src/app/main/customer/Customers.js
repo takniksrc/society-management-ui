@@ -13,7 +13,7 @@ import { useDispatch } from 'react-redux';
 import withReducer from 'app/store/withReducer';
 import CustomersHeader from './CustomersHeader';
 import AllCustomersHead from './AllCustomersHead';
-import ContactDialog from './ContactDialog';
+import AddUpdateCustomerDialog from './AddUpdateCustomerDialog';
 import reducer from './store';
 
 import { getCustomerData } from './store/customerSlice';
@@ -65,7 +65,7 @@ const Customers = () => {
 				header={<CustomersHeader />}
 				content={<AllCustomersHead />}
 			/>
-			<ContactDialog />
+			<AddUpdateCustomerDialog />
 		</>
 	);
 };

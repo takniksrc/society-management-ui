@@ -47,7 +47,7 @@ function ResidentialTab(props) {
 	const dispatch = useDispatch();
 
 	const board = useSelector(({ scrumboardApp }) => scrumboardApp.consumptionBoard);
-	console.log('Fields in Residenatial board tab', fields);
+	console.log('Fields in Residenatial ReportsTemplates tab', fields);
 	return (
 		<div>
 			<motion.div className="w-full pb-24  sm:p-16">
@@ -67,7 +67,7 @@ function ResidentialTab(props) {
 					</div>
 					<CardContent className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10 flex-auto items-center justify-center h-fit flex h-auto">
 						{fields?.map((propertySize, propertySizeIndex) => {
-							console.log('sp in board', propertySize);
+							console.log('sp in ReportsTemplates', propertySize);
 
 							return (
 								propertySize?.customer_type === RESIDENTIAL &&
@@ -111,7 +111,7 @@ function ResidentialTab(props) {
 					</div>
 					<CardContent className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10 flex-auto items-center justify-center h-fit flex h-auto">
 						{fields?.map((propertySize, propertySizeIndex) => {
-							console.log('sp in board', propertySize);
+							console.log('sp in ReportsTemplates', propertySize);
 
 							return (
 								propertySize?.customer_type === RESIDENTIAL &&
@@ -155,7 +155,7 @@ function ResidentialTab(props) {
 					</div>
 					<CardContent className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10 flex-auto items-center justify-center h-fit flex h-auto">
 						{fields?.map((propertySize, propertySizeIndex) => {
-							console.log('sp in board', propertySize);
+							console.log('sp in ReportsTemplates', propertySize);
 
 							return (
 								propertySize?.customer_type === RESIDENTIAL &&

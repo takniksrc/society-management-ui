@@ -6,14 +6,14 @@ import history from '@history';
 import BoardModel from '../model/BoardModel';
 
 
-export const getBoards = createAsyncThunk('scrumboardApp/boards/getBoards', async () => {
+export const getBoards = createAsyncThunk('scrumboardApp/ReportsBoxesList/getBoards', async () => {
 	const response = await instance.get('/api/services/propertySizeBased/get-services');
 	const data = await response.data.services;
 	console.log('I am data',data)
 
 	return data;
 });
-export const getConsumptionBoards = createAsyncThunk('scrumboardApp/boards/getBoards', async () => {
+export const getConsumptionBoards = createAsyncThunk('scrumboardApp/ReportsBoxesList/getBoards', async () => {
 	const response = await instance.get('/api/services/consumptionBased/get-services');
 	const data = await response.data.services;
 	console.log('I am data',data)
@@ -21,7 +21,7 @@ export const getConsumptionBoards = createAsyncThunk('scrumboardApp/boards/getBo
 	return data;
 });
 
-export const newBoard = createAsyncThunk('scrumboardApp/boards/newBoard', async (board, { dispatch }) => {
+export const newBoard = createAsyncThunk('scrumboardApp/ReportsBoxesList/newBoard', async (board, { dispatch }) => {
 	const response = await instance.post('/api/scrumboard-app/board/new', { board: board || BoardModel() });
 	const data = await response.data;
 

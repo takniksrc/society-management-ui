@@ -6,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { useMemo, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import ContactsMultiSelectMenu from './ContactsMultiSelectMenu';
+import CustomersMultiSelectMenu from './CustomersMultiSelectMenu';
 import AllCustomers from './AllCustomers';
 
 import {
@@ -70,7 +70,7 @@ function AllCustomersHead(props) {
 					const selectedRowIds = selectedFlatRows.map(row => row.original.id);
 
 					return (
-						selectedFlatRows.length > 0 && <ContactsMultiSelectMenu selectedContactIds={selectedRowIds} />
+						selectedFlatRows.length > 0 && <CustomersMultiSelectMenu selectedContactIds={selectedRowIds} />
 					);
 				},
 				accessor: 'avatar',

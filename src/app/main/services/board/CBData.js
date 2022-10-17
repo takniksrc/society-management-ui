@@ -33,7 +33,7 @@ function CBData(props) {
 
 	const boards = useSelector(selectBoards);
 
-	console.log('I am cunsumbtion board in CBDATA', boards);
+	console.log('I am cunsumbtion ReportsTemplates in CBDATA', boards);
 
 	const classes = useStyles(props);
 
@@ -83,7 +83,7 @@ function CBData(props) {
 								)}
 								role="button"
 								component={Link}
-								//onClick={event => handleOpen(board.id)}
+								//onClick={event => handleOpen(ReportsTemplates.id)}
 							>
 								<Icon className="text-56" color="action">
 									<img src={board.icon} alt="" />

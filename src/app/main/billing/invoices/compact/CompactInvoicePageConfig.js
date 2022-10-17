@@ -9,7 +9,7 @@ const CompactInvoicePageConfig = {
 	routes: [
 		{
 			path: '/pages/invoices/compact',
-			component: lazy(() => import('../BillTempelate'))
+			component: lazy(() => import('../BillUITemplate'))
 		}
 	]
 };

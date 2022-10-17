@@ -11,7 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import { useGlobalFilter, usePagination, useRowSelect, useSortBy, useTable } from 'react-table';
 import clsx from 'clsx';
-import ContactsTablePaginationActions from './ContactsTablePaginationActions';
+import CustomerTablePaginationActions from './CustomerTablePaginationActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCustomerData } from './store/customerSlice';
 
@@ -174,7 +174,7 @@ const AllCustomers = ({ columns, data, onRowClick }) => {
 				}}
 				onChangePage={handleChangePage}
 				onChangeRowsPerPage={handleChangeRowsPerPage}
-				ActionsComponent={ContactsTablePaginationActions}
+				ActionsComponent={CustomerTablePaginationActions}
 			/>
 		</div>
 	);
