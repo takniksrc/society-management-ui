@@ -22,17 +22,14 @@ import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import { Autocomplete } from '@material-ui/lab';
 // import { resetProduct, newProduct, getProduct } from '../store/productSlice';
+import { COMMERCIAL, CONSTRUCTION, RESIDENTIAL } from 'app/fuse-configs/constants';
 import reducer from '../store';
 import DescriptionTab from '../ConsumptionTabs/DescriptionTab';
 import ResidentialTab from '../ConsumptionTabs/ResidentialTab';
 import ConstructionTab from '../ConsumptionTabs/ConstructionTab';
 import FPATab from '../ConsumptionTabs/FPATab';
 import CommercialTab from '../ConsumptionTabs/CommercialTab';
-// import ProductHeader from './ProductHeader';
-// import InventoryTab from './tabs/InventoryTab';
-// import PricingTab from './tabs/PricingTab';
-// import ProductImagesTab from './tabs/ProductImagesTab';
-// import ShippingTab from './tabs/ShippingTab';
+
 
 /**
  * Form Validation Schema
@@ -95,9 +92,9 @@ function TIPService(props) {
 							classes={{ root: 'w-full h-64' }}
 						>
 							<Tab className="h-64" label="Description" />
-							<Tab className="h-64" label="Residential" />
-							<Tab className="h-64" label="Commercial" />
-							<Tab className="h-64" label="Construction" />
+							<Tab className="h-64" label={RESIDENTIAL} />
+							<Tab className="h-64" label={COMMERCIAL} />
+							<Tab className="h-64" label={CONSTRUCTION} />
 						</Tabs>
 					</>
 				}

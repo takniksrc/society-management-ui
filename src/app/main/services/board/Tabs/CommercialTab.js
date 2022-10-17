@@ -18,6 +18,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { getConfigurations } from 'app/fuse-configs/store/configSlice';
+import { COMMERCIAL } from 'app/fuse-configs/constants';
 
 function CommercialTab(props) {
 	const methods = useFormContext();
@@ -65,7 +66,7 @@ function CommercialTab(props) {
 								console.log('sp in board', propertySize);
 
 								return (
-									propertySize?.customer_type === 'Commercial' &&
+									propertySize?.customer_type === COMMERCIAL &&
 									propertySize?.property_size?.name.includes('Shop') && (
 										<Controller
 											name={`servicePricing[${propertySizeIndex}].price_per_unit`}
@@ -108,7 +109,7 @@ function CommercialTab(props) {
 								console.log('sp in board', propertySize);
 
 								return (
-									propertySize?.customer_type === 'Commercial' &&
+									propertySize?.customer_type === COMMERCIAL &&
 									propertySize?.property_size?.name.includes('Plaza') && (
 										<Controller
 											name={`servicePricing[${propertySizeIndex}].price_per_unit`}
