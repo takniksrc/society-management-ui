@@ -30,11 +30,10 @@ import { motion } from 'framer-motion';
 import _ from '@lodash';
 import * as yup from 'yup';
 import { instance } from 'app/services/jwtService/jwtService';
-
-import { removeUser, closeNewContactDialog, closeEditContactDialog } from '../store/newUsersSlice';
 import { Card } from '@material-ui/core';
 import { forEach } from 'lodash';
 import { showMessage } from 'app/store/fuse/messageSlice';
+import { closeNewContactDialog, closeEditContactDialog } from '../store/newUsersSlice';
 import { getBillData } from '../store/billWithIdSlice';
 import { getBills, resetBills } from '../store/AllBillsSlice';
 
@@ -46,6 +45,28 @@ const defaultValuesDiscount = {
 const defaultValuesPaidAmount = {
 	paid_amount: ''
 };
+
+const schemaPaidValues = yup.object().shape({
+	paid_amount: yup
+		.number('Must be a number')
+		.typeError('Value must be a number')
+		.moreThan(0, 'Value be greater than zero')
+});
+
+const schemaDiscount = yup.object().shape({
+	current_reading: yup
+		.number()
+		.moreThan(-1, 'Value must be greater than zero')
+		.typeError('Value must be a number')
+		.optional()
+		.nullable(),
+	discount: yup
+		.number()
+		.moreThan(-1, 'Value must be greater than zero')
+		.typeError('Value must be a number')
+		.optional()
+		.nullable()
+});
 
 function BillsPaymentDiscountDialog(props) {
 	const dispatch = useDispatch();
@@ -67,7 +88,8 @@ function BillsPaymentDiscountDialog(props) {
 
 	const { control, watch, reset, handleSubmit, formState, getValues, register, setValue } = useForm({
 		mode: 'onChange',
-		defaultValuesDiscount
+		defaultValuesDiscount,
+		resolver: yupResolver(schemaDiscount)
 	});
 
 	const {
@@ -77,17 +99,23 @@ function BillsPaymentDiscountDialog(props) {
 		handleSubmit: handleSubmitPaidValues,
 		formState: formStatePaidValues,
 		getValues: getValuesPaidValues,
-		setValue: setPauidValues,
+		setValue: setPaidValues,
 		register: registerPaidValues
 	} = useForm({
 		mode: 'onChange',
-		defaultValuesPaidAmount
+		defaultValuesPaidAmount,
+		resolver: yupResolver(schemaPaidValues)
 	});
 	function createData(month, unit, amount, date, Tamount) {
 		return { month, unit, amount, date, Tamount };
 	}
 
 	const { isValid, dirtyFields, errors } = formState;
+	const {
+		isValid: isValidPaidValues,
+		dirtyFields: dirtyFieldsPaidValues,
+		errors: errorsPaidValues
+	} = formStatePaidValues;
 
 	const id = watch('id');
 
@@ -233,10 +261,12 @@ function BillsPaymentDiscountDialog(props) {
 											{...field}
 											type="number"
 											className="mb-24"
-											label="Amount"
-											id="discont"
+											label="Pay Amount"
+											id="paid_amount"
 											variant="outlined"
 											fullWidth
+											error={!!errorsPaidValues.paid_amount}
+											helperText={errorsPaidValues?.paid_amount?.message}
 										/>
 									)}
 								/>
@@ -248,7 +278,7 @@ function BillsPaymentDiscountDialog(props) {
 									type="submit"
 									onClick={UpdateList}
 									// onClick={() => dispatch(getBillData(contactDialog.data.id))}
-									// disabled={_.isEmpty(dirtyFields) || !isValid}
+									disabled={!isValidPaidValues}
 								>
 									Add Payment
 								</Button>
@@ -282,6 +312,8 @@ function BillsPaymentDiscountDialog(props) {
 												id="current_reading"
 												variant="outlined"
 												fullWidth
+												error={!!errors.current_reading}
+												helperText={errors?.current_reading?.message}
 											/>
 										)}
 									/>
@@ -300,17 +332,14 @@ function BillsPaymentDiscountDialog(props) {
 												id="discount"
 												variant="outlined"
 												fullWidth
+												error={!!errors.discount}
+												helperText={errors?.discount?.message}
 											/>
 										)}
 									/>
 								</div>
 								<div className="px-16">
-									<Button
-										variant="contained"
-										color="secondary"
-										type="submit"
-										// disabled={_.isEmpty(dirtyFields) || !isValid}
-									>
+									<Button variant="contained" color="secondary" type="submit" disabled={!isValid}>
 										Update Bill
 									</Button>
 								</div>
@@ -335,7 +364,6 @@ function BillsPaymentDiscountDialog(props) {
 								<b>Current Reading: </b> {GetBillsData?.current_reading}{' '}
 							</Typography>
 							<Typography>
-								{' '}
 								<b>Arrears: </b>
 								{GetBillsData?.arrears}
 							</Typography>

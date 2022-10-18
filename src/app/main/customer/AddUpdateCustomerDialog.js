@@ -38,8 +38,7 @@ import {
 } from './store/newCustomersSlice';
 
 function AddUpdateCustomerDialog(props) {
-	// console.log('date', Date.now());
-
+	
 	const dispatch = useDispatch();
 	const contactDialog = useSelector(({ newCustomersSlice }) => newCustomersSlice.newCustomersSlice);
 
