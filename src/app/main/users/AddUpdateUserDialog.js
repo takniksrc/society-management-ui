@@ -155,7 +155,7 @@ function AddUpdateUserDialog(props) {
 			</AppBar>
 			<form noValidate onSubmit={handleSubmit(onSubmit)} className="flex flex-col md:overflow-hidden">
 				<DialogContent classes={{ root: 'p-24' }}>
-					<div className="flex">
+					{/* <div className="flex">
 						<div className="min-w-48 pt-20">
 							<Icon color="action">account_circle</Icon>
 						</div>
@@ -176,7 +176,7 @@ function AddUpdateUserDialog(props) {
 								/>
 							)}
 						/>
-					</div>
+					</div> */}
 					<div className="flex">
 						<div className="min-w-48 pt-20">
 							<Icon color="action">email</Icon>
