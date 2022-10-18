@@ -28,7 +28,7 @@ import { removeUser, updateUser, addUser, closeNewContactDialog, closeEditContac
 
 const defaultValues = {
 	id: '',
-	name: '',
+	// name: '',
 	email: '',
 	role: ''
 };
@@ -37,7 +37,7 @@ const defaultValues = {
  * Form Validation Schema
  */
 const schema = yup.object().shape({
-	name: yup.string().required('You must enter a name'),
+	// name: yup.string().required('You must enter a name'),
 	email: yup.string().email().required('Email must be valid email')
 });
 
