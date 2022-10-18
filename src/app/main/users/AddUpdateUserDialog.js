@@ -28,7 +28,7 @@ import { removeUser, updateUser, addUser, closeNewContactDialog, closeEditContac
 
 const defaultValues = {
 	id: '',
-	name: '',
+	// name: '',
 	email: '',
 	role: ''
 };
@@ -37,7 +37,7 @@ const defaultValues = {
  * Form Validation Schema
  */
 const schema = yup.object().shape({
-	name: yup.string().required('You must enter a name'),
+	// name: yup.string().required('You must enter a name'),
 	email: yup.string().email().required('Email must be valid email')
 });
 
@@ -155,7 +155,7 @@ function AddUpdateUserDialog(props) {
 			</AppBar>
 			<form noValidate onSubmit={handleSubmit(onSubmit)} className="flex flex-col md:overflow-hidden">
 				<DialogContent classes={{ root: 'p-24' }}>
-					<div className="flex">
+					{/* <div className="flex">
 						<div className="min-w-48 pt-20">
 							<Icon color="action">account_circle</Icon>
 						</div>
@@ -176,7 +176,7 @@ function AddUpdateUserDialog(props) {
 								/>
 							)}
 						/>
-					</div>
+					</div> */}
 					<div className="flex">
 						<div className="min-w-48 pt-20">
 							<Icon color="action">email</Icon>

@@ -254,7 +254,7 @@ function BillsTables(props) {
 
 	if (filteredData.length === 0) {
 		return (
-			<div className="flex flex-1 items-center justify-center h-full">
+			<div className=" flex-1 items-center justify-center h-full">
 				<div className="flex flex-grow flex-shrink-0 flex-col items-center container px-16 md:px-24">
 					<motion.div
 						variants={container}
