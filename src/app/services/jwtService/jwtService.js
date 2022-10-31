@@ -6,8 +6,8 @@ import { browserHistory } from 'react-router';
 /* eslint-disable camelcase */
 
 export const instance = axios.create({
-	baseURL: 'https://smsstagingapi.norditsol.com'
-	// baseURL: 'http://localhost:8000'
+	baseURL: 'https://sms.norditsol.com'
+	
 });
 
 instance.interceptors.response.use(
