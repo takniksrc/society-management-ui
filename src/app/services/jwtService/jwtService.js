@@ -6,8 +6,7 @@ import { browserHistory } from 'react-router';
 /* eslint-disable camelcase */
 
 export const instance = axios.create({
-	baseURL: 'https://sms.norditsol.com'
-	
+	baseURL: 'https://smsproductionapi.norditsol.com'
 });
 
 instance.interceptors.response.use(
