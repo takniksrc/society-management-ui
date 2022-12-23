@@ -8,5 +8,5 @@ const roles = [
 const RESIDENTIAL = 'Residential';
 const COMMERCIAL = 'Commercial';
 const CONSTRUCTION = 'Construction';
-const APP_URL = 'https://smsstagingapi.norditsol.com';
+const APP_URL = 'https://smsproductionapi.norditsol.com';
 export { roles, RESIDENTIAL, COMMERCIAL, CONSTRUCTION,APP_URL };

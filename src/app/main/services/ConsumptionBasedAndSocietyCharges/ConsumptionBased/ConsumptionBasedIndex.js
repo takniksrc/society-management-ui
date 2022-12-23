@@ -36,7 +36,7 @@ function ConsumptionBasedIndex(props) {
 		<FusePageSimple
 			style={{ left: 'auto' }}
 			classes={{
-				content: 'flex flex-col flex-auto overflow-hidden',
+				content: 'flex flex-col flex-auto overflow-auto',
 				header: 'h-72 min-h-72 lg:ltr:rounded-bl-20 lg:rtl:rounded-br-20 left-auto'
 				// sidebar: 'border-0'
 			}}

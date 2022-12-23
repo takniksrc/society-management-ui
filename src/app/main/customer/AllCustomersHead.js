@@ -82,11 +82,18 @@ function AllCustomersHead(props) {
 				sortable: false
 			},
 			{
+				Header: 'Reference Number',
+				accessor: 'reference_number',
+				className: 'font-medium',
+				sortable: true
+			},
+			{
 				Header: 'Customer Name',
 				accessor: 'name',
 				className: 'font-medium',
 				sortable: true
 			},
+			
 			{
 				Header: 'Property Size',
 				accessor: 'property_size',

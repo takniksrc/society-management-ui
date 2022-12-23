@@ -47,7 +47,7 @@ const AllCustomersTable = ({ columns, data, onRowClick }) => {
 			columns,
 			data,
 			initialState: {
-				hiddenColumns: ['reference_number', 'property_size_id', 'property_type_id', 'company']
+				hiddenColumns: ['property_size_id', 'property_type_id', 'company']
 			},
 			autoResetPage: true
 		},
